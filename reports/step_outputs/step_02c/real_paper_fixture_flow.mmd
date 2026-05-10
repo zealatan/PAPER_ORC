@@ -1,0 +1,8 @@
+flowchart LR
+    A[RTLFixer PDF] --> B[Step 03 Paper Parser]
+    B --> C[ParsedPaper JSON]
+    C --> D[Step 04 Citation Extractor]
+    D --> E[Step 05 Bibliography Mapper]
+    E --> F[Step 06 Citation Role Classifier]
+    F --> G[History Tree + Baseline Graph]
+    G --> H[Importance Report]

@@ -1,0 +1,149 @@
+[
+  {
+    "citation_id": "ref_1",
+    "raw_text": "[1] 3GPP. Technical Specification 38.211: NR Physical Channels. Release 16, 2020.",
+    "title": "Technical Specification 38.211: NR Physical Channels",
+    "authors": [
+      "3GPP"
+    ],
+    "year": 2020,
+    "venue": "Release 16"
+  },
+  {
+    "citation_id": "ref_2",
+    "raw_text": "[2] T. M. Schmidl and D. C. Cox. Robust Frequency and Timing Synchronization for OFDM.\n    IEEE Transactions on Communications, 45(12):1613-1621, 1997.",
+    "title": "Robust Frequency and Timing Synchronization for OFDM",
+    "authors": [
+      "T. M. Schmidl",
+      "D. C. Cox"
+    ],
+    "year": 1997,
+    "venue": "IEEE Transactions on Communications, 45(12):1613-1621"
+  },
+  {
+    "citation_id": "ref_3",
+    "raw_text": "[3] J. J. van de Beek, M. Sandell, and P. O. Borjesson. ML Estimation of Time and\n    Frequency Offset in OFDM Systems. IEEE Transactions on Signal Processing,\n    45(7):1800-1805, 1997.",
+    "title": "ML Estimation of Time and Frequency Offset in OFDM Systems",
+    "authors": [
+      "J. J. van de Beek",
+      "M. Sandell",
+      "P. O. Borjesson"
+    ],
+    "year": 1997,
+    "venue": "IEEE Transactions on Signal Processing, 45(7):1800-1805"
+  },
+  {
+    "citation_id": "ref_4",
+    "raw_text": "[4] T. O'Shea and J. Hoydis. An Introduction to Deep Learning for the Physical Layer.\n    IEEE Transactions on Cognitive Communications and Networking, 3(4):563-575, 2017.",
+    "title": "An Introduction to Deep Learning for the Physical Layer",
+    "authors": [
+      "T. O'Shea",
+      "J. Hoydis"
+    ],
+    "year": 2017,
+    "venue": "IEEE Transactions on Cognitive Communications and Networking, 3(4):563-575"
+  },
+  {
+    "citation_id": "ref_5",
+    "raw_text": "[5] H. Wang, X. Gao, and B. Jiang. Deep Learning Based Channel Estimation for OFDM\n    Systems. IEEE Wireless Communications Letters, 8(3):905-908, 2019.",
+    "title": "Deep Learning Based Channel Estimation for OFDM Systems",
+    "authors": [
+      "H. Wang",
+      "X. Gao",
+      "B. Jiang"
+    ],
+    "year": 2019,
+    "venue": "IEEE Wireless Communications Letters, 8(3):905-908"
+  },
+  {
+    "citation_id": "ref_6",
+    "raw_text": "[6] Y. Liu, Z. Zhang, and C. Zhong. Recurrent Neural Network for Timing Synchronization\n    in OFDM. IEEE Signal Processing Letters, 27:1105-1109, 2020.",
+    "title": "Recurrent Neural Network for Timing Synchronization in OFDM",
+    "authors": [
+      "Y. Liu",
+      "Z. Zhang",
+      "C. Zhong"
+    ],
+    "year": 2020,
+    "venue": "IEEE Signal Processing Letters, 27:1105-1109"
+  },
+  {
+    "citation_id": "ref_7",
+    "raw_text": "[7] M. Morelli and U. Mengali. An Improved Frequency Offset Estimator for OFDM\n    Applications. IEEE Communications Letters, 3(3):75-77, 1999.",
+    "title": "An Improved Frequency Offset Estimator for OFDM Applications",
+    "authors": [
+      "M. Morelli",
+      "U. Mengali"
+    ],
+    "year": 1999,
+    "venue": "IEEE Communications Letters, 3(3):75-77"
+  },
+  {
+    "citation_id": "ref_8",
+    "raw_text": "[8] S. Park, J. Lee, and K. Kim. Convolutional Feature Extraction for OFDM Timing\n    Detection. IEEE Access, 8:112340-112351, 2020.",
+    "title": "Convolutional Feature Extraction for OFDM Timing Detection",
+    "authors": [
+      "S. Park",
+      "J. Lee",
+      "K. Kim"
+    ],
+    "year": 2020,
+    "venue": "IEEE Access, 8:112340-112351"
+  },
+  {
+    "citation_id": "ref_9",
+    "raw_text": "[9] W. Yang, G. Durisi, and E. Riegler. Cascaded Neural Architectures for Lightweight\n    Signal Processing. IEEE Transactions on Signal Processing, 69:4501-4513, 2021.",
+    "title": "Cascaded Neural Architectures for Lightweight Signal Processing",
+    "authors": [
+      "W. Yang",
+      "G. Durisi",
+      "E. Riegler"
+    ],
+    "year": 2021,
+    "venue": "IEEE Transactions on Signal Processing, 69:4501-4513"
+  },
+  {
+    "citation_id": "ref_10",
+    "raw_text": "[10] ITU-R. Recommendation M.1225: Guidelines for Evaluation of Radio Transmission\n     Technologies for IMT-2000. International Telecommunication Union, 1997.",
+    "title": "Recommendation M.1225: Guidelines for Evaluation of Radio Transmission Technologies for IMT-2000",
+    "authors": [
+      "ITU-R"
+    ],
+    "year": 1997,
+    "venue": "International Telecommunication Union"
+  },
+  {
+    "citation_id": "ref_11",
+    "raw_text": "[11] COST 207 Management Committee. COST 207: Digital Land Mobile Radio Communications.\n     European Commission, 1989.",
+    "title": "COST 207: Digital Land Mobile Radio Communications",
+    "authors": [
+      "COST 207 Management Committee"
+    ],
+    "year": 1989,
+    "venue": "European Commission"
+  },
+  {
+    "citation_id": "ref_12",
+    "raw_text": "[12] X. Zhao, Y. Lin, and H. Sun. Transformer-Based Timing Synchronization for OFDM\n     Systems. IEEE Communications Letters, 26(8):1872-1876, 2022.",
+    "title": "Transformer-Based Timing Synchronization for OFDM Systems",
+    "authors": [
+      "X. Zhao",
+      "Y. Lin",
+      "H. Sun"
+    ],
+    "year": 2022,
+    "venue": "IEEE Communications Letters, 26(8):1872-1876"
+  },
+  {
+    "citation_id": "ref_13",
+    "raw_text": "[13] H. Meyr, M. Moeneclaey, and S. Fechtel. Digital Communication Receivers.\n     Wiley, 1997.",
+    "title": "Digital Communication Receivers",
+    "authors": [
+      "H. Meyr",
+      "M. Moeneclaey",
+      "S. Fechtel"
+    ],
+    "year": 1997,
+    "venue": "Wiley"
+  }
+]

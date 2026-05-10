@@ -4,6 +4,15 @@ from dataclasses import dataclass, field
 
 
 @dataclass
+class PaperSection:
+    name: str
+    title: str
+    text: str
+    start_char: int = 0
+    end_char: int = 0
+
+
+@dataclass
 class ParsedPaper:
     paper_id: str
     raw_text: str
@@ -11,7 +20,13 @@ class ParsedPaper:
     authors: list[str] = field(default_factory=list)
     abstract: str | None = None
     sections: dict[str, str] = field(default_factory=dict)
+    section_objects: list[PaperSection] = field(default_factory=list)
     metadata: dict = field(default_factory=dict)
+
+
+def normalize_citation_id(number: int) -> str:
+    """Convert a citation number to a canonical ID string."""
+    return f"ref_{number}"
 
 
 @dataclass
@@ -22,6 +37,8 @@ class CitationMention:
     sentence: str
     context_window: str
     role: str | None = None
+    start_char: int = 0
+    end_char: int = 0
 
 
 @dataclass

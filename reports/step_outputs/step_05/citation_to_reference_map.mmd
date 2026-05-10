@@ -1,0 +1,10 @@
+flowchart TD
+    A[Citation Mentions] --> B[Unique Citation IDs]
+    C[References Section] --> D[Bibliography Entries]
+    B --> E[Citation ID Matching]
+    D --> E
+    E --> F[citation_to_bibliography_map.json]
+    F --> G[Step 06 Citation Role Classifier]
+    E --> R1[ref_1]
+    E --> R5[ref_5]
+    E --> R13[ref_13]

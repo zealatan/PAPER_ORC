@@ -1,0 +1,20 @@
+{
+  "paper_id": "rtlfixer_2311_16543",
+  "title": "RTLFixer: Automatically Fixing RTL Syntax Errors with Large Language Models",
+  "arxiv_id": "2311.16543",
+  "source": "arXiv",
+  "pdf_url": "https://arxiv.org/pdf/2311.16543",
+  "local_pdf": "papers/real/rtlfixer_2311_16543.pdf",
+  "expected_domain": "LLM-assisted RTL debugging",
+  "expected_history_sections": ["Introduction", "Related Work"],
+  "expected_baseline_sections": ["Experiment", "Evaluation", "Results"],
+  "expected_use_in_papernav": [
+    "real parser smoke test",
+    "citation extraction smoke test",
+    "bibliography mapping smoke test",
+    "citation role classification smoke test",
+    "baseline graph candidate",
+    "topic relevance test"
+  ],
+  "pdf_status": "present"
+}

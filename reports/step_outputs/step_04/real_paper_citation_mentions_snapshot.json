@@ -1,0 +1,642 @@
+[
+  {
+    "citation_id": "ref_17",
+    "marker": "[17]",
+    "section_name": "introduction",
+    "sentence": "Recent efforts, such as VeriGen [17] and VerilogEval [9], have pri- marily focused on zero-shot code generation.",
+    "context_window": "ign intentions and produce Verilog code from natural language [ 8]. Recent efforts, such as VeriGen [17] and VerilogEval [9], have pri- marily focused on zero-shot code generation. However, akin to numero",
+    "role": null,
+    "start_char": 1768,
+    "end_char": 1772
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "introduction",
+    "sentence": "Recent efforts, such as VeriGen [17] and VerilogEval [9], have pri- marily focused on zero-shot code generation.",
+    "context_window": "oduce Verilog code from natural language [ 8]. Recent efforts, such as VeriGen [17] and VerilogEval [9], have pri- marily focused on zero-shot code generation. However, akin to numerous complex programmi",
+    "role": null,
+    "start_char": 1789,
+    "end_char": 1792
+  },
+  {
+    "citation_id": "ref_20",
+    "marker": "[20]",
+    "section_name": "introduction",
+    "sentence": "The ReAct framework [20] integrates reasoning and action synthesis in language models, demonstrating LLM’s capability to engage in reasoning processes and refine decision-making through interactive feedback.",
+    "context_window": "ca- pabilities in reasoning and enhancing action plans to address excep- tions. The ReAct framework [20] integrates reasoning and action synthesis in language models, demonstrating LLM’s capability to eng",
+    "role": null,
+    "start_char": 4624,
+    "end_char": 4628
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "introduction",
+    "sentence": "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model’s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+    "context_window": "n reasoning processes and refine decision-making through interactive feedback. Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model’s ability to self-identify mistakes by scrutiniz- ing execu",
+    "role": null,
+    "start_char": 4833,
+    "end_char": 4836
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[6]",
+    "section_name": "introduction",
+    "sentence": "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model’s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+    "context_window": "es and refine decision-making through interactive feedback. Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model’s ability to self-identify mistakes by scrutiniz- ing execution results and ar",
+    "role": null,
+    "start_char": 4852,
+    "end_char": 4855
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]",
+    "section_name": "introduction",
+    "sentence": "On the other hand, Large Language Models are acknowledged for their inclination to produce factual errors, a phenomenon termed hallucination [5].",
+    "context_window": "are acknowledged for their inclination to produce factual errors, a phenomenon termed hallucination [5]. To mitigate this challenge, the Retrieval-Augmented Generation (RAG) paradigm [7] has been introdu",
+    "role": null,
+    "start_char": 5382,
+    "end_char": 5385
+  },
+  {
+    "citation_id": "ref_7",
+    "marker": "[7]",
+    "section_name": "introduction",
+    "sentence": "To mitigate this challenge, the Retrieval-Augmented Generation (RAG) paradigm [7] has been introduced, integrating arXiv:2311.16543v3 [cs.AR] 20 May 2024 retrieval mechanisms to improve the precision of generated content by incorporating information from external knowledge sources.",
+    "context_window": "ed hallucination [5]. To mitigate this challenge, the Retrieval-Augmented Generation (RAG) paradigm [7] has been introduced, integrating arXiv:2311.16543v3 [cs.AR] 20 May 2024 retrieval mechanisms to i",
+    "role": null,
+    "start_char": 5465,
+    "end_char": 5468
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "introduction",
+    "sentence": "We also create VerilogEval-syntax, a Verilog syntax debugging dataset, derived from VerilogEval [9], containing 174 erroneous implementations.",
+    "context_window": "ng. We also create VerilogEval-syntax, a Verilog syntax debugging dataset, derived from VerilogEval [9], containing 174 erroneous implementations. Our contributions are summarized as follows: •Our framew",
+    "role": null,
+    "start_char": 6782,
+    "end_char": 6785
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "introduction",
+    "sentence": "•Our framework also improves the syntax success rate from 73% to 93% on the RTLLM benchmark [11], demonstrating the generalizability of this approach.",
+    "context_window": "tively. •Our framework also improves the syntax success rate from 73% to 93% on the RTLLM benchmark [11], demonstrating the generalizability of this approach. •Compared to One-shot generation, ReAct enhan",
+    "role": null,
+    "start_char": 7246,
+    "end_char": 7250
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "background",
+    "sentence": "2.1 LLMs for Verilog Code Generation Large Language Models exhibit the capability to generate code, with Codex [2] standing as an early exemplar.",
+    "context_window": "r Verilog Code Generation Large Language Models exhibit the capability to generate code, with Codex [2] standing as an early exemplar. GitHub Copilot [4], building upon such groundwork, played a crucial",
+    "role": null,
+    "start_char": 8582,
+    "end_char": 8585
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "background",
+    "sentence": "GitHub Copilot [4], building upon such groundwork, played a crucial role in pioneering LLM-based code completion engines, contributing significantly to the domains of auto-completion and conversational code gener- ation.",
+    "context_window": "hibit the capability to generate code, with Codex [2] standing as an early exemplar. GitHub Copilot [4], building upon such groundwork, played a crucial role in pioneering LLM-based code completion engin",
+    "role": null,
+    "start_char": 8632,
+    "end_char": 8635
+  },
+  {
+    "citation_id": "ref_14",
+    "marker": "[14]",
+    "section_name": "background",
+    "sentence": "DAVE [14] emerged as an early study of LLM tailored for hardware design.",
+    "context_window": "ributing significantly to the domains of auto-completion and conversational code gener- ation. DAVE [14] emerged as an early study of LLM tailored for hardware design. VeriGen [17] further expanded the da",
+    "role": null,
+    "start_char": 8843,
+    "end_char": 8847
+  },
+  {
+    "citation_id": "ref_17",
+    "marker": "[17]",
+    "section_name": "background",
+    "sentence": "VeriGen [17] further expanded the dataset scope and experimented with open-sourced models.",
+    "context_window": "code gener- ation. DAVE [14] emerged as an early study of LLM tailored for hardware design. VeriGen [17] further expanded the dataset scope and experimented with open-sourced models. Following suit, Chip-",
+    "role": null,
+    "start_char": 8919,
+    "end_char": 8923
+  },
+  {
+    "citation_id": "ref_1",
+    "marker": "[1]",
+    "section_name": "background",
+    "sentence": "Following suit, Chip- Chat [1], leveraging GPT-4, demonstrated the extensive potential of LLMs in collaboratively generating processors and other hard- ware designs.",
+    "context_window": "er expanded the dataset scope and experimented with open-sourced models. Following suit, Chip- Chat [1], leveraging GPT-4, demonstrated the extensive potential of LLMs in collaboratively generating proce",
+    "role": null,
+    "start_char": 9029,
+    "end_char": 9032
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "background",
+    "sentence": "In parallel, benchmarks such as VerilogEval [9] and RTLLM [11] played a pivotal role in advancing the application of LLMs in Verilog code generation.",
+    "context_window": "ely generating processors and other hard- ware designs. In parallel, benchmarks such as VerilogEval [9] and RTLLM [11] played a pivotal role in advancing the application of LLMs in Verilog code generatio",
+    "role": null,
+    "start_char": 9212,
+    "end_char": 9215
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "background",
+    "sentence": "In parallel, benchmarks such as VerilogEval [9] and RTLLM [11] played a pivotal role in advancing the application of LLMs in Verilog code generation.",
+    "context_window": "processors and other hard- ware designs. In parallel, benchmarks such as VerilogEval [9] and RTLLM [11] played a pivotal role in advancing the application of LLMs in Verilog code generation. 2.2 Reasonin",
+    "role": null,
+    "start_char": 9226,
+    "end_char": 9230
+  },
+  {
+    "citation_id": "ref_18",
+    "marker": "[18]",
+    "section_name": "background",
+    "sentence": "In terms of rea- soning, methods like chain-of-thought [18] empower LLMs to break down intricate problems into logical steps, significantly enhanc- ing their problem-solving abilities.",
+    "context_window": "reasoning and planning across various tasks. In terms of rea- soning, methods like chain-of-thought [18] empower LLMs to break down intricate problems into logical steps, significantly enhanc- ing their p",
+    "role": null,
+    "start_char": 9528,
+    "end_char": 9532
+  },
+  {
+    "citation_id": "ref_15",
+    "marker": "[15]",
+    "section_name": "background",
+    "sentence": "LLMs also excel in interactive decision-making and formulating action plans, effectively leverag- ing digital tools, as shown in works such as ToolLLM [15].",
+    "context_window": "formulating action plans, effectively leverag- ing digital tools, as shown in works such as ToolLLM [15]. The ReAct [20] framework represents a notable advancement in LLM capabilities by seamlessly integr",
+    "role": null,
+    "start_char": 9809,
+    "end_char": 9813
+  },
+  {
+    "citation_id": "ref_20",
+    "marker": "[20]",
+    "section_name": "background",
+    "sentence": "The ReAct [20] framework represents a notable advancement in LLM capabilities by seamlessly integrating reasoning and action planning.",
+    "context_window": "on plans, effectively leverag- ing digital tools, as shown in works such as ToolLLM [15]. The ReAct [20] framework represents a notable advancement in LLM capabilities by seamlessly integrating reasoning",
+    "role": null,
+    "start_char": 9825,
+    "end_char": 9829
+  },
+  {
+    "citation_id": "ref_7",
+    "marker": "[7]",
+    "section_name": "background",
+    "sentence": "2.3 Retrieval-Augmented Generation Retrieval-Augmented Generation (RAG) [7] represents a significant advancement in addressing the limitations of Large Language Mod- els when handling knowledge-intensive tasks.",
+    "context_window": "nd context-aware responses. 2.3 Retrieval-Augmented Generation Retrieval-Augmented Generation (RAG) [7] represents a significant advancement in addressing the limitations of Large Language Mod- els when",
+    "role": null,
+    "start_char": 10381,
+    "end_char": 10384
+  },
+  {
+    "citation_id": "ref_10",
+    "marker": "[10]",
+    "section_name": "background",
+    "sentence": "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential.",
+    "context_window": "ed accuracy and factual consistency. In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generati",
+    "role": null,
+    "start_char": 11186,
+    "end_char": 11190
+  },
+  {
+    "citation_id": "ref_21",
+    "marker": "[21]",
+    "section_name": "background",
+    "sentence": "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential.",
+    "context_window": "tual consistency. In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of L",
+    "role": null,
+    "start_char": 11205,
+    "end_char": 11209
+  },
+  {
+    "citation_id": "ref_20",
+    "marker": "[20]",
+    "section_name": "background",
+    "sentence": "3.2 Reasoning and Action Planning through ReAct Iterative Prompting We enable Large Language Models to function as autonomous agents for reasoning and action planning through theReActprompt- ing mechanism [20].",
+    "context_window": "nction as autonomous agents for reasoning and action planning through theReActprompt- ing mechanism [20]. In ReAct, LLMs generate both reasoning traces and task-specific actions in an interleaved manner.",
+    "role": null,
+    "start_char": 12693,
+    "end_char": 12697
+  },
+  {
+    "citation_id": "ref_0",
+    "marker": "[0]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "ering. module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Inde",
+    "role": null,
+    "start_char": 15639,
+    "end_char": 15642
+  },
+  {
+    "citation_id": "ref_1",
+    "marker": "[1]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8",
+    "role": null,
+    "start_char": 15646,
+    "end_char": 15649
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is ou",
+    "role": null,
+    "start_char": 15653,
+    "end_char": 15656
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "ule ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of ra",
+    "role": null,
+    "start_char": 15660,
+    "end_char": 15663
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "nput [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range. 1",
+    "role": null,
+    "start_char": 15667,
+    "end_char": 15670
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": ":0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range. 1 error(s",
+    "role": null,
+    "start_char": 15674,
+    "end_char": 15677
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[6]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range. 1 error(s) durin",
+    "role": null,
+    "start_char": 15681,
+    "end_char": 15684
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "[7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range. 1 error(s) during elabo",
+    "role": null,
+    "start_char": 15688,
+    "end_char": 15691
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "background",
+    "sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "context_window": "1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;↩→ endmodule Feedback: main.v:5: error: Index out[8] is out of range. 1 error(s) during elaboration. (a) One-shot Prompt Template Solve a task with inte",
+    "role": null,
+    "start_char": 15747,
+    "end_char": 15750
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "background",
+    "sentence": "3.4 Debugging Dataset We created a novel benchmark dataset, VerilogEval-syntax, based on the VerilogEval benchmark [9].",
+    "context_window": "ataset We created a novel benchmark dataset, VerilogEval-syntax, based on the VerilogEval benchmark [9]. This dataset comprises flawed code implementations sourced from the VerilogEval problem set. Each",
+    "role": null,
+    "start_char": 19812,
+    "end_char": 19815
+  },
+  {
+    "citation_id": "ref_16",
+    "marker": "[16]",
+    "section_name": "background",
+    "sentence": "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors.",
+    "context_window": "with ex- traneous language or empty module bodies. The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples whil",
+    "role": null,
+    "start_char": 20562,
+    "end_char": 20566
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]",
+    "section_name": "background",
+    "sentence": "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors.",
+    "context_window": "or empty module bodies. The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse repres",
+    "role": null,
+    "start_char": 20589,
+    "end_char": 20593
+  },
+  {
+    "citation_id": "ref_13",
+    "marker": "[13]",
+    "section_name": "experiment",
+    "sentence": "Setup: We conduct all experiments with GPT-3.5 as the LLM through OpenAI APIs [13], except for the ablation experiment on different LLM.",
+    "context_window": "back message and LLM. Setup: We conduct all experiments with GPT-3.5 as the LLM through OpenAI APIs [13], except for the ablation experiment on different LLM. We specifically used gpt-3.5-turbo-16k-0613.",
+    "role": null,
+    "start_char": 21199,
+    "end_char": 21203
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "experiment",
+    "sentence": "fix rate = E 𝑝𝑟𝑜𝑏𝑙𝑒𝑚𝑠 h𝑐 𝑛 i (1) Functional Correctness: We follow recent work in directly mea- suring code functional correctness with simulation through pass@k metric [2], where a problem is considered solved if any of the k samples passes the tests.",
+    "context_window": "cent work in directly mea- suring code functional correctness with simulation through pass@k metric [2], where a problem is considered solved if any of the k samples passes the tests. We use the unbiased",
+    "role": null,
+    "start_char": 22205,
+    "end_char": 22208
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9, 11]",
+    "section_name": "experiment",
+    "sentence": "Simulation Correctness Improvement: Previous research [9, 11] evaluates the performance of LLM-generated Verilog code using the pass@k metric.",
+    "context_window": "rk using ReAct and RAG with Quartus compiler. Simulation Correctness Improvement: Previous research [9, 11] evaluates the performance of LLM-generated Verilog code using the pass@k metric. However, this appr",
+    "role": null,
+    "start_char": 25609,
+    "end_char": 25616
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[9, 11]",
+    "section_name": "experiment",
+    "sentence": "Simulation Correctness Improvement: Previous research [9, 11] evaluates the performance of LLM-generated Verilog code using the pass@k metric.",
+    "context_window": "rk using ReAct and RAG with Quartus compiler. Simulation Correctness Improvement: Previous research [9, 11] evaluates the performance of LLM-generated Verilog code using the pass@k metric. However, this appr",
+    "role": null,
+    "start_char": 25609,
+    "end_char": 25616
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "experiment",
+    "sentence": "To account for potential overfitting dur- ing the design of the retrieval database, we also tested our method on the RTLLM [11] benchmark without deriving new human guid- ance for the retrieval database.",
+    "context_window": "l overfitting dur- ing the design of the retrieval database, we also tested our method on the RTLLM [11] benchmark without deriving new human guid- ance for the retrieval database. As shown in Table 3, ou",
+    "role": null,
+    "start_char": 27204,
+    "end_char": 27208
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9, 17]",
+    "section_name": "experiment",
+    "sentence": "Nonetheless, it is important to highlight that our approach of empowering LLMs with ReAct and RAG can significantly narrow the gap between weaker LLMs and stronger ones, especially ben- eficial for weaker open-source models [9, 17] that may not be as performant as GPT-4 on programming tasks.",
+    "context_window": "he gap between weaker LLMs and stronger ones, especially ben- eficial for weaker open-source models [9, 17] that may not be as performant as GPT-4 on programming tasks. 5 ANALYSIS AND DISCUSSION In this sect",
+    "role": null,
+    "start_char": 31125,
+    "end_char": 31132
+  },
+  {
+    "citation_id": "ref_17",
+    "marker": "[9, 17]",
+    "section_name": "experiment",
+    "sentence": "Nonetheless, it is important to highlight that our approach of empowering LLMs with ReAct and RAG can significantly narrow the gap between weaker LLMs and stronger ones, especially ben- eficial for weaker open-source models [9, 17] that may not be as performant as GPT-4 on programming tasks.",
+    "context_window": "he gap between weaker LLMs and stronger ones, especially ben- eficial for weaker open-source models [9, 17] that may not be as performant as GPT-4 on programming tasks. 5 ANALYSIS AND DISCUSSION In this sect",
+    "role": null,
+    "start_char": 31125,
+    "end_char": 31132
+  },
+  {
+    "citation_id": "ref_0",
+    "marker": "[0]",
+    "section_name": "experiment",
+    "sentence": "Erroneous Implementation (Partial): for (i = 0; i < 16; i = i + 1)begin : ROW for (j = 0; j < 16; j = j + 1)begin : COLUMN neighbors[0] = q[(i-1)*16 + (j-1)]; row_above = q[((i-1) & 15)*16 + j]; ...",
+    "context_window": "l): for (i = 0; i < 16; i = i + 1)begin : ROW for (j = 0; j < 16; j = j + 1)begin : COLUMN neighbors[0] = q[(i-1)*16 + (j-1)]; row_above = q[((i-1) & 15)*16 + j]; ... Compile Error: Error (10232): Verilo",
+    "role": null,
+    "start_char": 32142,
+    "end_char": 32145
+  },
+  {
+    "citation_id": "ref_1",
+    "marker": "[1]",
+    "section_name": "references",
+    "sentence": "[1] Jason Blocklove, et al.",
+    "context_window": "[1] Jason Blocklove, et al. 2023. Chip-Chat: Challenges and Opportunities in Con- versational Hardware",
+    "role": null,
+    "start_char": 34594,
+    "end_char": 34597
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "references",
+    "sentence": "[2] Mark Chen, et al.",
+    "context_window": "nges and Opportunities in Con- versational Hardware Design. arXiv preprint arXiv:2305.13243 (2023). [2] Mark Chen, et al. 2021. Evaluating large language models trained on code. arXiv preprint arXiv:2107",
+    "role": null,
+    "start_char": 34745,
+    "end_char": 34748
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "references",
+    "sentence": "[3] Xinyun Chen, et al.",
+    "context_window": "al. 2021. Evaluating large language models trained on code. arXiv preprint arXiv:2107.03374 (2021). [3] Xinyun Chen, et al. 2023. Teaching large language models to self-debug. arXiv preprint arXiv:2304.0",
+    "role": null,
+    "start_char": 34863,
+    "end_char": 34866
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "references",
+    "sentence": "[4] Nat Friedman.",
+    "context_window": "et al. 2023. Teaching large language models to self-debug. arXiv preprint arXiv:2304.05128 (2023). [4] Nat Friedman. 2021. Introducing GitHub Copilot: your AI pair program- mer. (2021). https://github.b",
+    "role": null,
+    "start_char": 34979,
+    "end_char": 34982
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]",
+    "section_name": "references",
+    "sentence": "https://github.blog/2021-06-29-introducing-github-copilot-ai- pair-programmer [5] Ziwei Ji, et al.",
+    "context_window": "program- mer. (2021). https://github.blog/2021-06-29-introducing-github-copilot-ai- pair-programmer [5] Ziwei Ji, et al. 2023. Survey of Hallucination in Natural Language Generation. Comput. Surveys 55,",
+    "role": null,
+    "start_char": 35144,
+    "end_char": 35147
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[6]",
+    "section_name": "references",
+    "sentence": "https://doi.org/10.1145/3571730 [6] Shuyang Jiang, et al.",
+    "context_window": "ral Language Generation. Comput. Surveys 55, 12 (March 2023), 1–38. https://doi.org/10.1145/3571730 [6] Shuyang Jiang, et al. 2023. SelfEvolve: A Code Evolution Framework via Large Language Models. arXiv",
+    "role": null,
+    "start_char": 35302,
+    "end_char": 35305
+  },
+  {
+    "citation_id": "ref_7",
+    "marker": "[7]",
+    "section_name": "references",
+    "sentence": "[7] Patrick Lewis, et al .",
+    "context_window": "olve: A Code Evolution Framework via Large Language Models. arXiv preprint arXiv:2306.02907 (2023). [7] Patrick Lewis, et al . 2021. Retrieval-Augmented Generation for Knowledge- Intensive NLP Tasks. arX",
+    "role": null,
+    "start_char": 35440,
+    "end_char": 35443
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "references",
+    "sentence": "arXiv:cs.CL/2005.11401 [8] Mingjie Liu, et al.",
+    "context_window": "l . 2021. Retrieval-Augmented Generation for Knowledge- Intensive NLP Tasks. arXiv:cs.CL/2005.11401 [8] Mingjie Liu, et al. 2023. ChipNeMo: Domain-Adapted LLMs for Chip Design. arXiv:cs.CL/2311.00176 [9]",
+    "role": null,
+    "start_char": 35563,
+    "end_char": 35566
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "references",
+    "sentence": "arXiv:cs.CL/2311.00176 [9] Mingjie Liu, et al .",
+    "context_window": "[8] Mingjie Liu, et al. 2023. ChipNeMo: Domain-Adapted LLMs for Chip Design. arXiv:cs.CL/2311.00176 [9] Mingjie Liu, et al . 2023. VerilogEval: Evaluating Large Language Models for Verilog Code Generatio",
+    "role": null,
+    "start_char": 35663,
+    "end_char": 35666
+  },
+  {
+    "citation_id": "ref_10",
+    "marker": "[10]",
+    "section_name": "references",
+    "sentence": "[10] Shuai Lu, et al.",
+    "context_window": "aluating Large Language Models for Verilog Code Generation. arXiv preprint arXiv:2309.07544 (2023). [10] Shuai Lu, et al. 2022. ReACC: A Retrieval-Augmented Code Completion Frame- work. arXiv:cs.SE/2203.0",
+    "role": null,
+    "start_char": 35809,
+    "end_char": 35813
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "references",
+    "sentence": "arXiv:cs.SE/2203.07722 [11] Yao Lu, et al.",
+    "context_window": "i Lu, et al. 2022. ReACC: A Retrieval-Augmented Code Completion Frame- work. arXiv:cs.SE/2203.07722 [11] Yao Lu, et al. 2023. RTLLM: An Open-Source Benchmark for Design RTL Gener- ation with Large Languag",
+    "role": null,
+    "start_char": 35918,
+    "end_char": 35922
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]",
+    "section_name": "references",
+    "sentence": "[12] Suphakit Niwattanakul, et al.",
+    "context_window": "mark for Design RTL Gener- ation with Large Language Model. arXiv preprint arXiv:2308.05345 (2023). [12] Suphakit Niwattanakul, et al. 2013. Using of Jaccard coefficient for keywords similarity. In Procee",
+    "role": null,
+    "start_char": 36071,
+    "end_char": 36075
+  },
+  {
+    "citation_id": "ref_13",
+    "marker": "[13]",
+    "section_name": "references",
+    "sentence": "[13] OpenAI.",
+    "context_window": "edings of the international multiconference of engineers and computer scientists , Vol. 1. 380–384. [13] OpenAI. 2023. OpenAI models api. (2023). https://platform.openai.com/docs/ models [14] Hammond Pear",
+    "role": null,
+    "start_char": 36274,
+    "end_char": 36278
+  },
+  {
+    "citation_id": "ref_14",
+    "marker": "[14]",
+    "section_name": "references",
+    "sentence": "https://platform.openai.com/docs/ models [14] Hammond Pearce, et al.",
+    "context_window": "1. 380–384. [13] OpenAI. 2023. OpenAI models api. (2023). https://platform.openai.com/docs/ models [14] Hammond Pearce, et al. 2020. Dave: Deriving automatically verilog from english. In Proceedings of t",
+    "role": null,
+    "start_char": 36361,
+    "end_char": 36365
+  },
+  {
+    "citation_id": "ref_15",
+    "marker": "[15]",
+    "section_name": "references",
+    "sentence": "[15] Yujia Qin, et al .",
+    "context_window": "log from english. In Proceedings of the 2020 ACM/IEEE Workshop on Machine Learning for CAD . 27–32. [15] Yujia Qin, et al . 2023. Toolllm: Facilitating large language models to master 16000+ real-world ap",
+    "role": null,
+    "start_char": 36528,
+    "end_char": 36532
+  },
+  {
+    "citation_id": "ref_16",
+    "marker": "[16]",
+    "section_name": "references",
+    "sentence": "[16] Erich Schubert, et al .",
+    "context_window": "ing large language models to master 16000+ real-world apis. arXiv preprint arXiv:2307.16789 (2023). [16] Erich Schubert, et al . 2017. DBSCAN revisited, revisited: why and how you should (still) use DBSCA",
+    "role": null,
+    "start_char": 36676,
+    "end_char": 36680
+  },
+  {
+    "citation_id": "ref_17",
+    "marker": "[17]",
+    "section_name": "references",
+    "sentence": "[17] Shailja Thakur, et al.",
+    "context_window": "how you should (still) use DBSCAN. ACM Transactions on Database Systems (TODS) 42, 3 (2017), 1–21. [17] Shailja Thakur, et al. 2023. VeriGen: A Large Language Model for Verilog Code Generation. arXiv pre",
+    "role": null,
+    "start_char": 36847,
+    "end_char": 36851
+  },
+  {
+    "citation_id": "ref_18",
+    "marker": "[18]",
+    "section_name": "references",
+    "sentence": "[18] Jason Wei, et al.",
+    "context_window": "eriGen: A Large Language Model for Verilog Code Generation. arXiv preprint arXiv:2308.00708 (2023). [18] Jason Wei, et al. 2023. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. arXi",
+    "role": null,
+    "start_char": 36982,
+    "end_char": 36986
+  },
+  {
+    "citation_id": "ref_19",
+    "marker": "[19]",
+    "section_name": "references",
+    "sentence": "arXiv:cs.CL/2201.11903 [19] Stephen Williams et al.",
+    "context_window": "2023. Chain-of-Thought Prompting Elicits Reasoning in Large Language Models. arXiv:cs.CL/2201.11903 [19] Stephen Williams et al. 2002. Icarus verilog: open-source verilog more than a year later. Linux Jou",
+    "role": null,
+    "start_char": 37105,
+    "end_char": 37109
+  },
+  {
+    "citation_id": "ref_20",
+    "marker": "[20]",
+    "section_name": "references",
+    "sentence": "[20] Shunyu Yao, et al.",
+    "context_window": "2002. Icarus verilog: open-source verilog more than a year later. Linux Journal 2002, 99 (2002), 3. [20] Shunyu Yao, et al. 2022. ReAct: Synergizing Reasoning and Acting in Language Models. In The Elevent",
+    "role": null,
+    "start_char": 37234,
+    "end_char": 37238
+  },
+  {
+    "citation_id": "ref_21",
+    "marker": "[21]",
+    "section_name": "references",
+    "sentence": "[21] Fengji Zhang, et al.",
+    "context_window": "d Acting in Language Models. In The Eleventh International Conference on Learning Representations . [21] Fengji Zhang, et al. 2023. Repocoder: Repository-level code completion through iterative retrieval",
+    "role": null,
+    "start_char": 37395,
+    "end_char": 37399
+  }
+]

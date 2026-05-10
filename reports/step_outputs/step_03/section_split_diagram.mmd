@@ -1,0 +1,12 @@
+flowchart TD
+    A["sample_paper.txt"] --> B[Paper Parser]
+    B --> P[ParsedPaper]
+    P --> introduction["Introduction"]
+    P --> relatedwork["Related Work"]
+    P --> method["System Model"]
+    P --> method["Proposed Method"]
+    P --> experiment["Experiment"]
+    P --> results["Results"]
+    P --> discussion["Discussion"]
+    P --> references["References"]
+    P --> J[parsed_paper_snapshot.json]

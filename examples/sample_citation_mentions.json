@@ -1,0 +1,412 @@
+[
+  {
+    "citation_id": "ref_1",
+    "marker": "[1]",
+    "section_name": "introduction",
+    "sentence": "Orthogonal frequency-division multiplexing (OFDM) has become the dominant waveform in modern broadband wireless communications, including LTE and 5G NR standards [1].",
+    "context_window": "he dominant waveform in modern broadband wireless communications, including LTE and 5G NR standards [1]. A critical challenge in OFDM receivers is accurate timing synchronization: an incorrect timing off",
+    "role": null,
+    "start_char": 811,
+    "end_char": 814
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "introduction",
+    "sentence": "The problem of timing synchronization was first proposed in the seminal work of Schmidl and Cox [2], who introduced a correlation-based method using repeated pilot symbols.",
+    "context_window": "y. The problem of timing synchronization was first proposed in the seminal work of Schmidl and Cox [2], who introduced a correlation-based method using repeated pilot symbols. This classical approach, w",
+    "role": null,
+    "start_char": 1094,
+    "end_char": 1097
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "introduction",
+    "sentence": "[3] later proposed a maximum-likelihood estimator for joint timing and frequency offset recovery, extending the pioneering work of [2] to cyclic-prefix-based detection.",
+    "context_window": "ssical approach, while elegant, degrades under severe multipath fading channels. Van de Beek et al. [3] later proposed a maximum-likelihood estimator for joint timing and frequency offset recovery, exten",
+    "role": null,
+    "start_char": 1279,
+    "end_char": 1282
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "introduction",
+    "sentence": "[3] later proposed a maximum-likelihood estimator for joint timing and frequency offset recovery, extending the pioneering work of [2] to cyclic-prefix-based detection.",
+    "context_window": "kelihood estimator for joint timing and frequency offset recovery, extending the pioneering work of [2] to cyclic-prefix-based detection. Recent advances in deep learning have motivated the application",
+    "role": null,
+    "start_char": 1410,
+    "end_char": 1413
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "introduction",
+    "sentence": "Recent advances in deep learning have motivated the application of neural networks to physical-layer tasks [4].",
+    "context_window": "advances in deep learning have motivated the application of neural networks to physical-layer tasks [4]. Prior work by Wang et al. [5] applied deep neural networks to channel estimation, while previous s",
+    "role": null,
+    "start_char": 1556,
+    "end_char": 1559
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]",
+    "section_name": "introduction",
+    "sentence": "[5] applied deep neural networks to channel estimation, while previous studies by Liu et al.",
+    "context_window": "motivated the application of neural networks to physical-layer tasks [4]. Prior work by Wang et al. [5] applied deep neural networks to channel estimation, while previous studies by Liu et al. [6] explor",
+    "role": null,
+    "start_char": 1587,
+    "end_char": 1590
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[6]",
+    "section_name": "introduction",
+    "sentence": "[6] explored recurrent networks for timing correction in OFDM systems.",
+    "context_window": "et al. [5] applied deep neural networks to channel estimation, while previous studies by Liu et al. [6] explored recurrent networks for timing correction in OFDM systems. These results suggest that data-",
+    "role": null,
+    "start_char": 1680,
+    "end_char": 1683
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "related_work",
+    "sentence": "The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7].",
+    "context_window": "ing synchronization in OFDM systems has a rich literature. The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3]",
+    "role": null,
+    "start_char": 2214,
+    "end_char": 2217
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "related_work",
+    "sentence": "The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7].",
+    "context_window": "[2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7]. Previous studies on machine-learning-based sy",
+    "role": null,
+    "start_char": 2313,
+    "end_char": 2316
+  },
+  {
+    "citation_id": "ref_7",
+    "marker": "[7]",
+    "section_name": "related_work",
+    "sentence": "The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7].",
+    "context_window": "tensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7]. Previous studies on machine-learning-based synchronization focused primarily on frequency offset",
+    "role": null,
+    "start_char": 2365,
+    "end_char": 2368
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]",
+    "section_name": "related_work",
+    "sentence": "Previous studies on machine-learning-based synchronization focused primarily on frequency offset estimation [5].",
+    "context_window": "studies on machine-learning-based synchronization focused primarily on frequency offset estimation [5]. The prior work of Park et al. [8] introduced a convolutional feature extractor for timing detectio",
+    "role": null,
+    "start_char": 2479,
+    "end_char": 2482
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "related_work",
+    "sentence": "[8] introduced a convolutional feature extractor for timing detection, which we build upon in this paper.",
+    "context_window": "synchronization focused primarily on frequency offset estimation [5]. The prior work of Park et al. [8] introduced a convolutional feature extractor for timing detection, which we build upon in this pape",
+    "role": null,
+    "start_char": 2514,
+    "end_char": 2517
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "related_work",
+    "sentence": "[9] demonstrated that cascaded architectures can reduce model complexity while preserving accuracy, an observation central to our design.",
+    "context_window": "onvolutional feature extractor for timing detection, which we build upon in this paper. Yang et al. [9] demonstrated that cascaded architectures can reduce model complexity while preserving accuracy, an",
+    "role": null,
+    "start_char": 2632,
+    "end_char": 2635
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "method",
+    "sentence": "This cascaded design reduces parameter count compared to a single deep network [9].",
+    "context_window": "efines the estimate. This cascaded design reduces parameter count compared to a single deep network [9].",
+    "role": null,
+    "start_char": 3433,
+    "end_char": 3436
+  },
+  {
+    "citation_id": "ref_10",
+    "marker": "[10]",
+    "section_name": "experiment",
+    "sentence": "We evaluate the proposed method against four baselines on the ITU Vehicular-A channel model [10] using the standard COST 207 dataset [11].",
+    "context_window": "We evaluate the proposed method against four baselines on the ITU Vehicular-A channel model [10] using the standard COST 207 dataset [11]. We compare with the Schmidl-Cox detector [2] as the prim",
+    "role": null,
+    "start_char": 3553,
+    "end_char": 3557
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "experiment",
+    "sentence": "We evaluate the proposed method against four baselines on the ITU Vehicular-A channel model [10] using the standard COST 207 dataset [11].",
+    "context_window": "gainst four baselines on the ITU Vehicular-A channel model [10] using the standard COST 207 dataset [11]. We compare with the Schmidl-Cox detector [2] as the primary classical baseline. We also compare w",
+    "role": null,
+    "start_char": 3594,
+    "end_char": 3598
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "experiment",
+    "sentence": "We compare with the Schmidl-Cox detector [2] as the primary classical baseline.",
+    "context_window": "nnel model [10] using the standard COST 207 dataset [11]. We compare with the Schmidl-Cox detector [2] as the primary classical baseline. We also compare with the ML-based timing method of Park et al. [",
+    "role": null,
+    "start_char": 3642,
+    "end_char": 3645
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "experiment",
+    "sentence": "[8] and the recurrent approach of Liu et al.",
+    "context_window": "] as the primary classical baseline. We also compare with the ML-based timing method of Park et al. [8] and the recurrent approach of Liu et al. [6], which serve as direct deep-learning baselines. The p",
+    "role": null,
+    "start_char": 3744,
+    "end_char": 3747
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[6]",
+    "section_name": "experiment",
+    "sentence": "[6], which serve as direct deep-learning baselines.",
+    "context_window": "compare with the ML-based timing method of Park et al. [8] and the recurrent approach of Liu et al. [6], which serve as direct deep-learning baselines. The proposed method is additionally compared again",
+    "role": null,
+    "start_char": 3789,
+    "end_char": 3792
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]",
+    "section_name": "experiment",
+    "sentence": "[12], which currently achieves the best published results on this benchmark.",
+    "context_window": "is additionally compared against the state-of-the-art transformer-based synchronizer of Zhao et al. [12], which currently achieves the best published results on this benchmark. Our method outperforms [12]",
+    "role": null,
+    "start_char": 3962,
+    "end_char": 3966
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]",
+    "section_name": "experiment",
+    "sentence": "Our method outperforms [12] by 2.1 dB at SNR = 0 dB.",
+    "context_window": "[12], which currently achieves the best published results on this benchmark. Our method outperforms [12] by 2.1 dB at SNR = 0 dB. Evaluation follows the protocol of [10] using root-mean-square error (RMS",
+    "role": null,
+    "start_char": 4062,
+    "end_char": 4066
+  },
+  {
+    "citation_id": "ref_10",
+    "marker": "[10]",
+    "section_name": "experiment",
+    "sentence": "Evaluation follows the protocol of [10] using root-mean-square error (RMSE) of the timing offset as the primary metric [13].",
+    "context_window": "benchmark. Our method outperforms [12] by 2.1 dB at SNR = 0 dB. Evaluation follows the protocol of [10] using root-mean-square error (RMSE) of the timing offset as the primary metric [13]. Secondary metr",
+    "role": null,
+    "start_char": 4128,
+    "end_char": 4132
+  },
+  {
+    "citation_id": "ref_13",
+    "marker": "[13]",
+    "section_name": "experiment",
+    "sentence": "Evaluation follows the protocol of [10] using root-mean-square error (RMSE) of the timing offset as the primary metric [13].",
+    "context_window": "the protocol of [10] using root-mean-square error (RMSE) of the timing offset as the primary metric [13]. Secondary metrics include probability of correct synchronization P_cs and computational complexity",
+    "role": null,
+    "start_char": 4212,
+    "end_char": 4216
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "results",
+    "sentence": "At SNR = -5 dB, our method reduces RMSE by 34% compared against the classical Schmidl-Cox baseline [2] and by 18% compared against the deep-learning baseline [8].",
+    "context_window": "At SNR = -5 dB, our method reduces RMSE by 34% compared against the classical Schmidl-Cox baseline [2] and by 18% compared against the deep-learning baseline [8]. State-of-the-art comparison confirms th",
+    "role": null,
+    "start_char": 4525,
+    "end_char": 4528
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "results",
+    "sentence": "At SNR = -5 dB, our method reduces RMSE by 34% compared against the classical Schmidl-Cox baseline [2] and by 18% compared against the deep-learning baseline [8].",
+    "context_window": "ainst the classical Schmidl-Cox baseline [2] and by 18% compared against the deep-learning baseline [8]. State-of-the-art comparison confirms that our lightweight model matches [12] in accuracy while usi",
+    "role": null,
+    "start_char": 4584,
+    "end_char": 4587
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]",
+    "section_name": "results",
+    "sentence": "State-of-the-art comparison confirms that our lightweight model matches [12] in accuracy while using 6x fewer parameters.",
+    "context_window": "deep-learning baseline [8]. State-of-the-art comparison confirms that our lightweight model matches [12] in accuracy while using 6x fewer parameters.",
+    "role": null,
+    "start_char": 4661,
+    "end_char": 4665
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "discussion",
+    "sentence": "Supporting evidence from [4] and [9] suggests that the cascaded structure implicitly learns a coarse-to-fine estimation hierarchy.",
+    "context_window": "onal processing is an effective inductive bias for timing synchronization. Supporting evidence from [4] and [9] suggests that the cascaded structure implicitly learns a coarse-to-fine estimation hierarch",
+    "role": null,
+    "start_char": 4886,
+    "end_char": 4889
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "discussion",
+    "sentence": "Supporting evidence from [4] and [9] suggests that the cascaded structure implicitly learns a coarse-to-fine estimation hierarchy.",
+    "context_window": "cessing is an effective inductive bias for timing synchronization. Supporting evidence from [4] and [9] suggests that the cascaded structure implicitly learns a coarse-to-fine estimation hierarchy.",
+    "role": null,
+    "start_char": 4894,
+    "end_char": 4897
+  },
+  {
+    "citation_id": "ref_1",
+    "marker": "[1]",
+    "section_name": "references",
+    "sentence": "[1] 3GPP.",
+    "context_window": "[1] 3GPP. Technical Specification 38.211: NR Physical Channels. Release 16, 2020. [2] T. M. Schmidl and",
+    "role": null,
+    "start_char": 5010,
+    "end_char": 5013
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "references",
+    "sentence": "[2] T.",
+    "context_window": "[1] 3GPP. Technical Specification 38.211: NR Physical Channels. Release 16, 2020. [2] T. M. Schmidl and D. C. Cox. Robust Frequency and Timing Synchronization for OFDM. IEEE Transac",
+    "role": null,
+    "start_char": 5092,
+    "end_char": 5095
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "references",
+    "sentence": "[3] J.",
+    "context_window": "d Timing Synchronization for OFDM. IEEE Transactions on Communications, 45(12):1613-1621, 1997. [3] J. J. van de Beek, M. Sandell, and P. O. Borjesson. ML Estimation of Time and Frequency Offset",
+    "role": null,
+    "start_char": 5244,
+    "end_char": 5247
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "references",
+    "sentence": "[4] T.",
+    "context_window": "requency Offset in OFDM Systems. IEEE Transactions on Signal Processing, 45(7):1800-1805, 1997. [4] T. O'Shea and J. Hoydis. An Introduction to Deep Learning for the Physical Layer. IEEE Transact",
+    "role": null,
+    "start_char": 5431,
+    "end_char": 5434
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]",
+    "section_name": "references",
+    "sentence": "[5] H.",
+    "context_window": "ysical Layer. IEEE Transactions on Cognitive Communications and Networking, 3(4):563-575, 2017. [5] H. Wang, X. Gao, and B. Jiang. Deep Learning Based Channel Estimation for OFDM Systems. IEEE Wi",
+    "role": null,
+    "start_char": 5603,
+    "end_char": 5606
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[6]",
+    "section_name": "references",
+    "sentence": "[6] Y.",
+    "context_window": "Channel Estimation for OFDM Systems. IEEE Wireless Communications Letters, 8(3):905-908, 2019. [6] Y. Liu, Z. Zhang, and C. Zhong. Recurrent Neural Network for Timing Synchronization in OFDM. IE",
+    "role": null,
+    "start_char": 5757,
+    "end_char": 5760
+  },
+  {
+    "citation_id": "ref_7",
+    "marker": "[7]",
+    "section_name": "references",
+    "sentence": "[7] M.",
+    "context_window": "Network for Timing Synchronization in OFDM. IEEE Signal Processing Letters, 27:1105-1109, 2020. [7] M. Morelli and U. Mengali. An Improved Frequency Offset Estimator for OFDM Applications. IEEE C",
+    "role": null,
+    "start_char": 5910,
+    "end_char": 5913
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "references",
+    "sentence": "[8] S.",
+    "context_window": "requency Offset Estimator for OFDM Applications. IEEE Communications Letters, 3(3):75-77, 1999. [8] S. Park, J. Lee, and K. Kim. Convolutional Feature Extraction for OFDM Timing Detection. IEEE A",
+    "role": null,
+    "start_char": 6054,
+    "end_char": 6057
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "references",
+    "sentence": "[9] W.",
+    "context_window": "Convolutional Feature Extraction for OFDM Timing Detection. IEEE Access, 8:112340-112351, 2020. [9] W. Yang, G. Durisi, and E. Riegler. Cascaded Neural Architectures for Lightweight Signal Proces",
+    "role": null,
+    "start_char": 6187,
+    "end_char": 6190
+  },
+  {
+    "citation_id": "ref_10",
+    "marker": "[10]",
+    "section_name": "references",
+    "sentence": "[10] ITU-R.",
+    "context_window": "for Lightweight Signal Processing. IEEE Transactions on Signal Processing, 69:4501-4513, 2021. [10] ITU-R. Recommendation M.1225: Guidelines for Evaluation of Radio Transmission Technologies for",
+    "role": null,
+    "start_char": 6356,
+    "end_char": 6360
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "references",
+    "sentence": "[11] COST 207 Management Committee.",
+    "context_window": "of Radio Transmission Technologies for IMT-2000. International Telecommunication Union, 1997. [11] COST 207 Management Committee. COST 207: Digital Land Mobile Radio Communications. European Co",
+    "role": null,
+    "start_char": 6516,
+    "end_char": 6520
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]",
+    "section_name": "references",
+    "sentence": "[12] X.",
+    "context_window": "ment Committee. COST 207: Digital Land Mobile Radio Communications. European Commission, 1989. [12] X. Zhao, Y. Lin, and H. Sun. Transformer-Based Timing Synchronization for OFDM Systems. IEEE C",
+    "role": null,
+    "start_char": 6636,
+    "end_char": 6640
+  },
+  {
+    "citation_id": "ref_13",
+    "marker": "[13]",
+    "section_name": "references",
+    "sentence": "[13] H.",
+    "context_window": "d Timing Synchronization for OFDM Systems. IEEE Communications Letters, 26(8):1872-1876, 2022. [13] H. Meyr, M. Moeneclaey, and S. Fechtel. Digital Communication Receivers. Wiley, 1997.",
+    "role": null,
+    "start_char": 6786,
+    "end_char": 6790
+  }
+]

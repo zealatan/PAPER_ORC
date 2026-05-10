@@ -1,0 +1,15 @@
+flowchart TD
+    A[ParsedPaper JSON] --> B[Citation Extractor]
+    B --> C[Introduction citations]
+    B --> D[Related Work citations]
+    B --> E[Experiment citations]
+    B --> F[Results citations]
+    B --> G[Discussion citations]
+    B --> H[Reference anchors]
+    C --> I[citation_mentions.json]
+    D --> I
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    I --> J[Step 05 Bibliography Mapper]

@@ -1,0 +1,230 @@
+{
+  "ref_17": {
+    "citation_id": "ref_17",
+    "raw_text": "[17] Shailja Thakur, et al. 2023. VeriGen: A Large Language Model for Verilog Code\nGeneration. arXiv preprint arXiv:2308.00708 (2023).",
+    "title": "VeriGen: A Large Language Model for Verilog Code\nGeneration",
+    "authors": [
+      "Shailja Thakur",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv preprint arXiv:2308.00708 (2023)."
+  },
+  "ref_9": {
+    "citation_id": "ref_9",
+    "raw_text": "[9] Mingjie Liu, et al . 2023. VerilogEval: Evaluating Large Language Models for\nVerilog Code Generation. arXiv preprint arXiv:2309.07544 (2023).",
+    "title": "VerilogEval: Evaluating Large Language Models for\nVerilog Code Generation",
+    "authors": [
+      "Mingjie Liu",
+      "et al . 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv preprint arXiv:2309.07544 (2023)."
+  },
+  "ref_20": {
+    "citation_id": "ref_20",
+    "raw_text": "[20] Shunyu Yao, et al. 2022. ReAct: Synergizing Reasoning and Acting in Language\nModels. In The Eleventh International Conference on Learning Representations .",
+    "title": "ReAct: Synergizing Reasoning and Acting in Language\nModels",
+    "authors": [
+      "Shunyu Yao",
+      "et al. 2022"
+    ],
+    "year": 2022,
+    "venue": "In The Eleventh International Conference on Learning Representations ."
+  },
+  "ref_3": {
+    "citation_id": "ref_3",
+    "raw_text": "[3] Xinyun Chen, et al. 2023. Teaching large language models to self-debug. arXiv\npreprint arXiv:2304.05128 (2023).",
+    "title": "Teaching large language models to self-debug",
+    "authors": [
+      "Xinyun Chen",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv\npreprint arXiv:2304.05128 (2023)."
+  },
+  "ref_6": {
+    "citation_id": "ref_6",
+    "raw_text": "[6] Shuyang Jiang, et al. 2023. SelfEvolve: A Code Evolution Framework via Large\nLanguage Models. arXiv preprint arXiv:2306.02907 (2023).",
+    "title": "SelfEvolve: A Code Evolution Framework via Large\nLanguage Models",
+    "authors": [
+      "Shuyang Jiang",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv preprint arXiv:2306.02907 (2023)."
+  },
+  "ref_5": {
+    "citation_id": "ref_5",
+    "raw_text": "[5] Ziwei Ji, et al. 2023. Survey of Hallucination in Natural Language Generation.\nComput. Surveys 55, 12 (March 2023), 1–38. https://doi.org/10.1145/3571730",
+    "title": "Survey of Hallucination in Natural Language Generation",
+    "authors": [
+      "Ziwei Ji",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "Comput. Surveys 55, 12 (March 2023), 1–38. https://doi.org/10.1145/3571730"
+  },
+  "ref_7": {
+    "citation_id": "ref_7",
+    "raw_text": "[7] Patrick Lewis, et al . 2021. Retrieval-Augmented Generation for Knowledge-\nIntensive NLP Tasks. arXiv:cs.CL/2005.11401",
+    "title": "Retrieval-Augmented Generation for Knowledge-\nIntensive NLP Tasks",
+    "authors": [
+      "Patrick Lewis",
+      "et al . 2021"
+    ],
+    "year": 2005,
+    "venue": "arXiv:cs.CL/2005.11401"
+  },
+  "ref_11": {
+    "citation_id": "ref_11",
+    "raw_text": "[11] Yao Lu, et al. 2023. RTLLM: An Open-Source Benchmark for Design RTL Gener-\nation with Large Language Model. arXiv preprint arXiv:2308.05345 (2023).",
+    "title": "RTLLM: An Open-Source Benchmark for Design RTL Gener-\nation with Large Language Model",
+    "authors": [
+      "Yao Lu",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv preprint arXiv:2308.05345 (2023)."
+  },
+  "ref_2": {
+    "citation_id": "ref_2",
+    "raw_text": "[2] Mark Chen, et al. 2021. Evaluating large language models trained on code. arXiv\npreprint arXiv:2107.03374 (2021).",
+    "title": "Evaluating large language models trained on code",
+    "authors": [
+      "Mark Chen",
+      "et al. 2021"
+    ],
+    "year": 2021,
+    "venue": "arXiv\npreprint arXiv:2107.03374 (2021)."
+  },
+  "ref_4": {
+    "citation_id": "ref_4",
+    "raw_text": "[4] Nat Friedman. 2021. Introducing GitHub Copilot: your AI pair program-\nmer. (2021). https://github.blog/2021-06-29-introducing-github-copilot-ai-\npair-programmer",
+    "title": "2021",
+    "authors": [
+      "Nat Friedman"
+    ],
+    "year": 2021,
+    "venue": "Introducing GitHub Copilot: your AI pair program-\nmer. (2021). https://github.blog/2021-06-29-introducing-github-copilot-ai-\npair-programmer"
+  },
+  "ref_14": {
+    "citation_id": "ref_14",
+    "raw_text": "[14] Hammond Pearce, et al. 2020. Dave: Deriving automatically verilog from english.\nIn Proceedings of the 2020 ACM/IEEE Workshop on Machine Learning for CAD .\n27–32.",
+    "title": "Dave: Deriving automatically verilog from english",
+    "authors": [
+      "Hammond Pearce",
+      "et al. 2020"
+    ],
+    "year": 2020,
+    "venue": "In Proceedings of the 2020 ACM/IEEE Workshop on Machine Learning for CAD .\n27–32."
+  },
+  "ref_1": {
+    "citation_id": "ref_1",
+    "raw_text": "[1] Jason Blocklove, et al. 2023. Chip-Chat: Challenges and Opportunities in Con-\nversational Hardware Design. arXiv preprint arXiv:2305.13243 (2023).",
+    "title": "Chip-Chat: Challenges and Opportunities in Con-\nversational Hardware Design",
+    "authors": [
+      "Jason Blocklove",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv preprint arXiv:2305.13243 (2023)."
+  },
+  "ref_18": {
+    "citation_id": "ref_18",
+    "raw_text": "[18] Jason Wei, et al. 2023. Chain-of-Thought Prompting Elicits Reasoning in Large\nLanguage Models. arXiv:cs.CL/2201.11903",
+    "title": "Chain-of-Thought Prompting Elicits Reasoning in Large\nLanguage Models",
+    "authors": [
+      "Jason Wei",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv:cs.CL/2201.11903"
+  },
+  "ref_15": {
+    "citation_id": "ref_15",
+    "raw_text": "[15] Yujia Qin, et al . 2023. Toolllm: Facilitating large language models to master\n16000+ real-world apis. arXiv preprint arXiv:2307.16789 (2023).",
+    "title": "Toolllm: Facilitating large language models to master\n16000+ real-world apis",
+    "authors": [
+      "Yujia Qin",
+      "et al . 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv preprint arXiv:2307.16789 (2023)."
+  },
+  "ref_10": {
+    "citation_id": "ref_10",
+    "raw_text": "[10] Shuai Lu, et al. 2022. ReACC: A Retrieval-Augmented Code Completion Frame-\nwork. arXiv:cs.SE/2203.07722",
+    "title": "ReACC: A Retrieval-Augmented Code Completion Frame-\nwork",
+    "authors": [
+      "Shuai Lu",
+      "et al. 2022"
+    ],
+    "year": 2022,
+    "venue": "arXiv:cs.SE/2203.07722"
+  },
+  "ref_21": {
+    "citation_id": "ref_21",
+    "raw_text": "[21] Fengji Zhang, et al. 2023. Repocoder: Repository-level code completion through\niterative retrieval and generation. arXiv preprint arXiv:2303.12570 (2023).",
+    "title": "Repocoder: Repository-level code completion through\niterative retrieval and generation",
+    "authors": [
+      "Fengji Zhang",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv preprint arXiv:2303.12570 (2023)."
+  },
+  "ref_8": {
+    "citation_id": "ref_8",
+    "raw_text": "[8] Mingjie Liu, et al. 2023. ChipNeMo: Domain-Adapted LLMs for Chip Design.\narXiv:cs.CL/2311.00176",
+    "title": "ChipNeMo: Domain-Adapted LLMs for Chip Design",
+    "authors": [
+      "Mingjie Liu",
+      "et al. 2023"
+    ],
+    "year": 2023,
+    "venue": "arXiv:cs.CL/2311.00176"
+  },
+  "ref_16": {
+    "citation_id": "ref_16",
+    "raw_text": "[16] Erich Schubert, et al . 2017. DBSCAN revisited, revisited: why and how you\nshould (still) use DBSCAN. ACM Transactions on Database Systems (TODS) 42, 3\n(2017), 1–21.",
+    "title": "DBSCAN revisited, revisited: why and how you\nshould (still) use DBSCAN",
+    "authors": [
+      "Erich Schubert",
+      "et al . 2017"
+    ],
+    "year": 2017,
+    "venue": "ACM Transactions on Database Systems (TODS) 42, 3\n(2017), 1–21."
+  },
+  "ref_12": {
+    "citation_id": "ref_12",
+    "raw_text": "[12] Suphakit Niwattanakul, et al. 2013. Using of Jaccard coefficient for keywords\nsimilarity. In Proceedings of the international multiconference of engineers and\ncomputer scientists , Vol. 1. 380–384.",
+    "title": "Using of Jaccard coefficient for keywords\nsimilarity",
+    "authors": [
+      "Suphakit Niwattanakul",
+      "et al. 2013"
+    ],
+    "year": 2013,
+    "venue": "In Proceedings of the international multiconference of engineers and\ncomputer scientists , Vol. 1. 380–384."
+  },
+  "ref_13": {
+    "citation_id": "ref_13",
+    "raw_text": "[13] OpenAI. 2023. OpenAI models api. (2023). https://platform.openai.com/docs/\nmodels",
+    "title": "2023",
+    "authors": [
+      "OpenAI"
+    ],
+    "year": 2023,
+    "venue": "OpenAI models api. (2023). https://platform.openai.com/docs/\nmodels"
+  },
+  "ref_19": {
+    "citation_id": "ref_19",
+    "raw_text": "[19] Stephen Williams et al. 2002. Icarus verilog: open-source verilog more than a\nyear later. Linux Journal 2002, 99 (2002), 3.",
+    "title": "Icarus verilog: open-source verilog more than a\nyear later",
+    "authors": [
+      "Stephen Williams et al. 2002"
+    ],
+    "year": 2002,
+    "venue": "Linux Journal 2002, 99 (2002), 3."
+  }
+}
