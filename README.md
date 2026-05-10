@@ -12,9 +12,13 @@
   <i>Connected Papers shows how papers are connected. PaperNav shows why each reference appears in a paper.</i>
 </p>
 
+<p align="center">
+  <img src="assets/papernav_project_roadmap_overview.png" alt="PaperNav Project Roadmap" width="100%">
+</p>
+
 ---
 
-## 1. Project Overview
+## 1. Overview
 
 **PaperNav** is a section-aware paper intelligence system.
 
@@ -28,7 +32,7 @@ A research paper uses references differently depending on where they appear:
 | Experiment / Evaluation / Results | Baselines, competitors, benchmark sources, metric sources | **Baseline Graph** |
 | Whole Paper | Project-specific relevance and importance | **Importance Report** |
 
-The core idea is:
+Core idea:
 
 > Introduction references reveal the historical evolution of a field.  
 > Experiment references reveal the actual baseline and competitor landscape.
@@ -54,79 +58,34 @@ PaperNav aims to answer these questions by analyzing **where** and **how** refer
 
 ---
 
-## 3. Core Concept
+## 3. Key Differentiation
 
-PaperNav separates references into two major views.
-
----
-
-### 3.1 History Tree View
-
-References that appear in:
-
-- Introduction
-- Related Work
-- Background
-- Motivation
-
-are treated as historical or conceptual references.
-
-These references help answer:
+Most paper tools are paper-level tools.
 
 ```text
-How did this research field evolve?
-Which papers are foundational?
-Which papers are direct prior work?
-Which papers should I read first to understand the background?
+Paper
+  ↓
+Summary
 ```
 
-The output is a **History Tree**.
-
-Example conceptual structure:
+PaperNav is a section-aware reference intelligence tool.
 
 ```text
-Foundational Work
-   └── Classical Prior Work
-          └── Recent Related Work
-                 └── Target Paper
+Paper
+  ↓
+Section Parsing
+  ↓
+Citation Role Analysis
+  ↓
+History Tree + Baseline Graph
+  ↓
+Project-Specific Importance Report
 ```
 
----
+Positioning:
 
-### 3.2 Baseline Graph View
-
-References that appear in:
-
-- Experiment
-- Evaluation
-- Results
-- Comparison
-- Ablation Study
-- Discussion
-
-are treated as experimental comparison references.
-
-These references help answer:
-
-```text
-Which methods are used as baselines?
-Which methods are competitors?
-Which benchmark or dataset is used?
-Which metric is used?
-Which methods are directly compared?
-```
-
-The output is a **Baseline Graph**.
-
-Example conceptual structure:
-
-```text
-            Baseline A
-               |
-Baseline B -- Target Paper -- Baseline C
-               |
-          Benchmark / Metric Source
-```
+> Connected Papers shows how papers are connected.  
+> PaperNav shows why each reference appears in a paper.
 
 ---
 
@@ -163,188 +122,154 @@ flowchart TD
 
 ---
 
-## 5. Main Components
+## 5. Roadmap
 
-### 5.1 Paper Parser Agent
+PaperNav is built step by step.
 
-The Paper Parser Agent converts raw PDF or text into structured paper sections.
+Every Claude Code prompt used to build the system must be saved as a Markdown file under `prompts/`.
 
-Input:
+### Milestone Overview
+
+| Milestone | Goal | Output |
+|---|---|---|
+| **Milestone 1** | Section-aware citation extraction | `citation_roles.json`, `citation_roles.md` |
+| **Milestone 2** | History Tree + Baseline Graph | `history_tree.html`, `baseline_graph.html` |
+| **Milestone 3** | Importance Agent integration | `final_report.md` |
+| **Milestone 4** | Batch research navigation tool | folder-level reports and global research map |
+
+---
+
+## 6. Prompt Archive Rule
+
+> **Rule:** Every step prompt must be saved as a Markdown file under `prompts/`.
+
+This repository follows a strict prompt-traceable development workflow.
 
 ```text
-PDF file
-or
-plain text paper
+prompts/
+├── 00_bootstrap_repository.md
+├── 01_define_common_models.md
+├── 02_add_sample_paper_fixture.md
+├── 03_build_paper_parser.md
+├── 04_build_citation_extractor.md
+├── 05_build_bibliography_mapper.md
+├── 06_build_citation_role_classifier.md
+├── 07_build_citation_report_writer.md
+├── 08_add_milestone1_pipeline.md
+├── 09_build_history_tree_model.md
+├── 10_build_history_tree_builder.md
+├── 11_build_baseline_graph_model.md
+├── 12_build_baseline_graph_builder.md
+├── 13_build_graph_visualizer.md
+├── 14_add_readme_graph_integration.md
+├── 15_build_topic_relevance_agent.md
+├── 16_build_citation_value_agent.md
+├── 17_build_experiment_value_agent.md
+├── 18_build_strategic_value_agent.md
+├── 19_build_weakness_risk_agent.md
+├── 20_build_final_importance_judge.md
+├── 21_build_final_paper_intelligence_report.md
+├── 22_build_batch_pipeline.md
+├── 23_build_global_research_map.md
+├── 24_add_cli_and_export.md
+├── 25_add_end_to_end_tests.md
+├── 26_add_example_outputs.md
+└── 27_polish_readme.md
 ```
 
-Output:
+Each prompt should include:
 
-```json
-{
-  "paper_id": "paper_001",
-  "title": "...",
-  "authors": ["..."],
-  "abstract": "...",
-  "sections": {
-    "introduction": "...",
-    "related_work": "...",
-    "method": "...",
-    "experiments": "...",
-    "results": "...",
-    "conclusion": "...",
-    "references": "..."
-  },
-  "raw_text": "..."
-}
+```text
+- Working directory
+- Objective
+- Context
+- Allowed modifications
+- Files to create or modify
+- Implementation requirements
+- Tests
+- Documentation updates
+- Final report format
 ```
 
 ---
 
-### 5.2 Citation Extractor
+## 7. Milestone 1 — Section-Aware Citation Extraction
 
-The Citation Extractor finds citation markers in each section.
+The first milestone builds the foundation for section-aware reference analysis.
 
-Supported citation patterns for MVP:
+The goal is to convert a paper into structured citation-role information.
 
 ```text
-[1]
-[1, 2]
-[1]-[4]
-[1–4]
-Smith et al. (2022)
-(Smith et al., 2022)
+Paper
+  ↓
+Section Parsing
+  ↓
+Citation Extraction
+  ↓
+Bibliography Mapping
+  ↓
+Citation Role Classification
+  ↓
+citation_roles.json / citation_roles.md
 ```
 
-Initial MVP will focus on numeric citations first.
+<p align="center">
+  <img src="assets/milestone_1_citation_extraction_workflow.png" alt="Milestone 1 Citation Extraction Workflow" width="100%">
+</p>
 
-Example output:
+### Milestone 1 Steps
 
-```json
-{
-  "citation_id": "ref_12",
-  "marker": "[12]",
-  "section_name": "introduction",
-  "sentence": "Recent works such as [12] and [13] explored LLM-based RTL generation.",
-  "context_window": "..."
-}
-```
+| Step | Prompt File | Purpose |
+|---:|---|---|
+| 00 | `prompts/00_bootstrap_repository.md` | Create repository structure, `pyproject.toml`, tests, and `prompts/` |
+| 01 | `prompts/01_define_common_models.md` | Define shared data models |
+| 02 | `prompts/02_add_sample_paper_fixture.md` | Create sample paper fixture with introduction and experiment citations |
+| 03 | `prompts/03_build_paper_parser.md` | Split paper into sections and build `ParsedPaper` JSON |
+| 04 | `prompts/04_build_citation_extractor.md` | Extract numeric citations from each section with sentence context |
+| 05 | `prompts/05_build_bibliography_mapper.md` | Map citation markers to reference entries |
+| 06 | `prompts/06_build_citation_role_classifier.md` | Classify history vs. baseline roles using section and keywords |
+| 07 | `prompts/07_build_citation_report_writer.md` | Generate `citation_roles.md` and summary tables |
+| 08 | `prompts/08_add_milestone1_pipeline.md` | Run the end-to-end Milestone 1 pipeline and export sample outputs |
+
+### Milestone 1 Done When
+
+- [ ] Paper sections are parsed
+- [ ] Citations are extracted from each section
+- [ ] Bibliography entries are mapped
+- [ ] Citation roles are classified
+- [ ] `citation_roles.json` is generated
+- [ ] `citation_roles.md` is generated
+- [ ] End-to-end sample pipeline passes
 
 ---
 
-### 5.3 Bibliography Mapper
+## 8. Milestone 2 — History Tree + Baseline Graph
 
-The Bibliography Mapper connects citation markers to reference entries.
+Milestone 2 converts citation roles into visual maps.
 
-Example input:
+### History Tree
 
-```text
-[12] A. Smith and B. Lee, "LLM-assisted RTL Verification", DAC, 2025.
-```
-
-Example output:
-
-```json
-{
-  "citation_id": "ref_12",
-  "raw_text": "[12] A. Smith and B. Lee, \"LLM-assisted RTL Verification\", DAC, 2025.",
-  "title": "LLM-assisted RTL Verification",
-  "authors": ["A. Smith", "B. Lee"],
-  "year": 2025,
-  "venue": "DAC"
-}
-```
-
----
-
-### 5.4 Section-Aware Citation Role Classifier
-
-This is the core intelligence module.
-
-The same citation can have different meaning depending on where it appears.
-
-#### Introduction / Related Work Citations
-
-Likely roles:
-
-```text
-history_foundational
-history_direct_prior
-history_background
-supporting_evidence
-```
-
-#### Experiment / Evaluation Citations
-
-Likely roles:
-
-```text
-baseline_direct
-baseline_extended
-competitor
-benchmark_source
-metric_source
-```
-
-#### Rule Examples
-
-| Context Pattern | Citation Role |
-|---|---|
-| "first proposed", "pioneering", "classical" | history_foundational |
-| "prior work", "previous studies", "recent works" | history_direct_prior |
-| "we compare with", "compared against", "baseline" | baseline_direct |
-| "outperforms", "against", "state-of-the-art" | competitor |
-| "benchmark", "dataset", "evaluation protocol" | benchmark_source |
-| "metric", "score", "measurement" | metric_source |
-
----
-
-### 5.5 History Tree Builder
-
-The History Tree Builder uses references from:
+References from:
 
 - Introduction
 - Related Work
 - Background
+- Motivation
 
-to create a historical learning path.
+are used to build a **History Tree**.
 
-Output files:
+This tree helps answer:
 
 ```text
-history_tree.json
-history_tree.html
-history_tree.svg
-history_tree_summary.md
+How did this field evolve?
+Which papers are foundational?
+Which papers are direct prior work?
+Which papers should I read first?
 ```
 
-Node attributes:
+### Baseline Graph
 
-```json
-{
-  "citation_id": "ref_12",
-  "title": "LLM-assisted RTL Verification",
-  "year": 2025,
-  "role": "history_direct_prior",
-  "citation_frequency": 3,
-  "importance_hint": "direct prior work"
-}
-```
-
-Visualization rule:
-
-| Visual Feature | Meaning |
-|---|---|
-| Node position | Historical order |
-| Node size | Citation frequency |
-| Node color | Citation role |
-| Edge direction | Evolution path |
-| Target paper | Final/root node |
-
----
-
-### 5.6 Baseline Graph Builder
-
-The Baseline Graph Builder uses references from:
+References from:
 
 - Experiment
 - Evaluation
@@ -352,71 +277,138 @@ The Baseline Graph Builder uses references from:
 - Comparison
 - Ablation Study
 
-to create an experimental comparison map.
+are used to build a **Baseline Graph**.
 
-Output files:
-
-```text
-baseline_graph.json
-baseline_graph.html
-baseline_graph.svg
-baseline_graph_summary.md
-```
-
-Node types:
+This graph helps answer:
 
 ```text
-target_paper
-baseline_direct
-competitor
-benchmark_source
-metric_source
-supporting_reference
+Which methods are direct baselines?
+Which methods are competitors?
+Which benchmarks are used?
+Which metrics are used?
+Which papers should I compare against?
 ```
 
-Edge types:
+### Milestone 2 Steps
 
-```text
-compared_against
-same_benchmark
-same_metric
-same_method_family
-competitor_relation
-```
+| Step | Prompt File | Purpose |
+|---:|---|---|
+| 09 | `prompts/09_build_history_tree_model.md` | Define data model for history tree nodes and edges |
+| 10 | `prompts/10_build_history_tree_builder.md` | Build history tree from introduction and related-work citations |
+| 11 | `prompts/11_build_baseline_graph_model.md` | Define data model for baseline graph nodes and edges |
+| 12 | `prompts/12_build_baseline_graph_builder.md` | Build baseline graph from experiment and evaluation citations |
+| 13 | `prompts/13_build_graph_visualizer.md` | Export graph data to HTML/SVG/JSON |
+| 14 | `prompts/14_add_readme_graph_integration.md` | Add graph examples to README |
 
-Visualization rule:
+### Milestone 2 Done When
 
-| Visual Feature | Meaning |
-|---|---|
-| Center node | Target paper |
-| Orange node | Direct baseline |
-| Yellow node | Competitor |
-| Green node | Benchmark source |
-| Cyan node | Metric source |
-| Edge thickness | Relation strength |
+- [ ] `history_tree.json` is generated
+- [ ] `history_tree.html` is generated
+- [ ] `baseline_graph.json` is generated
+- [ ] `baseline_graph.html` is generated
+- [ ] Static README graph figures are generated
+- [ ] Graph summaries are included in the report
 
 ---
 
-### 5.7 Importance Evaluation Agents
+## 9. Milestone 3 — Importance Agent Integration
 
-After citation role analysis and graph construction, PaperNav evaluates the importance of the paper for the user's project.
+Milestone 3 adds project-specific paper importance evaluation.
 
-Initial specialist agents:
+At this point, PaperNav does not only know what references exist. It also knows:
 
-| Agent | Question |
+- which references are historical
+- which references are baselines
+- which references are competitors
+- whether the paper is important for the user's project
+
+### Importance Agents
+
+| Agent | Main Question |
 |---|---|
 | Topic Relevance Agent | Is this paper relevant to my project? |
 | Citation Value Agent | How should this paper be cited? |
 | Experiment Value Agent | Can I reuse its baselines or metrics? |
 | Strategic Value Agent | Does this paper expose a useful research gap? |
-| Weakness / Risk Agent | What is weak or overclaimed? |
+| Weakness / Risk Agent | What is weak, missing, or overclaimed? |
 | Final Judge Agent | What is the final reading decision? |
+
+### Milestone 3 Steps
+
+| Step | Prompt File | Purpose |
+|---:|---|---|
+| 15 | `prompts/15_build_topic_relevance_agent.md` | Evaluate project relevance |
+| 16 | `prompts/16_build_citation_value_agent.md` | Evaluate citation usefulness |
+| 17 | `prompts/17_build_experiment_value_agent.md` | Evaluate experiment and baseline usefulness |
+| 18 | `prompts/18_build_strategic_value_agent.md` | Evaluate research positioning and gap value |
+| 19 | `prompts/19_build_weakness_risk_agent.md` | Evaluate limitations and overclaim risk |
+| 20 | `prompts/20_build_final_importance_judge.md` | Combine specialist scores into final verdict |
+| 21 | `prompts/21_build_final_paper_intelligence_report.md` | Generate final paper intelligence report |
+
+### Final Decision Labels
+
+```text
+Must Read
+High Priority
+Read Selectively
+Skim Only
+Citation Only
+Ignore
+```
+
+### Milestone 3 Done When
+
+- [ ] Topic Relevance Agent is implemented
+- [ ] Citation Value Agent is implemented
+- [ ] Experiment Value Agent is implemented
+- [ ] Strategic Value Agent is implemented
+- [ ] Weakness / Risk Agent is implemented
+- [ ] Final Judge Agent is implemented
+- [ ] `final_report.md` is generated
 
 ---
 
-## 6. Data Models
+## 10. Milestone 4 — Batch Research Navigation Tool
 
-### 6.1 ParsedPaper
+Milestone 4 turns PaperNav into a multi-paper research navigation system.
+
+### Goal
+
+Process a folder of papers and generate:
+
+- per-paper reports
+- per-paper history trees
+- per-paper baseline graphs
+- global paper graph
+- ranking table
+- example outputs
+
+### Milestone 4 Steps
+
+| Step | Prompt File | Purpose |
+|---:|---|---|
+| 22 | `prompts/22_build_batch_pipeline.md` | Process multiple papers |
+| 23 | `prompts/23_build_global_research_map.md` | Build global multi-paper research map |
+| 24 | `prompts/24_add_cli_and_export.md` | Add CLI and export options |
+| 25 | `prompts/25_add_end_to_end_tests.md` | Add full pipeline tests |
+| 26 | `prompts/26_add_example_outputs.md` | Add sample outputs for GitHub |
+| 27 | `prompts/27_polish_readme.md` | Final README polish and documentation cleanup |
+
+### Milestone 4 Done When
+
+- [ ] Folder-level paper processing works
+- [ ] `ranking_table.csv` is generated
+- [ ] Per-paper history trees are generated
+- [ ] Per-paper baseline graphs are generated
+- [ ] Global paper graph is generated
+- [ ] Example outputs are committed
+- [ ] README clearly explains the full workflow
+
+---
+
+## 11. Data Models
+
+### ParsedPaper
 
 ```python
 class ParsedPaper:
@@ -429,9 +421,7 @@ class ParsedPaper:
     metadata: dict
 ```
 
----
-
-### 6.2 CitationMention
+### CitationMention
 
 ```python
 class CitationMention:
@@ -443,9 +433,7 @@ class CitationMention:
     role: str | None
 ```
 
----
-
-### 6.3 BibliographyEntry
+### BibliographyEntry
 
 ```python
 class BibliographyEntry:
@@ -457,9 +445,7 @@ class BibliographyEntry:
     venue: str | None
 ```
 
----
-
-### 6.4 CitationRole
+### CitationRole
 
 ```python
 class CitationRole:
@@ -470,9 +456,7 @@ class CitationRole:
     section_name: str
 ```
 
----
-
-### 6.5 HistoryTreeNode
+### HistoryTreeNode
 
 ```python
 class HistoryTreeNode:
@@ -485,9 +469,7 @@ class HistoryTreeNode:
     parent_id: str | None
 ```
 
----
-
-### 6.6 BaselineGraphNode
+### BaselineGraphNode
 
 ```python
 class BaselineGraphNode:
@@ -499,9 +481,7 @@ class BaselineGraphNode:
     role: str
 ```
 
----
-
-### 6.7 BaselineGraphEdge
+### BaselineGraphEdge
 
 ```python
 class BaselineGraphEdge:
@@ -514,7 +494,55 @@ class BaselineGraphEdge:
 
 ---
 
-## 7. Output Structure
+## 12. Citation Role Labels
+
+PaperNav classifies each citation mention into one of the following roles.
+
+| Role | Meaning |
+|---|---|
+| `history_foundational` | Foundational or classical work |
+| `history_direct_prior` | Direct prior work |
+| `history_background` | General background citation |
+| `baseline_direct` | Direct baseline compared in experiments |
+| `baseline_extended` | Extended or secondary baseline |
+| `competitor` | Competing method or state-of-the-art comparison |
+| `benchmark_source` | Dataset, benchmark, or evaluation protocol source |
+| `metric_source` | Metric or measurement definition source |
+| `supporting_evidence` | Supporting factual or empirical evidence |
+| `misc` | Citation role is unclear or not important |
+
+---
+
+## 13. Rule-Based Citation Classification MVP
+
+The MVP starts with deterministic rule-based classification.
+
+### Section-Based Rules
+
+| Section | Default Citation Role |
+|---|---|
+| Introduction | `history_background` |
+| Related Work | `history_direct_prior` |
+| Background | `history_background` |
+| Experiment | `baseline_direct` |
+| Evaluation | `baseline_direct` |
+| Results | `competitor` |
+| Discussion | `supporting_evidence` |
+
+### Keyword-Based Rules
+
+| Context Pattern | Citation Role |
+|---|---|
+| `first proposed`, `pioneering`, `classical` | `history_foundational` |
+| `prior work`, `previous studies`, `recent works` | `history_direct_prior` |
+| `we compare with`, `compared against`, `baseline` | `baseline_direct` |
+| `outperform`, `state-of-the-art`, `against` | `competitor` |
+| `benchmark`, `dataset`, `evaluation protocol` | `benchmark_source` |
+| `metric`, `score`, `measurement` | `metric_source` |
+
+---
+
+## 14. Output Structure
 
 For each target paper:
 
@@ -552,7 +580,7 @@ reports/
 
 ---
 
-## 8. Recommended Repository Structure
+## 15. Recommended Repository Structure
 
 ```text
 papernav/
@@ -560,6 +588,8 @@ papernav/
 ├── pyproject.toml
 ├── .gitignore
 ├── assets/
+│   ├── papernav_project_roadmap_overview.png
+│   ├── milestone_1_citation_extraction_workflow.png
 │   ├── history_tree_example.svg
 │   ├── baseline_graph_example.svg
 │   └── architecture.svg
@@ -571,19 +601,14 @@ papernav/
 ├── prompts/
 │   ├── 00_bootstrap_repository.md
 │   ├── 01_define_common_models.md
-│   ├── 02_build_paper_parser.md
-│   ├── 03_build_citation_extractor.md
-│   ├── 04_build_bibliography_mapper.md
-│   ├── 05_build_citation_role_classifier.md
-│   ├── 06_build_history_tree_builder.md
-│   ├── 07_build_baseline_graph_builder.md
-│   ├── 08_build_graph_visualizer.md
-│   ├── 09_build_topic_relevance_agent.md
-│   ├── 10_build_final_importance_judge.md
-│   ├── 11_build_report_generator.md
-│   ├── 12_build_batch_pipeline.md
-│   ├── 13_add_readme_and_example_figures.md
-│   └── 14_add_end_to_end_tests.md
+│   ├── 02_add_sample_paper_fixture.md
+│   ├── 03_build_paper_parser.md
+│   ├── 04_build_citation_extractor.md
+│   ├── 05_build_bibliography_mapper.md
+│   ├── 06_build_citation_role_classifier.md
+│   ├── 07_build_citation_report_writer.md
+│   ├── 08_add_milestone1_pipeline.md
+│   └── ...
 ├── examples/
 │   ├── sample_paper.txt
 │   ├── sample_parsed_paper.json
@@ -620,609 +645,7 @@ papernav/
 
 ---
 
-## 9. Development Roadmap
-
----
-
-### Step 00 — Repository Bootstrap
-
-Goal:
-
-Create the initial repository structure.
-
-Deliverables:
-
-```text
-src/
-tests/
-docs/
-prompts/
-assets/
-examples/
-papers/
-reports/
-README.md
-pyproject.toml
-.gitignore
-```
-
-Completion criteria:
-
-- Repository structure exists
-- Python package imports successfully
-- Basic smoke test passes
-- Prompt archive directory exists
-
----
-
-### Step 01 — Define Common Data Models
-
-Goal:
-
-Define shared data models used across all agents and graph modules.
-
-Deliverables:
-
-```text
-src/papernav/models.py
-tests/test_models.py
-docs/data_models.md
-```
-
-Required models:
-
-```text
-ParsedPaper
-CitationMention
-BibliographyEntry
-CitationRole
-HistoryTreeNode
-BaselineGraphNode
-BaselineGraphEdge
-AgentReport
-FinalImportanceReport
-```
-
-Completion criteria:
-
-- Models are serializable to JSON
-- Tests cover model creation and validation
-- Models are documented
-
----
-
-### Step 02 — Build Paper Parser
-
-Goal:
-
-Parse PDF or text into structured paper sections.
-
-Deliverables:
-
-```text
-src/papernav/parser.py
-tests/test_parser.py
-examples/sample_parsed_paper.json
-docs/parser.md
-```
-
-Completion criteria:
-
-- Sample paper text can be parsed
-- Sections are extracted
-- References section is detected
-- Parsed output is saved as JSON
-
----
-
-### Step 03 — Build Citation Extractor
-
-Goal:
-
-Extract citation mentions from each paper section.
-
-Deliverables:
-
-```text
-src/papernav/citation/extractor.py
-tests/test_citation_extractor.py
-docs/citation_extractor.md
-```
-
-Completion criteria:
-
-- Numeric citations are detected
-- Citation ranges are expanded
-- Citation sentence is captured
-- Section name is stored
-- Citation mention JSON is generated
-
----
-
-### Step 04 — Build Bibliography Mapper
-
-Goal:
-
-Extract bibliography entries and map them to citation IDs.
-
-Deliverables:
-
-```text
-src/papernav/citation/bibliography.py
-tests/test_bibliography_mapper.py
-docs/bibliography_mapper.md
-```
-
-Completion criteria:
-
-- Reference entries are split
-- Citation IDs are assigned
-- Title/year extraction works for common patterns
-- Citation mention ↔ bibliography entry mapping works
-
----
-
-### Step 05 — Build Section-Aware Citation Role Classifier
-
-Goal:
-
-Classify each citation based on section and sentence context.
-
-Deliverables:
-
-```text
-src/papernav/citation/classifier.py
-tests/test_citation_role_classifier.py
-docs/citation_role_classifier.md
-```
-
-Role labels:
-
-```text
-history_foundational
-history_direct_prior
-history_background
-baseline_direct
-baseline_extended
-competitor
-benchmark_source
-metric_source
-supporting_evidence
-misc
-```
-
-Completion criteria:
-
-- Introduction citations are classified as history roles
-- Experiment citations are classified as baseline/competitor roles
-- Keyword-based rules work
-- Citation role report is generated
-
----
-
-### Step 06 — Build History Tree Builder
-
-Goal:
-
-Create a history tree from Introduction / Related Work citations.
-
-Deliverables:
-
-```text
-src/papernav/graph/history_tree.py
-tests/test_history_tree.py
-docs/history_tree.md
-```
-
-Output:
-
-```text
-history_tree.json
-history_tree_summary.md
-```
-
-Completion criteria:
-
-- History citations are selected
-- Nodes are sorted by year and role
-- Target paper is included
-- JSON tree is generated
-
----
-
-### Step 07 — Build Baseline Graph Builder
-
-Goal:
-
-Create a baseline graph from Experiment / Evaluation citations.
-
-Deliverables:
-
-```text
-src/papernav/graph/baseline_graph.py
-tests/test_baseline_graph.py
-docs/baseline_graph.md
-```
-
-Output:
-
-```text
-baseline_graph.json
-baseline_graph_summary.md
-```
-
-Completion criteria:
-
-- Baseline citations are selected
-- Target paper is center node
-- Baseline and competitor nodes are connected
-- Edge types are assigned
-
----
-
-### Step 08 — Build Graph Visualizer
-
-Goal:
-
-Export History Tree and Baseline Graph as interactive HTML and static SVG.
-
-Recommended tools for MVP:
-
-```text
-NetworkX
-PyVis
-Matplotlib or Graphviz for static output
-```
-
-Deliverables:
-
-```text
-src/papernav/graph/visualizer.py
-tests/test_graph_visualizer.py
-docs/graph_visualizer.md
-assets/history_tree_example.svg
-assets/baseline_graph_example.svg
-```
-
-Completion criteria:
-
-- `history_tree.html` is generated
-- `baseline_graph.html` is generated
-- Example SVGs are generated
-- README can reference example figures
-
----
-
-### Step 09 — Build Topic Relevance Agent
-
-Goal:
-
-Evaluate whether the target paper is relevant to the user’s project context.
-
-Deliverables:
-
-```text
-src/papernav/agents/topic_relevance.py
-tests/test_topic_relevance_agent.py
-docs/topic_relevance_agent.md
-```
-
-Input:
-
-```text
-ParsedPaper
-CitationRole list
-History Tree summary
-Baseline Graph summary
-Project context
-```
-
-Completion criteria:
-
-- Score between 0 and 10
-- Evidence list generated
-- Weakness list generated
-- Markdown report generated
-
----
-
-### Step 10 — Build Final Importance Judge
-
-Goal:
-
-Combine paper information, citation roles, graph summaries, and agent reports into a final decision.
-
-Deliverables:
-
-```text
-src/papernav/agents/final_judge.py
-src/papernav/scoring.py
-tests/test_final_judge.py
-docs/final_judge.md
-```
-
-Decision labels:
-
-```text
-Must Read
-High Priority
-Read Selectively
-Skim Only
-Citation Only
-Ignore
-```
-
-Completion criteria:
-
-- Final score is computed
-- Verdict threshold works
-- Reading plan generated
-- Citation strategy generated
-- Research gap generated
-
----
-
-### Step 11 — Build Report Generator
-
-Goal:
-
-Generate Markdown reports and CSV ranking tables.
-
-Deliverables:
-
-```text
-src/papernav/report_writer.py
-tests/test_report_writer.py
-docs/report_generator.md
-```
-
-Final report structure:
-
-```markdown
-# Paper Intelligence Report
-
-## 1. Final Verdict
-## 2. Importance Score
-## 3. History Tree Summary
-## 4. Baseline Graph Summary
-## 5. Citation Role Summary
-## 6. Topic Relevance
-## 7. How to Read This Paper
-## 8. How to Use This Paper
-## 9. Research Gap
-## 10. Action Items
-```
-
-Completion criteria:
-
-- Markdown report generated
-- CSV ranking table generated
-- Required headings exist
-- Output paths are deterministic
-
----
-
-### Step 12 — Build Batch Pipeline
-
-Goal:
-
-Run PaperNav on a folder of papers.
-
-CLI target:
-
-```bash
-papernav scan ./papers \
-  --context ./docs/project_context.md \
-  --output ./reports \
-  --history-tree \
-  --baseline-graph
-```
-
-Deliverables:
-
-```text
-src/papernav/pipeline.py
-src/papernav/main.py
-tests/test_pipeline.py
-docs/batch_pipeline.md
-```
-
-Completion criteria:
-
-- Multiple papers processed
-- Per-paper reports generated
-- Ranking table generated
-- Graph outputs generated
-- Empty folder handled gracefully
-
----
-
-### Step 13 — Add README and Example Figures
-
-Goal:
-
-Make the project visually understandable on GitHub.
-
-Deliverables:
-
-```text
-README.md
-assets/history_tree_example.svg
-assets/baseline_graph_example.svg
-assets/architecture.svg
-```
-
-README must include:
-
-- Project overview
-- History Tree explanation
-- Baseline Graph explanation
-- System architecture
-- Roadmap
-- Example outputs
-- CLI usage
-- Prompt archive policy
-
-Completion criteria:
-
-- README renders cleanly on GitHub
-- Figures are visible
-- Mermaid diagram renders
-- Installation and usage instructions exist
-
----
-
-### Step 14 — Add End-to-End Tests
-
-Goal:
-
-Validate the full MVP pipeline.
-
-Deliverables:
-
-```text
-tests/test_end_to_end.py
-examples/sample_paper.txt
-examples/sample_outputs/
-docs/testing.md
-```
-
-Completion criteria:
-
-- Sample paper runs through full pipeline
-- Citation roles are generated
-- History tree is generated
-- Baseline graph is generated
-- Final report is generated
-- Tests pass
-
----
-
-## 10. Milestones
-
----
-
-### Milestone 1 — Section-Aware Citation Extraction
-
-Goal:
-
-Build the foundation for section-aware reference analysis.
-
-Completion checklist:
-
-```text
-[ ] Paper text is split into sections
-[ ] Introduction citations are extracted
-[ ] Experiment citations are extracted
-[ ] Reference section is parsed
-[ ] Citation markers are mapped to bibliography entries
-[ ] Each citation mention stores its section and sentence
-[ ] citation_roles.json is generated
-```
-
----
-
-### Milestone 2 — History Tree + Baseline Graph
-
-Goal:
-
-Visualize reference roles.
-
-Completion checklist:
-
-```text
-[ ] Introduction references generate history_tree.json
-[ ] Introduction references generate history_tree.html
-[ ] Experiment references generate baseline_graph.json
-[ ] Experiment references generate baseline_graph.html
-[ ] Static example figures are generated
-[ ] README includes both visualizations
-```
-
----
-
-### Milestone 3 — Importance Agent Integration
-
-Goal:
-
-Add project-specific paper importance evaluation.
-
-Completion checklist:
-
-```text
-[ ] Topic Relevance Agent implemented
-[ ] Citation Value Agent implemented
-[ ] Experiment Value Agent implemented
-[ ] Final Judge implemented
-[ ] Final Paper Intelligence Report generated
-```
-
----
-
-### Milestone 4 — Batch Research Navigation Tool
-
-Goal:
-
-Process multiple papers and generate research maps.
-
-Completion checklist:
-
-```text
-[ ] Folder-level paper processing works
-[ ] Ranking table generated
-[ ] Per-paper history trees generated
-[ ] Per-paper baseline graphs generated
-[ ] Global paper graph generated
-[ ] Example output committed
-```
-
----
-
-## 11. Claude Prompt Plan
-
-Every Claude Code prompt must be saved under:
-
-```text
-prompts/
-```
-
-Recommended prompt sequence:
-
-```text
-00_bootstrap_repository.md
-01_define_common_models.md
-02_build_paper_parser.md
-03_build_citation_extractor.md
-04_build_bibliography_mapper.md
-05_build_citation_role_classifier.md
-06_build_history_tree_builder.md
-07_build_baseline_graph_builder.md
-08_build_graph_visualizer.md
-09_build_topic_relevance_agent.md
-10_build_final_importance_judge.md
-11_build_report_generator.md
-12_build_batch_pipeline.md
-13_add_readme_and_example_figures.md
-14_add_end_to_end_tests.md
-```
-
-Each prompt should include:
-
-```text
-- Working directory
-- Objective
-- Context
-- Allowed modifications
-- Files to create or modify
-- Implementation requirements
-- Tests
-- Documentation updates
-- Final report format
-```
-
----
-
-## 12. MVP Scope
+## 16. MVP Scope
 
 The first MVP should avoid external APIs.
 
@@ -1254,9 +677,9 @@ The first MVP should avoid external APIs.
 
 ---
 
-## 13. Future Extensions
+## 17. Future Extensions
 
-### 13.1 Semantic Citation Enrichment
+### Semantic Citation Enrichment
 
 Use external APIs to enrich bibliography entries:
 
@@ -1280,9 +703,7 @@ citations
 field of study
 ```
 
----
-
-### 13.2 LLM-Based Citation Role Classification
+### LLM-Based Citation Role Classification
 
 Replace or augment rule-based classification with LLM reasoning.
 
@@ -1294,9 +715,7 @@ classify whether this reference is a foundational work,
 direct prior work, baseline, competitor, benchmark source, metric source, or supporting evidence.
 ```
 
----
-
-### 13.3 Global Research Map
+### Global Research Map
 
 Build a graph across multiple target papers.
 
@@ -1306,9 +725,7 @@ global_baseline_landscape.html
 global_research_gap_map.html
 ```
 
----
-
-### 13.4 React + D3 Web Viewer
+### React + D3 Web Viewer
 
 Upgrade visualization from PyVis/NetworkX to a professional web interface.
 
@@ -1322,9 +739,7 @@ Paper Importance Dashboard
 Reading Plan View
 ```
 
----
-
-### 13.5 Research Writing Assistant
+### Research Writing Assistant
 
 Use the extracted citation roles to generate:
 
@@ -1338,7 +753,7 @@ Citation sentence suggestions
 
 ---
 
-## 14. Example CLI
+## 18. Example CLI
 
 Single paper:
 
@@ -1374,7 +789,35 @@ Expected output:
 
 ---
 
-## 15. Research Positioning
+## 19. Development Workflow
+
+Recommended workflow for each step:
+
+```bash
+# 1. Open the next prompt
+cat prompts/00_bootstrap_repository.md
+
+# 2. Paste it into Claude Code
+
+# 3. Run tests
+pytest -q
+
+# 4. Inspect changed files
+git status
+git diff
+
+# 5. Commit the step
+git add .
+git commit -m "Step 00: Bootstrap repository"
+```
+
+Rule:
+
+> One step, one prompt file, one focused commit.
+
+---
+
+## 20. Research Positioning
 
 PaperNav can be positioned as:
 
@@ -1395,6 +838,6 @@ Key differentiator:
 
 ---
 
-## 16. One-Line Summary
+## 21. One-Line Summary
 
 > PaperNav transforms references inside a paper into a History Tree, a Baseline Graph, and a project-specific importance report.
