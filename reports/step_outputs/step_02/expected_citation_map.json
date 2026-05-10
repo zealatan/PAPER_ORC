@@ -1,0 +1,53 @@
+{
+  "paper_id": "sample_paper",
+  "source_file": "examples/sample_paper.txt",
+  "summary": {
+    "section_count": 6,
+    "citation_marker_count": 41,
+    "bibliography_entry_count": 13
+  },
+  "sections": {
+    "Introduction": {
+      "expected_role_family": "history",
+      "expected_roles": [
+        "history_foundational",
+        "history_direct_prior",
+        "history_background"
+      ]
+    },
+    "Related Work": {
+      "expected_role_family": "history",
+      "expected_roles": [
+        "history_direct_prior",
+        "history_background"
+      ]
+    },
+    "Experiment": {
+      "expected_role_family": "baseline",
+      "expected_roles": [
+        "baseline_direct",
+        "competitor",
+        "benchmark_source",
+        "metric_source"
+      ]
+    },
+    "Results": {
+      "expected_role_family": "baseline_or_evidence",
+      "expected_roles": [
+        "competitor",
+        "metric_source",
+        "supporting_evidence"
+      ]
+    },
+    "Discussion": {
+      "expected_role_family": "evidence",
+      "expected_roles": [
+        "supporting_evidence"
+      ]
+    },
+    "References": {
+      "expected_role_family": "bibliography",
+      "expected_roles": []
+    }
+  }
+}

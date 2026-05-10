@@ -1,0 +1,20 @@
+flowchart TD
+    A[Sample Paper Fixture] --> B[Introduction]
+    A --> C[Related Work]
+    A --> D[Experiment]
+    A --> E[Results]
+    A --> F[Discussion]
+    A --> G[References]
+
+    B --> B1[History citations]
+    C --> C1[Direct prior / background citations]
+    D --> D1[Baseline / competitor citations]
+    E --> E1[Metric / competitor / evidence citations]
+    F --> F1[Supporting evidence citations]
+    G --> G1[Bibliography entries]
+
+    B1 --> H[History Tree input]
+    C1 --> H
+    D1 --> I[Baseline Graph input]
+    E1 --> I
+    G1 --> J[Bibliography Mapper input]

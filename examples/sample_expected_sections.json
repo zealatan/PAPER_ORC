@@ -1,0 +1,50 @@
+{
+  "paper_id": "sample_paper",
+  "expected_sections": [
+    "Introduction",
+    "Related Work",
+    "Experiment",
+    "Results",
+    "Discussion",
+    "References"
+  ],
+  "expected_history_sections": [
+    "Introduction",
+    "Related Work"
+  ],
+  "expected_baseline_sections": [
+    "Experiment",
+    "Results"
+  ],
+  "expected_reference_section": [
+    "References"
+  ],
+  "expected_citation_marker_count": 41,
+  "expected_bibliography_entry_count": 13,
+  "section_role_expectations": {
+    "Introduction": [
+      "history_foundational",
+      "history_direct_prior",
+      "history_background"
+    ],
+    "Related Work": [
+      "history_direct_prior",
+      "history_background"
+    ],
+    "Experiment": [
+      "baseline_direct",
+      "competitor",
+      "benchmark_source",
+      "metric_source"
+    ],
+    "Results": [
+      "competitor",
+      "metric_source",
+      "supporting_evidence"
+    ],
+    "Discussion": [
+      "supporting_evidence"
+    ],
+    "References": []
+  }
+}
