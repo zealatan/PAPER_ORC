@@ -1,0 +1,13 @@
+flowchart TD
+    A[Citation Mentions] --> B{Section}
+    B --> C[Introduction / Related Work / Background]
+    B --> D[Experiment / Evaluation / Results]
+    B --> E[References]
+    C --> F[History Roles]
+    D --> G[Baseline / Competitor / Metric Roles]
+    E --> H[Misc Reference Anchors]
+    F --> I[History Tree Candidates]
+    G --> J[Baseline Graph Candidates]
+    H --> K[Ignored for Role Graphs]
+    I --> L[Step 10 History Tree Builder]
+    J --> M[Step 12 Baseline Graph Builder]

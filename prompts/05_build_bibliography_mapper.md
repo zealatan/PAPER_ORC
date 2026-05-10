@@ -8,9 +8,7 @@ prompts/05_build_bibliography_mapper.md
 
 If the file already exists, overwrite it with this full prompt.
 
-This project rule is mandatory:
-
-Every Claude Code step prompt must be saved as a Markdown file under prompts/.
+Every Claude Code prompt must be saved as a Markdown file under prompts/.
 
 After saving this prompt, continue with the implementation.
 
@@ -26,7 +24,7 @@ After saving this prompt, continue with the implementation.
 
 Implement the PaperNav Bibliography Mapper.
 
-This step parses the References section of a ParsedPaper and maps extracted citation IDs such as ref_1, ref_2, ..., ref_N to full bibliography entries.
+This step parses the References section of a ParsedPaper and maps citation IDs such as ref_1, ref_2, ..., ref_N to full bibliography entries.
 
 Input from previous steps:
 
@@ -41,7 +39,7 @@ Output of this step:
 - citation_id -> BibliographyEntry mapping
 - bibliography_entries.json
 - citation_to_bibliography_map.json
-- Markdown/visual summary outputs
+- Markdown / Mermaid visualization outputs
 
 Do not implement citation role classification in this step.
 Do not implement History Tree or Baseline Graph in this step.
@@ -50,60 +48,23 @@ This step only parses bibliography entries and maps them to citation mentions.
 
 ---
 
-## Project Context
-
-PaperNav is a section-aware paper intelligence agent.
-
-Current pipeline:
+## Current Pipeline
 
 Paper
   -> Step 03 Paper Parser
   -> ParsedPaper
   -> Step 04 Citation Extractor
   -> CitationMention list
-
-This Step 05 implements:
-
-References section
-  -> Bibliography Mapper
+  -> Step 05 Bibliography Mapper
   -> BibliographyEntry list
   -> citation_id-to-entry mapping
 
 Later steps will use this output:
 
-Step 06 Citation Role Classifier
-Step 10 History Tree Builder
-Step 12 Baseline Graph Builder
-Step 15 Topic Relevance Agent
-
----
-
-## Current Inputs
-
-Synthetic parsed paper:
-
-examples/sample_parsed_paper.json
-
-Synthetic citation mentions:
-
-examples/sample_citation_mentions.json
-
-Expected synthetic fixture:
-
-- 13 bibliography entries
-- citation IDs ref_1 through ref_13
-- references section exists
-- citation mentions include reference anchors and body mentions
-
-Real paper parsed snapshot:
-
-reports/step_outputs/step_03/real_paper_parsed_snapshot.json
-
-Real paper citation mentions:
-
-reports/step_outputs/step_04/real_paper_citation_mentions_snapshot.json
-
-For the real paper, exact reference parsing does not need to be perfect. It is a smoke test.
+- Step 06 Citation Role Classifier
+- Step 10 History Tree Builder
+- Step 12 Baseline Graph Builder
+- Step 15 Topic Relevance Agent
 
 ---
 
@@ -126,9 +87,8 @@ examples/sample_citation_mentions.json
 papers/real/rtlfixer_2311_16543.pdf
 papers/real/rtlfixer_2311_16543.metadata.json
 
-Do not implement citation role classification in this step.
-
-Do not implement graph building in this step.
+Do not implement citation role classification.
+Do not implement graph building.
 
 ---
 
@@ -154,31 +114,28 @@ reports/step_outputs/step_05/citation_to_bibliography_map_snapshot.json
 reports/step_outputs/step_05/real_paper_bibliography_summary.md
 reports/step_outputs/step_05/report.md
 
-Optional if useful:
+Optional:
 
 reports/step_outputs/step_05/real_paper_bibliography_entries_snapshot.json
 reports/step_outputs/step_05/real_paper_citation_to_bibliography_map_snapshot.json
 
 ---
 
-## Implementation Requirements
+## Required Public Functions
 
-Use existing models from:
+Implement these functions in:
 
-src/papernav/models.py
+src/papernav/citation/bibliography.py
 
-Use:
+Functions:
 
-ParsedPaper
-CitationMention
-BibliographyEntry
-normalize_citation_id
+split_reference_entries(references_text: str) -> list[str]
 
-The bibliography mapper must provide these public functions:
-
-extract_bibliography_entries(parsed_paper: ParsedPaper) -> list[BibliographyEntry]
+parse_reference_entry(raw_entry: str) -> BibliographyEntry
 
 extract_bibliography_entries_from_text(references_text: str) -> list[BibliographyEntry]
+
+extract_bibliography_entries(parsed_paper: ParsedPaper) -> list[BibliographyEntry]
 
 map_mentions_to_bibliography(
     mentions: list[CitationMention],
@@ -201,23 +158,24 @@ generate_step05_outputs(
     output_dir: str = "reports/step_outputs/step_05"
 ) -> None
 
-If needed, add small helper functions:
+Use these existing models/functions:
 
-split_reference_entries(references_text: str) -> list[str]
-
-parse_reference_entry(raw_entry: str) -> BibliographyEntry
+- ParsedPaper
+- CitationMention
+- BibliographyEntry
+- normalize_citation_id
 
 ---
 
-## Reference Format Requirements
+## Reference Parsing Requirements
 
-Support numeric bibliography formats:
+Support numeric reference formats:
 
 [1] A. Author, "Paper Title", Conference, 2020.
 [2] B. Author and C. Author, "Another Paper", Journal, 2021.
 [3] A. Author, Paper Title without quotes, arXiv preprint, 2023.
 
-Also support multi-line references if possible:
+Also support simple multi-line references:
 
 [4] A. Author, "Long Paper Title",
     Conference Name, 2024.
@@ -234,12 +192,12 @@ Each BibliographyEntry must include:
 - venue if extractable
 - metadata
 
-The most important fields are:
+Most important fields:
 
 - citation_id
 - raw_text
-- year if available
-- title if available
+- title
+- year
 
 ---
 
@@ -257,38 +215,27 @@ All bibliography entries must use citation_id = ref_N format.
 
 ---
 
-## Title Extraction Requirements
+## Extraction Heuristics
 
-Try to extract title using these heuristics:
+Title extraction:
 
 1. Prefer quoted title:
    "Paper Title"
 
-2. If no quoted title exists, use text between first author segment and venue/year heuristically.
+2. If no quoted title exists, infer title heuristically.
 
 3. If title extraction fails, set title = None.
 
-Do not fail if title extraction is imperfect.
+Year extraction:
 
----
+- Extract the last valid year between 1900 and 2099 from the reference entry.
+- If no year is found, set year = None.
 
-## Year Extraction Requirements
+Author extraction:
 
-Extract the last valid year between 1900 and 2099 from the reference entry.
-
-If no year is found, set year = None.
-
----
-
-## Author Extraction Requirements
-
-Attempt to extract authors before the title or before the first quoted string.
-
-Keep it simple.
-
-If extraction is uncertain, store the raw author segment as one string in authors.
-
-Do not fail if author parsing is imperfect.
+- Try to extract text before the title or before the first quoted string.
+- If uncertain, store the raw author segment as one string in authors.
+- Do not fail if author parsing is imperfect.
 
 ---
 
@@ -298,31 +245,15 @@ map_mentions_to_bibliography must:
 
 - accept citation mentions
 - accept bibliography entries
-- return a dictionary mapping citation_id to BibliographyEntry
+- return dict[str, BibliographyEntry]
 - include only citation IDs that have matching bibliography entries
-- ignore missing citation IDs without failing
+- ignore missing citation IDs without failure
 - allow reference-section anchors and body mentions
 
-Example:
-
-mentions contain ref_1, ref_5, ref_13
-entries contain ref_1 through ref_13
-
-mapping should contain ref_1, ref_5, ref_13
-
-For synthetic fixture, since mentions include ref_1 through ref_13 and entries include ref_1 through ref_13, mapping should contain 13 entries.
-
----
-
-## Synthetic Fixture Expectations
-
-When running on examples/sample_parsed_paper.json and examples/sample_citation_mentions.json:
+For the synthetic fixture:
 
 - bibliography entry count should be 13
-- mapped citation IDs should include ref_1 through ref_13
-- at least some titles should be extracted
-- years should be extracted for most entries if present in sample_paper.txt
-- output JSON files must be valid
+- mapping should include ref_1 through ref_13
 
 ---
 
@@ -332,9 +263,9 @@ If this file exists:
 
 reports/step_outputs/step_03/real_paper_parsed_snapshot.json
 
-Then parse its references section using extract_bibliography_entries.
+Then parse its references section.
 
-If this file also exists:
+If this file exists:
 
 reports/step_outputs/step_04/real_paper_citation_mentions_snapshot.json
 
@@ -349,15 +280,15 @@ The summary must include:
 - whether real parsed snapshot exists
 - whether references section was detected
 - bibliography entry count
-- mapped citation ID count if citation mentions exist
+- mapped citation ID count
 - first 10 bibliography entries by citation_id
 - note that real PDF extraction and reference parsing are heuristic
 
-Do not fail the entire step if real paper bibliography extraction is imperfect, as long as it runs and produces a summary.
+Do not fail the entire step if real paper bibliography parsing is imperfect.
 
 ---
 
-## Intermediate Visualization Requirements
+## Intermediate Visualization Outputs
 
 Create:
 
@@ -393,9 +324,7 @@ Create:
 
 reports/step_outputs/step_05/citation_to_reference_map.mmd
 
-It must be a valid Mermaid flowchart.
-
-Use this structure:
+Use this Mermaid diagram:
 
 flowchart TD
     A[Citation Mentions] --> B[Unique Citation IDs]
@@ -404,24 +333,14 @@ flowchart TD
     D --> E
     E --> F[citation_to_bibliography_map.json]
     F --> G[Step 06 Citation Role Classifier]
-
-Also include example nodes:
-
     E --> R1[ref_1]
     E --> R5[ref_5]
     E --> R13[ref_13]
 
-Create:
+Create valid JSON files:
 
 reports/step_outputs/step_05/bibliography_entries_snapshot.json
-
-This must be valid JSON.
-
-Create:
-
 reports/step_outputs/step_05/citation_to_bibliography_map_snapshot.json
-
-This must be valid JSON.
 
 Also create equivalent example outputs:
 
@@ -430,7 +349,7 @@ examples/sample_citation_to_bibliography_map.json
 
 ---
 
-## docs/bibliography_mapper.md Requirements
+## Documentation Requirements
 
 Create or update:
 
@@ -459,7 +378,7 @@ Explain that this module parses the References section and maps citation IDs to 
 
 ## Supported Reference Styles
 
-List numeric references:
+Explain numeric references:
 
 [1] ...
 [2] ...

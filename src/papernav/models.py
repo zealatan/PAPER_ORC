@@ -51,6 +51,30 @@ class BibliographyEntry:
     venue: str | None = None
 
 
+CITATION_ROLE_LABELS: tuple[str, ...] = (
+    "history_foundational",
+    "history_direct_prior",
+    "history_background",
+    "baseline_direct",
+    "baseline_extended",
+    "competitor",
+    "benchmark_source",
+    "metric_source",
+    "supporting_evidence",
+    "misc",
+)
+
+CONFIDENCE_LABELS: tuple[str, ...] = ("low", "medium", "high")
+
+
+def is_history_role(role: str) -> bool:
+    return role in ("history_foundational", "history_direct_prior", "history_background")
+
+
+def is_baseline_role(role: str) -> bool:
+    return role in ("baseline_direct", "baseline_extended", "competitor", "benchmark_source", "metric_source")
+
+
 @dataclass
 class CitationRole:
     citation_id: str
@@ -58,6 +82,7 @@ class CitationRole:
     confidence: str
     evidence_sentence: str
     section_name: str
+    reason: str = ""
 
 
 @dataclass

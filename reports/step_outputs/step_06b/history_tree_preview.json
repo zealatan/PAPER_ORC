@@ -1,0 +1,130 @@
+{
+  "paper_id": "sample_paper",
+  "target_node": {
+    "node_id": "target_paper",
+    "label": "Target Paper",
+    "role": "target"
+  },
+  "summary": {
+    "history_candidate_count": 8,
+    "history_foundational_count": 5,
+    "history_direct_prior_count": 2,
+    "history_background_count": 1
+  },
+  "nodes": [
+    {
+      "node_id": "ref_2",
+      "citation_id": "ref_2",
+      "title": "Robust Frequency and Timing Synchronization for OFDM",
+      "year": 1997,
+      "role": "history_foundational",
+      "section_name": "introduction"
+    },
+    {
+      "node_id": "ref_3",
+      "citation_id": "ref_3",
+      "title": "ML Estimation of Time and Frequency Offset in OFDM Systems",
+      "year": 1997,
+      "role": "history_foundational",
+      "section_name": "introduction"
+    },
+    {
+      "node_id": "ref_7",
+      "citation_id": "ref_7",
+      "title": "An Improved Frequency Offset Estimator for OFDM Applications",
+      "year": 1999,
+      "role": "history_foundational",
+      "section_name": "related_work"
+    },
+    {
+      "node_id": "ref_5",
+      "citation_id": "ref_5",
+      "title": "Deep Learning Based Channel Estimation for OFDM Systems",
+      "year": 2019,
+      "role": "history_foundational",
+      "section_name": "related_work"
+    },
+    {
+      "node_id": "ref_8",
+      "citation_id": "ref_8",
+      "title": "Convolutional Feature Extraction for OFDM Timing Detection",
+      "year": 2020,
+      "role": "history_foundational",
+      "section_name": "related_work"
+    },
+    {
+      "node_id": "ref_4",
+      "citation_id": "ref_4",
+      "title": "An Introduction to Deep Learning for the Physical Layer",
+      "year": 2017,
+      "role": "history_direct_prior",
+      "section_name": "introduction"
+    },
+    {
+      "node_id": "ref_6",
+      "citation_id": "ref_6",
+      "title": "Recurrent Neural Network for Timing Synchronization in OFDM",
+      "year": 2020,
+      "role": "history_direct_prior",
+      "section_name": "introduction"
+    },
+    {
+      "node_id": "ref_1",
+      "citation_id": "ref_1",
+      "title": "Technical Specification 38.211: NR Physical Channels",
+      "year": 2020,
+      "role": "history_background",
+      "section_name": "introduction"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ref_2",
+      "target": "ref_4",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge based on role ordering"
+    },
+    {
+      "source": "ref_3",
+      "target": "ref_4",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge based on role ordering"
+    },
+    {
+      "source": "ref_7",
+      "target": "ref_4",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge based on role ordering"
+    },
+    {
+      "source": "ref_5",
+      "target": "ref_4",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge based on role ordering"
+    },
+    {
+      "source": "ref_8",
+      "target": "ref_4",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge based on role ordering"
+    },
+    {
+      "source": "ref_4",
+      "target": "ref_1",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge based on role ordering"
+    },
+    {
+      "source": "ref_6",
+      "target": "ref_1",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge based on role ordering"
+    },
+    {
+      "source": "ref_1",
+      "target": "target_paper",
+      "edge_type": "preview_history_flow",
+      "reason": "Preview edge: history candidate feeds into target paper"
+    }
+  ]
+}

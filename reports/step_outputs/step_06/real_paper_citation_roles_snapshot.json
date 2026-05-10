@@ -1,0 +1,514 @@
+[
+  {
+    "citation_id": "ref_17",
+    "role": "benchmark_source",
+    "confidence": "medium",
+    "evidence_sentence": "Recent efforts, such as VeriGen [17] and VerilogEval [9], have pri- marily focused on zero-shot code generation.",
+    "section_name": "introduction",
+    "reason": "Keyword 'verilogeval' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "benchmark_source",
+    "confidence": "medium",
+    "evidence_sentence": "Recent efforts, such as VeriGen [17] and VerilogEval [9], have pri- marily focused on zero-shot code generation.",
+    "section_name": "introduction",
+    "reason": "Keyword 'verilogeval' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_20",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "The ReAct framework [20] integrates reasoning and action synthesis in language models, demonstrating LLM\u2019s capability to engage in reasoning processes and refine decision-making through interactive feedback.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_3",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model\u2019s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_6",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model\u2019s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_5",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "On the other hand, Large Language Models are acknowledged for their inclination to produce factual errors, a phenomenon termed hallucination [5].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_7",
+    "role": "history_foundational",
+    "confidence": "high",
+    "evidence_sentence": "To mitigate this challenge, the Retrieval-Augmented Generation (RAG) paradigm [7] has been introduced, integrating arXiv:2311.16543v3 [cs.AR] 20 May 2024 retrieval mechanisms to improve the precision of generated content by incorporating information from external knowledge sources.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and keyword 'introduced' indicate a foundational history citation."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "We also create VerilogEval-syntax, a Verilog syntax debugging dataset, derived from VerilogEval [9], containing 174 erroneous implementations.",
+    "section_name": "introduction",
+    "reason": "Keyword 'dataset' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_11",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "\u2022Our framework also improves the syntax success rate from 73% to 93% on the RTLLM benchmark [11], demonstrating the generalizability of this approach.",
+    "section_name": "introduction",
+    "reason": "Keyword 'benchmark' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_2",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "2.1 LLMs for Verilog Code Generation Large Language Models exhibit the capability to generate code, with Codex [2] standing as an early exemplar.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_4",
+    "role": "history_foundational",
+    "confidence": "high",
+    "evidence_sentence": "GitHub Copilot [4], building upon such groundwork, played a crucial role in pioneering LLM-based code completion engines, contributing significantly to the domains of auto-completion and conversational code gener- ation.",
+    "section_name": "background",
+    "reason": "Section 'background' and keyword 'pioneering' indicate a foundational history citation."
+  },
+  {
+    "citation_id": "ref_14",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "DAVE [14] emerged as an early study of LLM tailored for hardware design.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_17",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "VeriGen [17] further expanded the dataset scope and experimented with open-sourced models.",
+    "section_name": "background",
+    "reason": "Keyword 'dataset' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_1",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "Following suit, Chip- Chat [1], leveraging GPT-4, demonstrated the extensive potential of LLMs in collaboratively generating processors and other hard- ware designs.",
+    "section_name": "background",
+    "reason": "Keyword 'dataset' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "In parallel, benchmarks such as VerilogEval [9] and RTLLM [11] played a pivotal role in advancing the application of LLMs in Verilog code generation.",
+    "section_name": "background",
+    "reason": "Keyword 'benchmark' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_11",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "In parallel, benchmarks such as VerilogEval [9] and RTLLM [11] played a pivotal role in advancing the application of LLMs in Verilog code generation.",
+    "section_name": "background",
+    "reason": "Keyword 'benchmark' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_18",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "In terms of rea- soning, methods like chain-of-thought [18] empower LLMs to break down intricate problems into logical steps, significantly enhanc- ing their problem-solving abilities.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_15",
+    "role": "supporting_evidence",
+    "confidence": "medium",
+    "evidence_sentence": "LLMs also excel in interactive decision-making and formulating action plans, effectively leverag- ing digital tools, as shown in works such as ToolLLM [15].",
+    "section_name": "background",
+    "reason": "Keyword 'shown' indicates supporting evidence usage."
+  },
+  {
+    "citation_id": "ref_20",
+    "role": "supporting_evidence",
+    "confidence": "medium",
+    "evidence_sentence": "The ReAct [20] framework represents a notable advancement in LLM capabilities by seamlessly integrating reasoning and action planning.",
+    "section_name": "background",
+    "reason": "Keyword 'shown' indicates supporting evidence usage."
+  },
+  {
+    "citation_id": "ref_7",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "2.3 Retrieval-Augmented Generation Retrieval-Augmented Generation (RAG) [7] represents a significant advancement in addressing the limitations of Large Language Mod- els when handling knowledge-intensive tasks.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_10",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_21",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_20",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "3.2 Reasoning and Action Planning through ReAct Iterative Prompting We enable Large Language Models to function as autonomous agents for reasoning and action planning through theReActprompt- ing mechanism [20].",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_0",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_1",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_2",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_3",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_4",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_5",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_6",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_8",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_8",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "3.4 Debugging Dataset We created a novel benchmark dataset, VerilogEval-syntax, based on the VerilogEval benchmark [9].",
+    "section_name": "background",
+    "reason": "Keyword 'benchmark' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_16",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_12",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors.",
+    "section_name": "background",
+    "reason": "Section 'background' default role applied."
+  },
+  {
+    "citation_id": "ref_13",
+    "role": "baseline_direct",
+    "confidence": "medium",
+    "evidence_sentence": "Setup: We conduct all experiments with GPT-3.5 as the LLM through OpenAI APIs [13], except for the ablation experiment on different LLM.",
+    "section_name": "experiment",
+    "reason": "Section 'experiment' default role applied."
+  },
+  {
+    "citation_id": "ref_2",
+    "role": "metric_source",
+    "confidence": "medium",
+    "evidence_sentence": "fix rate = E \ud835\udc5d\ud835\udc5f\ud835\udc5c\ud835\udc4f\ud835\udc59\ud835\udc52\ud835\udc5a\ud835\udc60 h\ud835\udc50 \ud835\udc5b i (1) Functional Correctness: We follow recent work in directly mea- suring code functional correctness with simulation through pass@k metric [2], where a problem is considered solved if any of the k samples passes the tests.",
+    "section_name": "experiment",
+    "reason": "Section 'experiment' and keyword 'metric' indicate a metric or evaluation source."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "metric_source",
+    "confidence": "medium",
+    "evidence_sentence": "Simulation Correctness Improvement: Previous research [9, 11] evaluates the performance of LLM-generated Verilog code using the pass@k metric.",
+    "section_name": "experiment",
+    "reason": "Section 'experiment' and keyword 'metric' indicate a metric or evaluation source."
+  },
+  {
+    "citation_id": "ref_11",
+    "role": "metric_source",
+    "confidence": "medium",
+    "evidence_sentence": "Simulation Correctness Improvement: Previous research [9, 11] evaluates the performance of LLM-generated Verilog code using the pass@k metric.",
+    "section_name": "experiment",
+    "reason": "Section 'experiment' and keyword 'metric' indicate a metric or evaluation source."
+  },
+  {
+    "citation_id": "ref_11",
+    "role": "benchmark_source",
+    "confidence": "high",
+    "evidence_sentence": "To account for potential overfitting dur- ing the design of the retrieval database, we also tested our method on the RTLLM [11] benchmark without deriving new human guid- ance for the retrieval database.",
+    "section_name": "experiment",
+    "reason": "Keyword 'benchmark' indicates a benchmark or dataset source."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "baseline_direct",
+    "confidence": "medium",
+    "evidence_sentence": "Nonetheless, it is important to highlight that our approach of empowering LLMs with ReAct and RAG can significantly narrow the gap between weaker LLMs and stronger ones, especially ben- eficial for weaker open-source models [9, 17] that may not be as performant as GPT-4 on programming tasks.",
+    "section_name": "experiment",
+    "reason": "Section 'experiment' default role applied."
+  },
+  {
+    "citation_id": "ref_17",
+    "role": "baseline_direct",
+    "confidence": "medium",
+    "evidence_sentence": "Nonetheless, it is important to highlight that our approach of empowering LLMs with ReAct and RAG can significantly narrow the gap between weaker LLMs and stronger ones, especially ben- eficial for weaker open-source models [9, 17] that may not be as performant as GPT-4 on programming tasks.",
+    "section_name": "experiment",
+    "reason": "Section 'experiment' default role applied."
+  },
+  {
+    "citation_id": "ref_0",
+    "role": "baseline_direct",
+    "confidence": "medium",
+    "evidence_sentence": "Erroneous Implementation (Partial): for (i = 0; i < 16; i = i + 1)begin : ROW for (j = 0; j < 16; j = j + 1)begin : COLUMN neighbors[0] = q[(i-1)*16 + (j-1)]; row_above = q[((i-1) & 15)*16 + j]; ...",
+    "section_name": "experiment",
+    "reason": "Section 'experiment' default role applied."
+  },
+  {
+    "citation_id": "ref_1",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[1] Jason Blocklove, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_2",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[2] Mark Chen, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_3",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[3] Xinyun Chen, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_4",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[4] Nat Friedman.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_5",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "https://github.blog/2021-06-29-introducing-github-copilot-ai- pair-programmer [5] Ziwei Ji, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_6",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "https://doi.org/10.1145/3571730 [6] Shuyang Jiang, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_7",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[7] Patrick Lewis, et al .",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_8",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "arXiv:cs.CL/2005.11401 [8] Mingjie Liu, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "arXiv:cs.CL/2311.00176 [9] Mingjie Liu, et al .",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_10",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[10] Shuai Lu, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_11",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "arXiv:cs.SE/2203.07722 [11] Yao Lu, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_12",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[12] Suphakit Niwattanakul, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_13",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[13] OpenAI.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_14",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "https://platform.openai.com/docs/ models [14] Hammond Pearce, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_15",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[15] Yujia Qin, et al .",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_16",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[16] Erich Schubert, et al .",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_17",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[17] Shailja Thakur, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_18",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[18] Jason Wei, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_19",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "arXiv:cs.CL/2201.11903 [19] Stephen Williams et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_20",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[20] Shunyu Yao, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  },
+  {
+    "citation_id": "ref_21",
+    "role": "misc",
+    "confidence": "high",
+    "evidence_sentence": "[21] Fengji Zhang, et al.",
+    "section_name": "references",
+    "reason": "Reference-section anchor, not an in-text citation role."
+  }
+]
