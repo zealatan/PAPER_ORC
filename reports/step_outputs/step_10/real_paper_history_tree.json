@@ -1,0 +1,383 @@
+{
+  "paper_id": "real_paper",
+  "target_node": {
+    "node_id": "target_paper",
+    "citation_id": null,
+    "title": "Target Paper",
+    "year": null,
+    "role": "target",
+    "citation_frequency": 1,
+    "parent_id": null,
+    "metadata": {
+      "paper_id": "real_paper"
+    }
+  },
+  "summary": {
+    "history_candidate_mentions": 24,
+    "unique_history_nodes": 16,
+    "history_foundational_count": 2,
+    "history_direct_prior_count": 0,
+    "history_background_count": 14,
+    "edge_count": 6
+  },
+  "nodes": [
+    {
+      "node_id": "ref_7",
+      "citation_id": "ref_7",
+      "title": "Retrieval-Augmented Generation for Knowledge-\nIntensive NLP Tasks",
+      "year": 2005,
+      "role": "history_foundational",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "high",
+        "evidence_sentence": "To mitigate this challenge, the Retrieval-Augmented Generation (RAG) paradigm [7] has been introduced, integrating arXiv:2311.16543v3 [cs.AR] 20 May 2024 retrieval mechanisms to improve the precision of generated content by incorporating information from external knowledge sources.",
+        "evidence_sentences": [
+          "To mitigate this challenge, the Retrieval-Augmented Generation (RAG) paradigm [7] has been introduced, integrating arXiv:2311.16543v3 [cs.AR] 20 May 2024 retrieval mechanisms to improve the precision of generated content by incorporating information from external knowledge sources.",
+          "2.3 Retrieval-Augmented Generation Retrieval-Augmented Generation (RAG) [7] represents a significant advancement in addressing the limitations of Large Language Mod- els when handling knowledge-intensive tasks."
+        ],
+        "reason": "Section 'introduction' and keyword 'introduced' indicate a foundational history citation."
+      }
+    },
+    {
+      "node_id": "ref_4",
+      "citation_id": "ref_4",
+      "title": "2021",
+      "year": 2021,
+      "role": "history_foundational",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "high",
+        "evidence_sentence": "GitHub Copilot [4], building upon such groundwork, played a crucial role in pioneering LLM-based code completion engines, contributing significantly to the domains of auto-completion and conversational code gener- ation.",
+        "evidence_sentences": [
+          "GitHub Copilot [4], building upon such groundwork, played a crucial role in pioneering LLM-based code completion engines, contributing significantly to the domains of auto-completion and conversational code gener- ation.",
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'background' and keyword 'pioneering' indicate a foundational history citation."
+      }
+    },
+    {
+      "node_id": "ref_12",
+      "citation_id": "ref_12",
+      "title": "Using of Jaccard coefficient for keywords\nsimilarity",
+      "year": 2013,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors.",
+        "evidence_sentences": [
+          "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_16",
+      "citation_id": "ref_16",
+      "title": "DBSCAN revisited, revisited: why and how you\nshould (still) use DBSCAN",
+      "year": 2017,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors.",
+        "evidence_sentences": [
+          "The final step involved clustering using DBSCAN [16] with Jaccard distance [12], grouping similar implementations to select representative examples while ensuring a diverse representation of syntax errors."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_14",
+      "citation_id": "ref_14",
+      "title": "Dave: Deriving automatically verilog from english",
+      "year": 2020,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "DAVE [14] emerged as an early study of LLM tailored for hardware design.",
+        "evidence_sentences": [
+          "DAVE [14] emerged as an early study of LLM tailored for hardware design."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_2",
+      "citation_id": "ref_2",
+      "title": "Evaluating large language models trained on code",
+      "year": 2021,
+      "role": "history_background",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "2.1 LLMs for Verilog Code Generation Large Language Models exhibit the capability to generate code, with Codex [2] standing as an early exemplar.",
+        "evidence_sentences": [
+          "2.1 LLMs for Verilog Code Generation Large Language Models exhibit the capability to generate code, with Codex [2] standing as an early exemplar.",
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_10",
+      "citation_id": "ref_10",
+      "title": "ReACC: A Retrieval-Augmented Code Completion Frame-\nwork",
+      "year": 2022,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential.",
+        "evidence_sentences": [
+          "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_20",
+      "citation_id": "ref_20",
+      "title": "ReAct: Synergizing Reasoning and Acting in Language\nModels",
+      "year": 2022,
+      "role": "history_background",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "medium",
+        "evidence_sentence": "The ReAct framework [20] integrates reasoning and action synthesis in language models, demonstrating LLM\u2019s capability to engage in reasoning processes and refine decision-making through interactive feedback.",
+        "evidence_sentences": [
+          "The ReAct framework [20] integrates reasoning and action synthesis in language models, demonstrating LLM\u2019s capability to engage in reasoning processes and refine decision-making through interactive feedback.",
+          "3.2 Reasoning and Action Planning through ReAct Iterative Prompting We enable Large Language Models to function as autonomous agents for reasoning and action planning through theReActprompt- ing mechanism [20]."
+        ],
+        "reason": "Section 'introduction' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_1",
+      "citation_id": "ref_1",
+      "title": "Chip-Chat: Challenges and Opportunities in Con-\nversational Hardware Design",
+      "year": 2023,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+        "evidence_sentences": [
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_3",
+      "citation_id": "ref_3",
+      "title": "Teaching large language models to self-debug",
+      "year": 2023,
+      "role": "history_background",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "medium",
+        "evidence_sentence": "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model\u2019s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+        "evidence_sentences": [
+          "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model\u2019s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'introduction' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_5",
+      "citation_id": "ref_5",
+      "title": "Survey of Hallucination in Natural Language Generation",
+      "year": 2023,
+      "role": "history_background",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "medium",
+        "evidence_sentence": "On the other hand, Large Language Models are acknowledged for their inclination to produce factual errors, a phenomenon termed hallucination [5].",
+        "evidence_sentences": [
+          "On the other hand, Large Language Models are acknowledged for their inclination to produce factual errors, a phenomenon termed hallucination [5].",
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'introduction' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_6",
+      "citation_id": "ref_6",
+      "title": "SelfEvolve: A Code Evolution Framework via Large\nLanguage Models",
+      "year": 2023,
+      "role": "history_background",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "medium",
+        "evidence_sentence": "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model\u2019s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+        "evidence_sentences": [
+          "Similarly, SelfDebug [3] and SelfEvolve [6] illustrate the model\u2019s ability to self-identify mistakes by scrutiniz- ing execution results and articulating generated code in natural language.",
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'introduction' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_8",
+      "citation_id": "ref_8",
+      "title": "ChipNeMo: Domain-Adapted LLMs for Chip Design",
+      "year": 2023,
+      "role": "history_background",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+        "evidence_sentences": [
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_18",
+      "citation_id": "ref_18",
+      "title": "Chain-of-Thought Prompting Elicits Reasoning in Large\nLanguage Models",
+      "year": 2023,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "In terms of rea- soning, methods like chain-of-thought [18] empower LLMs to break down intricate problems into logical steps, significantly enhanc- ing their problem-solving abilities.",
+        "evidence_sentences": [
+          "In terms of rea- soning, methods like chain-of-thought [18] empower LLMs to break down intricate problems into logical steps, significantly enhanc- ing their problem-solving abilities."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_21",
+      "citation_id": "ref_21",
+      "title": "Repocoder: Repository-level code completion through\niterative retrieval and generation",
+      "year": 2023,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential.",
+        "evidence_sentences": [
+          "In the context of code generation, several works such as ReACC [10] and RepoCoder [21] have successfully harnessed the capabilities of RAG to enhance the code generation proficiency of LLMs, showcasing its transformative potential."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_0",
+      "citation_id": "ref_0",
+      "title": "ref_0",
+      "year": null,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "background",
+        "confidence": "medium",
+        "evidence_sentence": "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range.",
+        "evidence_sentences": [
+          "module top_module ( input [7:0] in, output [7:0] out ); Erroneous Implementation: assign {out[0],out[1],out[2],out[3],out[4],out[5],out[6],out[8]} = in;\u21a9\u2192 endmodule Feedback: main.v:5: error: Index out[8] is out of range."
+        ],
+        "reason": "Section 'background' default role applied."
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "ref_7",
+      "target": "ref_12",
+      "edge_type": "history_flow",
+      "reason": "Foundational work provides the field context for background citations.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_7",
+      "target": "ref_16",
+      "edge_type": "history_flow",
+      "reason": "Foundational work provides the field context for background citations.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_4",
+      "target": "ref_12",
+      "edge_type": "history_flow",
+      "reason": "Foundational work provides the field context for background citations.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_4",
+      "target": "ref_16",
+      "edge_type": "history_flow",
+      "reason": "Foundational work provides the field context for background citations.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_12",
+      "target": "target_paper",
+      "edge_type": "history_flow",
+      "reason": "Background citation connects to the target paper as supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_16",
+      "target": "target_paper",
+      "edge_type": "history_flow",
+      "reason": "Background citation connects to the target paper as supporting context.",
+      "weight": 1.0
+    }
+  ],
+  "reading_path": [
+    "ref_7",
+    "ref_4",
+    "ref_12",
+    "ref_16",
+    "ref_14",
+    "ref_2",
+    "ref_10",
+    "ref_20",
+    "ref_1",
+    "ref_3",
+    "ref_5",
+    "ref_6",
+    "ref_8",
+    "ref_18",
+    "ref_21",
+    "ref_0",
+    "target_paper"
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "paper_id": "sample_paper",
+  "target_node": {
+    "node_id": "target_paper",
+    "citation_id": null,
+    "title": "Target Paper",
+    "year": null,
+    "role": "target",
+    "citation_frequency": 1,
+    "parent_id": null,
+    "metadata": {
+      "paper_id": "sample_paper"
+    }
+  },
+  "summary": {
+    "history_candidate_mentions": 12,
+    "unique_history_nodes": 8,
+    "history_foundational_count": 3,
+    "history_direct_prior_count": 3,
+    "history_background_count": 2,
+    "edge_count": 17
+  },
+  "nodes": [
+    {
+      "node_id": "ref_2",
+      "citation_id": "ref_2",
+      "title": "Robust Frequency and Timing Synchronization for OFDM",
+      "year": 1997,
+      "role": "history_foundational",
+      "citation_frequency": 3,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "high",
+        "evidence_sentence": "The problem of timing synchronization was first proposed in the seminal work of Schmidl and Cox [2], who introduced a correlation-based method using repeated pilot symbols.",
+        "evidence_sentences": [
+          "The problem of timing synchronization was first proposed in the seminal work of Schmidl and Cox [2], who introduced a correlation-based method using repeated pilot symbols.",
+          "[3] later proposed a maximum-likelihood estimator for joint timing and frequency offset recovery, extending the pioneering work of [2] to cyclic-prefix-based detection.",
+          "The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7]."
+        ],
+        "reason": "Section 'introduction' and sentence keyword 'first proposed' indicate a foundational history citation."
+      }
+    },
+    {
+      "node_id": "ref_3",
+      "citation_id": "ref_3",
+      "title": "ML Estimation of Time and Frequency Offset in OFDM Systems",
+      "year": 1997,
+      "role": "history_foundational",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "high",
+        "evidence_sentence": "[3] later proposed a maximum-likelihood estimator for joint timing and frequency offset recovery, extending the pioneering work of [2] to cyclic-prefix-based detection.",
+        "evidence_sentences": [
+          "[3] later proposed a maximum-likelihood estimator for joint timing and frequency offset recovery, extending the pioneering work of [2] to cyclic-prefix-based detection.",
+          "The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7]."
+        ],
+        "reason": "Section 'introduction' and sentence keyword 'pioneering' indicate a foundational history citation."
+      }
+    },
+    {
+      "node_id": "ref_7",
+      "citation_id": "ref_7",
+      "title": "An Improved Frequency Offset Estimator for OFDM Applications",
+      "year": 1999,
+      "role": "history_foundational",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "related_work",
+        "confidence": "high",
+        "evidence_sentence": "The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7].",
+        "evidence_sentences": [
+          "The foundational work of Schmidl and Cox [2] remains a standard reference, and subsequent extensions addressed fractional offset estimation [3] and robustness under frequency-selective fading [7]."
+        ],
+        "reason": "Section 'related_work' and sentence keyword 'foundation' indicate a foundational history citation."
+      }
+    },
+    {
+      "node_id": "ref_4",
+      "citation_id": "ref_4",
+      "title": "An Introduction to Deep Learning for the Physical Layer",
+      "year": 2017,
+      "role": "history_direct_prior",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "high",
+        "evidence_sentence": "Recent advances in deep learning have motivated the application of neural networks to physical-layer tasks [4].",
+        "evidence_sentences": [
+          "Recent advances in deep learning have motivated the application of neural networks to physical-layer tasks [4]."
+        ],
+        "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+      }
+    },
+    {
+      "node_id": "ref_5",
+      "citation_id": "ref_5",
+      "title": "Deep Learning Based Channel Estimation for OFDM Systems",
+      "year": 2019,
+      "role": "history_direct_prior",
+      "citation_frequency": 2,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "high",
+        "evidence_sentence": "[5] applied deep neural networks to channel estimation, while previous studies by Liu et al.",
+        "evidence_sentences": [
+          "[5] applied deep neural networks to channel estimation, while previous studies by Liu et al.",
+          "Previous studies on machine-learning-based synchronization focused primarily on frequency offset estimation [5]."
+        ],
+        "reason": "Section 'introduction' and sentence keyword 'previous studies' indicate a direct prior work citation."
+      }
+    },
+    {
+      "node_id": "ref_8",
+      "citation_id": "ref_8",
+      "title": "Convolutional Feature Extraction for OFDM Timing Detection",
+      "year": 2020,
+      "role": "history_direct_prior",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "related_work",
+        "confidence": "medium",
+        "evidence_sentence": "[8] introduced a convolutional feature extractor for timing detection, which we build upon in this paper.",
+        "evidence_sentences": [
+          "[8] introduced a convolutional feature extractor for timing detection, which we build upon in this paper."
+        ],
+        "reason": "Section 'related_work' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_1",
+      "citation_id": "ref_1",
+      "title": "Technical Specification 38.211: NR Physical Channels",
+      "year": 2020,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "medium",
+        "evidence_sentence": "Orthogonal frequency-division multiplexing (OFDM) has become the dominant waveform in modern broadband wireless communications, including LTE and 5G NR standards [1].",
+        "evidence_sentences": [
+          "Orthogonal frequency-division multiplexing (OFDM) has become the dominant waveform in modern broadband wireless communications, including LTE and 5G NR standards [1]."
+        ],
+        "reason": "Section 'introduction' default role applied."
+      }
+    },
+    {
+      "node_id": "ref_6",
+      "citation_id": "ref_6",
+      "title": "Recurrent Neural Network for Timing Synchronization in OFDM",
+      "year": 2020,
+      "role": "history_background",
+      "citation_frequency": 1,
+      "parent_id": null,
+      "metadata": {
+        "section_name": "introduction",
+        "confidence": "medium",
+        "evidence_sentence": "[6] explored recurrent networks for timing correction in OFDM systems.",
+        "evidence_sentences": [
+          "[6] explored recurrent networks for timing correction in OFDM systems."
+        ],
+        "reason": "Section 'introduction' default role applied."
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "ref_2",
+      "target": "ref_4",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_2",
+      "target": "ref_5",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_2",
+      "target": "ref_8",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_3",
+      "target": "ref_4",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_3",
+      "target": "ref_5",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_3",
+      "target": "ref_8",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_7",
+      "target": "ref_4",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_7",
+      "target": "ref_5",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_7",
+      "target": "ref_8",
+      "edge_type": "history_flow",
+      "reason": "Foundational work precedes direct prior work in the history path.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_4",
+      "target": "ref_1",
+      "edge_type": "history_flow",
+      "reason": "Direct prior work connects to background supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_4",
+      "target": "ref_6",
+      "edge_type": "history_flow",
+      "reason": "Direct prior work connects to background supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_5",
+      "target": "ref_1",
+      "edge_type": "history_flow",
+      "reason": "Direct prior work connects to background supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_5",
+      "target": "ref_6",
+      "edge_type": "history_flow",
+      "reason": "Direct prior work connects to background supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_8",
+      "target": "ref_1",
+      "edge_type": "history_flow",
+      "reason": "Direct prior work connects to background supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_8",
+      "target": "ref_6",
+      "edge_type": "history_flow",
+      "reason": "Direct prior work connects to background supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_1",
+      "target": "target_paper",
+      "edge_type": "history_flow",
+      "reason": "Background citation connects to the target paper as supporting context.",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_6",
+      "target": "target_paper",
+      "edge_type": "history_flow",
+      "reason": "Background citation connects to the target paper as supporting context.",
+      "weight": 1.0
+    }
+  ],
+  "reading_path": [
+    "ref_2",
+    "ref_3",
+    "ref_7",
+    "ref_4",
+    "ref_5",
+    "ref_8",
+    "ref_1",
+    "ref_6",
+    "target_paper"
+  ]
+}

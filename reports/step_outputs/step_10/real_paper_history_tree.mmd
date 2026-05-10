@@ -1,0 +1,39 @@
+flowchart LR
+  subgraph F[Foundational Work]
+    ref_7["ref_7<br/>Retrieval-Augmented Generation for Knowledge-
+Intensiv…<br/>2005"]
+    ref_4["ref_4<br/>2021<br/>2021"]
+  end
+  subgraph B[Background Context]
+    ref_12["ref_12<br/>Using of Jaccard coefficient for keywords
+similarity<br/>2013"]
+    ref_16["ref_16<br/>DBSCAN revisited, revisited: why and how you
+should (s…<br/>2017"]
+    ref_14["ref_14<br/>Dave: Deriving automatically verilog from english<br/>2020"]
+    ref_2["ref_2<br/>Evaluating large language models trained on code<br/>2021"]
+    ref_10["ref_10<br/>ReACC: A Retrieval-Augmented Code Completion Frame-
+wo…<br/>2022"]
+    ref_20["ref_20<br/>ReAct: Synergizing Reasoning and Acting in Language
+Mo…<br/>2022"]
+    ref_1["ref_1<br/>Chip-Chat: Challenges and Opportunities in Con-
+versat…<br/>2023"]
+    ref_3["ref_3<br/>Teaching large language models to self-debug<br/>2023"]
+    ref_5["ref_5<br/>Survey of Hallucination in Natural Language Generation<br/>2023"]
+    ref_6["ref_6<br/>SelfEvolve: A Code Evolution Framework via Large
+Langu…<br/>2023"]
+    ref_8["ref_8<br/>ChipNeMo: Domain-Adapted LLMs for Chip Design<br/>2023"]
+    ref_18["ref_18<br/>Chain-of-Thought Prompting Elicits Reasoning in Large
+…<br/>2023"]
+    ref_21["ref_21<br/>Repocoder: Repository-level code completion through
+it…<br/>2023"]
+    ref_0["ref_0<br/>ref_0<br/>?"]
+  end
+  subgraph T[Target]
+    target_paper["Target Paper"]
+  end
+  ref_7 --> ref_12
+  ref_7 --> ref_16
+  ref_4 --> ref_12
+  ref_4 --> ref_16
+  ref_12 --> target_paper
+  ref_16 --> target_paper

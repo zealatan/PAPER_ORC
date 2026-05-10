@@ -1,0 +1,35 @@
+flowchart LR
+  subgraph F[Foundational Work]
+    ref_2["ref_2<br/>Robust Frequency and Timing Synchronization for OFDM<br/>1997"]
+    ref_3["ref_3<br/>ML Estimation of Time and Frequency Offset in OFDM Sys…<br/>1997"]
+    ref_7["ref_7<br/>An Improved Frequency Offset Estimator for OFDM Applic…<br/>1999"]
+  end
+  subgraph P[Direct Prior Work]
+    ref_4["ref_4<br/>An Introduction to Deep Learning for the Physical Layer<br/>2017"]
+    ref_5["ref_5<br/>Deep Learning Based Channel Estimation for OFDM Systems<br/>2019"]
+    ref_8["ref_8<br/>Convolutional Feature Extraction for OFDM Timing Detec…<br/>2020"]
+  end
+  subgraph B[Background Context]
+    ref_1["ref_1<br/>Technical Specification 38.211: NR Physical Channels<br/>2020"]
+    ref_6["ref_6<br/>Recurrent Neural Network for Timing Synchronization in…<br/>2020"]
+  end
+  subgraph T[Target]
+    target_paper["Target Paper"]
+  end
+  ref_2 --> ref_4
+  ref_2 --> ref_5
+  ref_2 --> ref_8
+  ref_3 --> ref_4
+  ref_3 --> ref_5
+  ref_3 --> ref_8
+  ref_7 --> ref_4
+  ref_7 --> ref_5
+  ref_7 --> ref_8
+  ref_4 --> ref_1
+  ref_4 --> ref_6
+  ref_5 --> ref_1
+  ref_5 --> ref_6
+  ref_8 --> ref_1
+  ref_8 --> ref_6
+  ref_1 --> target_paper
+  ref_6 --> target_paper
