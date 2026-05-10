@@ -1,27 +1,14 @@
-# Python
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
 .venv/
 venv/
-env/
 .ipynb_checkpoints/
-
-# Build / temp
 build/
 dist/
-*.egg-info/
 .cache/
-.tmp/
 tmp/
-
-# Logs
 *.log
 logs/
-*.out
-
-# Large experiment outputs
 results/**/raw/
 results/**/waveforms/
 results/**/*.npy
@@ -29,34 +16,25 @@ results/**/*.npz
 results/**/*.pkl
 results/**/*.h5
 results/**/*.hdf5
-
-# Keep lightweight summaries and figures if needed
 !results/**/*.json
 !results/**/*.csv
 !results/**/*.png
 !results/**/*.pdf
 !results/**/*.md
-
-# LaTeX
 *.aux
 *.bbl
 *.bcf
 *.blg
 *.fdb_latexmk
 *.fls
-*.log
 *.out
 *.run.xml
 *.synctex.gz
 *.toc
-
-# OS / editor
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
-
-# Secrets
 .env
 *.key
 *.pem
