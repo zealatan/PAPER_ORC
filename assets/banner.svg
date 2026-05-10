@@ -1,0 +1,68 @@
+<svg width="1280" height="360" viewBox="0 0 1280 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="0.45" stop-color="#1E3A8A"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1030 80) rotate(140) scale(420 300)">
+      <stop stop-color="#22D3EE" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 310) rotate(-25) scale(380 220)">
+      <stop stop-color="#F472B6" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#F472B6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1280" height="360" rx="34" fill="url(#bg)"/>
+  <rect width="1280" height="360" rx="34" fill="url(#glow1)"/>
+  <rect width="1280" height="360" rx="34" fill="url(#glow2)"/>
+
+  <g opacity="0.18">
+    <circle cx="1080" cy="78" r="5" fill="white"/>
+    <circle cx="1145" cy="145" r="4" fill="white"/>
+    <circle cx="1024" cy="214" r="4" fill="white"/>
+    <circle cx="920" cy="120" r="3" fill="white"/>
+    <circle cx="1168" cy="256" r="3" fill="white"/>
+    <line x1="1080" y1="78" x2="1145" y2="145" stroke="white" stroke-width="2"/>
+    <line x1="1145" y1="145" x2="1024" y2="214" stroke="white" stroke-width="2"/>
+    <line x1="1024" y1="214" x2="920" y2="120" stroke="white" stroke-width="2"/>
+    <line x1="1024" y1="214" x2="1168" y2="256" stroke="white" stroke-width="2"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="86" y="72" width="144" height="144" rx="28" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.28"/>
+    <path d="M129 120h58M129 148h58M129 176h38" stroke="#E0F2FE" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="201" cy="201" r="26" fill="#22D3EE"/>
+    <path d="M193 201l7 7 14-17" stroke="#0F172A" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="270" y="125" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800">
+    Paper Importance Agent
+  </text>
+  <text x="270" y="174" fill="#DBEAFE" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="500">
+    Multi-Agent Research Triage for Project-Specific Paper Evaluation
+  </text>
+
+  <g>
+    <rect x="270" y="215" width="176" height="42" rx="21" fill="#22D3EE" fill-opacity="0.18" stroke="#67E8F9" stroke-opacity="0.7"/>
+    <text x="294" y="243" fill="#ECFEFF" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Must Read?</text>
+
+    <rect x="465" y="215" width="168" height="42" rx="21" fill="#A78BFA" fill-opacity="0.20" stroke="#C4B5FD" stroke-opacity="0.7"/>
+    <text x="489" y="243" fill="#F5F3FF" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Baseline?</text>
+
+    <rect x="652" y="215" width="190" height="42" rx="21" fill="#F472B6" fill-opacity="0.18" stroke="#F9A8D4" stroke-opacity="0.7"/>
+    <text x="676" y="243" fill="#FDF2F8" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Citation Only?</text>
+
+    <rect x="861" y="215" width="164" height="42" rx="21" fill="#34D399" fill-opacity="0.16" stroke="#86EFAC" stroke-opacity="0.7"/>
+    <text x="885" y="243" fill="#F0FDF4" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Ignore?</text>
+  </g>
+
+  <text x="270" y="305" fill="#BFDBFE" font-family="Inter, Arial, sans-serif" font-size="20">
+    Connected Papers finds related papers. This system decides which papers actually matter.
+  </text>
+</svg>

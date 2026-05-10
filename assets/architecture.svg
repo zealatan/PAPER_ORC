@@ -1,0 +1,87 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="card1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="card2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0891B2"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="card3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#DB2777"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="720" rx="30" fill="#F8FAFC"/>
+  <text x="640" y="62" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" fill="#0F172A">Multi-Agent Evaluation Pipeline</text>
+  <text x="640" y="98" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="18" fill="#64748B">From paper discovery to project-specific research decision</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="155" width="220" height="90" rx="20" fill="url(#card1)"/>
+    <text x="190" y="193" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="white">Candidate Papers</text>
+    <text x="190" y="222" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" fill="#DBEAFE">PDF / arXiv / Scholar</text>
+  </g>
+
+  <path d="M315 200H410" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M400 188l16 12-16 12" fill="none" stroke="#64748B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="430" y="155" width="220" height="90" rx="20" fill="url(#card2)"/>
+    <text x="540" y="193" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="white">Parser Agent</text>
+    <text x="540" y="222" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" fill="#CFFAFE">Sections + Metadata</text>
+  </g>
+
+  <path d="M665 200H760" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M750 188l16 12-16 12" fill="none" stroke="#64748B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="780" y="125" width="420" height="150" rx="24" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="990" y="163" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="800" fill="#0F172A">Specialist Agents</text>
+    <g font-family="Inter, Arial, sans-serif" font-size="15" fill="#334155">
+      <text x="825" y="202">• Topic Relevance</text>
+      <text x="825" y="230">• Novelty</text>
+      <text x="825" y="258">• Technical Depth</text>
+      <text x="1010" y="202">• Experiment Value</text>
+      <text x="1010" y="230">• Citation Value</text>
+      <text x="1010" y="258">• Strategic + Risk</text>
+    </g>
+  </g>
+
+  <path d="M990 292V365" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M978 355l12 16 12-16" fill="none" stroke="#64748B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="780" y="385" width="420" height="110" rx="24" fill="url(#card3)"/>
+    <text x="990" y="430" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="25" font-weight="800" fill="white">Final Importance Judge</text>
+    <text x="990" y="462" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" fill="#FCE7F3">Weighted scoring + reading decision</text>
+  </g>
+
+  <path d="M765 440H665" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M675 428l-16 12 16 12" fill="none" stroke="#64748B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="430" y="385" width="220" height="110" rx="22" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="540" y="427" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#0F172A">Reports</text>
+    <text x="540" y="458" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" fill="#475569">Markdown + CSV</text>
+  </g>
+
+  <path d="M415 440H315" stroke="#64748B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M325 428l-16 12 16 12" fill="none" stroke="#64748B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="385" width="220" height="110" rx="22" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <text x="190" y="424" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="800" fill="#0F172A">Research Action</text>
+    <text x="190" y="455" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" fill="#475569">Read / Cite / Baseline</text>
+    <text x="190" y="479" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" fill="#475569">Skim / Ignore</text>
+  </g>
+
+  <g>
+    <rect x="145" y="580" width="990" height="70" rx="20" fill="#EEF2FF" stroke="#C7D2FE"/>
+    <text x="640" y="613" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="800" fill="#3730A3">Core Principle</text>
+    <text x="640" y="640" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="17" fill="#4338CA">Paper discovery is not enough. Researchers need project-specific importance judgment.</text>
+  </g>
+</svg>
