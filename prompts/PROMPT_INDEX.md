@@ -22,9 +22,11 @@ Prompts are the trace between the paper reproduction goal and the code produced.
 | `04_build_citation_extractor.md` | 04 | Build Citation Extractor | COMPLETE | 583 |
 | `05_build_bibliography_mapper.md` | 05 | Build Bibliography Mapper | COMPLETE | 654 |
 | `06_build_citation_role_classifier.md` | 06 | Build Citation Role Classifier | COMPLETE | 573 |
+| `03b_ieee_roman_heading_parser_patch.md` | 03b | IEEE Roman Heading Parser Patch | COMPLETE | 360 |
 | `06b_quick_history_tree_preview.md` | 06b | Quick History Tree Preview | COMPLETE | 318 |
 | `06c_citation_role_classifier_precision_patch.md` | 06c | Citation Role Classifier Precision Patch | COMPLETE | 304 |
 | `10_build_history_tree_builder.md` | 10 | History Tree Builder | COMPLETE | 822 |
+| `05b_raw_text_reference_fallback_patch.md` | 05b | Raw-Text Reference Fallback Patch | COMPLETE | — |
 | `00z_archive_and_validate_claude_prompts.md` | 00z | Prompt Archive Audit | INCOMPLETE (message cut off) | 83 |
 
 ---
@@ -33,10 +35,10 @@ Prompts are the trace between the paper reproduction goal and the code produced.
 
 | Status | Count |
 |---|---:|
-| COMPLETE | 12 |
+| COMPLETE | 14 |
 | MISSING | 2 |
 | INCOMPLETE | 1 |
-| **Total expected** | **13** |
+| **Total expected** | **15** |
 
 ---
 

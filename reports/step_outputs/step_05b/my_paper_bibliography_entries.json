@@ -1,0 +1,653 @@
+[
+  {
+    "citation_id": "ref_1",
+    "raw_text": "[1] A. Gupta and R. K. Jha, “A survey of 5G network: Architecture and\nemerging technologies,” IEEE Access, vol. 3, pp. 1206–1232, 2015.",
+    "title": "A survey of 5G network: Architecture and emerging technologies",
+    "authors": [
+      "A. Gupta",
+      "R. K. Jha"
+    ],
+    "year": 2015,
+    "venue": "IEEE Access, vol. 3, pp. 1206–1232",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_2",
+    "raw_text": "[2] R. Li et al. , “Intelligent 5G: When cellular networks meet artiﬁcial\nintelligence,” IEEE Wireless Commun. , vol. 24, no. 5, pp. 175–183,\nOct. 2017.",
+    "title": "Intelligent 5G: When cellular networks meet artiﬁcial intelligence",
+    "authors": [
+      "R. Li et al."
+    ],
+    "year": 2017,
+    "venue": "IEEE Wireless Commun. , vol. 24, no. 5, pp. 175–183, Oct.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_3",
+    "raw_text": "[3] A. Al-Fuqaha, M. Guizani, M. Mohammadi, M. Aledhari, and\nM. Ayyash, “Internet of Things: A survey on enabling technologies, protocols, and applications,” IEEE Commun. Surveys Tuts. , vol. 17, no. 4,\npp. 2347–2376, 4th Quart., 2015.",
+    "title": "Internet of Things: A survey on enabling technologies, protocols, and applications",
+    "authors": [
+      "A. Al-Fuqaha",
+      "M. Guizani",
+      "M. Mohammadi",
+      "M. Aledhari",
+      "M. Ayyash"
+    ],
+    "year": 2015,
+    "venue": "IEEE Commun. Surveys Tuts. , vol. 17, no. 4, pp. 2347–2376, 4th Quart.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_4",
+    "raw_text": "[4] Y . Lecun, Y . Bengio, and G. Hinton, “Deep learning,” Nature, vol. 521,\nno. 7553, pp. 436–444, 2015.",
+    "title": "Deep learning",
+    "authors": [
+      "Y . Lecun",
+      "Y . Bengio",
+      "G. Hinton"
+    ],
+    "year": 2015,
+    "venue": "Nature, vol. 521, no. 7553, pp. 436–444",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_5",
+    "raw_text": "[5] J. Qiu, Q. Wu, G. Ding, Y . Xu, and S. Feng, “A survey of machine\nlearning for big data processing,” EURASIP J. Adv. Signal Process. ,\nvol. 2016, no. 1, pp. 1–16, 2016.",
+    "title": "A survey of machine learning for big data processing",
+    "authors": [
+      "J. Qiu",
+      "Q. Wu",
+      "G. Ding",
+      "Y . Xu",
+      "S. Feng"
+    ],
+    "year": 2016,
+    "venue": "EURASIP J. Adv. Signal Process. , vol. 2016, no. 1, pp. 1–16",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_6",
+    "raw_text": "[6] O. Simeone, “A very brief introduction to machine learning with applications to communication systems,” IEEE Trans. Cogn. Commun. Netw.,\nvol. 4, no. 4, pp. 648–664, Nov. 2018.",
+    "title": "A very brief introduction to machine learning with applications to communication systems",
+    "authors": [
+      "O. Simeone"
+    ],
+    "year": 2018,
+    "venue": "IEEE Trans. Cogn. Commun. Netw., vol. 4, no. 4, pp. 648–664, Nov.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_7",
+    "raw_text": "[7] S. Zheng et al. , “Big data processing architecture for radio signals\nempowered by deep learning: Concept, experiment, applications and\nchallenges,” IEEE Access, vol. 6, pp. 55907–55922, 2018.",
+    "title": "Big data processing architecture for radio signals empowered by deep learning: Concept, experiment, applications and challenges",
+    "authors": [
+      "S. Zheng et al."
+    ],
+    "year": 2018,
+    "venue": "IEEE Access, vol. 6, pp. 55907–55922",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_8",
+    "raw_text": "[8] Q. Bai, J. Wang, Y . Zhang, and J. Song, “Deep learning based channel\nestimation algorithm over time selective fading channels,” IEEE Trans.\nCogn. Commun. Netw., vol. 6, no. 1, pp. 125–134, Aug. 2020.",
+    "title": "Deep learning based channel estimation algorithm over time selective fading channels",
+    "authors": [
+      "Q. Bai",
+      "J. Wang",
+      "Y . Zhang",
+      "J. Song"
+    ],
+    "year": 2020,
+    "venue": "IEEE Trans. Cogn. Commun. Netw., vol. 6, no. 1, pp. 125–134, Aug.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_9",
+    "raw_text": "[9] Y . Yang, F. Gao, X. Ma, and S. Zhang, “Deep learning-based channel\nestimation for doubly selective fading channels,” IEEE Access ,v o l .7 ,\npp. 36579–36589, 2019.",
+    "title": "Deep learning-based channel estimation for doubly selective fading channels",
+    "authors": [
+      "Y . Yang",
+      "F. Gao",
+      "X. Ma",
+      "S. Zhang"
+    ],
+    "year": 2019,
+    "venue": "IEEE Access ,v o l .7 , pp. 36579–36589",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_10",
+    "raw_text": "[10] H. Mao, H. Lu, Y . Lu, and D. Zhu, “RoemNet: Robust meta learning\nbased channel estimation in OFDM systems,” in Proc. IEEE Int. Conf.\nCommun. (ICC), 2019, pp. 1–6.",
+    "title": "RoemNet: Robust meta learning based channel estimation in OFDM systems",
+    "authors": [
+      "H. Mao",
+      "H. Lu",
+      "Y . Lu",
+      "D. Zhu"
+    ],
+    "year": 2019,
+    "venue": "in Proc. IEEE Int. Conf. Commun. (ICC), 2019, pp. 1–6.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_11",
+    "raw_text": "[11] M. Soltani, V . Pourahmadi, A. Mirzaei, and H. Sheikhzadeh, “Deep\nlearning-based channel estimation,” IEEE Commun. Lett., vol. 23, no. 4,\npp. 652–655, Feb. 2019.",
+    "title": "Deep learning-based channel estimation",
+    "authors": [
+      "M. Soltani",
+      "V . Pourahmadi",
+      "A. Mirzaei",
+      "H. Sheikhzadeh"
+    ],
+    "year": 2019,
+    "venue": "IEEE Commun. Lett., vol. 23, no. 4, pp. 652–655, Feb.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_12",
+    "raw_text": "[12] H. He, C.-K. Wen, S. Jin, and G. Y . Li, “Deep learning-based channel estimation for beamspace mmWave massive MIMO systems,” IEEE\nWireless Commun. Lett., vol. 7, no. 5, pp. 852–855, May 2018.",
+    "title": "Deep learning-based channel estimation for beamspace mmWave massive MIMO systems",
+    "authors": [
+      "H. He",
+      "C.-K. Wen",
+      "S. Jin",
+      "G. Y . Li"
+    ],
+    "year": 2018,
+    "venue": "IEEE Wireless Commun. Lett., vol. 7, no. 5, pp. 852–855, May",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_13",
+    "raw_text": "[13] M. Mehrabi, M. Mohammadkarimi, M. Ardakani, and Y . Jing, “Decision\ndirected channel estimation based on deep neural network k -step predictor for MIMO communications in 5G,” IEEE J. Sel. Areas Commun.,\nvol. 37, no. 11, pp. 2443–2456, Jan. 2019.",
+    "title": "Decision directed channel estimation based on deep neural network k -step predictor for MIMO communications in 5G",
+    "authors": [
+      "M. Mehrabi",
+      "M. Mohammadkarimi",
+      "M. Ardakani",
+      "Y . Jing"
+    ],
+    "year": 2019,
+    "venue": "IEEE J. Sel. Areas Commun., vol. 37, no. 11, pp. 2443–2456, Jan.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_14",
+    "raw_text": "[14] M. Zamanipour, “A survey on deep-learning based techniques for\nmodeling and estimation of massiveMIMO channels,” 2019. [Online].\nAvailable: arXiv:1910.03390.",
+    "title": "A survey on deep-learning based techniques for modeling and estimation of massiveMIMO channels",
+    "authors": [
+      "M. Zamanipour"
+    ],
+    "year": 1910,
+    "venue": "2019. [Online]. Available: arXiv:1910.03390.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_15",
+    "raw_text": "[15] L. Zhang and L.-L. Yang, “Machine learning for joint channel equalization and signal detection,” in Machine Learning for Future Wireless\nCommunications. London, U.K.: Wiley, 2020, pp. 213–241.",
+    "title": "Machine learning for joint channel equalization and signal detection",
+    "authors": [
+      "L. Zhang",
+      "L.-L. Yang"
+    ],
+    "year": 2020,
+    "venue": "in Machine Learning for Future Wireless Communications. London, U.K.: Wiley, 2020, pp. 213–241.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_16",
+    "raw_text": "[16] L. Fang and L. Wu, “Deep learning detection method for signal demodulation in short range multipath channel,” in Proc. IEEE 2nd Int. Conf.\nOpto Electron. Inf. Process. (ICOIP) , 2017, pp. 16–20.",
+    "title": "Deep learning detection method for signal demodulation in short range multipath channel",
+    "authors": [
+      "L. Fang",
+      "L. Wu"
+    ],
+    "year": 2017,
+    "venue": "in Proc. IEEE 2nd Int. Conf. Opto Electron. Inf. Process. (ICOIP) , 2017, pp. 16–20.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_17",
+    "raw_text": "[17] X. Ouyang and L. Wu, “Faster-than-Nyquist rate communication via\nconvolutional neural networks-based demodulators,” J. Southeast Univ.,\nvol. 32, no. 1, pp. 6–10, 2016.",
+    "title": "Faster-than-Nyquist rate communication via convolutional neural networks-based demodulators",
+    "authors": [
+      "X. Ouyang",
+      "L. Wu"
+    ],
+    "year": 2016,
+    "venue": "J. Southeast Univ., vol. 32, no. 1, pp. 6–10",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_18",
+    "raw_text": "[18] O. Shental and J. Hoydis, ‘Machine LLRnin’: Learning to softly\ndemodulate,” 2019. [Online]. Available: arXiv:1907.01512.",
+    "title": "Machine LLRnin",
+    "authors": [
+      "O. Shental",
+      "J. Hoydis"
+    ],
+    "year": 1907,
+    "venue": ": Learning to softly demodulate,” 2019. [Online]. Available: arXiv:1907.01512.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_19",
+    "raw_text": "[19] E. Nachmani, Y . Be’ery, and D. Burshtein, “Learning to decode linear\ncodes using deep learning,” in Proc. 54th Annu. Allerton Conf. Commun.\nControl Comput., 2016, pp. 341–346.",
+    "title": "Learning to decode linear codes using deep learning",
+    "authors": [
+      "E. Nachmani",
+      "Y . Be’ery",
+      "D. Burshtein"
+    ],
+    "year": 2016,
+    "venue": "in Proc. 54th Annu. Allerton Conf. Commun. Control Comput., 2016, pp. 341–346.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_20",
+    "raw_text": "[20] E. Nachmani, Y . Bachar, E. Marciano, D. Burshtein, and Y . Be’ery,\n“Near maximum likelihood decoding with deep learning,” 2018.\n[Online]. Available: arXiv:1801.02726.",
+    "title": "Near maximum likelihood decoding with deep learning",
+    "authors": [
+      "E. Nachmani",
+      "Y . Bachar",
+      "E. Marciano",
+      "D. Burshtein",
+      "Y . Be’ery"
+    ],
+    "year": 2018,
+    "venue": "2018. [Online]. Available: arXiv:1801.02726.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_21",
+    "raw_text": "[21] E. Nachmani, E. Marciano, L. Lugosch, W. J. Gross, D. Burshtein, and\nY . Be’ery, “Deep learning methods for improved decoding of linear\ncodes,” IEEE J. Sel. Topics Signal Process., vol. 12, no. 1, pp. 119–131,\nJan. 2018.",
+    "title": "Deep learning methods for improved decoding of linear codes",
+    "authors": [
+      "E. Nachmani",
+      "E. Marciano",
+      "L. Lugosch",
+      "W. J. Gross",
+      "D. Burshtein",
+      "Y . Be’ery"
+    ],
+    "year": 2018,
+    "venue": "IEEE J. Sel. Topics Signal Process., vol. 12, no. 1, pp. 119–131, Jan.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_22",
+    "raw_text": "[22] F. Liang, C. Shen, and F. Wu, “An iterative BP-CNN architecture for\nchannel decoding,” IEEE J. Sel. Topics Signal Process. , vol. 12, no. 1,\npp. 144–159, Jan. 2018.",
+    "title": "An iterative BP-CNN architecture for channel decoding",
+    "authors": [
+      "F. Liang",
+      "C. Shen",
+      "F. Wu"
+    ],
+    "year": 2018,
+    "venue": "IEEE J. Sel. Topics Signal Process. , vol. 12, no. 1, pp. 144–159, Jan.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_23",
+    "raw_text": "[23] E. Nachmani and L. Wolf, “Hyper-graph-network decoders for block\ncodes,” 2019. [Online]. Available: arXiv:1909.09036.",
+    "title": "Hyper-graph-network decoders for block codes",
+    "authors": [
+      "E. Nachmani",
+      "L. Wolf"
+    ],
+    "year": 1909,
+    "venue": "2019. [Online]. Available: arXiv:1909.09036.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_24",
+    "raw_text": "[24] L. Lugosch and W. J. Gross, “Neural offset min-sum decoding,” in Proc.\nIEEE Int. Symp. Inf. Theory (ISIT) , 2017, pp. 1361–1365.",
+    "title": "Neural offset min-sum decoding",
+    "authors": [
+      "L. Lugosch",
+      "W. J. Gross"
+    ],
+    "year": 2017,
+    "venue": "in Proc. IEEE Int. Symp. Inf. Theory (ISIT) , 2017, pp. 1361–1365.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_25",
+    "raw_text": "[25] C. Deng and S. L. B. Yuan, “Reduced-complexity deep neural networkaided channel code decoder: A case study for BCH decoder,” in\nProc. IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP) , 2019,\npp. 1468–1472.",
+    "title": "Reduced-complexity deep neural networkaided channel code decoder: A case study for BCH decoder",
+    "authors": [
+      "C. Deng",
+      "S. L. B. Yuan"
+    ],
+    "year": 2019,
+    "venue": "in Proc. IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP) , 2019, pp. 1468–1472.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_26",
+    "raw_text": "[26] W. Xu, X. You, C. Zhang, and Y . Be’ery, “Polar decoding on sparse\ngraphs with deep learning,” in Proc. 52nd Asilomar Conf. Signals Syst.\nComput., 2018, pp. 599–603.",
+    "title": "Polar decoding on sparse graphs with deep learning",
+    "authors": [
+      "W. Xu",
+      "X. You",
+      "C. Zhang",
+      "Y . Be’ery"
+    ],
+    "year": 2018,
+    "venue": "in Proc. 52nd Asilomar Conf. Signals Syst. Comput., 2018, pp. 599–603.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_27",
+    "raw_text": "[27] N. Doan, S. A. Hashemi, E. N. Mambou, T. Tonnellier, and W. J. Gross,\n“Neural belief propagation decoding of CRC-polar concatenated codes,”\nin Proc. IEEE Int. Conf. Commun. (ICC) , 2019, pp. 1–6.",
+    "title": "Neural belief propagation decoding of CRC-polar concatenated codes",
+    "authors": [
+      "N. Doan",
+      "S. A. Hashemi",
+      "E. N. Mambou",
+      "T. Tonnellier",
+      "W. J. Gross"
+    ],
+    "year": 2019,
+    "venue": "in Proc. IEEE Int. Conf. Commun. (ICC) , 2019, pp. 1–6.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_28",
+    "raw_text": "[28] X. Wang et al. , “Learning to ﬂip successive cancellation decoding of\npolar codes with LSTM networks,” in Proc. IEEE 30th Annu. Int. Symp.\nPers. Indoor Mobile Radio Commun. (PIMRC) , 2019, pp. 1–5.",
+    "title": "Learning to ﬂip successive cancellation decoding of polar codes with LSTM networks",
+    "authors": [
+      "X. Wang et al."
+    ],
+    "year": 2019,
+    "venue": "in Proc. IEEE 30th Annu. Int. Symp. Pers. Indoor Mobile Radio Commun. (PIMRC) , 2019, pp. 1–5.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_29",
+    "raw_text": "[29] Z. Cao, H. Zhu, Y . Zhao, and D. Li, “Learning to denoise and decode: A\nnovel residual neural network decoder for polar codes,” 2019. [Online].\nAvailable: arXiv:1908.00460.",
+    "title": "Learning to denoise and decode: A novel residual neural network decoder for polar codes",
+    "authors": [
+      "Z. Cao",
+      "H. Zhu",
+      "Y . Zhao",
+      "D. Li"
+    ],
+    "year": 1908,
+    "venue": "2019. [Online]. Available: arXiv:1908.00460.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_30",
+    "raw_text": "[30] N. Doan, S. A. Hashemi, and W. J. Gross, “Neural successive cancellation decoding of polar codes,” in Proc. IEEE 19th Int. Workshop Signal\nProcess. Adv. Wireless Commun. (SPAWC), 2018, pp. 1–5.",
+    "title": "Neural successive cancellation decoding of polar codes",
+    "authors": [
+      "N. Doan",
+      "S. A. Hashemi",
+      "W. J. Gross"
+    ],
+    "year": 2018,
+    "venue": "in Proc. IEEE 19th Int. Workshop Signal Process. Adv. Wireless Commun. (SPAWC), 2018, pp. 1–5.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_31",
+    "raw_text": "[31] J. Gao and R. Liu, “Neural network aided SC decoder for polar\ncodes,” in Proc. IEEE 4th Int. Conf. Comput. Commun. (ICCC) , 2018,\npp. 2153–2157.",
+    "title": "Neural network aided SC decoder for polar codes",
+    "authors": [
+      "J. Gao",
+      "R. Liu"
+    ],
+    "year": 2018,
+    "venue": "in Proc. IEEE 4th Int. Conf. Comput. Commun. (ICCC) , 2018, pp. 2153–2157.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_32",
+    "raw_text": "[32] R. Zhang, F. Liu, Z. Zeng, Q. Shang, and S. Zhao, “Neural network\nbased successive cancellation decoding algorithm for polar codes in\nURLLC,” in Proc. 16th Int. Symp. Wireless Commun. Syst. (ISWCS) ,\n2019, pp. 182–187.",
+    "title": "Neural network based successive cancellation decoding algorithm for polar codes in URLLC",
+    "authors": [
+      "R. Zhang",
+      "F. Liu",
+      "Z. Zeng",
+      "Q. Shang",
+      "S. Zhao"
+    ],
+    "year": 2019,
+    "venue": "in Proc. 16th Int. Symp. Wireless Commun. Syst. (ISWCS) , 2019, pp. 182–187.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_33",
+    "raw_text": "[33] Y . Wang, Z. Zhang, S. Zhang, S. Cao, and S. Xu, “A uniﬁed deep\nlearning based polar-LDPC decoder for 5G communication systems,” in\nProc. 10th Int. Conf. Wireless Commun. Signal Process. (WCSP) , 2018,\npp. 1–6.",
+    "title": "A uniﬁed deep learning based polar-LDPC decoder for 5G communication systems",
+    "authors": [
+      "Y . Wang",
+      "Z. Zhang",
+      "S. Zhang",
+      "S. Cao",
+      "S. Xu"
+    ],
+    "year": 2018,
+    "venue": "in Proc. 10th Int. Conf. Wireless Commun. Signal Process. (WCSP) , 2018, pp. 1–6.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_34",
+    "raw_text": "[34] N. Doan, S. A. Hashemi, F. Ercan, T. Tonnellier, and W. Gross, “Neural\ndynamic successive cancellation ﬂip decoding of polar codes,” 2019.\n[Online]. Available: arXiv:1907.11563.",
+    "title": "Neural dynamic successive cancellation ﬂip decoding of polar codes",
+    "authors": [
+      "N. Doan",
+      "S. A. Hashemi",
+      "F. Ercan",
+      "T. Tonnellier",
+      "W. Gross"
+    ],
+    "year": 1907,
+    "venue": "2019. [Online]. Available: arXiv:1907.11563.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_35",
+    "raw_text": "[35] I. Wodiany and A. Pop, “Low-precision neural network decoding of\npolar codes,” in Proc. IEEE 20th Int. Workshop Signal Process. Adv.\nWireless Commun. (SPAWC), 2019, pp. 1–5.",
+    "title": "Low-precision neural network decoding of polar codes",
+    "authors": [
+      "I. Wodiany",
+      "A. Pop"
+    ],
+    "year": 2019,
+    "venue": "in Proc. IEEE 20th Int. Workshop Signal Process. Adv. Wireless Commun. (SPAWC), 2019, pp. 1–5.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_36",
+    "raw_text": "[36] F. Nariman and G. Andrea, “Neural network detection of data sequences\nin communication systems,”IEEE Trans. Signal Process., vol. 66, no. 21,\npp. 5663–5678, Sep. 2018.",
+    "title": "Neural network detection of data sequences in communication systems",
+    "authors": [
+      "F. Nariman",
+      "G. Andrea"
+    ],
+    "year": 2018,
+    "venue": "IEEE Trans. Signal Process., vol. 66, no. 21, pp. 5663–5678, Sep.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_37",
+    "raw_text": "[37] H. Ye and G. Y . Li, “Initial results on deep learning for joint channel\nequalization and decoding,” in Proc. IEEE 86th Veh. Technol. Conf.\n(VTC-Fall), 2017, pp. 1–5.",
+    "title": "Initial results on deep learning for joint channel equalization and decoding",
+    "authors": [
+      "H. Ye",
+      "G. Y . Li"
+    ],
+    "year": 2017,
+    "venue": "in Proc. IEEE 86th Veh. Technol. Conf. (VTC-Fall), 2017, pp. 1–5.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_38",
+    "raw_text": "[38] H. Ye, G. Y . Li, and B.-H. Juang, “Power of deep learning for channel estimation and signal detection in OFDM systems,” IEEE Wireless\nCommun. Lett., vol. 7, no. 1, pp. 114–117, Sep. 2017.",
+    "title": "Power of deep learning for channel estimation and signal detection in OFDM systems",
+    "authors": [
+      "H. Ye",
+      "G. Y . Li",
+      "B.-H. Juang"
+    ],
+    "year": 2017,
+    "venue": "IEEE Wireless Commun. Lett., vol. 7, no. 1, pp. 114–117, Sep.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_39",
+    "raw_text": "[39] W. Xu, Z. Zhong, Y . Be’ery, X. You, and C. Zhang, “Joint neural network\nequalizer and decoder,” in Proc. 15th Int. Symp. Wireless Commun. Syst.\n(ISWCS), 2018, pp. 1–5.",
+    "title": "Joint neural network equalizer and decoder",
+    "authors": [
+      "W. Xu",
+      "Z. Zhong",
+      "Y . Be’ery",
+      "X. You",
+      "C. Zhang"
+    ],
+    "year": 2018,
+    "venue": "in Proc. 15th Int. Symp. Wireless Commun. Syst. (ISWCS), 2018, pp. 1–5.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_40",
+    "raw_text": "[40] X. Cheng, D. Liu, C. Wang, S. Yan, and Z. Zhu, “Deep learningbased channel estimation and equalization scheme for FBMC/OQAM\nsystems,” IEEE Wireless Commun. Lett. , vol. 8, no. 3, pp. 881–884,\nFeb. 2019.",
+    "title": "Deep learningbased channel estimation and equalization scheme for FBMC/OQAM systems",
+    "authors": [
+      "X. Cheng",
+      "D. Liu",
+      "C. Wang",
+      "S. Yan",
+      "Z. Zhu"
+    ],
+    "year": 2019,
+    "venue": "IEEE Wireless Commun. Lett. , vol. 8, no. 3, pp. 881–884, Feb.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_41",
+    "raw_text": "[41] T. O’Shea and J. Hoydis, “An introduction to deep learning for the\nphysical layer,” IEEE Trans. Cogn. Commun. Netw. , vol. 3, no. 4,\npp. 563–575, Oct. 2017.",
+    "title": "An introduction to deep learning for the physical layer",
+    "authors": [
+      "T. O’Shea",
+      "J. Hoydis"
+    ],
+    "year": 2017,
+    "venue": "IEEE Trans. Cogn. Commun. Netw. , vol. 3, no. 4, pp. 563–575, Oct.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_42",
+    "raw_text": "[42] S. Dorner, S. Cammerer, J. Hoydis, and S. T. Brink, “Deep learning\nbased communication over the air,” IEEE J. Sel. Topics Signal Process.,\nvol. 12, no. 1, pp. 132–143, Dec. 2018.",
+    "title": "Deep learning based communication over the air",
+    "authors": [
+      "S. Dorner",
+      "S. Cammerer",
+      "J. Hoydis",
+      "S. T. Brink"
+    ],
+    "year": 2018,
+    "venue": "IEEE J. Sel. Topics Signal Process., vol. 12, no. 1, pp. 132–143, Dec.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  },
+  {
+    "citation_id": "ref_43",
+    "raw_text": "[43] V . Raj and S. Kalyani, “Backpropagating through the air: Deep learning\nat physical layer without channel models,” IEEE Commun. Lett., vol. 22,\nno. 11, pp. 2278–2281, Aug. 2018.",
+    "title": "Backpropagating through the air: Deep learning at physical layer without channel models",
+    "authors": [
+      "V . Raj",
+      "S. Kalyani"
+    ],
+    "year": 2018,
+    "venue": "IEEE Commun. Lett., vol. 22, no. 11, pp. 2278–2281, Aug.",
+    "metadata": {
+      "title_extraction_method": "quoted_title"
+    }
+  }
+]

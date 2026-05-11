@@ -1,6 +1,7 @@
-"""Step 03: tests for the paper parser."""
+"""Step 03 / 03b: tests for the paper parser."""
 
 import json
+import re
 import tempfile
 from pathlib import Path
 
@@ -8,6 +9,7 @@ import pytest
 
 from papernav.models import ParsedPaper
 from papernav.parser import (
+    _denoise_pdf_heading,
     generate_step03_outputs,
     parse_file,
     parse_pdf,
@@ -17,6 +19,7 @@ from papernav.parser import (
 
 SAMPLE_TXT = Path("examples/sample_paper.txt")
 REAL_PDF = Path("papers/real/rtlfixer_2311_16543.pdf")
+MY_PAPER_PDF = Path("papers/real/my_paper.pdf")
 
 
 # --- basic parse_text ---
@@ -139,3 +142,115 @@ def test_generate_step03_outputs_creates_files(tmp_path):
     assert (tmp_path / "real_paper_parse_summary.md").exists()
     assert status["section_count"] >= 6
     assert "introduction" in status["section_keys"]
+
+
+# ---------------------------------------------------------------------------
+# Step 03b — IEEE Roman numeral heading tests
+# ---------------------------------------------------------------------------
+
+def _parse_roman_text(headings_body: str) -> dict:
+    """Helper: parse a synthetic text with IEEE-style Roman numeral headings."""
+    return parse_text(headings_body, paper_id="test_roman").sections
+
+
+def test_roman_heading_introduction_detected():
+    text = "I. INTRODUCTION\nThis is the introduction body."
+    sections = _parse_roman_text(text)
+    assert "introduction" in sections
+
+
+def test_roman_heading_system_model_detected():
+    text = "I. INTRODUCTION\nIntro body.\nII. SYSTEM MODEL AND CHANNEL ESTIMATION\nSystem body."
+    sections = _parse_roman_text(text)
+    assert "system_model" in sections
+
+
+def test_roman_heading_simulation_results_maps_to_experiment():
+    text = "VI. SIMULATION RESULTS\nHere are results."
+    sections = _parse_roman_text(text)
+    assert "experiment" in sections
+
+
+def test_roman_heading_conclusions_detected():
+    text = "VII. CONCLUSIONS\nWe conclude here."
+    sections = _parse_roman_text(text)
+    assert "conclusion" in sections
+
+
+def test_roman_heading_unknown_preserved_as_snake_case():
+    text = "III. INTERNAL MECHANISM OF RELU DNNS\nBody text here."
+    sections = _parse_roman_text(text)
+    assert "internal_mechanism_of_relu_dnns" in sections
+
+
+def test_synthetic_fixture_still_detects_introduction():
+    assert "introduction" in parse_file(str(SAMPLE_TXT)).sections
+
+
+def test_synthetic_fixture_still_detects_related_work():
+    assert "related_work" in parse_file(str(SAMPLE_TXT)).sections
+
+
+def test_synthetic_fixture_still_detects_experiment():
+    assert "experiment" in parse_file(str(SAMPLE_TXT)).sections
+
+
+def test_synthetic_fixture_still_detects_results():
+    assert "results" in parse_file(str(SAMPLE_TXT)).sections
+
+
+def test_synthetic_fixture_still_detects_discussion():
+    assert "discussion" in parse_file(str(SAMPLE_TXT)).sections
+
+
+def test_synthetic_fixture_still_detects_references():
+    assert "references" in parse_file(str(SAMPLE_TXT)).sections
+
+
+@pytest.mark.skipif(not MY_PAPER_PDF.exists(), reason="my_paper.pdf not present")
+def test_my_paper_detects_more_than_two_sections():
+    result = parse_file(str(MY_PAPER_PDF), paper_id="my_paper")
+    assert len(result.sections) > 2, f"Only found: {list(result.sections.keys())}"
+
+
+@pytest.mark.skipif(not MY_PAPER_PDF.exists(), reason="my_paper.pdf not present")
+def test_my_paper_detects_introduction():
+    result = parse_file(str(MY_PAPER_PDF), paper_id="my_paper")
+    assert "introduction" in result.sections, f"Sections: {list(result.sections.keys())}"
+
+
+@pytest.mark.skipif(not MY_PAPER_PDF.exists(), reason="my_paper.pdf not present")
+def test_my_paper_references_accessible():
+    # References may appear as a parsed section OR only in raw_text (split-heading PDF artifact).
+    # Verify that at least one of these holds so downstream extractors can find them.
+    result = parse_file(str(MY_PAPER_PDF), paper_id="my_paper")
+    has_section = "references" in result.sections
+    has_raw_refs = bool(result.raw_text and re.search(r"\[1\]", result.raw_text))
+    assert has_section or has_raw_refs, (
+        f"Neither references section nor [1] marker found. Sections: {list(result.sections.keys())}"
+    )
+
+
+@pytest.mark.skipif(not MY_PAPER_PDF.exists(), reason="my_paper.pdf not present")
+def test_my_paper_has_body_sections_beyond_intro_and_conclusion():
+    # Verify the paper has at least one substantive body section (model, system, method, etc.)
+    # beyond introduction and conclusion — exact names vary by paper.
+    result = parse_file(str(MY_PAPER_PDF), paper_id="my_paper")
+    skip = {"introduction", "abstract", "conclusion", "conclusion_and_discussion",
+            "references", "bibliography"}
+    body_sections = [k for k in result.sections if k not in skip]
+    assert len(body_sections) >= 1, (
+        f"Expected at least one body section. Sections: {list(result.sections.keys())}"
+    )
+
+
+def test_denoise_pdf_heading_introduction():
+    assert _denoise_pdf_heading("I NTRODUCTION") == "INTRODUCTION"
+
+
+def test_denoise_pdf_heading_system_model():
+    assert _denoise_pdf_heading("S YSTEM MODEL") == "SYSTEM MODEL"
+
+
+def test_denoise_pdf_heading_dnn_suffix():
+    assert _denoise_pdf_heading("DNN S") == "DNNS"

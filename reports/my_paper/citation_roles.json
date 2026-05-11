@@ -1,0 +1,1018 @@
+[
+  {
+    "citation_id": "ref_1",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensable way for human society to communicate information.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_2",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensable way for human society to communicate information.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_3",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensable way for human society to communicate information.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_4",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "1, MARCH 2021 In order to cope with the above-mentioned problems of the traditional physical layer receiver, in this article, we introduce the deep learning (DL) technology [4] currently widely used in the \ufb01elds of image, speech, natural language and other \ufb01elds to the design of communication receiver.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_5",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "The reason why deep learning is adopted is because it is an end-to-end learning method and it can learn deeper features from large amount of data compared with other machine learning methods [5]\u2013[7].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_6",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "The reason why deep learning is adopted is because it is an end-to-end learning method and it can learn deeper features from large amount of data compared with other machine learning methods [5]\u2013[7].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_7",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "The reason why deep learning is adopted is because it is an end-to-end learning method and it can learn deeper features from large amount of data compared with other machine learning methods [5]\u2013[7].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_8",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "1) Using DL to Improve the Performance of a Speci\ufb01c Processing Module of the Communication Receiver: In terms of channel estimation, in [8] a DL-based channel estimator under time-varying Rayleigh fading channel was proposed and the proposed DL-based estimator has better Mean Square Error (MSE) performance compared with the traditional algo- rithms.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "In [9], a DL-based channel estimator was \ufb01rst trained of\ufb02ine using simulated data and then dynamically adjusted online to effectively improve the generalization ability of the estimator.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_10",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]\u2013[14].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_11",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]\u2013[14].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_12",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]\u2013[14].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_13",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]\u2013[14].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_14",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]\u2013[14].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_15",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of channel equalization, in [15] deep learning was used for channel equalization and several deep neural network- based equalizers were presented and compared with traditional equalization methods.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_16",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "In terms of signal demodulation, deep belief networks and stacked autoencoders were used in [16] to complete signal demodulation in short-distance multipath channels.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_17",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "Convolutional neural network (CNN) was used to demodu- late bipolar extended binary phase shifting keying (BPSK) signals transmitted at a faster-than Nyquist rate [17], solving the problem of severe ISI.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_18",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In addition to hard demodulation, deep neural networks were also used to implement soft demod- ulation [18], which reduces the computational complexity and improves the demodulation performance.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_19",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_20",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_21",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_22",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_23",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_24",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In view of the high computational complexity of the BP algorithm, in [24], [25] deep learning-based minimum sum decoding algorithms were proposed, which reduced the computational complexity and improved the decoding speed.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_25",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In view of the high computational complexity of the BP algorithm, in [24], [25] deep learning-based minimum sum decoding algorithms were proposed, which reduced the computational complexity and improved the decoding speed.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_26",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_27",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_28",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_29",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_30",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_31",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_32",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_33",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_34",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_35",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]\u2013[29], reduce the delay of decoding [30]\u2013[32], and facilitate hardware implementation [33]\u2013[35].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_36",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "For instance, in [36] bidirectional recurrent neural network (BRNN) was used for data sequence detec- tion, however channel decoding module was not included in the BRNN.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_37",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In [37] deep neural network was proposed to replace the equalization and decoding modules to improve the performance in multipath channels, but there is still a cer- tain gap between the performance of minimal MSE method that knows the channel statistics.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_38",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "Based on this work, in [38] deep neural network structure was used to replace the chan- nel equalization and symbol detection modules in the OFDM receiver.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_39",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In [39], two separate neural networks were used to replace the equalization module and decoding module, respec- tively.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'neural network' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_40",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "In [40], a deep learning-based channel estima- tion and equalization method was used to address the problem of the traditional channel estimation algorithm in dealing with inherent interference.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_41",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]\u2013[45].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_42",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]\u2013[45].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_43",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]\u2013[45].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_44",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]\u2013[45].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_45",
+    "role": "history_direct_prior",
+    "confidence": "high",
+    "evidence_sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]\u2013[45].",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' and sentence keyword 'deep learning' indicate a direct prior work citation."
+  },
+  {
+    "citation_id": "ref_46",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Another method is to \ufb01rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]\u2013[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_47",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Another method is to \ufb01rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]\u2013[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_48",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Another method is to \ufb01rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]\u2013[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_49",
+    "role": "history_background",
+    "confidence": "medium",
+    "evidence_sentence": "Another method is to \ufb01rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]\u2013[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "section_name": "introduction",
+    "reason": "Section 'introduction' default role applied."
+  },
+  {
+    "citation_id": "ref_50",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "In addition, in actual hardware circuits, the physical limitations of the device and circuit design errors will cause the phase and ampli- tude of the I and Q signals to be inconsistent, result- ing in IQ imbalance [50].",
+    "section_name": "b_rief_introduction_of_acanonical_wireless_communication_system",
+    "reason": "Section 'b_rief_introduction_of_acanonical_wireless_communication_system' default role applied."
+  },
+  {
+    "citation_id": "ref_51",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "In addition, we also consider AGGN [51] which can better character- ize \u201cpulse\u201d noise.",
+    "section_name": "b_rief_introduction_of_acanonical_wireless_communication_system",
+    "reason": "Section 'b_rief_introduction_of_acanonical_wireless_communication_system' default role applied."
+  },
+  {
+    "citation_id": "ref_52",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "2) The Designed 1D-Conv-DenseNet Structure: There are many excellent CNN structures for image classi\ufb01cation, including Inception [52], ResNet [53], and DenseNet [54].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_53",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "2) The Designed 1D-Conv-DenseNet Structure: There are many excellent CNN structures for image classi\ufb01cation, including Inception [52], ResNet [53], and DenseNet [54].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_54",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "2) The Designed 1D-Conv-DenseNet Structure: There are many excellent CNN structures for image classi\ufb01cation, including Inception [52], ResNet [53], and DenseNet [54].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_54",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], recti\ufb01ed linear unit (ReLU) [56], and 5 \u00d7 1 convolution.",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_55",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], recti\ufb01ed linear unit (ReLU) [56], and 5 \u00d7 1 convolution.",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_56",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], recti\ufb01ed linear unit (ReLU) [56], and 5 \u00d7 1 convolution.",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_57",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "In our 1D-Conv-DenseNet, the transition module includes a batch normalization layer, a ReLU layer, a maximum pooling layer [57] with \ufb01lter size of 3 \u00d7 1 and step size of 2, and a convolution layer with kernel size of 5 \u00d7 1 (the number of kernels is determined as required).",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_58",
+    "role": "supporting_evidence",
+    "confidence": "medium",
+    "evidence_sentence": "Finally global maximum pooling and global average pooling [58] are used to obtain the feature vector, according to which each binary classi\ufb01er computes the probabilities of each bit being 0 or 1.",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Keyword 'according to' (sentence keyword) indicates supporting evidence usage."
+  },
+  {
+    "citation_id": "ref_0",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_1",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_0",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_1",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_59",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_60",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "We use SGD with momentum which adds a momentum term to the update to reduce this oscillation [60] in this article.",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_61",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "For example, layer-wise prun- ing [61] can be performed to reduce the number of neural network layers, thereby reducing inference delay.",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "reason": "Section 't_he_proposed_deep_receiver_model' default role applied."
+  },
+  {
+    "citation_id": "ref_1",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "R EFERENCES [1] A.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_2",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[2] R.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_3",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[3] A.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_4",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[4] Y .",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_5",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[5] J.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_6",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[6] O.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_7",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[7] S.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_8",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[8] Q.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_9",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[9] Y .",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_10",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[10] H.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_11",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[11] M.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_12",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[12] H.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_13",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[13] M.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_14",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[14] M.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_15",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[15] L.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_16",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[16] L.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_17",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[17] X.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_18",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[18] O.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_19",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[19] E.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_20",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[20] E.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_21",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[21] E.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_22",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[22] F.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_23",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[23] E.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_24",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[24] L.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_25",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[25] C.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_26",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[26] W.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_27",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[27] N.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_28",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[28] X.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_29",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[29] Z.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_30",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[30] N.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_31",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[31] J.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_32",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[32] R.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_33",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[33] Y .",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_34",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[34] N.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_35",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[35] I.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_36",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[36] F.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_37",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[37] H.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_38",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[38] H.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_39",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[39] W.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_40",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[40] X.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_41",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[41] T.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_42",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[42] S.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_43",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[43] V .",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_44",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "1, MARCH 2021 [44] B.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_45",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[45] F.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_46",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[46] T.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_47",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[47] J.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_48",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[48] S.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_49",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[49] X.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_50",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[50] L.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_51",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[51] J.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_52",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[52] C.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_53",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[53] K.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_54",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[54] G.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_55",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[55] S.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_56",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[56] V .",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_57",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[57] J.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_58",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[58] M.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_59",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[59] L.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_60",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[60] K.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  },
+  {
+    "citation_id": "ref_61",
+    "role": "misc",
+    "confidence": "low",
+    "evidence_sentence": "[61] S.",
+    "section_name": "conclusion_and_discussion",
+    "reason": "Section 'conclusion_and_discussion' default role applied."
+  }
+]

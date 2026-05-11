@@ -18,6 +18,7 @@ _SECTION_ALIASES: dict[str, str] = {
     "related work": "related_work",
     "related works": "related_work",
     "background": "background",
+    "background and related work": "related_work",
     "background and motivation": "background",
     "preliminary": "background",
     "preliminaries": "background",
@@ -27,17 +28,22 @@ _SECTION_ALIASES: dict[str, str] = {
     "approach": "method",
     "proposed method": "method",
     "proposed approach": "method",
-    "system model": "method",
+    "system model": "system_model",
+    "system model and channel estimation": "system_model",
     "system overview": "method",
     "problem formulation": "method",
+    "analysis": "analysis",
+    "analysis on dl based channel estimation": "analysis",
     "experiment": "experiment",
     "experiments": "experiment",
     "experimental setup": "experiment",
     "experimental results": "experiment",
     "experimental evaluation": "experiment",
     "evaluation": "experiment",
+    "simulation results": "experiment",
     "results": "results",
     "discussion": "discussion",
+    "robustness": "robustness",
     "conclusion": "conclusion",
     "conclusions": "conclusion",
     "conclusion and future work": "conclusion",
@@ -59,15 +65,17 @@ _PDF_HEADING_RE = re.compile(
     r"Abstract"
     r"|Introduction"
     r"|Related\s+Works?"
-    r"|Background(?:\s+and\s+\w+)?"
+    r"|Background(?:\s+and\s+(?:Related\s+Work|Motivation|\w+))?"
     r"|Preliminar(?:y|ies)"
-    r"|System\s+(?:Model|Overview)"
+    r"|System\s+(?:Model(?:\s+and\s+\w+(?:\s+\w+)*)?|Overview)"
     r"|Problem\s+Formulation"
     r"|Proposed\s+(?:Method|Approach)"
     r"|Method(?:ology)?s?"
     r"|Approach"
     r"|Experiment(?:al)?(?:\s+(?:Setup|Results|Evaluation))?s?"
+    r"|Simulation\s+Results?"
     r"|Evaluation"
+    r"|Analysis(?:\s+\w+(?:\s+\w+)*)?"
     r"|Results?"
     r"|Discussion"
     r"|Conclusions?(?:\s+and\s+Future\s+Work)?"
@@ -78,6 +86,25 @@ _PDF_HEADING_RE = re.compile(
     r"\s*:?\s*$",
     re.IGNORECASE,
 )
+
+# Detects IEEE-style Roman numeral headings with ALL-CAPS text.
+# PDF extractors often insert spaces mid-word: "I NTRODUCTION", "S YSTEM MODEL".
+_ROMAN_HEADING_LINE_RE = re.compile(
+    r"(?m)^([IVX]+)\.\s+([A-Z][A-Z\s]*[A-Z]|[A-Z]{2,})\s*$"
+)
+
+
+def _denoise_pdf_heading(text: str) -> str:
+    """Collapse PDF extraction artifacts where single uppercase letters are split.
+
+    Fixes patterns like "I NTRODUCTION" -> "INTRODUCTION" and "DNN S" -> "DNNS"
+    caused by PDF character-level spacing applied to section headings.
+    """
+    # Single uppercase letter at word start + space + 2+ uppercase continuation
+    text = re.sub(r"\b([A-Z]) ([A-Z]{2,})", r"\1\2", text)
+    # 2+ uppercase letters + space + single standalone uppercase letter
+    text = re.sub(r"([A-Z]{2,}) \b([A-Z])\b", r"\1\2", text)
+    return text.strip()
 
 
 def _normalize_key(heading: str) -> str | None:
@@ -120,26 +147,48 @@ def _split_sections(text: str) -> list[PaperSection]:
             char_pos += len(block) + 5
         return result
 
-    # Strategy 2: regex heading detection for PDF-extracted text
-    matches = list(_PDF_HEADING_RE.finditer(text))
-    if not matches:
-        return [PaperSection(name="body", title="Body", text=text.strip(),
-                             start_char=0, end_char=len(text))]
+    # Strategy 2: combined heading detection for PDF-extracted text.
+    # Pass A: known-heading regex (handles mixed-case known section names).
+    # Pass B: Roman numeral heading regex (handles IEEE-style numbered headings).
+    all_matches: list[tuple[int, int, str, str]] = []  # (start, end, key, title)
 
-    result = []
-    for i, m in enumerate(matches):
+    for m in _PDF_HEADING_RE.finditer(text):
         heading_name = m.group(1).strip()
-        body_start = m.end()
-        body_end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
-        body = text[body_start:body_end].strip()
         key = _normalize_key(m.group(0).strip())
         if key is None:
             key = re.sub(r"[^a-z0-9]+", "_", heading_name.lower())
+        all_matches.append((m.start(), m.end(), key, m.group(0).strip()))
+
+    seen_starts = {start for start, *_ in all_matches}
+    for m in _ROMAN_HEADING_LINE_RE.finditer(text):
+        if m.start() in seen_starts:
+            continue
+        raw_text = m.group(2)
+        clean_text = _denoise_pdf_heading(raw_text)
+        if len(clean_text) < 3:
+            continue
+        full_title = f"{m.group(1)}. {clean_text}"
+        key = _normalize_key(clean_text)
+        if key is None:
+            key = re.sub(r"[^a-z0-9]+", "_", clean_text.lower())
+        all_matches.append((m.start(), m.end(), key, full_title))
+
+    if not all_matches:
+        return [PaperSection(name="body", title="Body", text=text.strip(),
+                             start_char=0, end_char=len(text))]
+
+    all_matches.sort(key=lambda x: x[0])
+
+    result = []
+    for i, (start, end, key, title) in enumerate(all_matches):
+        body_start = end
+        body_end = all_matches[i + 1][0] if i + 1 < len(all_matches) else len(text)
+        body = text[body_start:body_end].strip()
         result.append(PaperSection(
             name=key,
-            title=heading_name,
+            title=title,
             text=body,
-            start_char=m.start(),
+            start_char=start,
             end_char=body_end,
         ))
     return result

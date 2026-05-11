@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PaperNav History Tree — my_paper</title>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #fafafa; }
+    .mermaid { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  </style>
+</head>
+<body>
+  <h1>PaperNav History Tree — my_paper</h1>
+  <pre class="mermaid">
+flowchart LR
+  subgraph P[Direct Prior Work]
+    ref_18["ref_18<br/>Machine LLRnin<br/>1907"]
+    ref_34["ref_34<br/>Neural dynamic successive cancellation ﬂip decoding of…<br/>1907"]
+    ref_29["ref_29<br/>Learning to denoise and decode: A novel residual neura…<br/>1908"]
+    ref_23["ref_23<br/>Hyper-graph-network decoders for block codes<br/>1909"]
+    ref_4["ref_4<br/>Deep learning<br/>2015"]
+    ref_5["ref_5<br/>A survey of machine learning for big data processing<br/>2016"]
+    ref_17["ref_17<br/>Faster-than-Nyquist rate communication via convolution…<br/>2016"]
+    ref_19["ref_19<br/>Learning to decode linear codes using deep learning<br/>2016"]
+    ref_24["ref_24<br/>Neural offset min-sum decoding<br/>2017"]
+    ref_37["ref_37<br/>Initial results on deep learning for joint channel equ…<br/>2017"]
+    ref_38["ref_38<br/>Power of deep learning for channel estimation and sign…<br/>2017"]
+    ref_41["ref_41<br/>An introduction to deep learning for the physical layer<br/>2017"]
+    ref_6["ref_6<br/>A very brief introduction to machine learning with app…<br/>2018"]
+    ref_7["ref_7<br/>Big data processing architecture for radio signals emp…<br/>2018"]
+    ref_20["ref_20<br/>Near maximum likelihood decoding with deep learning<br/>2018"]
+    ref_21["ref_21<br/>Deep learning methods for improved decoding of linear …<br/>2018"]
+    ref_22["ref_22<br/>An iterative BP-CNN architecture for channel decoding<br/>2018"]
+    ref_26["ref_26<br/>Polar decoding on sparse graphs with deep learning<br/>2018"]
+    ref_30["ref_30<br/>Neural successive cancellation decoding of polar codes<br/>2018"]
+    ref_31["ref_31<br/>Neural network aided SC decoder for polar codes<br/>2018"]
+    ref_33["ref_33<br/>A uniﬁed deep learning based polar-LDPC decoder for 5G…<br/>2018"]
+    ref_36["ref_36<br/>Neural network detection of data sequences in communic…<br/>2018"]
+    ref_39["ref_39<br/>Joint neural network equalizer and decoder<br/>2018"]
+    ref_42["ref_42<br/>Deep learning based communication over the air<br/>2018"]
+    ref_43["ref_43<br/>Backpropagating through the air: Deep learning at phys…<br/>2018"]
+    ref_25["ref_25<br/>Reduced-complexity deep neural networkaided channel co…<br/>2019"]
+    ref_27["ref_27<br/>Neural belief propagation decoding of CRC-polar concat…<br/>2019"]
+    ref_28["ref_28<br/>Learning to ﬂip successive cancellation decoding of po…<br/>2019"]
+    ref_32["ref_32<br/>Neural network based successive cancellation decoding …<br/>2019"]
+    ref_35["ref_35<br/>Low-precision neural network decoding of polar codes<br/>2019"]
+    ref_40["ref_40<br/>Deep learningbased channel estimation and equalization…<br/>2019"]
+    ref_15["ref_15<br/>Machine learning for joint channel equalization and si…<br/>2020"]
+    ref_44["ref_44<br/>ref_44<br/>?"]
+    ref_45["ref_45<br/>ref_45<br/>?"]
+  end
+  subgraph B[Background Context]
+    ref_14["ref_14<br/>A survey on deep-learning based techniques for modelin…<br/>1910"]
+    ref_1["ref_1<br/>A survey of 5G network: Architecture and emerging tech…<br/>2015"]
+    ref_3["ref_3<br/>Internet of Things: A survey on enabling technologies,…<br/>2015"]
+    ref_2["ref_2<br/>Intelligent 5G: When cellular networks meet artiﬁcial …<br/>2017"]
+    ref_16["ref_16<br/>Deep learning detection method for signal demodulation…<br/>2017"]
+    ref_12["ref_12<br/>Deep learning-based channel estimation for beamspace m…<br/>2018"]
+    ref_9["ref_9<br/>Deep learning-based channel estimation for doubly sele…<br/>2019"]
+    ref_10["ref_10<br/>RoemNet: Robust meta learning based channel estimation…<br/>2019"]
+    ref_11["ref_11<br/>Deep learning-based channel estimation<br/>2019"]
+    ref_13["ref_13<br/>Decision directed channel estimation based on deep neu…<br/>2019"]
+    ref_8["ref_8<br/>Deep learning based channel estimation algorithm over …<br/>2020"]
+    ref_46["ref_46<br/>ref_46<br/>?"]
+    ref_47["ref_47<br/>ref_47<br/>?"]
+    ref_48["ref_48<br/>ref_48<br/>?"]
+    ref_49["ref_49<br/>ref_49<br/>?"]
+  end
+  subgraph T[Target]
+    target_paper["My Target Paper"]
+  end
+  ref_18 --> ref_14
+  ref_18 --> ref_1
+  ref_34 --> ref_14
+  ref_34 --> ref_1
+  ref_14 --> target_paper
+  ref_1 --> target_paper  </pre>
+</body>
+</html>

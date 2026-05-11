@@ -1,0 +1,1272 @@
+[
+  {
+    "citation_id": "ref_1",
+    "marker": "[1]",
+    "section_name": "introduction",
+    "sentence": "Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensable way for human society to communicate information.",
+    "context_window": "A. Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indisp",
+    "role": null,
+    "start_char": 1909,
+    "end_char": 1912
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "introduction",
+    "sentence": "Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensable way for human society to communicate information.",
+    "context_window": "A. Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensab",
+    "role": null,
+    "start_char": 1914,
+    "end_char": 1917
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "introduction",
+    "sentence": "Background and Motivation W ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensable way for human society to communicate information.",
+    "context_window": "ITH the large-scale deployment of 5G networks [1], [2] and the emergence of the Internet of Things [3], wire- less communication has become an indispensable way for human society to communicate informat",
+    "role": null,
+    "start_char": 1962,
+    "end_char": 1965
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "introduction",
+    "sentence": "1, MARCH 2021 In order to cope with the above-mentioned problems of the traditional physical layer receiver, in this article, we introduce the deep learning (DL) technology [4] currently widely used in the ﬁelds of image, speech, natural language and other ﬁelds to the design of communication receiver.",
+    "context_window": "raditional physical layer receiver, in this article, we introduce the deep learning (DL) technology [4] currently widely used in the ﬁelds of image, speech, natural language and other ﬁelds to the design",
+    "role": null,
+    "start_char": 6453,
+    "end_char": 6456
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]–[7]",
+    "section_name": "introduction",
+    "sentence": "The reason why deep learning is adopted is because it is an end-to-end learning method and it can learn deeper features from large amount of data compared with other machine learning methods [5]–[7].",
+    "context_window": "it can learn deeper features from large amount of data compared with other machine learning methods [5]–[7]. We propose a new receiver model, namely DeepReceiver, replacing the traditional receiver’s informa",
+    "role": null,
+    "start_char": 6775,
+    "end_char": 6782
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[5]–[7]",
+    "section_name": "introduction",
+    "sentence": "The reason why deep learning is adopted is because it is an end-to-end learning method and it can learn deeper features from large amount of data compared with other machine learning methods [5]–[7].",
+    "context_window": "it can learn deeper features from large amount of data compared with other machine learning methods [5]–[7]. We propose a new receiver model, namely DeepReceiver, replacing the traditional receiver’s informa",
+    "role": null,
+    "start_char": 6775,
+    "end_char": 6782
+  },
+  {
+    "citation_id": "ref_7",
+    "marker": "[5]–[7]",
+    "section_name": "introduction",
+    "sentence": "The reason why deep learning is adopted is because it is an end-to-end learning method and it can learn deeper features from large amount of data compared with other machine learning methods [5]–[7].",
+    "context_window": "it can learn deeper features from large amount of data compared with other machine learning methods [5]–[7]. We propose a new receiver model, namely DeepReceiver, replacing the traditional receiver’s informa",
+    "role": null,
+    "start_char": 6775,
+    "end_char": 6782
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "introduction",
+    "sentence": "1) Using DL to Improve the Performance of a Speciﬁc Processing Module of the Communication Receiver: In terms of channel estimation, in [8] a DL-based channel estimator under time-varying Rayleigh fading channel was proposed and the proposed DL-based estimator has better Mean Square Error (MSE) performance compared with the traditional algo- rithms.",
+    "context_window": "ce of a Speciﬁc Processing Module of the Communication Receiver: In terms of channel estimation, in [8] a DL-based channel estimator under time-varying Rayleigh fading channel was proposed and the propos",
+    "role": null,
+    "start_char": 7968,
+    "end_char": 7971
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "introduction",
+    "sentence": "In [9], a DL-based channel estimator was ﬁrst trained ofﬂine using simulated data and then dynamically adjusted online to effectively improve the generalization ability of the estimator.",
+    "context_window": "mator has better Mean Square Error (MSE) performance compared with the traditional algo- rithms. In [9], a DL-based channel estimator was ﬁrst trained ofﬂine using simulated data and then dynamically adj",
+    "role": null,
+    "start_char": 8187,
+    "end_char": 8190
+  },
+  {
+    "citation_id": "ref_10",
+    "marker": "[10]",
+    "section_name": "introduction",
+    "sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14].",
+    "context_window": "g to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14]. In terms of channel",
+    "role": null,
+    "start_char": 8518,
+    "end_char": 8522
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "introduction",
+    "sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14].",
+    "context_window": "ddress the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14]. In terms of channel equal",
+    "role": null,
+    "start_char": 8524,
+    "end_char": 8528
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]–[14]",
+    "section_name": "introduction",
+    "sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14].",
+    "context_window": "(OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14]. In terms of channel equalization, in [15] deep learning was used for channel equalization and seve",
+    "role": null,
+    "start_char": 8592,
+    "end_char": 8601
+  },
+  {
+    "citation_id": "ref_13",
+    "marker": "[12]–[14]",
+    "section_name": "introduction",
+    "sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14].",
+    "context_window": "(OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14]. In terms of channel equalization, in [15] deep learning was used for channel equalization and seve",
+    "role": null,
+    "start_char": 8592,
+    "end_char": 8601
+  },
+  {
+    "citation_id": "ref_14",
+    "marker": "[12]–[14]",
+    "section_name": "introduction",
+    "sentence": "There are also studies that used deep learn- ing to address the problems of orthogonal frequency divi- sion multiplexing (OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14].",
+    "context_window": "(OFDM) channel estimation [10], [11] and multiple-input multiple-output (MIMO) channel estima- tion [12]–[14]. In terms of channel equalization, in [15] deep learning was used for channel equalization and seve",
+    "role": null,
+    "start_char": 8592,
+    "end_char": 8601
+  },
+  {
+    "citation_id": "ref_15",
+    "marker": "[15]",
+    "section_name": "introduction",
+    "sentence": "In terms of channel equalization, in [15] deep learning was used for channel equalization and several deep neural network- based equalizers were presented and compared with traditional equalization methods.",
+    "context_window": "e-input multiple-output (MIMO) channel estima- tion [12]–[14]. In terms of channel equalization, in [15] deep learning was used for channel equalization and several deep neural network- based equalizers w",
+    "role": null,
+    "start_char": 8640,
+    "end_char": 8644
+  },
+  {
+    "citation_id": "ref_16",
+    "marker": "[16]",
+    "section_name": "introduction",
+    "sentence": "In terms of signal demodulation, deep belief networks and stacked autoencoders were used in [16] to complete signal demodulation in short-distance multipath channels.",
+    "context_window": "tained. In terms of signal demodulation, deep belief networks and stacked autoencoders were used in [16] to complete signal demodulation in short-distance multipath channels. Convolutional neural network",
+    "role": null,
+    "start_char": 8979,
+    "end_char": 8983
+  },
+  {
+    "citation_id": "ref_17",
+    "marker": "[17]",
+    "section_name": "introduction",
+    "sentence": "Convolutional neural network (CNN) was used to demodu- late bipolar extended binary phase shifting keying (BPSK) signals transmitted at a faster-than Nyquist rate [17], solving the problem of severe ISI.",
+    "context_window": "olar extended binary phase shifting keying (BPSK) signals transmitted at a faster-than Nyquist rate [17], solving the problem of severe ISI. In addition to hard demodulation, deep neural networks were als",
+    "role": null,
+    "start_char": 9217,
+    "end_char": 9221
+  },
+  {
+    "citation_id": "ref_18",
+    "marker": "[18]",
+    "section_name": "introduction",
+    "sentence": "In addition to hard demodulation, deep neural networks were also used to implement soft demod- ulation [18], which reduces the computational complexity and improves the demodulation performance.",
+    "context_window": "addition to hard demodulation, deep neural networks were also used to implement soft demod- ulation [18], which reduces the computational complexity and improves the demodulation performance. In channel d",
+    "role": null,
+    "start_char": 9361,
+    "end_char": 9365
+  },
+  {
+    "citation_id": "ref_19",
+    "marker": "[19]",
+    "section_name": "introduction",
+    "sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "context_window": "ion with belief propagation algorithms to improve decoding performance. Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and",
+    "role": null,
+    "start_char": 9631,
+    "end_char": 9635
+  },
+  {
+    "citation_id": "ref_20",
+    "marker": "[20]",
+    "section_name": "introduction",
+    "sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "context_window": "th belief propagation algorithms to improve decoding performance. Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other",
+    "role": null,
+    "start_char": 9637,
+    "end_char": 9641
+  },
+  {
+    "citation_id": "ref_21",
+    "marker": "[21]",
+    "section_name": "introduction",
+    "sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "context_window": "rove decoding performance. Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used. In",
+    "role": null,
+    "start_char": 9676,
+    "end_char": 9680
+  },
+  {
+    "citation_id": "ref_22",
+    "marker": "[22]",
+    "section_name": "introduction",
+    "sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "context_window": "ing performance. Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used. In view of t",
+    "role": null,
+    "start_char": 9686,
+    "end_char": 9690
+  },
+  {
+    "citation_id": "ref_23",
+    "marker": "[23]",
+    "section_name": "introduction",
+    "sentence": "Deep neural networks (DNNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used.",
+    "context_window": "NNs) [19], [20], recurrent neural networks (RNNs) [21], CNN [22], graph convolutional network (GCN) [23] and other neural network structures were used. In view of the high computational complexity of the",
+    "role": null,
+    "start_char": 9726,
+    "end_char": 9730
+  },
+  {
+    "citation_id": "ref_24",
+    "marker": "[24]",
+    "section_name": "introduction",
+    "sentence": "In view of the high computational complexity of the BP algorithm, in [24], [25] deep learning-based minimum sum decoding algorithms were proposed, which reduced the computational complexity and improved the decoding speed.",
+    "context_window": "network structures were used. In view of the high computational complexity of the BP algorithm, in [24], [25] deep learning-based minimum sum decoding algorithms were proposed, which reduced the computat",
+    "role": null,
+    "start_char": 9847,
+    "end_char": 9851
+  },
+  {
+    "citation_id": "ref_25",
+    "marker": "[25]",
+    "section_name": "introduction",
+    "sentence": "In view of the high computational complexity of the BP algorithm, in [24], [25] deep learning-based minimum sum decoding algorithms were proposed, which reduced the computational complexity and improved the decoding speed.",
+    "context_window": "rk structures were used. In view of the high computational complexity of the BP algorithm, in [24], [25] deep learning-based minimum sum decoding algorithms were proposed, which reduced the computational",
+    "role": null,
+    "start_char": 9853,
+    "end_char": 9857
+  },
+  {
+    "citation_id": "ref_26",
+    "marker": "[26]–[29]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addit",
+    "role": null,
+    "start_char": 10135,
+    "end_char": 10144
+  },
+  {
+    "citation_id": "ref_27",
+    "marker": "[26]–[29]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addit",
+    "role": null,
+    "start_char": 10135,
+    "end_char": 10144
+  },
+  {
+    "citation_id": "ref_28",
+    "marker": "[26]–[29]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addit",
+    "role": null,
+    "start_char": 10135,
+    "end_char": 10144
+  },
+  {
+    "citation_id": "ref_29",
+    "marker": "[26]–[29]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addit",
+    "role": null,
+    "start_char": 10135,
+    "end_char": 10144
+  },
+  {
+    "citation_id": "ref_30",
+    "marker": "[30]–[32]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addition to replacing a certain processing mo",
+    "role": null,
+    "start_char": 10175,
+    "end_char": 10184
+  },
+  {
+    "citation_id": "ref_31",
+    "marker": "[30]–[32]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addition to replacing a certain processing mo",
+    "role": null,
+    "start_char": 10175,
+    "end_char": 10184
+  },
+  {
+    "citation_id": "ref_32",
+    "marker": "[30]–[32]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addition to replacing a certain processing mo",
+    "role": null,
+    "start_char": 10175,
+    "end_char": 10184
+  },
+  {
+    "citation_id": "ref_33",
+    "marker": "[33]–[35]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addition to replacing a certain processing module of the receiver with deep learning, some stud",
+    "role": null,
+    "start_char": 10225,
+    "end_char": 10234
+  },
+  {
+    "citation_id": "ref_34",
+    "marker": "[33]–[35]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addition to replacing a certain processing module of the receiver with deep learning, some stud",
+    "role": null,
+    "start_char": 10225,
+    "end_char": 10234
+  },
+  {
+    "citation_id": "ref_35",
+    "marker": "[33]–[35]",
+    "section_name": "introduction",
+    "sentence": "In terms of Polar code decod- ing, there are also many works that use deep learning to improve the performance of Polar code decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35].",
+    "context_window": "decoding [26]–[29], reduce the delay of decoding [30]–[32], and facilitate hardware implementation [33]–[35]. In addition to replacing a certain processing module of the receiver with deep learning, some stud",
+    "role": null,
+    "start_char": 10225,
+    "end_char": 10234
+  },
+  {
+    "citation_id": "ref_36",
+    "marker": "[36]",
+    "section_name": "introduction",
+    "sentence": "For instance, in [36] bidirectional recurrent neural network (BRNN) was used for data sequence detec- tion, however channel decoding module was not included in the BRNN.",
+    "context_window": "learn- ing to simultaneously optimize multiple processing modules of the receiver. For instance, in [36] bidirectional recurrent neural network (BRNN) was used for data sequence detec- tion, however chann",
+    "role": null,
+    "start_char": 10448,
+    "end_char": 10452
+  },
+  {
+    "citation_id": "ref_37",
+    "marker": "[37]",
+    "section_name": "introduction",
+    "sentence": "In [37] deep neural network was proposed to replace the equalization and decoding modules to improve the performance in multipath channels, but there is still a cer- tain gap between the performance of minimal MSE method that knows the channel statistics.",
+    "context_window": "sed for data sequence detec- tion, however channel decoding module was not included in the BRNN. In [37] deep neural network was proposed to replace the equalization and decoding modules to improve the pe",
+    "role": null,
+    "start_char": 10604,
+    "end_char": 10608
+  },
+  {
+    "citation_id": "ref_38",
+    "marker": "[38]",
+    "section_name": "introduction",
+    "sentence": "Based on this work, in [38] deep neural network structure was used to replace the chan- nel equalization and symbol detection modules in the OFDM receiver.",
+    "context_window": "een the performance of minimal MSE method that knows the channel statistics. Based on this work, in [38] deep neural network structure was used to replace the chan- nel equalization and symbol detection m",
+    "role": null,
+    "start_char": 10880,
+    "end_char": 10884
+  },
+  {
+    "citation_id": "ref_39",
+    "marker": "[39]",
+    "section_name": "introduction",
+    "sentence": "In [39], two separate neural networks were used to replace the equalization module and decoding module, respec- tively.",
+    "context_window": "tion modules in the OFDM receiver. Better performance than the traditional methods was obtained. In [39], two separate neural networks were used to replace the equalization module and decoding module, res",
+    "role": null,
+    "start_char": 11078,
+    "end_char": 11082
+  },
+  {
+    "citation_id": "ref_40",
+    "marker": "[40]",
+    "section_name": "introduction",
+    "sentence": "In [40], a deep learning-based channel estima- tion and equalization method was used to address the problem of the traditional channel estimation algorithm in dealing with inherent interference.",
+    "context_window": "ng module, respec- tively. The two networks can be jointly trained to obtain better performance. In [40], a deep learning-based channel estima- tion and equalization method was used to address the problem",
+    "role": null,
+    "start_char": 11268,
+    "end_char": 11272
+  },
+  {
+    "citation_id": "ref_41",
+    "marker": "[41]–[45]",
+    "section_name": "introduction",
+    "sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45].",
+    "context_window": "e research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45]. These works used a deep neural network (commonly autoencoder) to replace the entire com- municatio",
+    "role": null,
+    "start_char": 12566,
+    "end_char": 12575
+  },
+  {
+    "citation_id": "ref_42",
+    "marker": "[41]–[45]",
+    "section_name": "introduction",
+    "sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45].",
+    "context_window": "e research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45]. These works used a deep neural network (commonly autoencoder) to replace the entire com- municatio",
+    "role": null,
+    "start_char": 12566,
+    "end_char": 12575
+  },
+  {
+    "citation_id": "ref_43",
+    "marker": "[41]–[45]",
+    "section_name": "introduction",
+    "sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45].",
+    "context_window": "e research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45]. These works used a deep neural network (commonly autoencoder) to replace the entire com- municatio",
+    "role": null,
+    "start_char": 12566,
+    "end_char": 12575
+  },
+  {
+    "citation_id": "ref_44",
+    "marker": "[41]–[45]",
+    "section_name": "introduction",
+    "sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45].",
+    "context_window": "e research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45]. These works used a deep neural network (commonly autoencoder) to replace the entire com- municatio",
+    "role": null,
+    "start_char": 12566,
+    "end_char": 12575
+  },
+  {
+    "citation_id": "ref_45",
+    "marker": "[41]–[45]",
+    "section_name": "introduction",
+    "sentence": "2) DL-Based Communications System: In addition to using deep learning to learn the function of a certain module of the receiver, there are some research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45].",
+    "context_window": "e research work on end-to-end optimization of wireless communication systems based on deep learning [41]–[45]. These works used a deep neural network (commonly autoencoder) to replace the entire com- municatio",
+    "role": null,
+    "start_char": 12566,
+    "end_char": 12575
+  },
+  {
+    "citation_id": "ref_46",
+    "marker": "[46]–[49]",
+    "section_name": "introduction",
+    "sentence": "Another method is to ﬁrst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "context_window": "rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery. H",
+    "role": null,
+    "start_char": 14029,
+    "end_char": 14038
+  },
+  {
+    "citation_id": "ref_47",
+    "marker": "[46]–[49]",
+    "section_name": "introduction",
+    "sentence": "Another method is to ﬁrst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "context_window": "rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery. H",
+    "role": null,
+    "start_char": 14029,
+    "end_char": 14038
+  },
+  {
+    "citation_id": "ref_48",
+    "marker": "[46]–[49]",
+    "section_name": "introduction",
+    "sentence": "Another method is to ﬁrst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "context_window": "rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery. H",
+    "role": null,
+    "start_char": 14029,
+    "end_char": 14038
+  },
+  {
+    "citation_id": "ref_49",
+    "marker": "[46]–[49]",
+    "section_name": "introduction",
+    "sentence": "Another method is to ﬁrst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery.",
+    "context_window": "rst iden- tify the modulation and coding of the received signal (where DL-based methods can be used [46]–[49]), and then select the corresponding demodulation and decoding algorithm for information recovery. H",
+    "role": null,
+    "start_char": 14029,
+    "end_char": 14038
+  },
+  {
+    "citation_id": "ref_50",
+    "marker": "[50]",
+    "section_name": "b_rief_introduction_of_acanonical_wireless_communication_system",
+    "sentence": "In addition, in actual hardware circuits, the physical limitations of the device and circuit design errors will cause the phase and ampli- tude of the I and Q signals to be inconsistent, result- ing in IQ imbalance [50].",
+    "context_window": "se the phase and ampli- tude of the I and Q signals to be inconsistent, result- ing in IQ imbalance [50]. The IQ imbalance can be represented as y(x )=R e (x )10 α 40 exp { −j βπ 360 } + j Im(x )10 α 40 e",
+    "role": null,
+    "start_char": 21690,
+    "end_char": 21694
+  },
+  {
+    "citation_id": "ref_51",
+    "marker": "[51]",
+    "section_name": "b_rief_introduction_of_acanonical_wireless_communication_system",
+    "sentence": "In addition, we also consider AGGN [51] which can better character- ize “pulse” noise.",
+    "context_window": "ontain a certain amount of noise. The most common noise is AWGN. In addition, we also consider AGGN [51] which can better character- ize “pulse” noise. The probability density function of AGGN is p(ω)= ρ",
+    "role": null,
+    "start_char": 23396,
+    "end_char": 23400
+  },
+  {
+    "citation_id": "ref_52",
+    "marker": "[52]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "2) The Designed 1D-Conv-DenseNet Structure: There are many excellent CNN structures for image classiﬁcation, including Inception [52], ResNet [53], and DenseNet [54].",
+    "context_window": "Net Structure: There are many excellent CNN structures for image classiﬁcation, including Inception [52], ResNet [53], and DenseNet [54]. Among them, DenseNet has achieved better performance than the othe",
+    "role": null,
+    "start_char": 30259,
+    "end_char": 30263
+  },
+  {
+    "citation_id": "ref_53",
+    "marker": "[53]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "2) The Designed 1D-Conv-DenseNet Structure: There are many excellent CNN structures for image classiﬁcation, including Inception [52], ResNet [53], and DenseNet [54].",
+    "context_window": ": There are many excellent CNN structures for image classiﬁcation, including Inception [52], ResNet [53], and DenseNet [54]. Among them, DenseNet has achieved better performance than the other two network",
+    "role": null,
+    "start_char": 30272,
+    "end_char": 30276
+  },
+  {
+    "citation_id": "ref_54",
+    "marker": "[54]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "2) The Designed 1D-Conv-DenseNet Structure: There are many excellent CNN structures for image classiﬁcation, including Inception [52], ResNet [53], and DenseNet [54].",
+    "context_window": "cellent CNN structures for image classiﬁcation, including Inception [52], ResNet [53], and DenseNet [54]. Among them, DenseNet has achieved better performance than the other two networks. We will build ou",
+    "role": null,
+    "start_char": 30291,
+    "end_char": 30295
+  },
+  {
+    "citation_id": "ref_54",
+    "marker": "[54]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], rectiﬁed linear unit (ReLU) [56], and 5 × 1 convolution.",
+    "context_window": "ll these layers. The function Fl (·) is generally composed of multiple processing units. Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], rectiﬁed li",
+    "role": null,
+    "start_char": 31361,
+    "end_char": 31365
+  },
+  {
+    "citation_id": "ref_55",
+    "marker": "[55]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], rectiﬁed linear unit (ReLU) [56], and 5 × 1 convolution.",
+    "context_window": ". Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], rectiﬁed linear unit (ReLU) [56], and 5 × 1 convolution. The number of convolution kernels is set",
+    "role": null,
+    "start_char": 31448,
+    "end_char": 31452
+  },
+  {
+    "citation_id": "ref_56",
+    "marker": "[56]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "Similar to [54], this function in 1D-Conv-DenseNet includes three operations: batch normalization [55], rectiﬁed linear unit (ReLU) [56], and 5 × 1 convolution.",
+    "context_window": "n 1D-Conv-DenseNet includes three operations: batch normalization [55], rectiﬁed linear unit (ReLU) [56], and 5 × 1 convolution. The number of convolution kernels is set as required. The batch normalizati",
+    "role": null,
+    "start_char": 31482,
+    "end_char": 31486
+  },
+  {
+    "citation_id": "ref_57",
+    "marker": "[57]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "In our 1D-Conv-DenseNet, the transition module includes a batch normalization layer, a ReLU layer, a maximum pooling layer [57] with ﬁlter size of 3 × 1 and step size of 2, and a convolution layer with kernel size of 5 × 1 (the number of kernels is determined as required).",
+    "context_window": ", the transition module includes a batch normalization layer, a ReLU layer, a maximum pooling layer [57] with ﬁlter size of 3 × 1 and step size of 2, and a convolution layer with kernel size of 5 × 1 (the",
+    "role": null,
+    "start_char": 33113,
+    "end_char": 33117
+  },
+  {
+    "citation_id": "ref_58",
+    "marker": "[58]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "Finally global maximum pooling and global average pooling [58] are used to obtain the feature vector, according to which each binary classiﬁer computes the probabilities of each bit being 0 or 1.",
+    "context_window": "volution layer with 150 channels is used. Finally global maximum pooling and global average pooling [58] are used to obtain the feature vector, according to which each binary classiﬁer computes the probab",
+    "role": null,
+    "start_char": 34216,
+    "end_char": 34220
+  },
+  {
+    "citation_id": "ref_0",
+    "marker": "[1,0]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "context_window": "or labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural netw",
+    "role": null,
+    "start_char": 37439,
+    "end_char": 37444
+  },
+  {
+    "citation_id": "ref_1",
+    "marker": "[1,0]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "context_window": "or labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural netw",
+    "role": null,
+    "start_char": 37439,
+    "end_char": 37444
+  },
+  {
+    "citation_id": "ref_0",
+    "marker": "[0,1]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "context_window": "in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic",
+    "role": null,
+    "start_char": 37469,
+    "end_char": 37474
+  },
+  {
+    "citation_id": "ref_1",
+    "marker": "[0,1]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "context_window": "in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic",
+    "role": null,
+    "start_char": 37469,
+    "end_char": 37474
+  },
+  {
+    "citation_id": "ref_59",
+    "marker": "[59]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "One-hot coding is used for labeling, i.e., when a bit in the real information bit stream is 0, the correspond- ing label is [1,0]T otherwise the label is [0,1]T .T h em o s t commonly used optimization method for deep neural network training is the stochastic gradient descent (SGD) method [59].",
+    "context_window": "ptimization method for deep neural network training is the stochastic gradient descent (SGD) method [59]. The SGD algorithm might oscillate along the path of steepest descent towards the optimum. We use S",
+    "role": null,
+    "start_char": 37605,
+    "end_char": 37609
+  },
+  {
+    "citation_id": "ref_60",
+    "marker": "[60]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "We use SGD with momentum which adds a momentum term to the update to reduce this oscillation [60] in this article.",
+    "context_window": "timum. We use SGD with momentum which adds a momentum term to the update to reduce this oscillation [60] in this article. The update is w t+1 = w l − τ∇L(w t )+ ϑ(w t − w t−1), (16) where w is the network",
+    "role": null,
+    "start_char": 37794,
+    "end_char": 37798
+  },
+  {
+    "citation_id": "ref_61",
+    "marker": "[61]",
+    "section_name": "t_he_proposed_deep_receiver_model",
+    "sentence": "For example, layer-wise prun- ing [61] can be performed to reduce the number of neural network layers, thereby reducing inference delay.",
+    "context_window": "al complexity and storage complexity of the neural network model. For example, layer-wise prun- ing [61] can be performed to reduce the number of neural network layers, thereby reducing inference delay. I",
+    "role": null,
+    "start_char": 41198,
+    "end_char": 41202
+  },
+  {
+    "citation_id": "ref_1",
+    "marker": "[1]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "R EFERENCES [1] A.",
+    "context_window": "e air to evalu- ate the performance of the DeepReceiver in the real-world environments. R EFERENCES [1] A. Gupta and R. K. Jha, “A survey of 5G network: Architecture and emerging technologies,” IEEE Acce",
+    "role": null,
+    "start_char": 69498,
+    "end_char": 69501
+  },
+  {
+    "citation_id": "ref_2",
+    "marker": "[2]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[2] R.",
+    "context_window": "y of 5G network: Architecture and emerging technologies,” IEEE Access, vol. 3, pp. 1206–1232, 2015. [2] R. Li et al. , “Intelligent 5G: When cellular networks meet artiﬁcial intelligence,” IEEE Wireless",
+    "role": null,
+    "start_char": 69634,
+    "end_char": 69637
+  },
+  {
+    "citation_id": "ref_3",
+    "marker": "[3]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[3] A.",
+    "context_window": "works meet artiﬁcial intelligence,” IEEE Wireless Commun. , vol. 24, no. 5, pp. 175–183, Oct. 2017. [3] A. Al-Fuqaha, M. Guizani, M. Mohammadi, M. Aledhari, and M. Ayyash, “Internet of Things: A survey o",
+    "role": null,
+    "start_char": 69787,
+    "end_char": 69790
+  },
+  {
+    "citation_id": "ref_4",
+    "marker": "[4]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[4] Y .",
+    "context_window": "s, and applications,” IEEE Commun. Surveys Tuts. , vol. 17, no. 4, pp. 2347–2376, 4th Quart., 2015. [4] Y . Lecun, Y . Bengio, and G. Hinton, “Deep learning,” Nature, vol. 521, no. 7553, pp. 436–444, 201",
+    "role": null,
+    "start_char": 70025,
+    "end_char": 70028
+  },
+  {
+    "citation_id": "ref_5",
+    "marker": "[5]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[5] J.",
+    "context_window": ". Lecun, Y . Bengio, and G. Hinton, “Deep learning,” Nature, vol. 521, no. 7553, pp. 436–444, 2015. [5] J. Qiu, Q. Wu, G. Ding, Y . Xu, and S. Feng, “A survey of machine learning for big data processing,",
+    "role": null,
+    "start_char": 70131,
+    "end_char": 70134
+  },
+  {
+    "citation_id": "ref_6",
+    "marker": "[6]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[6] O.",
+    "context_window": "rning for big data processing,” EURASIP J. Adv. Signal Process. , vol. 2016, no. 1, pp. 1–16, 2016. [6] O. Simeone, “A very brief introduction to machine learning with appli- cations to communication sys",
+    "role": null,
+    "start_char": 70304,
+    "end_char": 70307
+  },
+  {
+    "citation_id": "ref_7",
+    "marker": "[7]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[7] S.",
+    "context_window": "to communication systems,” IEEE Trans. Cogn. Commun. Netw., vol. 4, no. 4, pp. 648–664, Nov. 2018. [7] S. Zheng et al. , “Big data processing architecture for radio signals empowered by deep learning: C",
+    "role": null,
+    "start_char": 70486,
+    "end_char": 70489
+  },
+  {
+    "citation_id": "ref_8",
+    "marker": "[8]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[8] Q.",
+    "context_window": "ing: Concept, experiment, applications and challenges,” IEEE Access, vol. 6, pp. 55907–55922, 2018. [8] Q. Bai, J. Wang, Y . Zhang, and J. Song, “Deep learning based channel estimation algorithm over tim",
+    "role": null,
+    "start_char": 70683,
+    "end_char": 70686
+  },
+  {
+    "citation_id": "ref_9",
+    "marker": "[9]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[9] Y .",
+    "context_window": "selective fading channels,” IEEE Trans. Cogn. Commun. Netw., vol. 6, no. 1, pp. 125–134, Aug. 2020. [9] Y . Yang, F. Gao, X. Ma, and S. Zhang, “Deep learning-based channel estimation for doubly selective",
+    "role": null,
+    "start_char": 70888,
+    "end_char": 70891
+  },
+  {
+    "citation_id": "ref_10",
+    "marker": "[10]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[10] H.",
+    "context_window": "el estimation for doubly selective fading channels,” IEEE Access ,v o l .7 , pp. 36579–36589, 2019. [10] H. Mao, H. Lu, Y . Lu, and D. Zhu, “RoemNet: Robust meta learning based channel estimation in OFDM",
+    "role": null,
+    "start_char": 71057,
+    "end_char": 71061
+  },
+  {
+    "citation_id": "ref_11",
+    "marker": "[11]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[11] M.",
+    "context_window": "g based channel estimation in OFDM systems,” in Proc. IEEE Int. Conf. Commun. (ICC), 2019, pp. 1–6. [11] M. Soltani, V . Pourahmadi, A. Mirzaei, and H. Sheikhzadeh, “Deep learning-based channel estimation",
+    "role": null,
+    "start_char": 71226,
+    "end_char": 71230
+  },
+  {
+    "citation_id": "ref_12",
+    "marker": "[12]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[12] H.",
+    "context_window": "eep learning-based channel estimation,” IEEE Commun. Lett., vol. 23, no. 4, pp. 652–655, Feb. 2019. [12] H. He, C.-K. Wen, S. Jin, and G. Y . Li, “Deep learning-based chan- nel estimation for beamspace mm",
+    "role": null,
+    "start_char": 71393,
+    "end_char": 71397
+  },
+  {
+    "citation_id": "ref_13",
+    "marker": "[13]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[13] M.",
+    "context_window": "ce mmWave massive MIMO systems,” IEEE Wireless Commun. Lett., vol. 7, no. 5, pp. 852–855, May 2018. [13] M. Mehrabi, M. Mohammadkarimi, M. Ardakani, and Y . Jing, “Decision directed channel estimation bas",
+    "role": null,
+    "start_char": 71592,
+    "end_char": 71596
+  },
+  {
+    "citation_id": "ref_14",
+    "marker": "[14]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[14] M.",
+    "context_window": "MIMO communications in 5G,” IEEE J. Sel. Areas Commun., vol. 37, no. 11, pp. 2443–2456, Jan. 2019. [14] M. Zamanipour, “A survey on deep-learning based techniques for modeling and estimation of massiveMI",
+    "role": null,
+    "start_char": 71845,
+    "end_char": 71849
+  },
+  {
+    "citation_id": "ref_15",
+    "marker": "[15]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[15] L.",
+    "context_window": "for modeling and estimation of massiveMIMO channels,” 2019. [Online]. Available: arXiv:1910.03390. [15] L. Zhang and L.-L. Yang, “Machine learning for joint channel equal- ization and signal detection,”",
+    "role": null,
+    "start_char": 72008,
+    "end_char": 72012
+  },
+  {
+    "citation_id": "ref_16",
+    "marker": "[16]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[16] L.",
+    "context_window": "n,” in Machine Learning for Future Wireless Communications. London, U.K.: Wiley, 2020, pp. 213–241. [16] L. Fang and L. Wu, “Deep learning detection method for signal demod- ulation in short range multipa",
+    "role": null,
+    "start_char": 72208,
+    "end_char": 72212
+  },
+  {
+    "citation_id": "ref_17",
+    "marker": "[17]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[17] X.",
+    "context_window": "path channel,” in Proc. IEEE 2nd Int. Conf. Opto Electron. Inf. Process. (ICOIP) , 2017, pp. 16–20. [17] X. Ouyang and L. Wu, “Faster-than-Nyquist rate communication via convolutional neural networks-base",
+    "role": null,
+    "start_char": 72410,
+    "end_char": 72414
+  },
+  {
+    "citation_id": "ref_18",
+    "marker": "[18]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[18] O.",
+    "context_window": "volutional neural networks-based demodulators,” J. Southeast Univ., vol. 32, no. 1, pp. 6–10, 2016. [18] O. Shental and J. Hoydis, ‘Machine LLRnin’: Learning to softly demodulate,” 2019. [Online]. Availab",
+    "role": null,
+    "start_char": 72583,
+    "end_char": 72587
+  },
+  {
+    "citation_id": "ref_19",
+    "marker": "[19]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[19] E.",
+    "context_window": "dis, ‘Machine LLRnin’: Learning to softly demodulate,” 2019. [Online]. Available: arXiv:1907.01512. [19] E. Nachmani, Y . Be’ery, and D. Burshtein, “Learning to decode linear codes using deep learning,” i",
+    "role": null,
+    "start_char": 72709,
+    "end_char": 72713
+  },
+  {
+    "citation_id": "ref_20",
+    "marker": "[20]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[20] E.",
+    "context_window": "sing deep learning,” in Proc. 54th Annu. Allerton Conf. Commun. Control Comput., 2016, pp. 341–346. [20] E. Nachmani, Y . Bachar, E. Marciano, D. Burshtein, and Y . Be’ery, “Near maximum likelihood decodi",
+    "role": null,
+    "start_char": 72891,
+    "end_char": 72895
+  },
+  {
+    "citation_id": "ref_21",
+    "marker": "[21]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[21] E.",
+    "context_window": "“Near maximum likelihood decoding with deep learning,” 2018. [Online]. Available: arXiv:1801.02726. [21] E. Nachmani, E. Marciano, L. Lugosch, W. J. Gross, D. Burshtein, and Y . Be’ery, “Deep learning met",
+    "role": null,
+    "start_char": 73064,
+    "end_char": 73068
+  },
+  {
+    "citation_id": "ref_22",
+    "marker": "[22]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[22] F.",
+    "context_window": "ding of linear codes,” IEEE J. Sel. Topics Signal Process., vol. 12, no. 1, pp. 119–131, Jan. 2018. [22] F. Liang, C. Shen, and F. Wu, “An iterative BP-CNN architecture for channel decoding,” IEEE J. Sel.",
+    "role": null,
+    "start_char": 73290,
+    "end_char": 73294
+  },
+  {
+    "citation_id": "ref_23",
+    "marker": "[23]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[23] E.",
+    "context_window": "or channel decoding,” IEEE J. Sel. Topics Signal Process. , vol. 12, no. 1, pp. 144–159, Jan. 2018. [23] E. Nachmani and L. Wolf, “Hyper-graph-network decoders for block codes,” 2019. [Online]. Available:",
+    "role": null,
+    "start_char": 73460,
+    "end_char": 73464
+  },
+  {
+    "citation_id": "ref_24",
+    "marker": "[24]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[24] L.",
+    "context_window": "Wolf, “Hyper-graph-network decoders for block codes,” 2019. [Online]. Available: arXiv:1909.09036. [24] L. Lugosch and W. J. Gross, “Neural offset min-sum decoding,” in Proc. IEEE Int. Symp. Inf. Theory",
+    "role": null,
+    "start_char": 73583,
+    "end_char": 73587
+  },
+  {
+    "citation_id": "ref_25",
+    "marker": "[25]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[25] C.",
+    "context_window": "Neural offset min-sum decoding,” in Proc. IEEE Int. Symp. Inf. Theory (ISIT) , 2017, pp. 1361–1365. [25] C. Deng and S. L. B. Yuan, “Reduced-complexity deep neural network- aided channel code decoder: A c",
+    "role": null,
+    "start_char": 73717,
+    "end_char": 73721
+  },
+  {
+    "citation_id": "ref_26",
+    "marker": "[26]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[26] W.",
+    "context_window": "H decoder,” in Proc. IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP) , 2019, pp. 1468–1472. [26] W. Xu, X. You, C. Zhang, and Y . Be’ery, “Polar decoding on sparse graphs with deep learning,” in P",
+    "role": null,
+    "start_char": 73937,
+    "end_char": 73941
+  },
+  {
+    "citation_id": "ref_27",
+    "marker": "[27]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[27] N.",
+    "context_window": "graphs with deep learning,” in Proc. 52nd Asilomar Conf. Signals Syst. Comput., 2018, pp. 599–603. [27] N. Doan, S. A. Hashemi, E. N. Mambou, T. Tonnellier, and W. J. Gross, “Neural belief propagation de",
+    "role": null,
+    "start_char": 74108,
+    "end_char": 74112
+  },
+  {
+    "citation_id": "ref_28",
+    "marker": "[28]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[28] X.",
+    "context_window": "decoding of CRC-polar concatenated codes,” in Proc. IEEE Int. Conf. Commun. (ICC) , 2019, pp. 1–6. [28] X. Wang et al. , “Learning to ﬂip successive cancellation decoding of polar codes with LSTM network",
+    "role": null,
+    "start_char": 74309,
+    "end_char": 74313
+  },
+  {
+    "citation_id": "ref_29",
+    "marker": "[29]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[29] Z.",
+    "context_window": "ks,” in Proc. IEEE 30th Annu. Int. Symp. Pers. Indoor Mobile Radio Commun. (PIMRC) , 2019, pp. 1–5. [29] Z. Cao, H. Zhu, Y . Zhao, and D. Li, “Learning to denoise and decode: A novel residual neural netwo",
+    "role": null,
+    "start_char": 74512,
+    "end_char": 74516
+  },
+  {
+    "citation_id": "ref_30",
+    "marker": "[30]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[30] N.",
+    "context_window": "ovel residual neural network decoder for polar codes,” 2019. [Online]. Available: arXiv:1908.00460. [30] N. Doan, S. A. Hashemi, and W. J. Gross, “Neural successive cancella- tion decoding of polar codes,",
+    "role": null,
+    "start_char": 74690,
+    "end_char": 74694
+  },
+  {
+    "citation_id": "ref_31",
+    "marker": "[31]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[31] J.",
+    "context_window": "es,” in Proc. IEEE 19th Int. Workshop Signal Process. Adv. Wireless Commun. (SPAWC), 2018, pp. 1–5. [31] J. Gao and R. Liu, “Neural network aided SC decoder for polar codes,” in Proc. IEEE 4th Int. Conf.",
+    "role": null,
+    "start_char": 74891,
+    "end_char": 74895
+  },
+  {
+    "citation_id": "ref_32",
+    "marker": "[32]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[32] R.",
+    "context_window": "ecoder for polar codes,” in Proc. IEEE 4th Int. Conf. Comput. Commun. (ICCC) , 2018, pp. 2153–2157. [32] R. Zhang, F. Liu, Z. Zeng, Q. Shang, and S. Zhao, “Neural network based successive cancellation dec",
+    "role": null,
+    "start_char": 75041,
+    "end_char": 75045
+  },
+  {
+    "citation_id": "ref_33",
+    "marker": "[33]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[33] Y .",
+    "context_window": "polar codes in URLLC,” in Proc. 16th Int. Symp. Wireless Commun. Syst. (ISWCS) , 2019, pp. 182–187. [33] Y . Wang, Z. Zhang, S. Zhang, S. Cao, and S. Xu, “A uniﬁed deep learning based polar-LDPC decoder f",
+    "role": null,
+    "start_char": 75265,
+    "end_char": 75269
+  },
+  {
+    "citation_id": "ref_34",
+    "marker": "[34]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[34] N.",
+    "context_window": "ication systems,” in Proc. 10th Int. Conf. Wireless Commun. Signal Process. (WCSP) , 2018, pp. 1–6. [34] N. Doan, S. A. Hashemi, F. Ercan, T. Tonnellier, and W. Gross, “Neural dynamic successive cancellat",
+    "role": null,
+    "start_char": 75481,
+    "end_char": 75485
+  },
+  {
+    "citation_id": "ref_35",
+    "marker": "[35]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[35] I.",
+    "context_window": "successive cancellation ﬂip decoding of polar codes,” 2019. [Online]. Available: arXiv:1907.11563. [35] I. Wodiany and A. Pop, “Low-precision neural network decoding of polar codes,” in Proc. IEEE 20th I",
+    "role": null,
+    "start_char": 75664,
+    "end_char": 75668
+  },
+  {
+    "citation_id": "ref_36",
+    "marker": "[36]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[36] F.",
+    "context_window": "es,” in Proc. IEEE 20th Int. Workshop Signal Process. Adv. Wireless Commun. (SPAWC), 2019, pp. 1–5. [36] F. Nariman and G. Andrea, “Neural network detection of data sequences in communication systems,”IEE",
+    "role": null,
+    "start_char": 75843,
+    "end_char": 75847
+  },
+  {
+    "citation_id": "ref_37",
+    "marker": "[37]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[37] H.",
+    "context_window": "s in communication systems,”IEEE Trans. Signal Process., vol. 66, no. 21, pp. 5663–5678, Sep. 2018. [37] H. Ye and G. Y . Li, “Initial results on deep learning for joint channel equalization and decoding,",
+    "role": null,
+    "start_char": 76016,
+    "end_char": 76020
+  },
+  {
+    "citation_id": "ref_38",
+    "marker": "[38]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[38] H.",
+    "context_window": "annel equalization and decoding,” in Proc. IEEE 86th Veh. Technol. Conf. (VTC-Fall), 2017, pp. 1–5. [38] H. Ye, G. Y . Li, and B.-H. Juang, “Power of deep learning for chan- nel estimation and signal dete",
+    "role": null,
+    "start_char": 76188,
+    "end_char": 76192
+  },
+  {
+    "citation_id": "ref_39",
+    "marker": "[39]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[39] W.",
+    "context_window": "nal detection in OFDM systems,” IEEE Wireless Commun. Lett., vol. 7, no. 1, pp. 114–117, Sep. 2017. [39] W. Xu, Z. Zhong, Y . Be’ery, X. You, and C. Zhang, “Joint neural network equalizer and decoder,” in",
+    "role": null,
+    "start_char": 76384,
+    "end_char": 76388
+  },
+  {
+    "citation_id": "ref_40",
+    "marker": "[40]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[40] X.",
+    "context_window": "ork equalizer and decoder,” in Proc. 15th Int. Symp. Wireless Commun. Syst. (ISWCS), 2018, pp. 1–5. [40] X. Cheng, D. Liu, C. Wang, S. Yan, and Z. Zhu, “Deep learning- based channel estimation and equaliz",
+    "role": null,
+    "start_char": 76558,
+    "end_char": 76562
+  },
+  {
+    "citation_id": "ref_41",
+    "marker": "[41]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[41] T.",
+    "context_window": "scheme for FBMC/OQAM systems,” IEEE Wireless Commun. Lett. , vol. 8, no. 3, pp. 881–884, Feb. 2019. [41] T. O’Shea and J. Hoydis, “An introduction to deep learning for the physical layer,” IEEE Trans. Cog",
+    "role": null,
+    "start_char": 76768,
+    "end_char": 76772
+  },
+  {
+    "citation_id": "ref_42",
+    "marker": "[42]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[42] S.",
+    "context_window": "g for the physical layer,” IEEE Trans. Cogn. Commun. Netw. , vol. 3, no. 4, pp. 563–575, Oct. 2017. [42] S. Dorner, S. Cammerer, J. Hoydis, and S. T. Brink, “Deep learning based communication over the air",
+    "role": null,
+    "start_char": 76930,
+    "end_char": 76934
+  },
+  {
+    "citation_id": "ref_43",
+    "marker": "[43]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[43] V .",
+    "context_window": "ication over the air,” IEEE J. Sel. Topics Signal Process., vol. 12, no. 1, pp. 132–143, Dec. 2018. [43] V . Raj and S. Kalyani, “Backpropagating through the air: Deep learning at physical layer without c",
+    "role": null,
+    "start_char": 77114,
+    "end_char": 77118
+  },
+  {
+    "citation_id": "ref_44",
+    "marker": "[44]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "1, MARCH 2021 [44] B.",
+    "context_window": "apply. 20 IEEE TRANSACTIONS ON COGNITIVE COMMUNICATIONS AND NETWORKING, VOL. 7, NO. 1, MARCH 2021 [44] B. Zhu, J. Wang, L. He, and J. Song, “Joint transceiver optimization for wireless communication PHY",
+    "role": null,
+    "start_char": 77552,
+    "end_char": 77556
+  },
+  {
+    "citation_id": "ref_45",
+    "marker": "[45]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[45] F.",
+    "context_window": "n PHY using neural network,” IEEE J. Sel. Areas Commun., vol. 37, no. 11, pp. 1364–1373, Aug. 2019. [45] F. A. Aoudia and J. Hoydis, “Model-free training of end-to-end com- munication systems,” IEEE J. Se",
+    "role": null,
+    "start_char": 77751,
+    "end_char": 77755
+  },
+  {
+    "citation_id": "ref_46",
+    "marker": "[46]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[46] T.",
+    "context_window": "d com- munication systems,” IEEE J. Sel. Areas Commun. , vol. 37, no. 11, pp. 2503–2516, Aug. 2019. [46] T. J. O’Shea, T. Roy, and T. C. Clancy, “Over-the-air deep learning based radio signal classiﬁcatio",
+    "role": null,
+    "start_char": 77917,
+    "end_char": 77921
+  },
+  {
+    "citation_id": "ref_47",
+    "marker": "[47]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[47] J.",
+    "context_window": "ignal classiﬁcation,” IEEE J. Sel. Topics Signal Process. , vol. 12, no. 1, pp. 168–179, Feb. 2018. [47] J. Tian, Y . Pei, Y .-D. Huang, and Y .-C. Liang, “Modulation-constrained clustering approach to bl",
+    "role": null,
+    "start_char": 78103,
+    "end_char": 78107
+  },
+  {
+    "citation_id": "ref_48",
+    "marker": "[48]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[48] S.",
+    "context_window": "iﬁcation for MIMO systems,” IEEE Trans. Cogn. Commun. Netw., vol. 4, no. 4, pp. 894–907, Dec. 2018. [48] S. Peng et al., “Modulation classiﬁcation based on signal constellation diagrams and deep learning,",
+    "role": null,
+    "start_char": 78327,
+    "end_char": 78331
+  },
+  {
+    "citation_id": "ref_49",
+    "marker": "[49]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[49] X.",
+    "context_window": "and deep learning,” IEEE Trans. Neural Netw. Learn. Syst. , vol. 30, no. 3, pp. 718–727, Jul. 2019. [49] X. Qin, S. Peng, X. Yang, and Y .-D. Yao, “Deep learning based chan- nel code recognition using Tex",
+    "role": null,
+    "start_char": 78513,
+    "end_char": 78517
+  },
+  {
+    "citation_id": "ref_50",
+    "marker": "[50]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[50] L.",
+    "context_window": "de recognition using TextCNN,” in Proc. IEEE Int. Symp. Dyn. Spectrum Access Netw. , 2019, pp. 1–5. [50] L. Anttila, M. Valkama, and M. Renfors, “Blind compensation of frequency-selective I/Q imbalances i",
+    "role": null,
+    "start_char": 78693,
+    "end_char": 78697
+  },
+  {
+    "citation_id": "ref_51",
+    "marker": "[51]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[51] J.",
+    "context_window": "ed approach,” in Proc. IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP) , 2007, pp. 245–248. [51] J. Miller and J. Thomas, “Detectors for discrete-time signals in non- Gaussian noise,” IEEE Trans.",
+    "role": null,
+    "start_char": 78942,
+    "end_char": 78946
+  },
+  {
+    "citation_id": "ref_52",
+    "marker": "[52]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[52] C.",
+    "context_window": "ignals in non- Gaussian noise,” IEEE Trans. Inf. Theory, vol. IT-18, no. 2, pp. 241–250, Mar. 1972. [52] C. Szegedy et al. , “Going deeper with convolutions,” in Proc. IEEE Conf. Comput. Vis. Pattern Reco",
+    "role": null,
+    "start_char": 79102,
+    "end_char": 79106
+  },
+  {
+    "citation_id": "ref_53",
+    "marker": "[53]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[53] K.",
+    "context_window": "oing deeper with convolutions,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit. , 2015, pp. 1–9. [53] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for image recognition,” in Proc. IEEE",
+    "role": null,
+    "start_char": 79229,
+    "end_char": 79233
+  },
+  {
+    "citation_id": "ref_54",
+    "marker": "[54]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[54] G.",
+    "context_window": "ning for image recognition,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit., 2016, pp. 770–778. [54] G. Huang, Z. Liu, L. Van Der Maaten, and K. Q. Weinberger, “Densely connected convolutional network",
+    "role": null,
+    "start_char": 79390,
+    "end_char": 79394
+  },
+  {
+    "citation_id": "ref_55",
+    "marker": "[55]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[55] S.",
+    "context_window": "d convolutional networks,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit., 2017, pp. 4700–4708. [55] S. Ioffe and C. Szegedy, “Batch normalization: Accelerating deep network training by reducing inter",
+    "role": null,
+    "start_char": 79571,
+    "end_char": 79575
+  },
+  {
+    "citation_id": "ref_56",
+    "marker": "[56]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[56] V .",
+    "context_window": "etwork training by reducing internal covariate shift,” 2015. [Online]. Available: arXiv:1502.03167. [56] V . Nair and G. E. Hinton, “Rectiﬁed linear units improve restricted Boltzmann machines,” in Proc.",
+    "role": null,
+    "start_char": 79742,
+    "end_char": 79746
+  },
+  {
+    "citation_id": "ref_57",
+    "marker": "[57]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[57] J.",
+    "context_window": "mprove restricted Boltzmann machines,” in Proc. Int. Conf. Mach. Learn. (ICML) , 2010, pp. 807–814. [57] J. Nagi, F. Ducatelle, G. A. D. Caro, C. Dan, and L. M. Gambardella, “Max-pooling convolutional neu",
+    "role": null,
+    "start_char": 79898,
+    "end_char": 79902
+  },
+  {
+    "citation_id": "ref_58",
+    "marker": "[58]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[58] M.",
+    "context_window": "ure recognition,” in Proc. IEEE Int. Conf. Signal Image Process. Appl. (ICSIPA), 2011, pp. 342–347. [58] M. Lin, Q. Chen, and S. Yan, “Network in network,” 2013. [Online]. Available: arXiv:1312.4400. [59]",
+    "role": null,
+    "start_char": 80143,
+    "end_char": 80147
+  },
+  {
+    "citation_id": "ref_59",
+    "marker": "[59]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[59] L.",
+    "context_window": "[58] M. Lin, Q. Chen, and S. Yan, “Network in network,” 2013. [Online]. Available: arXiv:1312.4400. [59] L. Bottou, “Stochastic gradient descent tricks,” in Neural Networks: Tricks of the Trade . Berlin,",
+    "role": null,
+    "start_char": 80243,
+    "end_char": 80247
+  },
+  {
+    "citation_id": "ref_60",
+    "marker": "[60]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[60] K.",
+    "context_window": "nt tricks,” in Neural Networks: Tricks of the Trade . Berlin, Germany: Springer, 2012, pp. 421–436. [60] K. P. Murphy, Machine Learning: A Probabilistic Perspective . Cambridge, MA, USA: MIT Press, 2012.",
+    "role": null,
+    "start_char": 80385,
+    "end_char": 80389
+  },
+  {
+    "citation_id": "ref_61",
+    "marker": "[61]",
+    "section_name": "conclusion_and_discussion",
+    "sentence": "[61] S.",
+    "context_window": "K. P. Murphy, Machine Learning: A Probabilistic Perspective . Cambridge, MA, USA: MIT Press, 2012. [61] S. Chen and Q. Zhao, “Shallowing deep networks: Layer-wise prun- ing based on feature representatio",
+    "role": null,
+    "start_char": 80489,
+    "end_char": 80493
+  }
+]

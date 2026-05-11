@@ -49,6 +49,7 @@ class BibliographyEntry:
     authors: list[str] = field(default_factory=list)
     year: int | None = None
     venue: str | None = None
+    metadata: dict = field(default_factory=dict)
 
 
 CITATION_ROLE_LABELS: tuple[str, ...] = (

@@ -1,0 +1,34 @@
+flowchart LR
+  subgraph P[Direct Prior Work]
+    ref_1["ref_1<br/>Deep learning for wireless physical layer: Opport…<br/>2017"]
+    ref_2["ref_2<br/>ComNet: Combination of deep learning and expert k…<br/>2018"]
+    ref_16["ref_16<br/>Deep learning based communication over the air<br/>2018"]
+    ref_17["ref_17<br/>Channel agnostic end-to-end learning based commun…<br/>2018"]
+    ref_18["ref_18<br/>Deep learning for massive MIMO CSI feedback<br/>2018"]
+    ref_3["ref_3<br/>Hardware-constrained millimeter-wave systems for …<br/>2019"]
+    ref_15["ref_15<br/>Deep learning based downlink channel prediction f…<br/>2019"]
+  end
+  subgraph B[Background Context]
+    ref_21["ref_21<br/>Shallow vs. deep sum-product networks<br/>2011"]
+    ref_22["ref_22<br/>On the complexity of neural network classiﬁers: A…<br/>2014"]
+    ref_23["ref_23<br/>Beneﬁts of depth in neural networks<br/>2016"]
+    ref_10["ref_10<br/>An introduction to deep learning for the physical…<br/>2017"]
+    ref_5["ref_5<br/>Machine learning for vehicular networks: Recent a…<br/>2018"]
+    ref_7["ref_7<br/>Deep learning-based channel estimation for beamsp…<br/>2018"]
+    ref_8["ref_8<br/>Power of deep learning for channel estimation and…<br/>2018"]
+    ref_12["ref_12<br/>Deep learning for super-resolution channel estima…<br/>2018"]
+    ref_4["ref_4<br/>Deep learning in physical layer communications<br/>2019"]
+    ref_6["ref_6<br/>Toward intelligent vehicular networks: A machine …<br/>2019"]
+    ref_9["ref_9<br/>Deep learning-based CSI feedback approach for tim…<br/>2019"]
+    ref_11["ref_11<br/>Deep reinforcement learning based resource alloca…<br/>2019"]
+    ref_14["ref_14<br/>Deep learning-based channel estimation<br/>2019"]
+  end
+  subgraph T[Target]
+    target_paper["Deep Learning for MIMO Channel Estimation"]
+  end
+  ref_1 --> ref_21
+  ref_1 --> ref_22
+  ref_2 --> ref_21
+  ref_2 --> ref_22
+  ref_21 --> target_paper
+  ref_22 --> target_paper

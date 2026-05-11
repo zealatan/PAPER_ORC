@@ -58,22 +58,135 @@ def _extract_venue(body: str, title: str, year: int | None) -> str | None:
 
 
 # ---------------------------------------------------------------------------
+# Raw-text reference block extraction helpers
+# ---------------------------------------------------------------------------
+
+_MIN_REFS_SECTION_LEN = 200
+
+# Matches REFERENCES heading including the PDF extraction artifact "R\nEFERENCES"
+_REFS_HEADING_RE = re.compile(
+    r"(?m)"
+    r"(?:^R\s*\n\s*EFERENCES\s*\n"
+    r"|^REFERENCES\s*\n"
+    r"|^References\s*\n"
+    r")",
+)
+
+# Lines that signal the start of author biographies or legal footers
+_BIOGRAPHY_STOP_RE = re.compile(
+    r"received (?:the |his |her )?[A-Z]\.(?:S|E)\."
+    r"|received (?:the |his |her )?B\.S\."
+    r"|\bis currently\b"
+    r"|\bBiography\b"
+    r"|Authorized licensed use"
+    r"|Downloaded on"
+    r"|Restrictions apply",
+    re.IGNORECASE,
+)
+
+
+def _trim_after_biography(text: str) -> str:
+    """Trim text at the first biography or legal-footer line."""
+    m = _BIOGRAPHY_STOP_RE.search(text)
+    if not m:
+        return text
+    line_start = text.rfind("\n", 0, m.start())
+    return text[:line_start] if line_start != -1 else text[: m.start()]
+
+
+def _find_reference_block_in_raw_text(raw_text: str) -> str:
+    """Locate the reference list block inside PDF raw text.
+
+    Tries three strategies in order:
+    1. Known REFERENCES heading (including split-line PDF artifact R\\nEFERENCES).
+    2. [1] marker followed by a capital letter (author name).
+    3. Densest consecutive numeric-marker sequence.
+    """
+    # Strategy A: REFERENCES heading
+    heading_m = _REFS_HEADING_RE.search(raw_text)
+    if heading_m:
+        tail = raw_text[heading_m.end():]
+        first_m = re.search(r"\[\d+\]", tail)
+        if first_m:
+            return _trim_after_biography(tail[first_m.start():])
+
+    # Strategy B: [1] followed by an author-name capital letter
+    for m in re.finditer(r"\[1\]\s+[A-Z]", raw_text):
+        tail = raw_text[m.start():]
+        if re.search(r"\[2\]", tail[:3000]):
+            return _trim_after_biography(tail)
+
+    # Strategy C: find the start of the longest consecutive [N] sequence
+    markers = list(re.finditer(r"(?m)^\[(\d+)\]", raw_text))
+    if markers:
+        nums = {int(mk.group(1)): mk for mk in markers}
+        for mk in markers:
+            n = int(mk.group(1))
+            if n + 1 in nums and n + 2 in nums:
+                return _trim_after_biography(raw_text[mk.start():])
+
+    return ""
+
+
+def extract_references_text_best_effort(parsed_paper: ParsedPaper) -> str:
+    """Return the best-available references text for a parsed paper.
+
+    Tries parsed sections first; falls back to scanning raw_text when the
+    references section is missing or suspiciously short (e.g., the REFERENCES
+    heading was split by the PDF extractor and not detected by the parser).
+    """
+    for key in ("references", "bibliography", "reference"):
+        text = parsed_paper.sections.get(key, "")
+        if len(text.strip()) >= _MIN_REFS_SECTION_LEN:
+            return text
+
+    if parsed_paper.raw_text:
+        return _find_reference_block_in_raw_text(parsed_paper.raw_text)
+
+    return ""
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
 def split_reference_entries(references_text: str) -> list[str]:
     """Split a references section into individual raw entry strings.
 
-    Handles multi-line entries: continuation lines start with whitespace,
-    so only lines beginning with [N] are treated as entry boundaries.
+    Supports multi-line entries and hyphenated PDF line breaks.
+    Entry boundaries are lines that start with [N].
     """
-    raw_blocks = re.split(r"\n(?=\[\d+\])", references_text)
+    # Rejoin hyphenated line breaks: "sys-\ntem" -> "system"
+    text = re.sub(r"-\s*\n\s*", "", references_text)
+    raw_blocks = re.split(r"\n(?=\[\d+\])", text)
     entries: list[str] = []
     for block in raw_blocks:
         block = block.strip()
         if block and re.match(r"\[\d+\]", block):
             entries.append(block)
     return entries
+
+
+# Matches quoted titles using ASCII straight quotes OR Unicode curly/smart quotes.
+# Groups: (open_quote)(title_text)(close_quote)
+# IEEE references use “ (") and ” (") around the title.
+_QUOTED_TITLE_RE = re.compile(
+    r'[“„‟‘‚"]'   # opening quote variant
+    r'(.+?)'                                 # title text (lazy)
+    r'[”’"]',                      # closing quote variant
+    re.DOTALL,
+)
+
+# Heuristic: reject extracted titles that look like author fragments or venue fragments.
+_BAD_TITLE_RE = re.compile(
+    r"^(?:"
+    r"[A-Z]\w{0,6},\s*[A-Z]"           # author initial fragment: "Wen, H", "F, G"
+    r"|[A-Z]\s*$"                        # single letter: "F"
+    r"|\d+,?\s*(?:no|pp|vol)\b"          # volume/page fragment: "7, pp", "12, no"
+    r"|(?:Cogn|Veh|Commun|Trans|Lett|Proc|Conf|IEEE)\b"  # venue abbreviation
+    r")",
+    re.IGNORECASE,
+)
 
 
 def parse_reference_entry(raw_entry: str) -> BibliographyEntry:
@@ -83,35 +196,53 @@ def parse_reference_entry(raw_entry: str) -> BibliographyEntry:
         return BibliographyEntry(citation_id="ref_unknown", raw_text=raw_entry)
 
     citation_id = normalize_citation_id(int(num_m.group(1)))
-    # Join continuation lines
-    body = re.sub(r"\n\s+", " ", raw_entry[num_m.end():]).strip()
+    # Collapse all line breaks (PDF line wrapping inside entries)
+    body = re.sub(r"\n+", " ", raw_entry[num_m.end():])
+    body = re.sub(r"\s+", " ", body).strip()
     year = _extract_year(body)
 
-    # Strategy 1: quoted title
-    quoted_m = re.search(r'"([^"]{3,})"', body)
+    title: str | None = None
+    authors_raw: str = ""
+    venue: str | None = None
+    extraction_method: str = "failed"
+
+    # Strategy 1: quoted title (handles ASCII " and Unicode curly quotes " ")
+    quoted_m = _QUOTED_TITLE_RE.search(body)
     if quoted_m:
-        title: str | None = quoted_m.group(1).strip()
+        raw_title = quoted_m.group(1).strip()
+        # Strip trailing punctuation inserted before the closing quote
+        clean_title = raw_title.rstrip(",;.").strip()
+        clean_title = re.sub(r"\s+", " ", clean_title).strip()
+        if len(clean_title) >= 5:
+            title = clean_title
+            extraction_method = "quoted_title"
         authors_raw = body[: quoted_m.start()].strip().rstrip(",").strip()
         venue_tail = body[quoted_m.end():].strip().lstrip(".").lstrip(",").strip()
         if year:
             venue_tail = re.sub(rf",?\s*\b{year}\b\.?\s*$", "", venue_tail).strip().rstrip(",")
-        venue: str | None = venue_tail or None
-    else:
-        # Strategy 2: period-separated heuristic
+        venue = venue_tail or None
+
+    if title is None:
+        # Strategy 2: period-separated heuristic (for non-quoted references)
         boundary = _find_author_title_boundary(body)
         if boundary != -1:
             authors_raw = body[:boundary].strip()
             remainder = body[boundary + 2:]  # skip '. '
             title_end_m = re.search(r"\.\s", remainder)
-            if title_end_m:
-                title = remainder[: title_end_m.start()].strip()
+            candidate = (
+                remainder[: title_end_m.start()].strip()
+                if title_end_m
+                else remainder.strip().rstrip(".")
+            )
+            # Reject obvious garbage (author fragments, venue abbreviations, etc.)
+            if candidate and len(candidate) >= 10 and not _BAD_TITLE_RE.match(candidate):
+                title = candidate
+                extraction_method = "fallback_heuristic"
+                venue = _extract_venue(body, title, year) if title else None
             else:
-                title = remainder.strip().rstrip(".")
-            venue = _extract_venue(body, title, year) if title else None
+                extraction_method = "failed"
         else:
-            authors_raw = ""
-            title = None
-            venue = None
+            extraction_method = "failed"
 
     authors = _parse_authors(authors_raw)
     return BibliographyEntry(
@@ -121,6 +252,7 @@ def parse_reference_entry(raw_entry: str) -> BibliographyEntry:
         authors=authors,
         year=year,
         venue=venue,
+        metadata={"title_extraction_method": extraction_method},
     )
 
 
@@ -130,13 +262,12 @@ def extract_bibliography_entries_from_text(references_text: str) -> list[Bibliog
 
 
 def extract_bibliography_entries(parsed_paper: ParsedPaper) -> list[BibliographyEntry]:
-    """Extract bibliography entries from a ParsedPaper's references section."""
-    refs_text = parsed_paper.sections.get("references", "")
-    if not refs_text:
-        for key in ("bibliography", "reference"):
-            if key in parsed_paper.sections:
-                refs_text = parsed_paper.sections[key]
-                break
+    """Extract bibliography entries from a ParsedPaper.
+
+    Uses best-effort extraction: tries the parsed references section first,
+    then falls back to scanning raw_text when the section is missing.
+    """
+    refs_text = extract_references_text_best_effort(parsed_paper)
     return extract_bibliography_entries_from_text(refs_text)
 
 

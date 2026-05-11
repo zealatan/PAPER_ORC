@@ -7,7 +7,10 @@
       "3GPP"
     ],
     "year": 2020,
-    "venue": "Release 16"
+    "venue": "Release 16",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_2",
@@ -18,7 +21,10 @@
       "D. C. Cox"
     ],
     "year": 1997,
-    "venue": "IEEE Transactions on Communications, 45(12):1613-1621"
+    "venue": "IEEE Transactions on Communications, 45(12):1613-1621",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_3",
@@ -30,7 +36,10 @@
       "P. O. Borjesson"
     ],
     "year": 1997,
-    "venue": "IEEE Transactions on Signal Processing, 45(7):1800-1805"
+    "venue": "IEEE Transactions on Signal Processing, 45(7):1800-1805",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_4",
@@ -41,7 +50,10 @@
       "J. Hoydis"
     ],
     "year": 2017,
-    "venue": "IEEE Transactions on Cognitive Communications and Networking, 3(4):563-575"
+    "venue": "IEEE Transactions on Cognitive Communications and Networking, 3(4):563-575",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_5",
@@ -53,7 +65,10 @@
       "B. Jiang"
     ],
     "year": 2019,
-    "venue": "IEEE Wireless Communications Letters, 8(3):905-908"
+    "venue": "IEEE Wireless Communications Letters, 8(3):905-908",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_6",
@@ -65,7 +80,10 @@
       "C. Zhong"
     ],
     "year": 2020,
-    "venue": "IEEE Signal Processing Letters, 27:1105-1109"
+    "venue": "IEEE Signal Processing Letters, 27:1105-1109",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_7",
@@ -76,7 +94,10 @@
       "U. Mengali"
     ],
     "year": 1999,
-    "venue": "IEEE Communications Letters, 3(3):75-77"
+    "venue": "IEEE Communications Letters, 3(3):75-77",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_8",
@@ -88,7 +109,10 @@
       "K. Kim"
     ],
     "year": 2020,
-    "venue": "IEEE Access, 8:112340-112351"
+    "venue": "IEEE Access, 8:112340-112351",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_9",
@@ -100,7 +124,10 @@
       "E. Riegler"
     ],
     "year": 2021,
-    "venue": "IEEE Transactions on Signal Processing, 69:4501-4513"
+    "venue": "IEEE Transactions on Signal Processing, 69:4501-4513",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_10",
@@ -110,7 +137,10 @@
       "ITU-R"
     ],
     "year": 1997,
-    "venue": "International Telecommunication Union"
+    "venue": "International Telecommunication Union",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_11",
@@ -120,7 +150,10 @@
       "COST 207 Management Committee"
     ],
     "year": 1989,
-    "venue": "European Commission"
+    "venue": "European Commission",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_12",
@@ -132,7 +165,10 @@
       "H. Sun"
     ],
     "year": 2022,
-    "venue": "IEEE Communications Letters, 26(8):1872-1876"
+    "venue": "IEEE Communications Letters, 26(8):1872-1876",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   },
   {
     "citation_id": "ref_13",
@@ -144,6 +180,9 @@
       "S. Fechtel"
     ],
     "year": 1997,
-    "venue": "Wiley"
+    "venue": "Wiley",
+    "metadata": {
+      "title_extraction_method": "fallback_heuristic"
+    }
   }
 ]
