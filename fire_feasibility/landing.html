@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Cup — Market Dashboard</title>
+  <style>
+    :root {
+      --bg: #0d1209;
+      --bg-soft: #182414;
+      --cream: #fff5dc;
+      --paper: #fff9ed;
+      --text: #1f2b18;
+      --muted: #6c745e;
+      --green: #8eb957;
+      --green-dark: #31431f;
+      --accent: #e7ff9b;
+      --shadow: 0 28px 80px rgba(0,0,0,.32);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(165, 214, 105, .16), transparent 28%),
+        radial-gradient(circle at 85% 0%, rgba(255, 245, 220, .08), transparent 28%),
+        linear-gradient(180deg, #0b1008 0%, #111a0e 44%, #090d07 100%);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    button, a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(11, 16, 8, .72);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav-inner {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -.4px;
+      font-size: 22px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #16210e;
+      background: linear-gradient(135deg, #f7ffd4, #8dbb55);
+      box-shadow: 0 12px 28px rgba(142, 185, 87, .26);
+      font-family: Georgia, serif;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: rgba(255,245,220,.76);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav-links a:hover {
+      color: var(--cream);
+    }
+
+    .cart-button {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      color: var(--cream);
+      background: rgba(255,255,255,.08);
+      padding: 12px 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 900;
+    }
+
+    .cart-count {
+      min-width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 76px);
+      display: grid;
+      align-items: center;
+      padding: 84px 0 96px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 52px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.07);
+      color: rgba(255,245,220,.82);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      line-height: .94;
+      letter-spacing: -4px;
+      font-size: clamp(58px, 8.2vw, 116px);
+    }
+
+    .hero-copy {
+      max-width: 630px;
+      color: rgba(255,245,220,.72);
+      font-size: 18px;
+      line-height: 1.75;
+      margin: 28px 0 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+      border: 0;
+      border-radius: 999px;
+      padding: 16px 24px;
+      font-weight: 950;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .btn-primary {
+      background: var(--cream);
+      color: var(--text);
+      box-shadow: 0 14px 32px rgba(255,245,220,.16);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: var(--cream);
+    }
+
+    .btn-primary:hover, .btn-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 46px;
+      max-width: 560px;
+    }
+
+    .stat {
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.06);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      color: var(--cream);
+    }
+
+    .stat span {
+      display: block;
+      color: rgba(255,245,220,.6);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 640px;
+      min-height: 560px;
+      display: grid;
+      place-items: center;
+    }
+
+    .orbit {
+      position: absolute;
+      width: min(760px, 98vw);
+      height: min(760px, 98vw);
+      max-width: 760px;
+      max-height: 760px;
+      left: 50%;
+      top: 43%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .orbit-card {
+      position: absolute;
+      width: 108px;
+      height: 136px;
+      border-radius: 24px;
+      background: rgba(255,249,237,.96);
+      color: var(--text);
+      box-shadow: 0 28px 48px rgba(0,0,0,.28);
+      display: grid;
+      place-items: center;
+      transform-origin: center center;
+      will-change: transform, opacity, filter;
+      border: 1px solid rgba(255,255,255,.7);
+      overflow: hidden;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .orbit-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,.4), transparent 45%);
+      pointer-events: none;
+    }
+
+    .dish {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      background:
+        radial-gradient(circle at 50% 50%, var(--c1), var(--c2) 57%, #fff8e8 58% 70%, transparent 72%);
+      box-shadow: inset 0 4px 10px rgba(255,255,255,.34);
+    }
+
+    .orbit-card small {
+      position: absolute;
+      bottom: 18px;
+      font-weight: 950;
+      font-size: 12px;
+      letter-spacing: -.2px;
+    }
+
+    .main-cup-wrap {
+      position: relative;
+      z-index: 20;
+      width: 260px;
+      height: 410px;
+      scale: .60;
+      filter: drop-shadow(0 42px 45px rgba(0,0,0,.42));
+      animation: floatCup 3.8s ease-in-out infinite;
+    }
+
+    @keyframes floatCup {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .straw {
+      position: absolute;
+      width: 16px;
+      height: 250px;
+      left: 158px;
+      top: -12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e6ffae 0 45%, #fff8dc 46% 100%);
+      transform: rotate(14deg);
+      box-shadow: 0 9px 20px rgba(0,0,0,.2);
+      z-index: 1;
+    }
+
+    .cream {
+      position: absolute;
+      left: 50%;
+      top: 72px;
+      width: 190px;
+      height: 90px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 28% 46%, #fff 0 18%, transparent 19%),
+        radial-gradient(circle at 47% 35%, #fbffe9 0 24%, transparent 25%),
+        radial-gradient(circle at 68% 48%, #fff 0 19%, transparent 20%);
+      z-index: 3;
+    }
+
+    .cup {
+      position: absolute;
+      left: 50%;
+      bottom: 38px;
+      width: 205px;
+      height: 285px;
+      transform: translateX(-50%);
+      border-radius: 34px 34px 62px 62px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.88) 0 8%, transparent 8%),
+        linear-gradient(180deg, rgba(255,255,255,.2), transparent 20%),
+        linear-gradient(180deg, var(--drinkTop) 0 24%, var(--drinkMid) 24% 58%, var(--drinkBot) 58% 100%);
+      box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,.25),
+        inset 18px 0 34px rgba(255,255,255,.16),
+        inset -22px 0 40px rgba(0,0,0,.16);
+      overflow: hidden;
+      transition: background .6s ease;
+      z-index: 2;
+    }
+
+    .cup::before {
+      content: "";
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: -22px;
+      height: 46px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, #fffbed 0 42%, var(--drinkTop) 45% 70%, transparent 72%);
+      box-shadow: inset 0 5px 12px rgba(0,0,0,.2);
+    }
+
+    .ice {
+      position: absolute;
+      width: 42px;
+      height: 30px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.45);
+      box-shadow: inset 0 1px 6px rgba(255,255,255,.5);
+    }
+    .ice.one { left: 48px; top: 76px; rotate: 18deg; }
+    .ice.two { right: 48px; top: 105px; rotate: -12deg; }
+    .ice.three { left: 74px; top: 165px; rotate: 29deg; }
+
+    .cup-label {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: rgba(255,249,237,.96);
+      color: var(--text);
+      padding: 11px 24px;
+      font-size: 13px;
+      font-weight: 950;
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    .glow {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(207,255,141,.18), transparent 66%);
+      z-index: 0;
+    }
+
+    .section {
+      padding: 96px 0;
+      position: relative;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 34px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(38px, 5vw, 72px);
+      font-weight: 500;
+      letter-spacing: -2.5px;
+      line-height: 1;
+    }
+
+    .section-title p {
+      margin: 0;
+      max-width: 430px;
+      color: rgba(255,245,220,.68);
+      line-height: 1.65;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .product-card {
+      background: rgba(255,249,237,.96);
+      color: var(--text);
+      border-radius: 32px;
+      padding: 18px;
+      box-shadow: 0 18px 46px rgba(0,0,0,.18);
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 70px rgba(0,0,0,.28);
+    }
+
+    .product-img {
+      height: 190px;
+      border-radius: 26px;
+      display: grid;
+      place-items: center;
+      font-size: 58px;
+      background:
+        radial-gradient(circle at 50% 50%, var(--c1), var(--c2) 52%, #fff4da 53% 67%, transparent 68%),
+        linear-gradient(135deg, #fdf4dc, #e6f4bd);
+      margin-bottom: 18px;
+    }
+
+    .product-card h3 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -.4px;
+    }
+
+    .product-card p {
+      margin: 8px 0 16px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+      min-height: 42px;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 950;
+    }
+
+    .add-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 11px 15px;
+      background: var(--green-dark);
+      color: var(--cream);
+      font-weight: 950;
+    }
+
+    .feature-band {
+      background: var(--paper);
+      color: var(--text);
+      border-radius: 46px;
+      padding: 38px;
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .feature-band h2 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: clamp(36px, 5vw, 68px);
+      letter-spacing: -2.4px;
+      line-height: .98;
+      font-weight: 500;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .feature {
+      border-radius: 28px;
+      padding: 22px;
+      background: #eef5d7;
+    }
+
+    .feature strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature span {
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 56px 0;
+      color: rgba(255,245,220,.62);
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(0,0,0,.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: min(430px, 92vw);
+      z-index: 100;
+      background: var(--paper);
+      color: var(--text);
+      transform: translateX(105%);
+      transition: transform .55s cubic-bezier(.18,.88,.22,1);
+      padding: 26px;
+      box-shadow: -30px 0 80px rgba(0,0,0,.35);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .drawer-head h2 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 38px;
+      font-weight: 500;
+      letter-spacing: -1.4px;
+    }
+
+    .close-btn {
+      border: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #e8dec9;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .cart-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 62px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(31,43,24,.1);
+    }
+
+    .cart-thumb {
+      width: 62px;
+      height: 62px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      font-size: 27px;
+      background: radial-gradient(circle, var(--c1), var(--c2));
+    }
+
+    .cart-item strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .cart-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 950;
+    }
+
+    .qty button {
+      border: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--green-dark);
+      color: var(--cream);
+      cursor: pointer;
+      font-weight: 950;
+    }
+
+    .drawer-bottom {
+      border-top: 1px solid rgba(31,43,24,.12);
+      padding-top: 18px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 950;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .checkout {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 16px;
+      background: var(--green-dark);
+      color: var(--cream);
+      font-weight: 950;
+      cursor: pointer;
+    }
+
+    .empty {
+      color: var(--muted);
+      line-height: 1.6;
+      padding: 28px 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 56px;
+      }
+
+      .hero-visual {
+        height: 560px;
+        order: -1;
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .feature-band {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .nav-inner {
+        height: 66px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 34px 0 70px;
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: 58px;
+        letter-spacing: -2.5px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        height: 430px;
+        min-height: 430px;
+      }
+
+      .main-cup-wrap {
+        scale: .62;
+      }
+
+      .orbit {
+        scale: .82;
+      }
+
+      .orbit-card {
+        width: 92px;
+        height: 114px;
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .section-title {
+        display: block;
+      }
+
+      .section-title p {
+        margin-top: 16px;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-band {
+        border-radius: 32px;
+        padding: 24px;
+      }
+    }
+  
+    /* ===== Global Cup conversion patch using original orbit motion ===== */
+    .nav-links { display: none !important; }
+
+    .hero {
+      padding: 58px 0 76px !important;
+    }
+
+    .hero-visual {
+      height: 640px !important;
+      min-height: 560px !important;
+      transform: translateY(-92px) !important;
+    }
+
+    .orbit {
+      pointer-events: auto !important;
+      top: 42% !important;
+    }
+
+    .orbit-card {
+      width: 112px !important;
+      height: 142px !important;
+      text-decoration: none !important;
+      grid-template-rows: 1fr auto !important;
+      padding: 13px 10px 16px !important;
+    }
+
+    .orbit-card small {
+      position: static !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 5px !important;
+      margin-top: 8px !important;
+      color: #1f2b18 !important;
+      line-height: 1 !important;
+    }
+
+    .orbit-card small b {
+      font-size: 21px !important;
+      font-weight: 950 !important;
+      letter-spacing: -.4px !important;
+    }
+
+    .orbit-card small span {
+      font-size: 10px !important;
+      font-weight: 850 !important;
+      color: rgba(31,43,24,.72) !important;
+    }
+
+    .drawn-flag {
+      position: relative;
+      width: 64px;
+      height: 42px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.16), 0 8px 18px rgba(31,43,24,.13);
+      align-self: end;
+      margin-top: 18px;
+    }
+
+    .flag-kr {
+      background:
+        radial-gradient(circle at 50% 43%, #cd2e3a 0 20%, transparent 21%),
+        radial-gradient(circle at 50% 58%, #0047a0 0 20%, transparent 21%),
+        #fff;
+    }
+
+    .flag-us {
+      background:
+        linear-gradient(to bottom,
+          #b22234 0 7.7%, #fff 7.7% 15.4%,
+          #b22234 15.4% 23.1%, #fff 23.1% 30.8%,
+          #b22234 30.8% 38.5%, #fff 38.5% 46.2%,
+          #b22234 46.2% 53.9%, #fff 53.9% 61.6%,
+          #b22234 61.6% 69.3%, #fff 69.3% 77%,
+          #b22234 77% 84.7%, #fff 84.7% 92.4%,
+          #b22234 92.4% 100%);
+    }
+
+    .flag-us::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0;
+      width: 45%; height: 54%;
+      background: #3c3b6e;
+      border-radius: 10px 0 4px 0;
+    }
+
+    .flag-eu {
+      background:
+        radial-gradient(circle at 50% 16%, #ffcc00 0 4%, transparent 5%),
+        radial-gradient(circle at 72% 25%, #ffcc00 0 4%, transparent 5%),
+        radial-gradient(circle at 84% 50%, #ffcc00 0 4%, transparent 5%),
+        radial-gradient(circle at 72% 75%, #ffcc00 0 4%, transparent 5%),
+        radial-gradient(circle at 50% 84%, #ffcc00 0 4%, transparent 5%),
+        radial-gradient(circle at 28% 75%, #ffcc00 0 4%, transparent 5%),
+        radial-gradient(circle at 16% 50%, #ffcc00 0 4%, transparent 5%),
+        radial-gradient(circle at 28% 25%, #ffcc00 0 4%, transparent 5%),
+        #003399;
+    }
+
+    .flag-jp {
+      background:
+        radial-gradient(circle at 50% 50%, #bc002d 0 29%, transparent 30%),
+        #fff;
+    }
+
+    .flag-glb {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, #6ee7b7 0 12%, transparent 13%),
+        radial-gradient(circle at 65% 60%, #22c55e 0 18%, transparent 19%),
+        radial-gradient(circle at 50% 50%, #38bdf8 0 60%, #1d4ed8 100%);
+    }
+
+    .main-cup-wrap {
+      scale: .60 !important;
+    }
+
+    .cream {
+      opacity: .82 !important;
+    }
+
+    .cup {
+      --drinkTop: rgba(255,255,255,.88);
+      --drinkMid: #b77a42;
+      --drinkBot: #3f2517;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.88) 0 8%, transparent 8%),
+        linear-gradient(180deg, rgba(255,255,255,.20), transparent 20%),
+        linear-gradient(180deg, var(--drinkTop) 0 22%, var(--drinkMid) 22% 56%, var(--drinkBot) 56% 100%) !important;
+    }
+
+    .cup::before {
+      background:
+        radial-gradient(ellipse, #fffbed 0 25%, rgba(215,155,90,.90) 30% 68%, transparent 72%) !important;
+    }
+
+    .ice {
+      background: rgba(255,255,255,.56) !important;
+    }
+
+    .chart-sticker {
+      position: absolute;
+      left: 50%;
+      top: 96px;
+      width: 116px;
+      height: 98px;
+      transform: translateX(-50%);
+      border-radius: 22px;
+      background: rgba(255,255,255,.84);
+      z-index: 10;
+      padding: 12px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.16), inset 0 0 0 2px rgba(255,255,255,.55);
+    }
+
+    .chart-title {
+      color: #1f2b18;
+      font-size: 15px;
+      font-weight: 950;
+      margin-bottom: 8px;
+    }
+
+    .mini-bars {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      height: 42px;
+      display: flex;
+      align-items: end;
+      gap: 6px;
+    }
+
+    .mini-bars span {
+      flex: 1;
+      border-radius: 999px 999px 4px 4px;
+      background: linear-gradient(180deg, #35b66d, #2574d9);
+    }
+
+    .mini-bars span:nth-child(1) { height: 35%; }
+    .mini-bars span:nth-child(2) { height: 55%; }
+    .mini-bars span:nth-child(3) { height: 70%; }
+    .mini-bars span:nth-child(4) { height: 86%; }
+
+    .chart-sticker svg {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      top: 34px;
+      width: calc(100% - 24px);
+      height: 36px;
+      overflow: visible;
+    }
+
+    .chart-sticker path {
+      fill: none;
+      stroke: #a14d36;
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 3px 3px rgba(0,0,0,.16));
+    }
+
+    .section, footer, .drawer-backdrop, .cart-drawer {
+      display: none !important;
+    }
+
+      /* align orbit to your global row patch */
+
+    @media (max-width: 980px) {
+      .hero-visual {
+        transform: translateY(-36px) !important;
+      }
+      .main-cup-wrap {
+        scale: .52 !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-visual {
+        transform: translateY(-12px) !important;
+      }
+      .main-cup-wrap {
+        scale: .46 !important;
+      }
+    }
+
+  
+    /* Keep existing orbit/arch motion; only add dynamic chart face styling */
+    .chart-sticker {
+      display: none !important;
+    }
+
+    .chart-face {
+      position: absolute;
+      left: 50%;
+      top: 88px;
+      width: 138px;
+      height: 118px;
+      transform: translateX(-50%);
+      border-radius: 28px;
+      background: rgba(255,255,255,.78);
+      box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,.52),
+        0 12px 28px rgba(0,0,0,.16);
+      z-index: 10;
+      overflow: hidden;
+      padding: 17px 14px 12px;
+    }
+
+    .chart-face::before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 62px;
+      height: 1px;
+      background: rgba(31,43,24,.13);
+      box-shadow: 0 -24px 0 rgba(31,43,24,.08), 0 24px 0 rgba(31,43,24,.08);
+    }
+
+    .chart-label {
+      position: absolute;
+      left: 14px;
+      top: 9px;
+      color: #1f2b18;
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: -.5px;
+      z-index: 2;
+    }
+
+    .chart-smile {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      font-size: 18px;
+      z-index: 6;
+    }
+
+    .chart-bars {
+      position: absolute;
+      left: 15px;
+      right: 15px;
+      bottom: 13px;
+      height: 62px;
+      display: flex;
+      align-items: end;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    .bar {
+      flex: 1;
+      border-radius: 999px 999px 7px 7px;
+      height: var(--h);
+      background: linear-gradient(180deg, var(--chart1), var(--chart2));
+      box-shadow: inset 0 4px 8px rgba(255,255,255,.32);
+      transition: height .55s ease, background .55s ease;
+    }
+
+    .chart-line {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 23px;
+      height: 56px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .chart-line svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .chart-line path {
+      fill: none;
+      stroke: var(--line);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 3px 4px rgba(0,0,0,.18));
+      transition: stroke .55s ease;
+    }
+
+  
+    /* Hover update UX: highlight card currently under pointer without changing orbit geometry */
+    .orbit-card:hover,
+    .orbit-card:focus {
+      outline: 2px solid rgba(231,255,155,.70);
+      box-shadow:
+        0 28px 48px rgba(0,0,0,.28),
+        0 0 26px rgba(231,255,155,.26) !important;
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <span class="brand-mark">📈</span>
+        Global Cup
+      </a>
+      <div class="nav-links"></div>
+      <a class="cart-button" href="http://localhost:8504/?market=Global">Open Dashboard ↗</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Cute global market dashboard</div>
+          <h1>Choose your<br>global<br>market.</h1>
+          <p class="hero-copy">
+            한국, 미국, EU, 일본 그리고 글로벌 시장을 귀여운 컵 차트로 보여주는 인터랙티브 랜딩페이지입니다. 카드를 클릭해 바로 이동하세요.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="http://localhost:8504/?market=Global">Open dashboard</a>
+            <button class="btn-secondary" onclick="location.href='http://localhost:8504/?market=Korea'">Try Korea</button>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat"><strong>5</strong><span>Markets</span></div>
+            <div class="stat"><strong>35+</strong><span>Tickers</span></div>
+            <div class="stat"><strong>Live</strong><span>yfinance data</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="glow"></div>
+          <div class="orbit" id="orbit"></div>
+
+          <div class="main-cup-wrap">
+            <div class="straw"></div>
+            <div class="cream"></div>
+            <div class="cup" id="mainCup">
+              <span class="ice one"></span>
+              <span class="ice two"></span>
+              <span class="ice three"></span>
+              <div class="chart-face">
+                <div class="chart-label" id="chartLabel">GLB</div>
+                <div class="chart-smile" id="chartSmile">🌈</div>
+                <div class="chart-bars" id="chartBars">
+                  <span class="bar" style="--h:49%"></span>
+                  <span class="bar" style="--h:57%"></span>
+                  <span class="bar" style="--h:53%"></span>
+                  <span class="bar" style="--h:68%"></span>
+                  <span class="bar" style="--h:76%"></span>
+                </div>
+                <div class="chart-line">
+                  <svg viewBox="0 0 120 60" preserveAspectRatio="none">
+                    <path id="chartPath" d="M2 42 C15 34, 25 37, 40 28 S67 43, 82 25 S105 18, 118 11"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="cup-label" id="cupLabel">GLOBAL DASHBOARD</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const products = [
+      {
+        name: 'Korea Market',
+        short: 'Korea',
+        label: 'KOREA DASHBOARD',
+        code: 'KOR',
+        market: 'Korea',
+        price: 0,
+        flagClass: 'flag-kr',
+        c1: '#ffffff',
+        c2: '#dce7ff',
+        top: '#f7ffe3',
+        mid: '#91b85a',
+        bot: '#486a30',
+        chart1: '#f04b4b',
+        chart2: '#2453d6',
+        line: '#e93434',
+        smile: '😊',
+        bars: [38, 54, 46, 73, 66],
+        path: 'M2 45 C18 42, 28 26, 43 34 S68 51, 84 31 S103 16, 118 20'
+      },
+      {
+        name: 'United States',
+        short: 'USA',
+        label: 'US DASHBOARD',
+        code: 'US',
+        market: 'United States',
+        price: 0,
+        flagClass: 'flag-us',
+        c1: '#f8fbff',
+        c2: '#b9cdfa',
+        top: '#fff9e7',
+        mid: '#f6a0b5',
+        bot: '#d92e58',
+        chart1: '#2453d6',
+        chart2: '#e23636',
+        line: '#2453d6',
+        smile: '🚀',
+        bars: [44, 61, 58, 80, 88],
+        path: 'M2 48 C18 42, 28 39, 42 30 S64 24, 80 18 S103 12, 118 8'
+      },
+      {
+        name: 'European Union',
+        short: 'EU',
+        label: 'EU DASHBOARD',
+        code: 'EU',
+        market: 'European Union',
+        price: 0,
+        flagClass: 'flag-eu',
+        c1: '#1c4fd7',
+        c2: '#062066',
+        top: '#fff9de',
+        mid: '#a97935',
+        bot: '#3b2518',
+        chart1: '#214fd8',
+        chart2: '#ffd84a',
+        line: '#ffd84a',
+        smile: '⭐',
+        bars: [52, 50, 56, 55, 61],
+        path: 'M2 34 C20 28, 31 38, 45 33 S65 25, 82 32 S101 42, 118 31'
+      },
+      {
+        name: 'Japan Market',
+        short: 'Japan',
+        label: 'JAPAN DASHBOARD',
+        code: 'JP',
+        market: 'Japan',
+        price: 0,
+        flagClass: 'flag-jp',
+        c1: '#ffffff',
+        c2: '#f2dfe3',
+        top: '#f7ffe3',
+        mid: '#8fa0db',
+        bot: '#343d93',
+        chart1: '#d92545',
+        chart2: '#ff9aac',
+        line: '#d92545',
+        smile: '🌸',
+        bars: [41, 47, 62, 56, 70],
+        path: 'M2 44 C20 49, 29 36, 45 40 S65 22, 82 28 S103 25, 118 16'
+      },
+      {
+        name: 'Global Market',
+        short: 'Global',
+        label: 'GLOBAL DASHBOARD',
+        code: 'GLB',
+        market: 'Global',
+        price: 0,
+        flagClass: 'flag-glb',
+        c1: '#53b96a',
+        c2: '#1d5a9e',
+        top: '#fffaf4',
+        mid: '#b9a7e8',
+        bot: '#5d4b8a',
+        chart1: '#35b66d',
+        chart2: '#2574d9',
+        line: '#35b66d',
+        smile: '🌈',
+        bars: [49, 57, 53, 68, 76],
+        path: 'M2 42 C15 34, 25 37, 40 28 S67 43, 82 25 S105 18, 118 11'
+      }
+    ];
+
+    const cart = {};
+    const orbit = document.getElementById('orbit');
+    const menuGrid = document.getElementById('menuGrid');
+    let theta = 0;
+    let activeIndex = 0;
+    let lastActive = -1;
+    let hoverLock = false;
+
+    function init() {
+      products.forEach((p, i) => {
+        const card = document.createElement('a');
+        card.className = 'orbit-card';
+        card.href = "http://localhost:8504/?" + new URLSearchParams({ market: p.market }).toString();
+        card.dataset.index = String(i);
+        card.setAttribute('aria-label', `Open ${p.name} dashboard`);
+
+        card.innerHTML = `
+          <div class="drawn-flag ${p.flagClass}"></div>
+          <small><b>${p.code}</b><span>${p.short}</span></small>
+        `;
+
+        // Hover/touch/focus: update cup drink color + mini chart immediately.
+        // hoverLock prevents the automatic rotating front-card update from overriding this.
+        card.addEventListener('mouseenter', () => {
+          hoverLock = true;
+          applyDrink(i);
+        });
+
+        card.addEventListener('focus', () => {
+          hoverLock = true;
+          applyDrink(i);
+        });
+
+        card.addEventListener('touchstart', () => {
+          hoverLock = true;
+          applyDrink(i);
+        }, { passive: true });
+
+        card.addEventListener('mouseleave', () => {
+          hoverLock = false;
+        });
+
+        card.addEventListener('blur', () => {
+          hoverLock = false;
+        });
+
+        orbit.appendChild(card);
+      });
+
+      applyDrink(4);
+      animate();
+    }
+
+    function animate() {
+      theta += 0.0048;
+      layoutOrbit();
+
+      // Automatic front-card update only runs when the user is not hovering a card.
+      // This keeps hover interactions stable even while the cards continue rotating.
+      if (!hoverLock) {
+        const section = Math.PI * 2 / products.length;
+        const topIndex = Math.round((((-theta) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2)) / section) % products.length;
+
+        if (topIndex !== lastActive) {
+          applyDrink(topIndex);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function layoutOrbit() {
+      const cards = [...document.querySelectorAll('.orbit-card')];
+      const rect = orbit.getBoundingClientRect();
+      const size = Math.min(rect.width, rect.height);
+      const cx = rect.width / 2;
+      const cy = rect.height / 2 + 45;
+      const rx = size * 0.42;
+      const ry = size * 0.235;
+
+      cards.forEach((card, i) => {
+        const a = theta + i * Math.PI * 2 / products.length;
+        const x = cx + Math.sin(a) * rx;
+        const y = cy - Math.cos(a) * ry;
+        const depth = (Math.cos(a) + 1) / 2;
+        const scale = 0.68 + depth * 0.34;
+        const opacity = 0.38 + depth * 0.62;
+        const blur = (1 - depth) * 2.2;
+        const z = Math.round(1 + depth * 30);
+        const rotate = Math.sin(a) * 12;
+
+        card.style.transform = `translate(${x - 54}px, ${y - 68}px) rotate(${rotate}deg) scale(${scale})`;
+        card.style.opacity = opacity;
+        card.style.filter = `blur(${blur}px) saturate(${0.85 + depth * .25})`;
+        card.style.zIndex = z;
+      });
+    }
+
+    function applyDrink(i) {
+      activeIndex = i;
+      lastActive = i;
+      const p = products[i];
+      const cup = document.getElementById('mainCup');
+      cup.style.setProperty('--drinkTop', p.top);
+      cup.style.setProperty('--drinkMid', p.mid);
+      cup.style.setProperty('--drinkBot', p.bot);
+      document.getElementById('cupLabel').textContent = p.label;
+      const chartCode = document.getElementById('chartCode');
+      if (chartCode) chartCode.textContent = p.code;
+      updateChart(p);
+    }
+
+    function updateChart(p) {
+      const chartLabel = document.getElementById('chartLabel');
+      const chartSmile = document.getElementById('chartSmile');
+      const chartPath = document.getElementById('chartPath');
+      const face = document.querySelector('.chart-face');
+
+      if (chartLabel) chartLabel.textContent = p.code;
+      if (chartSmile) chartSmile.textContent = p.smile;
+      if (chartPath) chartPath.setAttribute('d', p.path);
+
+      if (face) {
+        face.style.setProperty('--chart1', p.chart1);
+        face.style.setProperty('--chart2', p.chart2);
+        face.style.setProperty('--line', p.line);
+      }
+
+      document.querySelectorAll('.bar').forEach((bar, idx) => {
+        if (p.bars && p.bars[idx] !== undefined) {
+          bar.style.setProperty('--h', p.bars[idx] + '%');
+        }
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
