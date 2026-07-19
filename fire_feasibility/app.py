@@ -4,7 +4,10 @@
 "은퇴 시점에 목돈으로 한 종목을 사고, 매월 생활비를 인출했다면 자산이 버텼을까?"
 마켓을 고르면 통화·기본 원천징수세가 자동 반영되고, 종목은 마켓별 목록에서 선택.
 배당은 실제 지급 시점에 현금으로 들어오고, 생활비는 배당현금 우선 충당 후 부족분만
-매도. 잉여 배당은 (다음 배당까지 버퍼를 남기고) 재투자. 통화 환산(FX)은 하지 않음.
+매도. 잉여 배당은 (다음 배당까지 버퍼를 남기고) 같은 종목에 재투자.
+
+디자인은 Global Cup 엔진 UI 테마(inject_css) 재사용 — 다크 올리브 배경·크림 텍스트·
+라임 액센트·세리프 헤더·마켓별 차트 색상.
 
 Run:
   PYB=/home/zealatan/.pyenv/versions/3.11.8/bin/python3.11
@@ -22,15 +25,59 @@ import streamlit as st
 from global_cup.config import get_market_rule
 from global_cup.data_loader import (download_price, download_dividends,
                                     get_close_series, build_ticker_dict)
-from global_cup.market_config import MARKETS
+from global_cup.market_config import MARKETS, get_flag_svg
 from global_cup.formatting import format_amount, get_currency_symbol
 from global_cup.dividend_schedule import classify
-from global_cup.fire_engine import run_fire_backtest
+from global_cup.fire_engine import run_fire_backtest_multi, AssetSpec
+from global_cup.ui import inject_css
 
 st.set_page_config(page_title="FIRE 타당성 백테스트", page_icon="🔥", layout="wide")
+inject_css()   # Global Cup dark theme (background, fonts, glass inputs, flags)
+
+# ── FIRE-specific supplemental theme ────────────────────────────────────────────
+st.markdown("""
+<style>
+.fire-brand { display:flex; align-items:center; gap:.9rem; margin:.2rem 0 1.4rem; }
+.fire-brand .brand-mark { width:46px; height:46px; font-size:24px; }
+.fire-title { font-family:Georgia,"Times New Roman",serif; font-weight:500;
+    font-size:clamp(28px,3.2vw,42px); letter-spacing:-1.2px; line-height:1; color:#fff5dc; }
+.fire-sub { color:#d9caa8; font-size:.82rem; margin-top:.35rem; max-width:680px; }
+
+div[data-testid="stNumberInput"], div[data-testid="stDateInput"] {
+    background:rgba(255,255,255,.075) !important; border:1px solid rgba(255,255,255,.14) !important;
+    border-radius:8px !important; box-shadow:0 6px 16px rgba(0,0,0,.1) !important; }
+div[data-testid="stDateInput"] label { color:#e8e3cf !important; font-weight:600 !important;
+    font-size:.82rem !important; }
+div[data-testid="stVerticalBlockBorderWrapper"] { background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08) !important; border-radius:14px; }
+
+.verdict { border-radius:14px; padding:.95rem 1.3rem; margin:1.1rem 0 .3rem;
+    font-size:1.0rem; font-weight:600; border:1px solid; }
+.verdict.ok  { background:rgba(53,182,109,.13); border-color:rgba(53,182,109,.5); color:#daffe9; }
+.verdict.bad { background:rgba(226,54,54,.13); border-color:rgba(226,54,54,.5); color:#ffdede; }
+.verdict b   { color:#ffffff; }
+
+.mgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:.7rem; margin:.4rem 0 1.2rem; }
+@media (max-width:820px){ .mgrid { grid-template-columns:repeat(2,1fr); } }
+.mcard { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09);
+    border-radius:14px; padding:.8rem 1rem; box-shadow:0 10px 24px rgba(0,0,0,.18); }
+.mcard .lbl { color:#d9caa8; font-size:.72rem; font-weight:700; }
+.mcard .val { color:#fff9ed; font-size:1.42rem; font-weight:800; line-height:1.2; margin-top:.15rem; }
+.mcard .sub { color:#9db386; font-size:.7rem; margin-top:.12rem; }
+.mcard .sub.neg { color:#e88; }
+
+.chart-h { font-family:Georgia,serif; color:#fff5dc; font-size:1.05rem; margin:.6rem 0 .1rem; }
+
+table.fire-table { width:100%; border-collapse:collapse; font-size:.8rem; }
+table.fire-table th { color:#d9caa8; text-align:right; padding:.42rem .6rem; font-weight:700;
+    border-bottom:1px solid rgba(255,255,255,.14); }
+table.fire-table td { color:#f2ecd8; text-align:right; padding:.36rem .6rem;
+    border-bottom:1px solid rgba(255,255,255,.05); }
+table.fire-table td:first-child, table.fire-table th:first-child { text-align:left; }
+</style>
+""", unsafe_allow_html=True)
 
 # ── constants ───────────────────────────────────────────────────────────────────
-INK, ACCENT, GREY = "#1f2933", "#e5484d", "#adb5bd"
 FREQ_KR = {"monthly": "월배당", "quarterly": "분기배당", "semiannual": "반기배당",
            "annual": "연배당", "irregular": "불규칙", "none": "무배당"}
 MARKET_ORDER = ["United States", "ETF", "Global", "Korea", "Japan", "European Union"]
@@ -40,17 +87,56 @@ CUR_DEFAULTS = {
     "KRW": dict(corpus=300_000_000, corpus_step=10_000_000, exp=1_500_000, exp_step=100_000),
     "JPY": dict(corpus=30_000_000,  corpus_step=1_000_000,  exp=150_000,   exp_step=10_000),
 }
-DEFAULT_TICKER = {"United States": "Coca-Cola / KO"}   # signature FIRE example
+DEFAULT_TICKER = {"United States": "Coca-Cola / KO"}
+MAX_ASSETS = 5
+# per-asset chart palette (fits the olive/cream engine theme on cream paper)
+ASSET_PALETTE = ["#ca6702", "#005f73", "#0a9396", "#bb3e03", "#94d2bd"]
+
+# engine-parameter dropdowns: {UI label: engine value}
+SELL_PRIORITY_OPTS = {
+    "초기 비율대로 매도": "weights",
+    "연배당금(절대액) 최저": "annual_income",
+    "배당수익률(yield) 최저": "yield",
+    "주당 배당금(DPS) 최저": "dps",
+}
+REINVEST_TARGET_OPTS = {
+    "초기 비율대로 분산": "weights",
+    "배당수익률 높은 종목에 몰아서": "highest_yield",
+}
+SELL_PRIORITY_DESC = {
+    "weights": "각 종목을 초기 비율대로 나눠서 매도 (구성 유지)",
+    "annual_income": "연배당금(절대액)이 가장 적은 종목부터 처분",
+    "yield": "배당수익률(연배당÷평가액)이 가장 낮은 종목부터 처분",
+    "dps": "주당 배당금(DPS)이 가장 낮은 종목부터 처분",
+}
+REINVEST_TARGET_DESC = {
+    "weights": "초기 비율대로 분산 재투자",
+    "highest_yield": "배당수익률이 가장 높은 종목에 몰아서 재투자",
+}
+
+
+def _rgba(hexc, a):
+    h = hexc.lstrip("#")
+    return f"rgba({int(h[0:2],16)},{int(h[2:4],16)},{int(h[4:6],16)},{a})"
+
 
 # ── header ──────────────────────────────────────────────────────────────────────
-st.title("🔥 FIRE 타당성 백테스트")
-st.caption("은퇴 목돈으로 한 종목을 사고 매월 생활비를 인출했을 때 자산이 버텼는지 검증합니다 · 통화 환산 없음")
+st.markdown("""
+<div class="fire-brand">
+  <div class="brand-mark">🔥</div>
+  <div>
+    <div class="fire-title">FIRE 타당성 백테스트</div>
+    <div class="fire-sub">은퇴 목돈으로 한 종목을 사고 매월 생활비를 인출했을 때 자산이 버텼는지 검증합니다 · 통화 환산 없음</div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
 # ── inputs ──────────────────────────────────────────────────────────────────────
 with st.container(border=True):
     r1 = st.columns([1.3, 1.7, 1, 1])
     market = r1[0].selectbox("마켓", MARKET_ORDER,
-                             format_func=lambda k: f"{MARKETS[k].flag} {MARKETS[k].name}")
+                             format_func=lambda k: f"{MARKETS[k].flag}  {MARKETS[k].name}")
+    mc = MARKETS[market]
     rule = get_market_rule(market)
     currency = rule["currency"]
     defaults = CUR_DEFAULTS.get(currency, CUR_DEFAULTS["USD"])
@@ -61,9 +147,10 @@ with st.container(border=True):
         st.error(f"'{market}' 종목 목록을 불러오지 못했습니다.")
         st.stop()
     def_label = DEFAULT_TICKER.get(market)
-    def_idx = labels.index(def_label) if def_label in labels else 0
-    ticker_label = r1[1].selectbox("종목", labels, index=def_idx, key=f"ticker_{market}")
-    ticker = tickers[ticker_label]
+    default_sel = [def_label] if def_label in labels else labels[:1]
+    sel_labels = r1[1].multiselect(
+        f"종목 (최대 {MAX_ASSETS}개)", labels, default=default_sel,
+        max_selections=MAX_ASSETS, key=f"tickers_{market}")
 
     start = r1[2].date_input("은퇴 시작일", value=date(2000, 1, 1),
                              min_value=date(1970, 1, 1), max_value=date.today())
@@ -73,13 +160,48 @@ with st.container(border=True):
     r2 = st.columns([1.3, 1.7, 2])
     sym = get_currency_symbol(currency)
     corpus = r2[0].number_input(f"은퇴 자금 ({sym})", value=defaults["corpus"],
-                                step=defaults["corpus_step"], min_value=0,
-                                key=f"corpus_{currency}")
+                                step=defaults["corpus_step"], min_value=0, key=f"corpus_{currency}")
     monthly = r2[1].number_input(f"월 생활비 ({sym})", value=defaults["exp"],
-                                 step=defaults["exp_step"], min_value=0,
-                                 key=f"exp_{currency}")
+                                 step=defaults["exp_step"], min_value=0, key=f"exp_{currency}")
     reinvest_surplus = r2[2].toggle("잉여 배당 재투자", value=True,
-                                    help="생활비 충당 후 남는 배당을 (다음 배당까지 버퍼 남기고) 재매수")
+                                    help="생활비 충당 후 남는 배당을 다음 배당까지 버퍼를 남기고 재매수 "
+                                         "(대상은 아래 '재투자 대상'에서 선택)")
+
+    # ── per-stock allocation weights ─────────────────────────────────────────────
+    if not sel_labels:
+        st.info("종목을 1개 이상 선택하세요.")
+        st.stop()
+
+    st.markdown('<div style="color:#d9caa8;font-size:.8rem;font-weight:700;'
+                'margin:.4rem 0 .2rem;">비중 (%)</div>', unsafe_allow_html=True)
+    wcols = st.columns(len(sel_labels))
+    eq = round(100.0 / len(sel_labels), 2)
+    raw_weights = []
+    for i, lbl in enumerate(sel_labels):
+        short = lbl.split(" / ")[-1]
+        w = wcols[i].number_input(short, value=eq, min_value=0.0, max_value=100.0,
+                                  step=5.0, key=f"w_{market}_{lbl}")
+        raw_weights.append(float(w))
+    wsum = sum(raw_weights)
+    if wsum <= 0:
+        st.warning("비중 합이 0입니다. 하나 이상 0보다 크게 설정하세요.")
+        st.stop()
+    if abs(wsum - 100.0) > 0.5:
+        st.caption(f"⚠️ 비중 합 {wsum:.1f}% — 100%로 정규화하여 계산합니다.")
+
+    # ── strategy knobs: sell priority + surplus reinvest target ──────────────────
+    r3 = st.columns(2)
+    sell_label = r3[0].selectbox(
+        "매도 우선순위 (배당 < 생활비일 때)", list(SELL_PRIORITY_OPTS),
+        index=0, key=f"sell_{market}",
+        help="생활비가 배당보다 클 때 어떤 종목부터 팔지 — 낮은 종목부터 매도")
+    sell_priority = SELL_PRIORITY_OPTS[sell_label]
+    reinv_label = r3[1].selectbox(
+        "잉여 배당 재투자 대상", list(REINVEST_TARGET_OPTS),
+        index=0, key=f"reinv_{market}",
+        disabled=not reinvest_surplus,
+        help="생활비 충당 후 남는 배당을 어디에 재매수할지 (재투자 OFF면 무시)")
+    reinvest_target = REINVEST_TARGET_OPTS[reinv_label]
 
 if corpus <= 0:
     st.info("은퇴 자금을 입력하세요.")
@@ -92,25 +214,60 @@ def money(v, dec=0):
     return format_amount(v, currency, decimals=dec)
 
 
-# ── load data ───────────────────────────────────────────────────────────────────
+# ── load data for the whole basket ──────────────────────────────────────────────
 today = date.today()
-with st.spinner(f"{ticker} 데이터 로딩 중…"):
-    price_df = download_price(ticker, start, today)
-    close = get_close_series(price_df)
-    div = download_dividends(ticker, date(max(start.year - 6, 1970), 1, 1), today)
+assets = []          # engine input (AssetSpec)
+meta = []            # display meta: name, ticker, weight%, close, sch, color
+with st.spinner(f"{len(sel_labels)}개 종목 데이터 로딩 중…"):
+    for lbl, w in zip(sel_labels, raw_weights):
+        if w <= 0:
+            continue
+        tk = tickers[lbl]
+        nm = lbl.split(" / ")[0]
+        price_df = download_price(tk, start, today)
+        cl = get_close_series(price_df)
+        if cl.empty:
+            st.warning(f"'{tk}' 가격 데이터를 불러오지 못해 제외합니다.")
+            continue
+        dv = download_dividends(tk, date(max(start.year - 6, 1970), 1, 1), today)
+        assets.append(AssetSpec(nm, tk, cl, dv, float(w)))
+        meta.append({"name": nm, "ticker": tk, "weight": float(w),
+                     "close": cl, "sch": classify(dv)})
 
-if close.empty:
-    st.error(f"'{ticker}' 가격 데이터를 불러오지 못했습니다. 다른 종목/기간을 선택하세요.")
+if not assets:
+    st.error("유효한 종목이 없습니다. 다른 종목/기간을 선택하세요.")
     st.stop()
 
-sch = classify(div)
+# normalized weights (for display), aligned with `meta`
+wtot = sum(m["weight"] for m in meta)
+for m in meta:
+    m["wn"] = m["weight"] / wtot * 100.0
+for i, m in enumerate(meta):
+    m["color"] = ASSET_PALETTE[i % len(ASSET_PALETTE)]
 
-# ── run backtest ────────────────────────────────────────────────────────────────
-result = run_fire_backtest(
-    close, div, float(corpus),
-    annual_withdrawal=float(monthly) * 12,
+# ── market header (flag + serif name + basket) ──────────────────────────────────
+chips = " ".join(
+    f'<span style="display:inline-flex;align-items:center;gap:.3rem;'
+    f'background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);'
+    f'border-radius:999px;padding:.15rem .6rem;margin:.15rem .2rem;font-size:.78rem;color:#f2ecd8;">'
+    f'<b style="color:{m["color"]};">●</b>{m["name"]} · {m["ticker"]} '
+    f'<b style="color:#fff9ed;">{m["wn"]:.0f}%</b></span>'
+    for m in meta)
+st.markdown(
+    f"""<div class="market-badge-row" style="margin-top:.4rem;">
+  <div class="market-flag-box">{get_flag_svg(market)}</div>
+  <div><div class="market-title">{mc.name} · {len(meta)}종목 포트폴리오</div></div>
+</div>
+<div style="margin:.4rem 0 .2rem;">{chips}</div>""",
+    unsafe_allow_html=True,
+)
+
+result = run_fire_backtest_multi(
+    assets, float(corpus), annual_withdrawal=float(monthly) * 12,
     strategy="fixed_nominal", frequency="monthly",
     tax_rate_pct=float(tax), reinvest_surplus=reinvest_surplus,
+    sell_priority=sell_priority,       # UI: 매도 우선순위
+    reinvest_target=reinvest_target,   # UI: 잉여 배당 재투자 대상
     start_date=start,
 )
 if result is None:
@@ -118,96 +275,143 @@ if result is None:
     st.stop()
 
 s, tl = result.summary, result.timeline_df
+asum = result.asset_summary_df
 
 # ── verdict banner ──────────────────────────────────────────────────────────────
-freq_txt = f"{FREQ_KR.get(sch.frequency, sch.frequency)} · {sch.payments_per_year}회/년"
-if sch.has_specials:
-    freq_txt += " (특별배당 포함)"
-name = ticker_label.split(" / ")[0]
-
+basket = " + ".join(m["ticker"] for m in meta)
 if s["Survived"]:
-    st.success(f"✅ **생존** — {name}({freq_txt}) · {s['Years']:.1f}년간 월 {money(monthly)} 인출 후 "
-               f"최종 자산 **{money(s['Final Value'])}**")
+    st.markdown(
+        f'<div class="verdict ok">✅ <b>생존</b> — {basket} · '
+        f'{s["Years"]:.1f}년간 월 {money(monthly)} 인출 후 최종 자산 <b>{money(s["Final Value"])}</b></div>',
+        unsafe_allow_html=True)
 else:
     dep = pd.Timestamp(s["Depletion Date"]).date()
-    st.error(f"❌ **고갈** — {name}({freq_txt}) · 자산이 **{dep}**에 소진됨 "
-             f"(약 {s['Survived Years']:.1f}년 지속)")
+    st.markdown(
+        f'<div class="verdict bad">❌ <b>고갈</b> — {basket} · '
+        f'자산이 <b>{dep}</b>에 소진됨 (약 {s["Survived Years"]:.1f}년 지속)</div>',
+        unsafe_allow_html=True)
 
 # ── metric cards ────────────────────────────────────────────────────────────────
-m = st.columns(4)
-m[0].metric("최종 자산", money(s["Final Value"]),
-            delta=f"{(s['Final Value']/corpus - 1)*100:+.0f}% vs 원금")
-m[1].metric("총 인출액", money(s["Total Withdrawn"]))
-m[2].metric("총 배당(세후)", money(s["Total Net Dividend"]))
-m[3].metric("총 매도액", money(s["Total Shares Sold Value"]))
+delta_pct = (s["Final Value"] / corpus - 1) * 100
+delta_cls = "sub" if delta_pct >= 0 else "sub neg"
 
-m2 = st.columns(4)
-m2[0].metric("최종 보유주식", f"{s['Final Shares']:,.0f}주")
-m2[1].metric("잉여 재투자액", money(s["Total Reinvested Surplus"]))
-m2[2].metric("최대 낙폭 (MDD)", f"{s['Max Drawdown %']:.0f}%")
-m2[3].metric("최저 자산", money(s["Min Portfolio Value"]))
 
-# ── portfolio value chart ───────────────────────────────────────────────────────
+def card(lbl, val, sub_html=""):
+    return f'<div class="mcard"><div class="lbl">{lbl}</div><div class="val">{val}</div>{sub_html}</div>'
+
+
+cards = [
+    card("최종 자산", money(s["Final Value"]),
+         f'<div class="{delta_cls}">{delta_pct:+.0f}% vs 원금</div>'),
+    card("총 인출액", money(s["Total Withdrawn"])),
+    card("총 배당 (세후)", money(s["Total Net Dividend"])),
+    card("총 매도액", money(s["Total Shares Sold Value"])),
+    card("종목 수", f'{s["N Assets"]}개'),
+    card("잉여 재투자액", money(s["Total Reinvested Surplus"])),
+    card("최대 낙폭 (MDD)", f'{s["Max Drawdown %"]:.0f}%'),
+    card("최저 자산", money(s["Min Portfolio Value"])),
+]
+st.markdown(f'<div class="mgrid">{"".join(cards)}</div>', unsafe_allow_html=True)
+
+# ── chart helper ────────────────────────────────────────────────────────────────
+def _style(fig, ytitle):
+    # charts sit on the engine's cream "paper" card (stPlotlyChart CSS), so the
+    # plot internals are styled light: dark ink text, faint olive grid.
+    fig.update_layout(
+        height=420, margin=dict(l=14, r=14, t=30, b=12),
+        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#33402a", family="Inter, sans-serif"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
+                    font=dict(color="#33402a")),
+        hovermode="x unified",
+        yaxis=dict(title=ytitle, gridcolor="rgba(31,43,24,.09)", zeroline=False,
+                   tickfont=dict(color="#5a6b3f")),
+        xaxis=dict(gridcolor="rgba(31,43,24,.06)", tickfont=dict(color="#5a6b3f")),
+    )
+    return fig
+
+
+# ── portfolio value chart (stacked per stock + cash) ─────────────────────────────
+st.markdown('<div class="chart-h">💰 자산 추이 (종목별 스택)</div>', unsafe_allow_html=True)
 fig = go.Figure()
-fig.add_trace(go.Scatter(
-    x=tl["Date"], y=tl["Portfolio Value"], name="포트폴리오 가치",
-    line=dict(color=ACCENT, width=2), fill="tozeroy", fillcolor="rgba(229,72,77,0.08)",
-))
+for m in meta:
+    fig.add_trace(go.Scatter(
+        x=tl["Date"], y=tl[m["ticker"]], name=f'{m["ticker"]} ({m["wn"]:.0f}%)',
+        mode="lines", line=dict(width=0.6, color=m["color"]),
+        stackgroup="v", fillcolor=_rgba(m["color"], .55)))
+if (tl["Cash"] > 1e-6).any():
+    fig.add_trace(go.Scatter(
+        x=tl["Date"], y=tl["Cash"], name="현금(배당)",
+        mode="lines", line=dict(width=0.4, color="#b0985f"),
+        stackgroup="v", fillcolor=_rgba("#b0985f", .35)))
 fig.add_trace(go.Scatter(
     x=tl["Date"], y=tl["Cumulative Withdrawn"] + corpus, name="원금 + 누적인출",
-    line=dict(color=GREY, width=1.5, dash="dot"),
-))
-fig.add_hline(y=corpus, line=dict(color=INK, width=1, dash="dash"),
-              annotation_text=f"은퇴 원금 {money(corpus)}", annotation_position="top left")
+    line=dict(color="#33402a", width=1.4, dash="dot")))
+fig.add_hline(y=corpus, line=dict(color="#6f9a3f", width=1, dash="dash"),
+              annotation_text=f"은퇴 원금 {money(corpus)}", annotation_position="top left",
+              annotation_font_color="#5a6b3f")
 if not s["Survived"] and s["Depletion Date"] is not None:
-    fig.add_vline(x=pd.Timestamp(s["Depletion Date"]), line=dict(color=ACCENT, width=1.5),
-                  annotation_text="고갈", annotation_position="top")
-fig.update_layout(
-    height=420, margin=dict(l=10, r=10, t=30, b=10),
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    hovermode="x unified", plot_bgcolor="white",
-    yaxis=dict(title=f"자산 ({sym})", gridcolor="#eef1f4", zeroline=False),
-    xaxis=dict(gridcolor="#eef1f4"),
-)
-st.plotly_chart(fig, width="stretch")
+    fig.add_vline(x=pd.Timestamp(s["Depletion Date"]), line=dict(color="#e23636", width=1.5),
+                  annotation_text="고갈", annotation_position="top", annotation_font_color="#c0392b")
+st.plotly_chart(_style(fig, f"자산 ({sym})"), width="stretch")
+
+# ── per-stock breakdown table ───────────────────────────────────────────────────
+st.markdown('<div class="chart-h">📦 종목별 결과</div>', unsafe_allow_html=True)
+sch_by_tk = {m["ticker"]: m["sch"] for m in meta}
+brk = asum.copy()
+brk["배당주기"] = brk["Ticker"].map(
+    lambda tk: FREQ_KR.get(sch_by_tk[tk].frequency, sch_by_tk[tk].frequency))
+brk_show = pd.DataFrame({
+    "종목": brk["Name"] + " · " + brk["Ticker"],
+    "비중": brk["Weight %"].map(lambda v: f"{v:.0f}%"),
+    "배당주기": brk["배당주기"],
+    "초기 투자금": brk["Initial Amount"].map(money),
+    "최종 평가액": brk["Final Value"].map(money),
+    "총 배당(세후)": brk["Total Net Dividend"].map(money),
+    "총 매도액": brk["Total Sold Value"].map(money),
+})
+st.markdown(brk_show.to_html(index=False, classes="fire-table", border=0, escape=False),
+            unsafe_allow_html=True)
+_reinv_txt = REINVEST_TARGET_DESC[reinvest_target] if reinvest_surplus else "재투자 안 함"
+st.caption(f"매도 우선순위: {SELL_PRIORITY_DESC[sell_priority]} · 잉여 배당: {_reinv_txt}")
 
 # ── annual breakdown ────────────────────────────────────────────────────────────
-tl2 = tl.copy()
-tl2["Year"] = tl2["Date"].dt.year
+tl2 = tl.copy(); tl2["Year"] = tl2["Date"].dt.year
 annual = tl2.groupby("Year").agg(
     배당세후=("Dividend", "sum"), 인출=("Withdrawal", "sum"),
-    연말자산=("Portfolio Value", "last"), 연말주식=("Shares", "last"),
-).round(0)
+    연말자산=("Portfolio Value", "last")).round(0)
 annual["매도필요"] = (annual["인출"] - annual["배당세후"]).clip(lower=0).round(0)
 
 with st.expander("📅 연도별 상세", expanded=False):
-    show = annual.reset_index()[["Year", "배당세후", "인출", "매도필요", "연말주식", "연말자산"]]
-    show.columns = ["연도", "배당(세후)", "인출", "매도필요", "연말 주식수", "연말 자산"]
-    money_cols = ["배당(세후)", "인출", "매도필요", "연말 자산"]
-    for c in money_cols:
+    show = annual.reset_index()[["Year", "배당세후", "인출", "매도필요", "연말자산"]]
+    show.columns = ["연도", "배당(세후)", "인출", "매도필요", "연말 자산"]
+    for c in ["배당(세후)", "인출", "매도필요", "연말 자산"]:
         show[c] = show[c].map(lambda v: money(v))
-    show["연말 주식수"] = show["연말 주식수"].map(lambda v: f"{v:,.0f}")
     show["연도"] = show["연도"].astype(str)
-    st.dataframe(show, width="stretch", hide_index=True)
+    st.markdown(show.to_html(index=False, classes="fire-table", border=0, escape=False),
+                unsafe_allow_html=True)
 
-# ── raw price chart (bottom) ────────────────────────────────────────────────────
-st.markdown(f"#### 📉 {name} 주가 ({ticker})")
+# ── rebased price chart (bottom, one line per stock, =100 at start) ──────────────
+st.markdown('<div class="chart-h">📉 종목별 주가 (시작=100 리베이스)</div>', unsafe_allow_html=True)
 pfig = go.Figure()
-pfig.add_trace(go.Scatter(
-    x=tl["Date"], y=tl["Price"], name="주가",
-    line=dict(color="#3b5bdb", width=2), fill="tozeroy", fillcolor="rgba(59,91,219,0.06)",
-))
+start_ts = pd.Timestamp(tl["Date"].iloc[0])
+for m in meta:
+    cl = m["close"]
+    cl = cl[cl.index >= start_ts]
+    if cl.empty:
+        continue
+    base = float(cl.iloc[0])
+    if base <= 0:
+        continue
+    pfig.add_trace(go.Scatter(
+        x=cl.index, y=cl.values / base * 100.0, name=m["ticker"],
+        line=dict(color=m["color"], width=1.8)))
 if not s["Survived"] and s["Depletion Date"] is not None:
-    pfig.add_vline(x=pd.Timestamp(s["Depletion Date"]), line=dict(color=ACCENT, width=1.5),
-                   annotation_text="고갈", annotation_position="top")
-pfig.update_layout(
-    height=420, margin=dict(l=10, r=10, t=30, b=10),
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    hovermode="x unified", plot_bgcolor="white",
-    yaxis=dict(title=f"주가 ({sym})", gridcolor="#eef1f4", zeroline=False),
-    xaxis=dict(gridcolor="#eef1f4"),
-)
-st.plotly_chart(pfig, width="stretch")
+    pfig.add_vline(x=pd.Timestamp(s["Depletion Date"]), line=dict(color="#e23636", width=1.5),
+                   annotation_text="고갈", annotation_position="top", annotation_font_color="#c0392b")
+st.plotly_chart(_style(pfig, "리베이스 (시작=100)"), width="stretch")
 
-st.caption(f"데이터: {tl['Date'].iloc[0].date()} ~ {tl['Date'].iloc[-1].date()} · "
-           f"{market} · {ticker} · 배당 {sch.n_recent}건(최근) · Copyright © zealatan")
+st.markdown(
+    f'<div class="market-subtitle" style="margin-top:.6rem;">데이터 {tl["Date"].iloc[0].date()} ~ '
+    f'{tl["Date"].iloc[-1].date()} · {market} · {basket} · '
+    f'Copyright © zealatan</div>', unsafe_allow_html=True)
