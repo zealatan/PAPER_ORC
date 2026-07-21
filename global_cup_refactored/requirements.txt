@@ -1,5 +1,0 @@
-streamlit>=1.35.0
-yfinance>=0.2.40
-multitasking==0.0.11  # 0.0.13+ uses py3.9 syntax (type[Thread]); pin for py3.8 compat
-pandas>=2.0.0
-plotly>=5.20.0

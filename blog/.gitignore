@@ -1,0 +1,9 @@
+# secrets
+.eleven_key
+# generated media outputs (too large for GitHub / regenerable)
+*.mp4
+*.webm
+*.wav
+*.mp3
+tts/
+subtitles/
