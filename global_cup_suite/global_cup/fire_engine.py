@@ -89,6 +89,7 @@ def run_fire_backtest(
                                            #   is future work.)
     cpi: Optional[pd.Series] = None,       # required for fixed_real
     start_date: Optional[date] = None,
+    end_date: Optional[date] = None,       # retirement window end (inclusive); None = last data point
 ) -> Optional[FireResult]:
     close = close.dropna().copy()
     if close.empty or initial_amount <= 0:
@@ -96,6 +97,8 @@ def run_fire_backtest(
     close.index = pd.to_datetime(close.index).tz_localize(None)
     if start_date is not None:
         close = close[close.index >= pd.Timestamp(start_date)]
+    if end_date is not None:
+        close = close[close.index <= pd.Timestamp(end_date)]
     if close.empty:
         return None
 
@@ -385,6 +388,7 @@ def run_fire_backtest_multi(
     reinvest_asset: Optional["AssetSpec"] = None,  # reinvest-only asset OUTSIDE the basket
     cpi: Optional[pd.Series] = None,
     start_date: Optional[date] = None,
+    end_date: Optional[date] = None,       # retirement window end (inclusive); None = last data point
 ) -> Optional[FireMultiResult]:
     # ── clean + validate the basket ─────────────────────────────────────────────
     specs: List[AssetSpec] = []
@@ -395,6 +399,8 @@ def run_fire_backtest_multi(
         c.index = pd.to_datetime(c.index).tz_localize(None)
         if start_date is not None:
             c = c[c.index >= pd.Timestamp(start_date)]
+        if end_date is not None:
+            c = c[c.index <= pd.Timestamp(end_date)]
         if c.empty:
             continue
         specs.append(AssetSpec(a.name, a.ticker, c, a.dividends, float(a.weight)))
@@ -433,6 +439,8 @@ def run_fire_backtest_multi(
             rc.index = pd.to_datetime(rc.index).tz_localize(None)
             if start_date is not None:
                 rc = rc[rc.index >= pd.Timestamp(start_date)]
+            if end_date is not None:
+                rc = rc[rc.index <= pd.Timestamp(end_date)]
         if not rc.empty:
             specs.append(AssetSpec(reinvest_asset.name, reinvest_asset.ticker,
                                    rc, reinvest_asset.dividends, 0.0))

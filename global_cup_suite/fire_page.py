@@ -175,12 +175,18 @@ with st.columns([1])[0], st.container(border=True):
 
     sym = get_currency_symbol(currency)
 
-    # 은퇴 시작일 · 원천징수세 — 한 줄
+    # 은퇴 시작일 · 종료일 — 한 줄
     rA = st.columns(2)
     start = rA[0].date_input("은퇴 시작일", value=date(2000, 1, 1),
                              min_value=date(1970, 1, 1), max_value=date.today())
-    tax = rA[1].number_input("원천징수세 (%)", value=float(rule["tax_rate"]),
-                             step=0.5, min_value=0.0, max_value=100.0, key=f"tax_{market}")
+    # 종료일 min/max는 고정(1970~오늘)으로 두고 start와의 대소는 아래에서 검증한다.
+    # (min_value=start로 묶으면 start를 뒤로 옮길 때 저장된 end가 범위를 벗어나 예외가 난다.)
+    end = rA[1].date_input("은퇴 종료일", value=date.today(),
+                           min_value=date(1970, 1, 1), max_value=date.today())
+
+    # 원천징수세 — 한 줄 (단독)
+    tax = st.number_input("원천징수세 (%)", value=float(rule["tax_rate"]),
+                          step=0.5, min_value=0.0, max_value=100.0, key=f"tax_{market}")
 
     # 은퇴 자금 · 월 생활비 — 한 줄
     rB = st.columns(2)
@@ -240,6 +246,10 @@ with st.columns([1])[0], st.container(border=True):
              "초기 투자 없이 재투자만 받는 포지션으로 추가됩니다.")
     reinvest_ticker = tickers.get(reinvest_pick_label)
 
+if end <= start:
+    st.warning("은퇴 종료일은 시작일보다 뒤여야 합니다.")
+    st.stop()
+
 if corpus <= 0:
     st.info("은퇴 자금을 입력하세요.")
     st.stop()
@@ -252,7 +262,7 @@ def money(v, dec=0):
 
 
 # ── load data for the whole basket ──────────────────────────────────────────────
-today = date.today()
+# 다운로드 종료는 은퇴 종료일(end)까지. 엔진도 end_date로 한 번 더 잘라 안전하게 맞춘다.
 assets = []          # engine input (AssetSpec)
 meta = []            # display meta: name, ticker, weight%, close, sch, color
 with st.spinner(f"{len(sel_labels)}개 종목 데이터 로딩 중…"):
@@ -261,12 +271,12 @@ with st.spinner(f"{len(sel_labels)}개 종목 데이터 로딩 중…"):
             continue
         tk = tickers[lbl]
         nm = lbl.split(" / ")[0]
-        price_df = download_price(tk, start, today)
+        price_df = download_price(tk, start, end)
         cl = get_close_series(price_df)
         if cl.empty:
             st.warning(f"'{tk}' 가격 데이터를 불러오지 못해 제외합니다.")
             continue
-        dv = download_dividends(tk, date(max(start.year - 6, 1970), 1, 1), today)
+        dv = download_dividends(tk, date(max(start.year - 6, 1970), 1, 1), end)
         assets.append(AssetSpec(nm, tk, cl, dv, float(w)))
         meta.append({"name": nm, "ticker": tk, "weight": float(w),
                      "close": cl, "sch": classify(dv)})
@@ -277,7 +287,7 @@ _basket_tickers = {m["ticker"] for m in meta}
 if (reinvest_surplus and reinvest_target == "specific"
         and reinvest_ticker and reinvest_ticker not in _basket_tickers):
     with st.spinner(f"재투자 대상 '{reinvest_ticker}' 데이터 로딩 중…"):
-        _rdf = download_price(reinvest_ticker, start, today)
+        _rdf = download_price(reinvest_ticker, start, end)
         _rcl = get_close_series(_rdf)
         if _rcl.empty:
             st.warning(f"재투자 대상 '{reinvest_ticker}' 가격 데이터를 불러오지 못해 "
@@ -287,7 +297,7 @@ if (reinvest_surplus and reinvest_target == "specific"
             _rnm = (reinvest_pick_label.split(" / ")[0]
                     if reinvest_pick_label else reinvest_ticker)
             _rdv = download_dividends(reinvest_ticker,
-                                      date(max(start.year - 6, 1970), 1, 1), today)
+                                      date(max(start.year - 6, 1970), 1, 1), end)
             reinvest_asset = AssetSpec(_rnm, reinvest_ticker, _rcl, _rdv, 0.0)
             # 스택/리베이스 차트에도 보이도록 meta에 편입 (초기배분 0 → wn 0%).
             meta.append({"name": _rnm, "ticker": reinvest_ticker, "weight": 0.0,
@@ -330,6 +340,7 @@ result = run_fire_backtest_multi(
     reinvest_ticker=reinvest_ticker,   # UI: '특정 종목에 집중'일 때 대상 티커
     reinvest_asset=reinvest_asset,     # UI: 바스켓 밖 종목이면 재투자 전용 편입
     start_date=start,
+    end_date=end,
 )
 if result is None:
     st.error("백테스트를 실행할 수 없습니다. 입력값을 확인하세요.")
