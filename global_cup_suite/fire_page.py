@@ -466,7 +466,8 @@ with st.expander("📅 연도별 상세 (종목별 보유 수량 포함)", expan
     for c in ["배당(세후)", "인출", "매도필요", "연말 자산"]:
         show[c] = show[c].map(lambda v: money(v))
     for c in share_cols:
-        show[c] = show[c].map(lambda v: f"{v:,.1f}")
+        # 주식 수량은 정수로, 소수점 내림 (shares≥0 이므로 int()=floor)
+        show[c] = show[c].map(lambda v: f"{int(v):,}")
     show["연도"] = show["연도"].astype(str)
     st.markdown('<div class="table-scroll">'
                 + show.to_html(index=False, classes="fire-table", border=0, escape=False)
