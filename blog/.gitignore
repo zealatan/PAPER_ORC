@@ -1,9 +1,15 @@
 # secrets
 .eleven_key
-# generated media outputs (too large for GitHub / regenerable)
-*.mp4
+# generated video OUTPUTS (large, regenerable) — but keep bg/ and clip/full_clip.mp4 (app needs them)
+cocacola_final_video.mp4
+cocacola_dubbed.mp4
+cocacola_recording_guide.mp4
+# unused large source variants (app uses clip/full_clip.mp4 only)
+clip/full_clip_hq.mp4
+clip/full_clip_split.mp4
+# generated audio / artifacts
 *.webm
 *.wav
-*.mp3
 tts/
+tts_voice_test.mp3
 subtitles/
