@@ -1,0 +1,68 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden}
+  body{
+    font-family:'Noto Sans CJK KR','Noto Sans KR',sans-serif;
+    background:
+      radial-gradient(1200px 900px at 78% 42%, rgba(224,79,58,.28), transparent 60%),
+      radial-gradient(1400px 1000px at 20% 60%, #123b3f 0%, #0a2124 45%, #05161a 100%);
+    position:relative; color:#fff;
+  }
+  /* 코카콜라 캔 (우하단 원형 + 붉은 링) */
+  .coke{
+    position:absolute; right:55px; bottom:55px;
+    width:560px; height:560px; border-radius:50%;
+    background:url('thumb_coke.png') center/135% no-repeat;
+    box-shadow:0 0 0 11px rgba(224,79,58,.95), 0 30px 70px rgba(0,0,0,.55);
+    filter:saturate(1.15) contrast(1.06);
+  }
+  .coke::after{content:'';position:absolute;inset:0;border-radius:50%;
+    box-shadow:inset 0 0 110px rgba(0,0,0,.35);}
+  /* 킥커 */
+  .kick{position:absolute; left:80px; top:64px; font-weight:800; font-size:42px;
+    letter-spacing:1px; color:#ffd83d; text-shadow:0 3px 10px rgba(0,0,0,.5);}
+  .kick b{color:#fff;background:#e04f3a;padding:5px 18px;border-radius:10px;margin-left:8px}
+  /* 대비 블록 */
+  .rows{position:absolute; left:80px; top:180px; display:flex; flex-direction:column; gap:34px;}
+  .row{display:flex; align-items:center; gap:26px;}
+  .tag{font-weight:900; font-size:66px; width:88px; height:88px; border-radius:20px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.4); flex:none;}
+  .tag.a{background:#e04f3a;color:#fff} .tag.b{background:#37c46a;color:#06231a}
+  .desc{font-weight:800; font-size:40px; color:#dfe7e4; opacity:.95; white-space:nowrap}
+  .desc .m{color:#ffd83d}
+  .arrow{font-size:46px;color:#8fa3a0;margin:0 2px}
+  .big{font-weight:900; font-size:92px; line-height:.95; letter-spacing:-2px; white-space:nowrap;
+    -webkit-text-stroke:3px rgba(0,0,0,.35);}
+  .big.red{color:#ff5a41; text-shadow:0 6px 0 #7a1d12, 0 14px 34px rgba(255,60,40,.35)}
+  .big.grn{color:#3ee07f; text-shadow:0 6px 0 #0d5a30, 0 14px 34px rgba(40,220,120,.3)}
+  /* 하단 헤드라인 */
+  .head{position:absolute; left:80px; bottom:66px; font-weight:900; font-size:100px;
+    letter-spacing:-3px; line-height:1; text-shadow:0 6px 22px rgba(0,0,0,.6)}
+  .head .hl{color:#ffd83d}
+  .head .q{color:#ff5a41}
+  /* 로고 (우상단) */
+  .logo{position:absolute; right:64px; top:52px; width:108px; height:108px;
+    background:url('thumb_logo.png') center/contain no-repeat; filter:drop-shadow(0 4px 10px rgba(0,0,0,.5)); z-index:5}
+</style></head>
+<body>
+  <div class="coke"></div>
+  <div class="kick">코카콜라 25년 배당 백테스트<b>실화</b></div>
+  <div class="rows">
+    <div class="row">
+      <div class="tag a">A</div>
+      <div class="desc">$600,000 · 매달 <span class="m">$3,000</span> 펑펑</div>
+      <div class="arrow">▶</div>
+      <div class="big red">파산</div>
+    </div>
+    <div class="row">
+      <div class="tag b">B</div>
+      <div class="desc">$400,000 · 매달 <span class="m">$1,000</span>만</div>
+      <div class="arrow">▶</div>
+      <div class="big grn">1.8배 부자</div>
+    </div>
+  </div>
+  <div class="head">돈 <span class="hl">더 많은</span> 쪽이 <span class="q">망했다?!</span></div>
+  <div class="logo"></div>
+</body></html>

@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<title>덱 로딩…</title>
+<style>html,body{margin:0;height:100%;background:#111;color:#eee;font:16px/1.5 sans-serif;display:flex;align-items:center;justify-content:center}</style>
+</head><body>
+<div id="msg">31씬 덱 불러오는 중…</div>
+<script>
+const KEY='tplCatalog_cocacola_v4g';
+fetch('cocacola_deck_current.json',{cache:'no-store'})
+  .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+  .then(t=>{
+    JSON.parse(t); // validate
+    localStorage.setItem(KEY,t);
+    document.getElementById('msg').textContent='로딩 완료 — 재생 화면으로 이동…';
+    location.replace('cocacola_final.html?rec');
+  })
+  .catch(e=>{ document.getElementById('msg').textContent='실패: '+e.message; });
+</script>
+</body></html>

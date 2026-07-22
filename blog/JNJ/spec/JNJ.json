@@ -1,0 +1,73 @@
+{
+ "schema_version": "1.0",
+ "ticker": "JNJ",
+ "company": "Johnson & Johnson",
+ "theme": "dividend_king",
+ "currency": "USD",
+ "window": {
+  "start": "2000-01-01",
+  "end": "2026-07-31"
+ },
+ "data": {
+  "monthly_price": [],
+  "dividends": [],
+  "annual_dividends": [],
+  "business": {
+   "_source": "curation/JNJ.yaml"
+  }
+ },
+ "backtest": {
+  "fire": {
+   "grid": {
+    "inits": [
+     200000,
+     400000,
+     600000
+    ],
+    "monthlies": [
+     1000,
+     2000,
+     3000
+    ],
+    "strategies": [
+     "fixed_nominal",
+     "fixed_real"
+    ],
+    "tax_rate_pct": 15,
+    "reinvest_dividends": false,
+    "reinvest_surplus": true,
+    "frequency": "monthly"
+   },
+   "scenarios": []
+  },
+  "strategy_compare": {
+   "deck_triggers": []
+  }
+ },
+ "story": {
+  "hook": {},
+  "sections": [],
+  "voice": {
+   "voice_id": "Iu0W7wMhBwV2Qjzj0Fp2",
+   "model": "eleven_v3",
+   "lang": "ko",
+   "atempo": 1.18,
+   "ms_per_char": 225
+  }
+ },
+ "scenes": [],
+ "deck_layout": {
+  "ov": {},
+  "cp": {},
+  "theme": "paper",
+  "paper": "photo"
+ },
+ "assets": {
+  "bg_clips": {},
+  "brand_media": {},
+  "thumbnail": {},
+  "publish": {}
+ },
+ "outputs": {},
+ "_todo": "data/backtest/business/story/scenes/assets 모두 비어있음 — HANDOVER.md 순서대로 채울 것"
+}

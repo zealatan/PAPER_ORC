@@ -1,0 +1,23 @@
+# Coca-Cola (KO) 사업개요 — 결정론 소스 없음, 큐레이션 필수. 각 claim에 출처(QA 대조용).
+# 원천: cocacola_final.html DEFAULT_SCENES/IIFE에 baked됐던 값 동결.
+dividend_growth_years: 64        # 연속 증배 (배당시리즈에서 결정론 재계산 가능)
+payout_ratio: 67                 # 조정 EPS 대비 배당성향 %
+region_revenue:                  # 지역 매출 구성 %
+  - {name: 북미, val: 35, code: us}
+  - {name: 북미 외, val: 65, code: world}
+recent_results:
+  revenue: "$12.5B"              # 2026 1분기 순매출
+  yoy: "+12%"
+  organic: "+10%"
+  op_margin: "35%"
+brand:
+  market_cap: "$359B"
+  tagline: "하루 22억 잔"
+  brands_total: 200
+  megabrands: 30                 # 연매출 $10억+ 메가브랜드
+  logo_token: coke
+sources:
+  - {claim: "64년 연속 증배", url: "TODO: KO IR / dividend history", asof: "2026-07"}
+  - {claim: "배당성향 67%", url: "TODO: KO 10-Q/IR", asof: "2026-07"}
+  - {claim: "2026 Q1 순매출 $12.5B +12%", url: "TODO: KO Q1 2026 IR", asof: "2026-07"}
+  - {claim: "시가총액 $359B", url: "TODO: 시세", asof: "2026-07"}

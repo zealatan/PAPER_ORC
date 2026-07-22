@@ -1,0 +1,19 @@
+# Johnson & Johnson (JNJ) 사업개요 — 결정론 소스 없음, 리서치+큐레이션 필수. 각 claim에 출처.
+# ⚠ JNJ 특이사항: 2023년 소비자건강(Kenvue) 분사 → 현재 2개 부문(Innovative Medicine=제약, MedTech).
+#   코카콜라의 "브랜드 포트폴리오" 앵글 대신 "제약+의료기기 파이프라인" 앵글로.
+dividend_growth_years: 63        # TODO 확인: JNJ 배당왕(Dividend King). 배당시리즈로 결정론 재계산 가능
+payout_ratio:                    # TODO 리서치 (조정 EPS 대비 %)
+segments:                        # 코카콜라 region_revenue 대신 사업부문
+  - {name: Innovative Medicine, note: 제약}
+  - {name: MedTech, note: 의료기기}
+recent_results:
+  revenue:                       # TODO 최근 분기 매출
+  yoy:
+  note:
+brand:
+  market_cap:                    # TODO 시총
+  tagline:                       # TODO 예 "전 세계 의료 필수기업"
+  logo_token: jnj
+sources:
+  - {claim: "배당왕 63년 증배", url: "TODO: JNJ IR/dividend history", asof: "2026-07"}
+  # TODO: 각 수치 출처 추가 (QA 대조용)
