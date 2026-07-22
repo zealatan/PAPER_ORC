@@ -1,10 +1,25 @@
 # JNJ 영상 제작 — 세션 인수인계
 
 ## 0. 목표
-**존슨앤드존슨(JNJ) 배당 백테스트 유튜브 영상 1편**을 코카콜라와 **똑같은 방식**으로 제작.
-산출물: ① 본편(약 10~12분, 1080p60, 본인 클론 목소리 더빙) ② 썸네일 ③ 쇼츠(세로).
+**존슨앤드존슨(JNJ) 배당 백테스트 유튜브 영상 1편**을 코카콜라 방식으로 제작.
+산출물: ① 본편(1080p60, 본인 클론 목소리 더빙) ② 썸네일 ③ 쇼츠(세로).
 
 이 문서 하나로 처음부터 끝까지 갈 수 있게 썼다. 막히면 `ref/`의 **코카콜라 완성본을 예시로** 참고.
+
+## 0.5 ⭐콘텐츠 구조 — 백테스트 중심 (코카콜라 실제 성과에서 배운 것)
+> 코카콜라 1편(https://youtube.com/watch?v=-yv2igFEaZc) 공개 후 확인: **시청자가 원하는 건 백테스트**다.
+> 회사 소개·사업개요·닷컴버블 시점분석 같은 "설명" 파트는 관심이 떨어진다.
+
+**그래서 JNJ는 군더더기 다 빼고 3부 구성으로 짧고 강하게:**
+1. **후킹 영상** — 같은 JNJ 주식, 넉넉히 쓴 A는 파산 / 아껴 재투자한 B는 부자. 궁금증 유발.
+2. **파산 시나리오 백테스트** — "얼마 있으면, 매달 얼마 쓰면 버티나/파산하나". 원금 $200k/$400k/$600k × 월 $1k/$2k/$3k FIRE 백테스트가 **핵심**.
+3. **매수 방법 백테스트** — 목돈 vs 매달 적립 vs 폭락매수, 뭐가 이기나. 전략비교 백테스트.
+
+**과감히 컷(코카콜라엔 있었지만 JNJ선 빼거나 최소화):**
+- 회사 소개(herostat/card 인트로), **사업개요 섹션 전체**(regionmap/divbars/cupdrain/kpirow/quad = "지금 사도 될까" 부분), 닷컴버블 시점위험·2002년 재시작·생존지도, 긴 결론.
+- (배당왕·배당성향 정도만 1~2씬으로 짧게 언급하거나 아예 생략)
+
+→ 결과: 코카콜라 12분 → **JNJ는 5~7분** 목표. 밀도 높게. **§3-C·§3-D의 씬 골격은 이 3부에 맞춰 설계.**
 
 ---
 
@@ -62,20 +77,28 @@ JNJ 가격·배당을 받아 FIRE 시나리오(원금×월인출×물가반영)�
 - JNJ = **배당왕(Dividend King)**, 60년+ 연속 증배 (배당시리즈에서 연수 결정론 재계산 가능).
 - `/deep-research` 스킬 활용 추천. 출처 없는 숫자는 대본에 쓰지 말 것(QA 원칙).
 
-### C. 대본/스토리  →  `spec/JNJ.json`의 `story`
-코카콜라 구조를 그대로 답습(`ref/cocacola_narration_lines.EXAMPLE.json` 참고):
-- **A/B 훅**: 같은 JNJ 주식, 넉넉히 쓴 A는 파산 / 아껴 재투자한 B는 부자 (백테스트 결과에 맞춰 숫자 조정).
-- 섹션: 훅 → 유의사항 → FIRE 3케이스($200k/$400k/$600k) → 닷컴/시점위험 → 사업개요(제약·의료기기·배당왕·배당성향·최근실적) → 전략비교(목돈/적립/폭락매수) → 결론(버핏 인용 등).
-- **철칙**: 대본의 모든 숫자·연도는 A단계 백테스트 결과를 **인용만**. 지어내면 안 됨.
+### C. 대본/스토리  →  `spec/JNJ.json`의 `story`  (⭐§0.5 3부 구성)
+- **1부 후킹**: 같은 JNJ 주식, 넉넉히 쓴 A는 파산 / 아껴 재투자한 B는 부자 (A단계 백테스트 결과에 맞춰 숫자 조정). A/B 인물 대비.
+- **2부 파산 시나리오 백테스트**: "$200k/$400k/$600k로 은퇴, 매달 $1k/$2k/$3k 쓰면?" → 각 케이스 생존/파산연도/최종자산. 물가반영(fixed_real) 버전이 임팩트. **여기가 본편의 심장.**
+- **3부 매수 방법 백테스트**: 25년간 목돈 vs 매달 적립 vs 폭락(-30%)매수 → 최종자산 비교, 뭐가 이기나.
+- (짧은 유의사항 1씬 + 짧은 마무리/구독 1씬만. 사업개요·시점분석·생존지도는 §0.5대로 컷.)
+- **철칙**: 대본의 모든 숫자·연도는 A단계 백테스트 결과를 **인용만**. 지어내면 안 됨. `ref/cocacola_narration_lines.EXAMPLE.json`은 톤 참고용(단 코카콜라는 풀버전이라 2/3만 발췌).
 
 ### D. 덱(HTML) 제작 — 세분화 ⭐가장 복잡, 스토리보드 기반
 덱의 실체 = **씬 JSON 배열** `{scenes:[{tpl,dur,cam,data,bgid,subLines,subTimes,subHold}], ov, cp, theme, paper}`.
 HTML(`jnj_final.html`)은 이 JSON을 **localStorage**에서 읽어 렌더하는 **엔진**(TPL 템플릿 + engChart). 즉 "HTML 만들기"="씬 JSON 만들기".
 > 참고 원본: `gen_storyboard_v3.py`(스토리보드+대본+dur), `build_cur33.py`(덱 JSON 조립), `gen_pages_30_31_32.py`·`gen_page16_smart.py`(백테스트→차트데이터). `ref/cocacola_deck_dubbed.EXAMPLE.json`=완성 덱 예시.
 
-**D1. 씬 골격(스토리보드) 설계** — 어떤 tpl을 어떤 순서로.
-  - 사용 tpl 18종: `videohook`(훅영상) `notice`(유의사항) `solostory`(A/B 인물) `interlude`(전환) `enginechart`(백테스트 차트) `herostat`(대형 통계) `card`(표지/요약) `regionmap`(지역/부문) `divbars`(배당 막대) `cupdrain`(배당성향) `kpirow`(실적 KPI) `quad`(4분할) `hbars/hbars2`(수평막대) `checks`(체크리스트) `quotebig`(인용) `bars` `waterfall`
-  - 코카콜라 31씬 순서를 뼈대로(`ref/…EXAMPLE.json`), JNJ 스토리(§3-C)에 맞게. `gen_storyboard_v3.py`의 `SB=[]` 배열이 씬별 {대본,배경,요소,자료}의 원본 형태.
+**D1. 씬 골격(스토리보드) 설계** — ⭐§0.5 3부에 맞춘 **린 골격 ~12~16씬**(코카콜라 31씬 → 대폭 축소):
+  ```
+  1부 후킹    videohook(훅영상) → notice(짧은 유의사항) → solostory×2(A 파산 / B 부자)
+  2부 파산BT  interlude(전환) → enginechart×3 ($200k/$400k/$600k, 물가반영, 3케이스 파산)
+              [옵션] survheat(생존지도) 1씬으로 요약 가능
+  3부 매수BT  interlude → enginechart×2~3(폭락매수 vs 적립 결과) → hbars2(전략 비교)
+  마무리      quotebig 또는 card (구독 유도) 1씬
+  ```
+  - 쓰는 tpl은 `videohook·notice·solostory·interlude·enginechart·hbars2·survheat·quotebig·card` 정도면 충분. (regionmap/divbars/cupdrain/kpirow/quad = 사업개요용 → **JNJ선 안 씀**)
+  - `ref/cocacola_deck_dubbed.EXAMPLE.json`에서 **해당 tpl 씬만 골라** 형태 참고. `gen_storyboard_v3.py`의 `SB=[]`가 씬별 {대본,배경,요소,자료} 원본 형태.
 
 **D2. 씬 dur 산출** — 대본 글자수 기반. `gen_storyboard_v3.py:62` 로직: `dur = 글자수(공백제외)/RATE(5자/s) + BUF(1.3s)`. 단, 최종 타이밍은 **더빙 TTS 실측**(subHold/subTimes)이 덮어씀(E단계). D2는 초안용.
 
