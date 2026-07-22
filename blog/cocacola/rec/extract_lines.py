@@ -3,8 +3,8 @@
    TTS 더빙의 입력 텍스트. 출력: rec/narration_lines.json + 사람이 읽는 요약."""
 import json, re, os, sys
 
-HTML = os.path.join(os.path.dirname(__file__), '..', 'cocacola_final.html')
-DECK = os.path.join(os.path.dirname(__file__), '..', 'cocacola_deck_current.json')
+HTML = os.path.join(os.path.dirname(__file__), '..', 'deck', 'cocacola_final.html')
+DECK = os.path.join(os.path.dirname(__file__), '..', 'data', 'cocacola_deck_current.json')
 OUT  = os.path.join(os.path.dirname(__file__), 'narration_lines.json')
 
 src = open(HTML, encoding='utf-8').read()

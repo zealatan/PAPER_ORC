@@ -5,10 +5,10 @@ import json, re, os
 
 HERE = os.path.dirname(__file__)
 ROOT = os.path.join(HERE, '..')
-HTML = os.path.join(ROOT, 'cocacola_final.html')
-DECK = os.path.join(ROOT, 'cocacola_deck_current.json')
+HTML = os.path.join(ROOT, 'deck', 'cocacola_final.html')
+DECK = os.path.join(ROOT, 'data', 'cocacola_deck_current.json')
 MANI = os.path.join(HERE, 'tts_manifest.json')
-OUT_DECK = os.path.join(ROOT, 'cocacola_deck_dubbed.json')
+OUT_DECK = os.path.join(ROOT, 'data', 'cocacola_deck_dubbed.json')
 OUT_TL   = os.path.join(HERE, 'voice_timeline.json')
 
 GAP_MS  = 120   # 줄 사이 간격

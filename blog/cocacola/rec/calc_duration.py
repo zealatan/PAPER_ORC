@@ -3,8 +3,8 @@
    현재 덱(cocacola_deck_current.json)의 총 재생 시간을 계산한다."""
 import json, re, sys, os
 
-HTML = os.path.join(os.path.dirname(__file__), '..', 'cocacola_final.html')
-DECK = os.path.join(os.path.dirname(__file__), '..', 'cocacola_deck_current.json')
+HTML = os.path.join(os.path.dirname(__file__), '..', 'deck', 'cocacola_final.html')
+DECK = os.path.join(os.path.dirname(__file__), '..', 'data', 'cocacola_deck_current.json')
 
 # ---- HTML에서 상수 추출 ----
 src = open(HTML, encoding='utf-8').read()

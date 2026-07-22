@@ -179,7 +179,7 @@ firefox로 덱을 전체화면 재생하며 화면녹화(rec/record_full.sh). **
 - **ref/*.EXAMPLE.*** — 코카콜라 완성 덱·나레이션·큐레이션 (형태 그대로 따라하기)
 - **아키텍처 아트팩트**: https://claude.ai/code/artifact/45ab02e4-037c-4db0-8b24-b431e967606d
 - **메모리**: `cocacola-recording-pipeline` (렌더 파이프라인 상세)
-- **완성된 코카콜라**: `blog/recordings/cocacola_dubbed_final.mp4`(본편), `cocacola_shorts_bt.mp4`(쇼츠), `thumb_final_v6.png`(썸네일) — 목표 품질 기준
+- **완성된 코카콜라**(참고 기준): `blog/cocacola/recordings/cocacola_dubbed_final.mp4`(본편), `cocacola_shorts_bt.mp4`(쇼츠), `thumb_final_v6.png`(썸네일). 소스·덱·데이터는 `blog/cocacola/`(JNJ와 동일 구조) — 막히면 여기 실물 참고.
 
 ## 7. 첫 스텝 (다음 세션이 바로 할 것)
 1. `git pull` 후 이 문서 + PROTOCOL.md 읽기
