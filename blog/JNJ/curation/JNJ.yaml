@@ -1,19 +1,49 @@
-# Johnson & Johnson (JNJ) 사업개요 — 결정론 소스 없음, 리서치+큐레이션 필수. 각 claim에 출처.
-# ⚠ JNJ 특이사항: 2023년 소비자건강(Kenvue) 분사 → 현재 2개 부문(Innovative Medicine=제약, MedTech).
-#   코카콜라의 "브랜드 포트폴리오" 앵글 대신 "제약+의료기기 파이프라인" 앵글로.
-dividend_growth_years: 63        # TODO 확인: JNJ 배당왕(Dividend King). 배당시리즈로 결정론 재계산 가능
-payout_ratio:                    # TODO 리서치 (조정 EPS 대비 %)
-segments:                        # 코카콜라 region_revenue 대신 사업부문
-  - {name: Innovative Medicine, note: 제약}
-  - {name: MedTech, note: 의료기기}
+# Johnson & Johnson (JNJ) 사업개요 — 결정론 소스 없음, 리서치+큐레이션. 각 claim에 출처.
+# ⚠ JNJ 특이사항: 2023년 소비자건강(Kenvue) 분사 → 현재 2개 부문(Innovative Medicine=제약, MedTech=의료기기).
+#   코카콜라 "브랜드 포트폴리오" 앵글 대신 "제약+의료기기 파이프라인 + 64년 배당왕" 앵글.
+# 리서치: deep-research wf_b2e47b4f (3표 적대검증, 대부분 3-0 만장일치). as-of 2026-07.
+
+dividend_king:
+  consecutive_years: 64          # 2026-04-14 이사회 결의로 64년 연속 증배 달성 (배당왕=50년+ 훌쩍 상회)
+  last_raise: {date: "2026-04-14", pct: 3.1, from: 1.30, to: 1.34}  # 분기배당 $1.30→$1.34
+  annual_dividend_per_share: 5.36   # 분기 $1.34 × 4 (직전 연 $5.20)
+  dividend_yield_pct: 2.14          # $5.36 ÷ $250.61 (2026-07-21 종가 기준, 시장가 변동)
+  payout_ratio_pct: 62              # 연배당 $5.36 ÷ GAAP TTM EPS $8.62 (yfinance 2026-07-21)
+  payout_ratio_note: "조정 EPS(FY2025 ~$10.7) 기준으로는 ~50%. 대본 인용 시 기준 명시할 것"
+
+segments:                          # 코카콜라 region_revenue 대신 사업부문 (FY2025)
+  - {name: "Innovative Medicine", ko: "제약", fy2025_rev_b: 60.401, share_pct: 64.1, yoy_pct: 6.0}
+  - {name: "MedTech",             ko: "의료기기", fy2025_rev_b: 33.792, share_pct: 35.9, yoy_pct: 6.1}
+
 recent_results:
-  revenue:                       # TODO 최근 분기 매출
-  yoy:
-  note:
+  fy2025:                          # 2026-01-21 발표 (SEC 8-K Ex.99.1)
+    revenue_b: 94.193
+    yoy_pct: 6.0
+    q4_adjusted_eps: 2.46
+  q2_2026:                         # 2026-07-15 발표, 리서치 기준일 1주 전 = 최신
+    revenue_b: 25.31
+    yoy_pct: 6.6
+    operational_growth_pct: 5.6
+    innovative_medicine: {rev_b: 16.384, yoy_pct: 7.8, share_pct: 64.7}
+    medtech:             {rev_b: 8.926,  yoy_pct: 4.5, share_pct: 35.3}
+    note: "2026 연간 outlook 상향"
+
 brand:
-  market_cap:                    # TODO 시총
-  tagline:                       # TODO 예 "전 세계 의료 필수기업"
+  market_cap_b: 603.3              # $250.61 × 2.407B주 (2026-07-21). yfinance marketCap $603.27B와 일치
+  shares_outstanding_b: 2.407
+  tagline: "제약과 의료기기 두 축의 글로벌 헬스케어 대기업 — 64년 연속 배당을 늘려온 배당왕"
   logo_token: jnj
+
+# 물가반영 백테스트/전략비교 수치는 spec/JNJ.json backtest 참조 (엔진 산출, 여기 중복 안 함)
+
 sources:
-  - {claim: "배당왕 63년 증배", url: "TODO: JNJ IR/dividend history", asof: "2026-07"}
-  # TODO: 각 수치 출처 추가 (QA 대조용)
+  - {claim: "64년 연속 증배 + 연배당 $5.36 (분기 $1.34, +3.1%)", asof: "2026-04-14",
+     url: "https://www.investor.jnj.com/investor-news/news-details/2026/Johnson--Johnson-Announces-64th-Consecutive-Year-of-Dividend-Increase-Raises-Quarterly-Dividend-by-3-1/default.aspx"}
+  - {claim: "FY2025 총매출 $94.193B(+6.0%), IM $60.401B / MedTech $33.792B", asof: "2026-01-21",
+     url: "https://www.sec.gov/Archives/edgar/data/200406/000020040626000002/a2025q4exhibit991.htm"}
+  - {claim: "Q2 2026 총매출 $25.31B(+6.6%), IM $16.384B / MedTech $8.926B", asof: "2026-07-15",
+     url: "https://www.investor.jnj.com/investor-news/news-details/2026/Johnson--Johnson-reports-Q2-2026-results-raises-2026-outlook/default.aspx"}
+  - {claim: "Kenvue(소비자건강) 분사 2023 완료 → 2개 부문 체제", asof: "2023-08-23",
+     url: "https://www.jnj.com/media-center/press-releases/johnson-johnson-announces-kenvue-as-the-name-for-planned-new-consumer-health-company"}
+  - {claim: "시총 $603B·발행주식 2.407B·배당수익률 2.14%·payout 62%(GAAP TTM)", asof: "2026-07-21",
+     url: "yfinance (marketCap/sharesOutstanding/trailingEps), 종가 $250.61"}

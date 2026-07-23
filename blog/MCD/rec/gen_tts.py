@@ -12,7 +12,7 @@ KEY = None
 for _kp in (os.path.join(ROOT, '.eleven_key'), os.path.join(ROOT, '..', '.eleven_key')):
     if os.path.exists(_kp):
         KEY = open(_kp).read().strip(); break
-assert KEY, ".eleven_key 못 찾음 (JNJ/ 또는 blog/)"
+assert KEY, ".eleven_key 못 찾음 (MCD/ 또는 blog/)"
 VOICE = "Iu0W7wMhBwV2Qjzj0Fp2"
 MODEL = "eleven_v3"
 STABILITY = float(os.environ.get('TTS_STABILITY', '0.4'))  # 톤: 낮을수록 표현적/자연

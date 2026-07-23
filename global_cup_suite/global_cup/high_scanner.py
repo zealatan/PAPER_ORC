@@ -21,9 +21,14 @@ import pandas as pd
 from .data_loader import download_price, get_close_series
 from .golden_engine import build_current_status
 
-# ZigZag swing threshold used to locate the prior high. 10% matches golden.py's
-# default and gives a stable "직전 전고점" that ignores minor noise.
-SCAN_THRESHOLD = 0.10
+# ZigZag swing threshold used to locate the prior high. Raised 10%→15% because a
+# single ~10% dead-cat bounce would register a fresh swing low and drag the
+# "직전 전고점" down onto that bounce peak, understating the real drawdown from the
+# true high (e.g. 삼성전자 2026-07: -18.6% off a 7/6 bounce vs -28.6% off the real
+# 6/18 high). 15% ignores those minor rebounds and anchors on the meaningful prior
+# swing high. (build_current_status in golden_engine is unaffected — it takes the
+# threshold as a param and other pages still call it with the 10% default.)
+SCAN_THRESHOLD = 0.15
 
 # Output column order (raw numeric values; formatting happens in the UI layer).
 SCAN_COLUMNS = [

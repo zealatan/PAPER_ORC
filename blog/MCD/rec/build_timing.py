@@ -5,10 +5,10 @@ import json, re, os
 
 HERE = os.path.dirname(__file__)
 ROOT = os.path.join(HERE, '..')
-HTML = os.path.join(ROOT, 'deck', 'jnj_final.html')       # PACE·SUBS 소스
-DECK = os.path.join(ROOT, 'deck', 'jnj_deck.json')        # 입력 덱
+HTML = os.path.join(ROOT, 'deck', 'mcd_final.html')       # PACE·SUBS 소스
+DECK = os.path.join(ROOT, 'deck', 'mcd_deck.json')        # 입력 덱
 MANI = os.path.join(HERE, 'tts_manifest.json')
-OUT_DECK = os.path.join(ROOT, 'deck', 'jnj_deck_dubbed.json')  # 타이밍 반영 덱
+OUT_DECK = os.path.join(ROOT, 'deck', 'mcd_deck_dubbed.json')  # 타이밍 반영 덱
 OUT_TL   = os.path.join(HERE, 'voice_timeline.json')
 
 GAP_MS  = 120   # 줄 사이 간격
