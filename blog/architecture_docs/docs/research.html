@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>리서치·벤치마킹 · research/README</title>
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<style>
+  :root{
+    --bg:#f5f2ec; --surface:#fffdf9; --surface2:#faf6ee;
+    --ink:#1d1a15; --muted:#6d675c; --faint:#948d80;
+    --line:#e6dfd2; --line2:#ded5c4;
+    --accent:#b07d15; --accent-ink:#8a6210; --accent-soft:rgba(176,125,21,.10);
+    --done:#2f7d59; --active:#b07d15; --todo:#a49b8d;
+    --done-soft:rgba(47,125,89,.12); --active-soft:rgba(176,125,21,.14); --todo-soft:rgba(164,155,141,.12);
+    --warn:#b1462b; --warn-soft:rgba(177,70,43,.10); --warn-line:rgba(177,70,43,.30);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#14120d; --surface:#1d1a14; --surface2:#211d16;
+      --ink:#ece6da; --muted:#9c9488; --faint:#736c60;
+      --line:#2c281f; --line2:#37311f;
+      --accent:#dda637; --accent-ink:#eabf5c; --accent-soft:rgba(221,166,55,.13);
+      --done:#4fb083; --active:#dda637; --todo:#8c8474;
+      --done-soft:rgba(79,176,131,.14); --active-soft:rgba(221,166,55,.15); --todo-soft:rgba(140,132,116,.14);
+      --warn:#e0846a; --warn-soft:rgba(224,132,106,.12); --warn-line:rgba(224,132,106,.32);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f5f2ec; --surface:#fffdf9; --surface2:#faf6ee;
+    --ink:#1d1a15; --muted:#6d675c; --faint:#948d80;
+    --line:#e6dfd2; --line2:#ded5c4;
+    --accent:#b07d15; --accent-ink:#8a6210; --accent-soft:rgba(176,125,21,.10);
+    --done:#2f7d59; --active:#b07d15; --todo:#a49b8d;
+    --done-soft:rgba(47,125,89,.12); --active-soft:rgba(176,125,21,.14); --todo-soft:rgba(164,155,141,.12);
+    --warn:#b1462b; --warn-soft:rgba(177,70,43,.10); --warn-line:rgba(177,70,43,.30);
+  }
+  :root[data-theme="dark"]{
+    --bg:#14120d; --surface:#1d1a14; --surface2:#211d16;
+    --ink:#ece6da; --muted:#9c9488; --faint:#736c60;
+    --line:#2c281f; --line2:#37311f;
+    --accent:#dda637; --accent-ink:#eabf5c; --accent-soft:rgba(221,166,55,.13);
+    --done:#4fb083; --active:#dda637; --todo:#8c8474;
+    --done-soft:rgba(79,176,131,.14); --active-soft:rgba(221,166,55,.15); --todo-soft:rgba(140,132,116,.14);
+    --warn:#e0846a; --warn-soft:rgba(224,132,106,.12); --warn-line:rgba(224,132,106,.32);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace}
+  .wrap{max-width:940px;margin:0 auto;padding:26px 22px 60px}
+
+  a{color:var(--accent-ink);text-decoration:none}
+  a:hover{text-decoration:underline}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--faint);
+    border:1px solid var(--line2);border-radius:20px;padding:4px 12px;margin-bottom:18px}
+  .back:hover{color:var(--accent-ink);text-decoration:none;border-color:var(--accent)}
+
+  header{padding-bottom:16px;border-bottom:1px solid var(--line2)}
+  header .eb{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  h1{font-size:24px;font-weight:680;letter-spacing:-.01em;margin:6px 0 0;text-wrap:balance}
+  .sub{color:var(--muted);font-size:13.5px;margin-top:7px;max-width:74ch}
+  .path{font-size:11.5px;color:var(--faint)}
+
+  h2{font-size:16.5px;font-weight:670;margin:0 0 4px;letter-spacing:-.005em}
+  .sec{margin-top:32px;padding-top:20px;border-top:1px solid var(--line2)}
+  .lead{color:var(--muted);font-size:13px;margin:8px 0 0;max-width:74ch}
+  p{font-size:13.4px;color:var(--ink);margin:11px 0 0;line-height:1.58}
+  p.m{color:var(--muted)}
+
+  .chip,code.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:11.6px;background:var(--surface2);border:1px solid var(--line);border-radius:5px;
+    padding:1px 6px;color:var(--accent-ink);white-space:nowrap}
+
+  ul.list{margin:11px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  ul.list>li{position:relative;padding-left:16px;font-size:13.2px;line-height:1.55;color:var(--ink)}
+  ul.list>li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  ul.list>li b{font-weight:640}
+
+  /* dir cards */
+  .dirs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .dir{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px;position:relative;overflow:hidden}
+  .dir::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent)}
+  .dir .nm{font-family:ui-monospace,Menlo,monospace;font-size:12.6px;color:var(--accent-ink);font-weight:640}
+  .dir p{margin-top:6px;font-size:12.4px;color:var(--muted);line-height:1.5}
+
+  /* steps */
+  ol.steps{margin:14px 0 0;padding:0;list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:7px}
+  ol.steps>li{counter-increment:st;position:relative;padding:10px 14px 10px 44px;font-size:12.9px;line-height:1.55;
+    background:var(--surface);border:1px solid var(--line);border-radius:9px}
+  ol.steps>li::before{content:counter(st);position:absolute;left:12px;top:10px;width:20px;height:20px;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:750;
+    color:var(--accent-ink);background:var(--accent-soft);border-radius:6px}
+  ol.steps>li b{font-weight:660}
+
+  .call{margin:14px 0 0;border-radius:11px;padding:12px 15px;border:1px solid var(--line2);
+    background:var(--accent-soft);font-size:13px;line-height:1.55}
+  .call .h{font-weight:660;font-size:12.5px;color:var(--accent-ink);margin-bottom:5px}
+  .call.warn{background:var(--warn-soft);border-color:var(--warn-line)}
+  .call.warn .h{color:var(--warn)}
+  .call b{font-weight:660}
+
+  footer{margin-top:40px;padding-top:15px;border-top:1px solid var(--line2);
+    font-size:12px;color:var(--faint);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+  .totop{margin-left:auto}
+
+  @media (max-width:720px){ .dirs{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../ARCHITECTURE.html">← 아키텍처</a>
+
+  <header id="top">
+    <div class="eb">부속 · 벤치마킹</div>
+    <h1>배투실 리서치 · 벤치마킹 공간</h1>
+    <div class="path mono">blog/research/README.md</div>
+    <p class="sub">다른 유튜브 영상(경쟁·레퍼런스)을 분석해 쌓아두는 곳. 다음 제작 기획·후킹·썸네일에 활용.</p>
+  </header>
+
+  <section class="sec">
+    <h2>무엇을 저장하나</h2>
+    <ul class="list">
+      <li><b>우리 관점의 분석·요점</b> — 구조·후킹·훅 문구·타임스탬프·잘 된 점·우리에게 줄 교훈</li>
+      <li><b>썸네일 이미지</b> — 레퍼런스로 다운받아 <code class="chip">thumbs/</code>에</li>
+      <li><b>후킹 캡처</b> — 첫 3~5초 화면, <code class="chip">hooks/</code>에</li>
+    </ul>
+    <div class="call warn">
+      <div class="h">⚠ 원저작물은 통째로 저장하지 않는다</div>
+      자막·대본 전문은 저장 금지. <b>사실 정보(제목·조회수·구성)와 우리 분석만.</b>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>구조</h2>
+    <div class="dirs">
+      <div class="dir"><div class="nm">benchmarks/</div><p>영상 1편 = .md 1개(분석 노트). <code class="chip">_TEMPLATE.md</code> 복사해서 작성.</p></div>
+      <div class="dir"><div class="nm">thumbs/</div><p>레퍼런스 썸네일 이미지(파일명 = 벤치마크 slug).</p></div>
+      <div class="dir"><div class="nm">hooks/</div><p>후킹 화면 캡처.</p></div>
+    </div>
+    <div class="call">
+      <div class="h">"우리 채널" vs "남의 채널"</div>
+      썸네일 "우리 채널" 승인본은 별도로 <code class="chip">blog/assets/thumb_references/</code>(thumbnail-designer 에이전트가 참조). 여기 <code class="chip">thumbs/</code>는 "남의 채널" 벤치마킹용.
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>벤치마크 추가하는 법</h2>
+    <ol class="steps">
+      <li><code class="chip">benchmarks/_TEMPLATE.md</code>를 복사 → <code class="chip">benchmarks/&lt;slug&gt;.md</code></li>
+      <li>제목·URL·채널·주제·후킹·구조·교훈 채우기(우리 분석 위주)</li>
+      <li>썸네일 있으면 <code class="chip">thumbs/&lt;slug&gt;.png</code>, 후킹 캡처 <code class="chip">hooks/&lt;slug&gt;.png</code></li>
+      <li>우리가 리메이크하면 "우리 버전" 링크·상태 연결</li>
+    </ol>
+  </section>
+
+  <section class="sec">
+    <h2>활용</h2>
+    <ul class="list">
+      <li>기획 시 <code class="chip">benchmarks/</code> 훑어 잘 되는 후킹·구조 패턴 참고.</li>
+      <li>썸네일 작업 시 thumbnail-designer 에이전트에게 <code class="chip">research/thumbs/</code> 관련 항목도 함께 보게 하면 트렌드 반영.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span>blog/research/README.md · 벤치마킹 공간</span>
+    <a class="totop" href="#top">↑ 맨 위로</a>
+  </footer>
+</div>
+</body>
+</html>

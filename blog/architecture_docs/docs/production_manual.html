@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실전 제작 매뉴얼 · PRODUCTION_MANUAL</title>
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<style>
+  :root{
+    --bg:#f5f2ec; --surface:#fffdf9; --surface2:#faf6ee;
+    --ink:#1d1a15; --muted:#6d675c; --faint:#948d80;
+    --line:#e6dfd2; --line2:#ded5c4;
+    --accent:#b07d15; --accent-ink:#8a6210; --accent-soft:rgba(176,125,21,.10);
+    --done:#2f7d59; --active:#b07d15; --todo:#a49b8d;
+    --done-soft:rgba(47,125,89,.12); --active-soft:rgba(176,125,21,.14); --todo-soft:rgba(164,155,141,.12);
+    --warn:#b1462b; --warn-soft:rgba(177,70,43,.10); --warn-line:rgba(177,70,43,.30);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#14120d; --surface:#1d1a14; --surface2:#211d16;
+      --ink:#ece6da; --muted:#9c9488; --faint:#736c60;
+      --line:#2c281f; --line2:#37311f;
+      --accent:#dda637; --accent-ink:#eabf5c; --accent-soft:rgba(221,166,55,.13);
+      --done:#4fb083; --active:#dda637; --todo:#8c8474;
+      --done-soft:rgba(79,176,131,.14); --active-soft:rgba(221,166,55,.15); --todo-soft:rgba(140,132,116,.14);
+      --warn:#e0846a; --warn-soft:rgba(224,132,106,.12); --warn-line:rgba(224,132,106,.32);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f5f2ec; --surface:#fffdf9; --surface2:#faf6ee;
+    --ink:#1d1a15; --muted:#6d675c; --faint:#948d80;
+    --line:#e6dfd2; --line2:#ded5c4;
+    --accent:#b07d15; --accent-ink:#8a6210; --accent-soft:rgba(176,125,21,.10);
+    --done:#2f7d59; --active:#b07d15; --todo:#a49b8d;
+    --done-soft:rgba(47,125,89,.12); --active-soft:rgba(176,125,21,.14); --todo-soft:rgba(164,155,141,.12);
+    --warn:#b1462b; --warn-soft:rgba(177,70,43,.10); --warn-line:rgba(177,70,43,.30);
+  }
+  :root[data-theme="dark"]{
+    --bg:#14120d; --surface:#1d1a14; --surface2:#211d16;
+    --ink:#ece6da; --muted:#9c9488; --faint:#736c60;
+    --line:#2c281f; --line2:#37311f;
+    --accent:#dda637; --accent-ink:#eabf5c; --accent-soft:rgba(221,166,55,.13);
+    --done:#4fb083; --active:#dda637; --todo:#8c8474;
+    --done-soft:rgba(79,176,131,.14); --active-soft:rgba(221,166,55,.15); --todo-soft:rgba(140,132,116,.14);
+    --warn:#e0846a; --warn-soft:rgba(224,132,106,.12); --warn-line:rgba(224,132,106,.32);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace}
+  .wrap{max-width:1060px;margin:0 auto;padding:26px 22px 60px}
+
+  a{color:var(--accent-ink);text-decoration:none}
+  a:hover{text-decoration:underline}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--faint);
+    border:1px solid var(--line2);border-radius:20px;padding:4px 12px;margin-bottom:18px}
+  .back:hover{color:var(--accent-ink);text-decoration:none;border-color:var(--accent)}
+
+  header{padding-bottom:16px;border-bottom:1px solid var(--line2)}
+  header .eb{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  h1{font-size:24px;font-weight:680;letter-spacing:-.01em;margin:6px 0 0;text-wrap:balance}
+  .sub{color:var(--muted);font-size:13.5px;margin-top:7px;max-width:70ch}
+  .path{font-size:11.5px;color:var(--faint)}
+
+  .principle{margin:18px 0 8px;padding:11px 15px;border-radius:10px;
+    background:var(--accent-soft);border:1px solid var(--line2);
+    font-size:13.5px;color:var(--ink);display:flex;gap:9px;align-items:flex-start;flex-wrap:wrap}
+  .principle b{color:var(--accent-ink)}
+  .principle .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);font-weight:700;padding-top:1px}
+
+  /* TOC */
+  .toc{margin:22px 0 8px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .toc .eyebrow{margin:0 0 9px}
+  .toc ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:6px 16px;counter-reset:t}
+  .toc a{font-size:12.8px;color:var(--muted);display:flex;gap:8px;align-items:baseline}
+  .toc a:hover{color:var(--accent-ink);text-decoration:none}
+  .toc a .n{font-size:10.5px;font-weight:700;color:var(--accent);min-width:16px}
+
+  .eyebrow{font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--faint);font-weight:700;margin:34px 0 12px}
+
+  section{scroll-margin-top:16px}
+  h2{font-size:16.5px;font-weight:670;margin:0 0 4px;letter-spacing:-.005em}
+  .sec{margin-top:34px;padding-top:20px;border-top:1px solid var(--line2)}
+  .sec:first-of-type{border-top:none}
+  .sechd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .sechd .no{font-size:12px;font-weight:750;color:var(--accent);
+    background:var(--accent-soft);border-radius:6px;padding:2px 8px}
+  .lead{color:var(--muted);font-size:13px;margin:8px 0 0;max-width:74ch}
+
+  p{font-size:13.4px;color:var(--ink);margin:11px 0 0;line-height:1.58}
+  p.m{color:var(--muted)}
+
+  ul.list{margin:11px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  ul.list>li{position:relative;padding-left:16px;font-size:13.2px;line-height:1.55;color:var(--ink)}
+  ul.list>li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  ul.list>li b{font-weight:640}
+
+  .chip,code.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:11.6px;background:var(--surface2);border:1px solid var(--line);border-radius:5px;
+    padding:1px 6px;color:var(--accent-ink);white-space:nowrap}
+
+  .scrollx{overflow-x:auto;margin:14px 0 0;border:1px solid var(--line);border-radius:12px;scrollbar-width:thin}
+  table{border-collapse:collapse;width:100%;font-size:12.8px;min-width:560px}
+  thead th{background:var(--surface2);text-align:left;font-weight:660;color:var(--muted);
+    font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:10px 13px;border-bottom:1px solid var(--line2)}
+  tbody td{padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink);line-height:1.5}
+  tbody tr:last-child td{border-bottom:none}
+  tbody td:first-child{font-weight:640;white-space:nowrap}
+  td .stg{color:var(--accent);font-weight:750}
+
+  pre.code{overflow-x:auto;background:var(--surface2);border:1px solid var(--line);border-radius:12px;
+    padding:13px 15px;margin:14px 0 0;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:11.8px;line-height:1.65;color:var(--ink);scrollbar-width:thin}
+  pre.code .c{color:var(--faint)}
+  pre.code .k{color:var(--accent-ink)}
+
+  /* callouts */
+  .call{margin:14px 0 0;border-radius:11px;padding:12px 15px;border:1px solid var(--line2);
+    background:var(--surface);font-size:13px;line-height:1.55}
+  .call .h{font-weight:660;font-size:12.5px;display:flex;align-items:center;gap:7px;margin-bottom:5px}
+  .call.warn{background:var(--warn-soft);border-color:var(--warn-line)}
+  .call.warn .h{color:var(--warn)}
+  .call.note{background:var(--accent-soft);border-color:var(--line2)}
+  .call.note .h{color:var(--accent-ink)}
+  .call b{font-weight:660}
+
+  /* grouped traps */
+  .grp{margin-top:16px}
+  .grp>.gl{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--accent-ink);
+    text-transform:uppercase;display:flex;align-items:center;gap:8px;margin:18px 0 2px}
+  .grp>.gl::before{content:"⚠";font-size:12px}
+  .traps{display:flex;flex-direction:column;gap:9px;margin-top:9px}
+  .trap{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);
+    border-radius:9px;padding:11px 14px;font-size:12.9px;line-height:1.56}
+  .trap b{font-weight:660}
+
+  /* definition rows */
+  .defs{margin-top:14px;display:flex;flex-direction:column;gap:1px;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .def{display:grid;grid-template-columns:180px 1fr;gap:16px;padding:11px 15px;background:var(--surface);
+    border-bottom:1px solid var(--line);font-size:12.9px;line-height:1.55}
+  .def:last-child{border-bottom:none}
+  .def .dt{font-weight:640;color:var(--accent-ink)}
+  .def .dd{color:var(--ink)}
+
+  /* checklist */
+  ol.check{margin:14px 0 0;padding:0;list-style:none;counter-reset:ck;display:flex;flex-direction:column;gap:8px}
+  ol.check>li{counter-increment:ck;position:relative;padding:11px 14px 11px 44px;font-size:13px;line-height:1.55;
+    background:var(--surface);border:1px solid var(--line);border-radius:9px}
+  ol.check>li::before{content:counter(ck);position:absolute;left:12px;top:11px;width:20px;height:20px;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:750;
+    color:var(--accent-ink);background:var(--accent-soft);border-radius:6px}
+  ol.check>li b{font-weight:660}
+
+  /* changelog */
+  .logs{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+  .log{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+  .log .lh{font-weight:660;font-size:13.2px;display:flex;gap:9px;align-items:baseline}
+  .log .lh .num{font-size:11px;font-weight:750;color:var(--accent);background:var(--accent-soft);
+    border-radius:6px;padding:2px 7px}
+  .log p{margin-top:6px;font-size:12.6px;color:var(--muted)}
+
+  footer{margin-top:40px;padding-top:15px;border-top:1px solid var(--line2);
+    font-size:12px;color:var(--faint);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+  .totop{margin-left:auto}
+
+  @media (max-width:720px){
+    .toc ol{grid-template-columns:1fr 1fr}
+    .def{grid-template-columns:1fr;gap:3px}
+    .def .dt{color:var(--accent-ink)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../ARCHITECTURE.html">← 아키텍처</a>
+
+  <header id="top">
+    <div class="eb">① 실전 바이블 · as-built</div>
+    <h1>배투실 롱폼+쇼츠 제작 실전 매뉴얼</h1>
+    <div class="path mono">blog/PRODUCTION_MANUAL.md</div>
+    <p class="sub">코카콜라(공개)·JNJ 두 편을 실제로 만들며 검증한 <b>지금 되는(as-built)</b> 노하우.
+      <code class="chip">pipeline/README.md</code>(=<code class="chip">JNJ/PROTOCOL.md</code>)는 설계 청사진(대부분 stub)이고,
+      <b>이 문서는 실제로 손으로 돌리는 워크플로우와 함정 모음</b>이다. 기준 구현체 = <code class="chip">blog/JNJ/</code>(가장 정제됨) — 새 종목은 JNJ를 복제해 시작하는 게 가장 빠르다.</p>
+  </header>
+
+  <div class="principle">
+    <span class="k">최상위 원칙</span>
+    <span><b>데이터는 엔진</b> · <b>대본은 인용</b> · <b>QA는 대조</b>. 금융 콘텐츠라 정확성이 1순위 — LLM이 숫자를 지어내지 못하게 막는 게 존재 이유. 논쟁적 수치(전략 비교 등)는 <b>멀티에이전트 워크플로우로 적대 검증</b>한다(§7).</span>
+  </div>
+
+  <nav class="toc" aria-label="목차">
+    <div class="eyebrow">목차</div>
+    <ol>
+      <li><a href="#s0"><span class="n">0</span> 산출물</a></li>
+      <li><a href="#s1"><span class="n">1</span> 파이프라인 A~G</a></li>
+      <li><a href="#s2"><span class="n">2</span> 재사용 자산</a></li>
+      <li><a href="#s3"><span class="n">3</span> ⚠ 핵심 함정</a></li>
+      <li><a href="#s4"><span class="n">4</span> 검증 인프라</a></li>
+      <li><a href="#s5"><span class="n">5</span> LAN 프리뷰</a></li>
+      <li><a href="#s6"><span class="n">6</span> 유튜브 업로드</a></li>
+      <li><a href="#s7"><span class="n">7</span> 적대 검증 사례</a></li>
+      <li><a href="#s8"><span class="n">8</span> 시작 체크리스트</a></li>
+      <li><a href="#s9"><span class="n">9</span> 변경 로그</a></li>
+      <li><a href="#s10"><span class="n">10</span> 리서치·벤치마킹</a></li>
+    </ol>
+  </nav>
+
+  <section class="sec" id="s0">
+    <div class="sechd"><span class="no">0</span><h2>산출물</h2></div>
+    <ul class="list">
+      <li><b>롱폼</b> ~3분 (배당 백테스트, 21씬 3부 구성) → <code class="chip">recordings/longform_final.mp4</code></li>
+      <li><b>쇼츠 2편</b> 9:16 세로 (그래프 위주, 롱폼에서 구간 컷) → <code class="chip">recordings/jnj_short_{fire,strat}.mp4</code></li>
+      <li><b>썸네일</b> 롱폼 가로(16:9) + 쇼츠 세로(9:16)</li>
+      <li><b>유튜브 업로드 메타</b> — 제목·설명·타임스탬프·해시태그</li>
+    </ul>
+    <div class="call note">
+      <div class="h">콘텐츠 구조 (코카콜라 공개 후 학습) — 백테스트 중심 3부</div>
+      ① <b>후킹</b>(같은 돈, 다른 운명) · ② <b>파산 시나리오</b>(FIRE: 원금×인출액별 생존/파산, 물가반영) · ③ <b>매수 방법</b>(폭락 타이밍 vs 매달 적립). 회사소개는 최소화(훅↔반전 사이 2씬).
+    </div>
+  </section>
+
+  <section class="sec" id="s1">
+    <div class="sechd"><span class="no">1</span><h2>파이프라인 A~G</h2></div>
+    <p class="lead">실제 스크립트·순서 (JNJ 기준).</p>
+    <div class="scrollx">
+      <table>
+        <thead><tr><th>단계</th><th>산출</th><th>스크립트</th></tr></thead>
+        <tbody>
+          <tr><td><span class="stg">A</span> 데이터·백테스트</td><td>spec/JNJ.json 채움</td><td><code class="chip">spec/fetch_data.py</code> · <code class="chip">spec/gen_backtest.py</code>(FIRE 그리드) · <code class="chip">spec/gen_strategy.py</code>(전략 비교+XIRR)</td></tr>
+          <tr><td><span class="stg">B</span> 리서치</td><td>큐레이션 사실+출처</td><td>deep-research 워크플로우 → <code class="chip">curation/JNJ.yaml</code> · <code class="chip">assets/JNJ_NEWS.md</code></td></tr>
+          <tr><td><span class="stg">C</span> 대본</td><td>나레이션+씬</td><td><code class="chip">spec/gen_story.py</code> → <code class="chip">narration_draft.json</code> · <code class="chip">SCRIPT.md</code> (숫자는 backtest 자동인용=지어내기 차단)</td></tr>
+          <tr><td><span class="stg">D</span> 덱</td><td>자립형 HTML</td><td><code class="chip">deck/build_deck.py</code> → <code class="chip">deck/jnj_v1.html</code> + <code class="chip">jnj_deck.json</code></td></tr>
+          <tr><td><span class="stg">E</span> 더빙</td><td>음성+타이밍</td><td><code class="chip">rec/gen_tts.py</code> → <code class="chip">build_timing.py</code> → <code class="chip">build_voice.py</code>, <code class="chip">deck/build_dubbed.py</code></td></tr>
+          <tr><td><span class="stg">F</span> 렌더</td><td>롱폼 mp4</td><td><code class="chip">rec/render_pw.py</code>(playwright) → 트림 → <code class="chip">rec/mix_audio.sh</code></td></tr>
+          <tr><td><span class="stg">G</span> 썸네일·쇼츠</td><td>썸네일+쇼츠2</td><td>썸네일 PIL · <code class="chip">rec/gen_hook.py</code> + <code class="chip">rec/build_short_v2.sh</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="m" style="margin-top:18px"><b>새 종목 end-to-end 명령 순서</b> (더빙 텍스트 바뀔 때 전체):</p>
+    <pre class="code"><span class="k">python3 spec/fetch_data.py</span>           <span class="c"># yfinance → data/*.csv</span>
+<span class="k">python3 spec/gen_backtest.py</span>         <span class="c"># FIRE 시나리오 → spec.json</span>
+<span class="k">python3 spec/gen_strategy.py</span>         <span class="c"># 전략 비교+XIRR → spec.json</span>
+<span class="k">python3 spec/gen_story.py</span>            <span class="c"># 대본 → narration_draft.json</span>
+<span class="k">python3 deck/build_deck.py</span>           <span class="c"># 덱 → jnj_v1.html + jnj_deck.json</span>
+<span class="c"># narration_lines.json 재생성(아래 스니펫) → gen_tts → build_timing → build_voice</span>
+<span class="k">python3 rec/gen_tts.py</span>               <span class="c"># TTS(변경분만, raw 보존→재-atempo 무료)</span>
+<span class="k">python3 rec/build_timing.py</span>          <span class="c"># subTimes/subHold + voice_timeline</span>
+<span class="k">python3 rec/build_voice.py</span>           <span class="c"># voice_track.wav (+ 1페이지 beep)</span>
+<span class="k">python3 deck/build_dubbed.py</span>         <span class="c"># jnj_dubbed.html (KEY=tplCatalog_jnj_dubbed)</span>
+<span class="k">python3 rec/render_pw.py</span>             <span class="c"># 롱폼 녹화(webm) — F 참고</span>
+<span class="c"># 트림+믹싱 → longform_final.mp4, 그다음 쇼츠 컷</span></pre>
+
+    <div class="call note">
+      <div class="h">narration_lines.json 재생성</div>
+      코카콜라 <code class="chip">extract_lines.py</code>는 경로 하드코딩이라 JNJ는 인라인으로 재생성:
+    </div>
+    <pre class="code"><span class="k">import</span> json; d=json.load(open(<span class="c">'deck/jnj_deck.json'</span>,encoding=<span class="c">'utf-8'</span>))
+out=[{<span class="c">'scene'</span>:i,<span class="c">'tpl'</span>:s.get(<span class="c">'tpl'</span>),<span class="c">'lines'</span>:s.get(<span class="c">'subLines'</span>) <span class="k">or</span> []} <span class="k">for</span> i,s <span class="k">in</span> enumerate(d[<span class="c">'scenes'</span>])]
+json.dump(out, open(<span class="c">'rec/narration_lines.json'</span>,<span class="c">'w'</span>,encoding=<span class="c">'utf-8'</span>), ensure_ascii=<span class="k">False</span>, indent=1)</pre>
+  </section>
+
+  <section class="sec" id="s2">
+    <div class="sechd"><span class="no">2</span><h2>재사용 자산</h2></div>
+    <p class="lead">종목무관 — 새 종목에서 그대로 상속된다.</p>
+    <div class="defs">
+      <div class="def"><div class="dt">백테스트 엔진</div><div class="dd"><code class="chip">global_cup_suite/global_cup/{fire_engine,golden_engine,backtest_engine}.py</code>, 전략엔진 <code class="chip">deck/tools/ko_smart_vs_steady.py</code>. <b>검증됨, 절대 수정 금지</b> — 조작 의혹 방어의 근거.</div></div>
+      <div class="def"><div class="dt">덱 엔진</div><div class="dd"><code class="chip">deck/jnj_final.html</code>(3.2MB 렌더러, 씬 JSON을 읽어 TPL로 렌더). cocacola_final.html에서 파생.</div></div>
+      <div class="def"><div class="dt">더빙/렌더 헬퍼</div><div class="dd"><code class="chip">rec/{gen_tts,build_timing,build_voice}.py</code>, <code class="chip">rec/render_pw.py</code>, <code class="chip">rec/mix_audio.sh</code>, <code class="chip">rec/{keep_fs,send_key,nav_raise}.py</code>(x11grab용, 지금은 playwright라 거의 불필요).</div></div>
+      <div class="def"><div class="dt">폰트</div><div class="dd"><code class="chip">fonts/BlackHanSans-Regular.ttf</code>(썸네일·훅 굵은 한글).</div></div>
+      <div class="def"><div class="dt">마스코트/로고</div><div class="dd"><code class="chip">assets/shorts/batusil.png</code>(덱 BATUSIL data URI에서 추출), <code class="chip">assets/jnj_logo.svg</code>.</div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="s3">
+    <div class="sechd"><span class="no">3</span><h2>⚠ 핵심 함정</h2></div>
+    <p class="lead">hard-won — 반드시 숙지. 카테고리별로 묶음.</p>
+
+    <div class="grp">
+      <div class="gl">덱 (D)</div>
+      <div class="traps">
+        <div class="trap"><b>cocacola 패치 IIFE 4종</b>(v8-hook/revert1/survheat1/src1, <code class="chip">jnj_final.html</code> ~1795–1889)이 로드 시 SCENES를 코카콜라로 덮어씀. build_deck이 <code class="chip">/* FIRE 세트</code> ~ src1 <code class="chip">})();</code> 블록을 통째 제거하고 <code class="chip">if(!localStorage.getItem(KEY)){SCENES=…;OV={};CP={}}</code> 주입. KEY=<code class="chip">tplCatalog_jnj_v2</code>.</div>
+        <div class="trap"><b>편집 지속성</b>: HUD 편집은 localStorage에 저장 → 재빌드해도 새로고침 후 유지. 트레이드오프: 저장본 있으면 코드 재빌드가 안 보임. 구조 변경 시 localStorage 비우거나 KEY 교체.</div>
+        <div class="trap"><b>제목 크기 마스터</b>: <code class="chip">.btitle{font-size:2em !important}</code>(~1537)가 모든 슬라이드 제목 지배. 여기 하나로 통제.</div>
+        <div class="trap"><b>차트 애니메이션</b>: 선은 stroke 드로잉(<code class="chip">--d</code> 지연 최대 ~3.2s). <b>playwright 캡처 전 5.5s 대기 필수.</b></div>
+        <div class="trap"><b>fire 차트 범례 겹침</b>: 떠다니는 고정 범례는 선/기준선라벨과 필연 충돌 → 범례 제거(<code class="chip">noLegend:true</code>) + 각 선 끝에 '월 $X' 라벨(선에 부착돼 충돌 불가). 기준선 라벨은 끝라벨 회피 위해 후보 x에서 우측끝(0.8+) 제외.</div>
+        <div class="trap"><b>hbars2 정직 분해</b>(§7 사례): 폭락매수는 실투입만 표기(319k 전액 아님) — 실투입/자본이득/배당/유휴현금(빗금) 4단, 우측 적립은 전액. XIRR 병기.</div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="gl">자막</div>
+      <div class="traps">
+        <div class="trap"><b><code class="chip">#subbar</code>는 <code class="chip">left:50%;width:fit-content;max-width:94cqw;white-space:nowrap;display:block</code></b>. <code class="chip">display:flex</code>는 fit-content를 깨뜨려 조기 줄바꿈 → <b>flex 금지</b>. <code class="chip">white-space:nowrap</code>으로 무조건 1줄. 유연 알약형(로고 border-radius).</div>
+        <div class="trap"><b>본문과 절대 안 겹침</b>: solostory accent 배지·card 칩이 자막 위에 붙는 케이스 → 자막 bottom 2.4cqw로 내리고 1줄 유지로 해결. 전수조사 방법은 §6.</div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="gl">더빙 (E)</div>
+      <div class="traps">
+        <div class="trap"><b>ElevenLabs <code class="chip">eleven_v3</code></b>, voice_id=<code class="chip">Iu0W7wMhBwV2Qjzj0Fp2</code>("메시" 클론). previous/next_text 미지원 → 속도는 ffmpeg <code class="chip">atempo</code>.</div>
+        <div class="trap"><b>raw .mp3 보존이 핵심</b>: 재-atempo(속도 변경)는 raw에서 재처리라 API 무료. 속도 바꾸려면 tts/의 sped mp3만 지우고(raw 유지) <code class="chip">TTS_SPEED</code> 바꿔 gen_tts 재실행. 텍스트 바뀐 클립만 raw+sped 둘 다 지워야 재API.</div>
+        <div class="trap"><b>현재 속도 <code class="chip">SPEED=1.062</code></b>(초기 1.18에서 10% 감속). 자막 속도는 subHold가 클립 길이에서 파생돼 자동 연동.</div>
+        <div class="trap"><b>1페이지(씬0) 무더빙</b>: gen_story 씬0 <code class="chip">lines:[]</code> → 자막·TTS 없음. build_voice가 <code class="chip">assets/sfx/notice_beep.mp3</code>를 t=250ms에 배치.</div>
+        <div class="trap"><b>키 파일 <code class="chip">blog/.eleven_key</code></b>(gitignore, 절대 커밋·노출 금지).</div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="gl">렌더 (F) — ★가장 중요한 전환</div>
+      <div class="traps">
+        <div class="trap"><b>playwright headless firefox <code class="chip">record_video</code>를 쓴다(x11grab 아님).</b> 이유: display :1을 점유·풀스크린 취약한 x11grab 대신, headless라 안전·결정적. 1920×1080, ~25fps webm, <code class="chip">?rec</code> 풀블리드(크롬·HUD 없음). 폰 시청 쇼츠엔 25fps 충분. (진짜 60fps 필요 시에만 <code class="chip">rec/record_full.sh</code> x11grab.)</div>
+        <div class="trap"><b>오디오 정밀 정렬 = 블랙 마커 기법</b>: <code class="chip">render_pw.py</code>가 씬0 시작 직전 검은 오버레이(~0.9s) 삽입 → <code class="chip">ffmpeg blackdetect</code>로 <code class="chip">black_end</code>(=씬0 시작) 찾아 그 지점부터 트림. <code class="chip">video ≈ deck_time − 0.13</code>.</div>
+        <div class="trap"><b>헤드리스 크롬은 H.264 배경영상 못 디코드(검게 렌더)</b> → 렌더·캡처는 firefox로. (SVG 로고 래스터화만 chromium: firefox headless는 <code class="chip">omit_background</code> 투명 스크린샷 미지원.)</div>
+        <div class="trap"><b>렌더 후</b>: 트림+h264 인코딩 → <code class="chip">rec/mix_audio.sh</code>(voice loudnorm −16 LUFS) → longform_final.mp4. DUR는 render_pw.py가 jnj_deck_dubbed.json subHold 합으로 자동 계산.</div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="gl">쇼츠 (G)</div>
+      <div class="traps">
+        <div class="trap"><b>포맷(코카콜라 복제)</b>: 9:16 캔버스 = 검정 배경 + 가운데 16:9 원본 + 상단 훅(로고+2행 문구) + 하단 배투실 워터마크. <b>첫 1초 = 롱폼 마지막 카드 페이지</b>(브랜딩). 대사 씬 빼고 그래프 씬만.</div>
+        <div class="trap"><b><code class="chip">rec/build_short_v2.sh &lt;src&gt; &lt;graph_start&gt; &lt;graph_dur&gt; &lt;hook.png&gt; &lt;out&gt;</code></b>: 카드 1초 무음 인트로 + 그래프 구간 concat. VF는 pad(검정)+overlay.</div>
+        <div class="trap"><b>훅 PNG <code class="chip">rec/gen_hook.py</code></b>(PIL+BlackHanSans): 상단 JNJ 로고(빨간 script, 글로우) + 1행 흰색 외곽선 + 2행 노란 하이라이트박스. 로고 밑 공백 최소·그래프까지 위로 붙임.</div>
+        <div class="trap"><b>씬 시간대</b>는 jnj_deck_dubbed.json subHold 누적으로 계산(§6 스니펫).</div>
+        <div class="trap"><b>주의</b>: 전략 쇼츠는 hbars2(비교 차트) 포함 → 그 데이터 바뀌면 롱폼 재렌더 후 재컷. 파산 쇼츠는 fire 차트만이라 독립.</div>
+      </div>
+    </div>
+
+    <div class="grp">
+      <div class="gl">썸네일</div>
+      <div class="traps">
+        <div class="trap"><b>롱폼 가로</b>: 덱 bg 영상 프레임을 배경으로(예 <code class="chip">hourglass_time</code>=시간/은퇴자금 소진 메타포) 어둡게+그라디언트 스크림 → JNJ 로고 + 큰 헤드라인(흰+노란 하이라이트) + 마스코트. PIL 합성(<code class="chip">assets/thumb_hourglass.png</code> 참고).</div>
+        <div class="trap"><b>AI 합성은 선택</b>: 노부부·돈다발(코카콜라 <code class="chip">recordings/recordings/thumb_final.png</code>). 손그림 일러스트 버전은 <code class="chip">thumb_illust_v1.png</code>.</div>
+        <div class="trap"><b>쇼츠 세로</b>: 마지막 카드 페이지 세로 프레임(<code class="chip">assets/shorts/thumb_card.png</code>). 쇼츠 썸네일은 <b>YouTube 모바일 앱에서만</b> 지정 가능.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="s4">
+    <div class="sechd"><span class="no">4</span><h2>검증 인프라 (playwright)</h2></div>
+    <ul class="list">
+      <li><b>전수조사/캡처</b>: headless firefox, <code class="chip">firefox_user_prefs={media.autoplay.default:0}</code>. 씬 이동 = jnj_v1.html 로드 → <code class="chip">#btoggle</code>(일시정지) → <code class="chip">#bprev</code>×25(씬0) → <code class="chip">#bnext</code>로 목표 → <b>5.5s 대기</b>(애니 완료) → 자막 주입 → 스크린샷.</li>
+      <li>⚠ <code class="chip">?rec</code>에서만 Home 키 재시작 동작. 비-rec은 auto재생이라 한 씬 밀림 주의.</li>
+      <li>덱 메인스크립트가 IIFE라 <code class="chip">contentWindow.show</code> 접근 불가 → 외부 제어는 <b>Home 키 디스패치</b> 또는 HUD 버튼 클릭.</li>
+    </ul>
+  </section>
+
+  <section class="sec" id="s5">
+    <div class="sechd"><span class="no">5</span><h2>LAN 프리뷰</h2></div>
+    <p class="lead">DGX는 오디오 출력이 없어 브라우저로 프리뷰한다.</p>
+    <pre class="code"><span class="k">python3 -m http.server 8080 --bind 0.0.0.0</span>   <span class="c"># blog/JNJ/ 에서</span></pre>
+    <p><code class="chip">deck/preview.html</code> = jnj_dubbed.html?rec iframe + voice_track.mp3 동기재생(재생 버튼 클릭 시 Home 디스패치로 씬0 정렬). URL 예: <code class="chip">http://&lt;box-ip&gt;:8080/deck/preview.html</code>. 완성 mp4도 <code class="chip">http://&lt;box-ip&gt;:8080/recordings/*.mp4</code>로 다운로드.</p>
+  </section>
+
+  <section class="sec" id="s6">
+    <div class="sechd"><span class="no">6</span><h2>유튜브 업로드 포맷 (코카콜라 검증)</h2></div>
+    <p>설명 = <b>상단 해시태그 3개</b> → 스토리형 후킹 2줄 → "직접 만든 백테스트 앱으로…" 방법 문장 → 고유 앵글 티저 → <b>⏱ 타임스탬프</b> → 하단 전체 해시태그. 타임스탬프 첫 챕터 0:00, 3개 이상(자동 챕터 활성). 실제 씬 시각으로 검증(subHold 누적). 예시는 <code class="chip">JNJ/assets/YOUTUBE_UPLOAD.md</code>.</p>
+    <div class="call note"><div class="h">쇼츠</div>제목에 <code class="chip">#shorts</code>, 설명 짧게+해시태그. 쇼츠↔롱폼 상호 링크 추천.</div>
+  </section>
+
+  <section class="sec" id="s7">
+    <div class="sechd"><span class="no">7</span><h2>데이터 정확성 = 멀티에이전트 적대 검증 (사례)</h2></div>
+    <div class="call warn">
+      <div class="h">JNJ hbars2 '원금 오표기' 사건</div>
+      폭락매수 원금을 $319k(전액)로 그렸으나 실제 실투입은 $119k, 나머지 $273k는 유휴현금 → 씬15와 모순. 사용자 제보 + "metric도 CAGR/XIRR 아니냐" →
+      <b>Workflow(7에이전트: 엔진의미·지표계산·씬일관성 → 종합판정 → 적대검증 3/3 confirmed)</b>로 확정: 결론(적립 승)은 절대금액·XIRR(10.0%&gt;9.2%) 모두 유지, CAGR은 정기적립엔 정의불가 → XIRR이 정답. 수정: 막대 정직분해+XIRR 병기+나레이션 보완.
+    </div>
+    <div class="call note"><div class="h">교훈</div>비교·수익률 주장은 반드시 <b>엔진 재현+적대검증</b>. CAGR 대신 <b>XIRR</b>(화폐가중)을 쓴다.</div>
+  </section>
+
+  <section class="sec" id="s8">
+    <div class="sechd"><span class="no">8</span><h2>새 종목 시작 체크리스트</h2></div>
+    <ol class="check">
+      <li><code class="chip">blog/JNJ/</code> 복제 → <code class="chip">blog/&lt;TICKER&gt;/</code>. 경로·KEY(<code class="chip">tplCatalog_&lt;ticker&gt;_v2</code>) 치환.</li>
+      <li><b>A</b>: fetch_data(티커 교체) → gen_backtest → gen_strategy.</li>
+      <li><b>B</b>: deep-research로 사업개요+출처(결정론 소스 없음 — 큐레이션 필수). 배당 증배 연수·payout·부문매출·시총·수익률.</li>
+      <li><b>C</b>: gen_story(숫자 인용 자동). 흐름·톤 사용자 확인.</li>
+      <li><b>D</b>: build_deck → playwright 전수조사(겹침·차트). 배경영상(Pexels, curl_cffi impersonate) 신규 필요.</li>
+      <li><b>E</b>: narration_lines 재생성 → gen_tts(신규라 전량 API) → timing → voice → build_dubbed.</li>
+      <li><b>F</b>: render_pw → 트림 → mix → longform_final.</li>
+      <li><b>G</b>: 훅 PNG(gen_hook, 종목 문구) → build_short_v2 ×2 → 세로/가로 썸네일 → 업로드 메타.</li>
+      <li>논쟁 수치 있으면 §7 멀티에이전트 검증.</li>
+    </ol>
+    <div class="call note"><div class="h">경계</div><b>"종목만 바꾸면"은 데이터·백테스트·덱까지만 참.</b> bg영상·로고·훅문구·썸네일·큐레이션은 수동 슬롯.</div>
+  </section>
+
+  <section class="sec" id="s9">
+    <div class="sechd"><span class="no">9</span><h2>다음 제작 반영사항 (변경 로그)</h2></div>
+    <p class="lead">2026-07-23~ · JNJ 완성 후 확정된 개선. 새 종목은 아래를 기본으로 적용(JNJ 소스 <code class="chip">jnj_final.html</code>에 이미 반영 — 새 종목은 JNJ 복제라 자동 상속).</p>
+    <div class="logs">
+      <div class="log"><div class="lh"><span class="num">1</span>썸네일 담당 에이전트</div>
+        <p><code class="chip">thumbnail-designer</code>(<code class="chip">~/PAPER_ORC/.claude/agents/thumbnail-designer.md</code>). 썸네일 작업은 이 에이전트에 위임(Agent tool, subagent_type: thumbnail-designer). 승인 레퍼런스는 <code class="chip">blog/assets/thumb_references/</code>(coca_thumb_ref·jnj_thumb_ref). 새 승인본 나오면 여기 축적. 스타일=돈다발+대표제품+노부부+빨간로고+찢긴종이 라벨+흰/노랑 대형 헤드라인.</p></div>
+      <div class="log"><div class="lh"><span class="num">2</span>타이틀 네모박스(자막과 통일)</div>
+        <p><code class="chip">.btitle</code>에 알약 박스 적용(jnj_final.html ~1537). 차트 씬=어두운 박스+흰 글씨, bg영상 씬(<code class="chip">.frame.has-bg</code>)=밝은 박스+어두운 글씨 → 각 씬의 자막과 세트로 보임. 하이라이트 토큰(노란 강조)은 유지. 검증: 씬6(bg)·8·17(차트).</p></div>
+      <div class="log"><div class="lh"><span class="num">3</span>글자크기 LOCKED(숫자 고정)</div>
+        <p>전 슬라이드 현재 크기가 최적 — 함부로 바꾸지 말 것. 명시값: 타이틀 <code class="chip">.btitle 3.45cqw !important</code>(마스터) · 자막 <code class="chip">#subbar 1.9cqw</code> · 차트축 <code class="chip">.etick 30px</code>/<code class="chip">.echart .axlab 2.9cqw</code> · 끝라벨 세로간격 <code class="chip">eLH 38</code>. jnj_final.html ~1537에 주석으로 박제.</p></div>
+      <div class="log"><div class="lh"><span class="num">4</span>쇼츠 구도 하향(위 쏠림 해소)</div>
+        <p><code class="chip">rec/build_short_v2.sh</code> VF에서 모든 요소를 아래로 내려 세로 중앙 정렬. 확정값: 그래프 pad offset <code class="chip">(oh-ih)/2+170</code>, 훅 overlay <code class="chip">y=400</code>, 배투실 워터마크 <code class="chip">y=1650</code>. (이전 −110/120/1470은 상단 쏠림.) JNJ·MCD 둘 다 반영.</p></div>
+      <div class="log"><div class="lh"><span class="num">5</span>배투실 마스코트 얼굴 채움</div>
+        <p>윤곽선만 있던 얼굴 내부를 옅은 살구빛 <code class="chip">(255,240,226)</code>으로 flood-fill. 방법: alpha&gt;60=그려짐, 모서리에서 flood로 바깥 표시 → 나머지 내부(모든 pocket 포함) 채움. <code class="chip">assets/shorts/batusil.png</code> 교체(JNJ·MCD). 원본 윤곽선 버전은 덱 BATUSIL data URI에 아직 있음.</p></div>
+    </div>
+    <div class="call warn"><div class="h">소급 적용 주의</div>2·3·4·5는 JNJ 소스에 반영됨. <b>이미 업로드된 JNJ 롱폼/쇼츠에 소급 적용하려면 재렌더 필요</b>(사용자가 원할 때만). 기본은 "다음 제작부터". MCD는 클론이라 자동 상속.</div>
+  </section>
+
+  <section class="sec" id="s10">
+    <div class="sechd"><span class="no">10</span><h2>리서치·벤치마킹</h2></div>
+    <p>다른 채널 영상을 분석해 후킹·구조·썸네일 패턴을 축적(<code class="chip">blog/research/</code>). <code class="chip">benchmarks/&lt;slug&gt;.md</code>(우리 분석 위주, 원저작물 전문 저장 금지) · <code class="chip">thumbs/</code>(레퍼 썸네일) · <code class="chip">hooks/</code>(후킹 캡처). 첫 항목: <code class="chip">4uk-fire-sp500.md</code>(4억 파이어 → S&amp;P500 리메이크, 백테스트 답 확정). 기획 시 여기 훑고, 썸네일 작업 시 thumbnail-designer에 함께 참고시킴.</p>
+    <p class="m">→ 자세히: <a href="research.html">리서치 공간 문서 열기 →</a></p>
+  </section>
+
+  <footer>
+    <span>blog/PRODUCTION_MANUAL.md · as-built 실전 바이블</span>
+    <a class="totop" href="#top">↑ 맨 위로</a>
+  </footer>
+</div>
+</body>
+</html>

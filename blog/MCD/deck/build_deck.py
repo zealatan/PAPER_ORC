@@ -17,6 +17,9 @@ SC = {s["id"]: s for s in spec["backtest"]["fire"]["scenarios"]}
 STRAT = spec["backtest"]["strategy_compare"]["strategies"]
 BIZ = spec["data"]["business"]
 NARR = json.load(open(ROOT / "spec" / "narration_draft.json"))
+# 사용자 HUD 편집분(라벨 위치·anno 숨김 등) — 있으면 덱 기본 OV로 주입(재빌드해도 유지)
+_ovf = ROOT / "spec" / "deck_ov.json"
+DECK_OV = json.load(open(_ovf, encoding="utf-8")) if _ovf.exists() else {}
 
 BLUE, ORANGE, RED, GREEN, INK = "var(--blue)", "#e08a3c", "var(--red)", "var(--green)", "var(--ink-soft)"
 
@@ -170,20 +173,20 @@ def survheat_grid():
 
 
 def news_checks():
-    return {"title": "MCD, 요즘 어떤가 — [최신 근황]", "sub": "2026년 기준 · 출처 MCD IR·SEC",
-            "name": "존슨앤드존슨 (MCD)", "tag": "64년 배당왕",
+    return {"title": "MCD, 요즘 어떤가 — [최신 근황]", "sub": f"{BIZ['latest_q_label']} 기준 · 출처 MCD IR·SEC",
+            "name": "맥도날드 (MCD)", "tag": f"{BIZ['div_years']}년 {BIZ['div_label']}",
             "items": [
-                ["실적 신기록", "사상 첫 매출 $100B 돌파 — 2026 가이던스 상향"],
-                ["신약 성장", "트렘피아 +72% · 다잘렉스 +19%"],
-                ["의료기기 확장", "수술로봇 오타바(OTTAVA) FDA 승인"],
-                ["최대 리스크", "탈크 소송 진행 중 — 파산 전략 무산"]],
-            "verdict": "방어력과 소송 리스크가 공존하는 배당왕",
-            "anno": "방어주의 안정성 vs 진행 중인 소송 불확실성"}
+                ["가성비 반격", "맥밸류·$5 세트로 지친 소비자 다시 유치"],
+                ["실적 반등", f"{BIZ['latest_q_label']} 매출 +{BIZ['latest_q_yoy_pct']}% — 약 2년 만의 최강 성장"],
+                ["부동산 파워", f"임대료 {BIZ['rents_b']*10:.0f}억 달러 — 로열티보다 큰 최대 매출"],
+                ["관전 포인트", "저소득층 트래픽 회복이 지속될지"]],
+            "verdict": "불황에 강한 가성비 + 임대수익의 배당귀족",
+            "anno": "가성비 방어력 vs 소비 양극화 속 트래픽 회복 관건"}
 
 
 def divbars_data():
     vals = [[int(y), round(v, 2)] for y, v in spec["data"]["annual_dividends"] if int(y) <= 2025]
-    return {"_divcupRevert": "revert1", "title": f"{BIZ['dividend_king_years']}년 연속 [배당 인상]",
+    return {"_divcupRevert": "revert1", "title": f"{BIZ['div_years']}년 연속 [배당 인상]",
             "sub": "주당 연간 배당금 · $ (2000~2025 실측)", "vals": vals, "unit": "$", "cut": [], "flat": [],
             "annoMain": "한 해도 거르지 않고 매년 인상",
             "annoSub": f"${vals[0][1]:.2f} → ${vals[-1][1]:.2f} · 주당 연배당 약 {vals[-1][1]/vals[0][1]:.0f}배"}
@@ -196,27 +199,82 @@ def dur_for(lines):
 
 # 씬 인덱스 → 배경영상 bgid (내러티브 씬만; 차트/생존지도/막대 씬은 종이=null 유지)
 # 씬 인덱스 → 배경영상 (23씬 기준; 차트/생존지도/막대 씬은 종이=null)
-BGID = {
-    1: "hourglass_time",   # 후킹 solo A (지출 과다 → 시간 소진)
-    2: "sprout_growth",    # 후킹 solo B (아껴 재투자 → 성장)
-    4: "lab_research",     # herostat
-    6: "lab_research",     # checks 뉴스
-    7: "warm_window",      # interlude → 백테스트1 (사용자 지정: 창가햇살)
-    11: "sprout_growth",   # interlude → 백테스트2
-    12: "hourglass_time",  # 3부 타이밍(폭락 대기)
-    13: "sprout_growth",   # 3부 적립
-    19: "warm_window",     # quotebig
-    20: "warm_window",     # card
+BGID = {                   # 전 씬 맥도날드 실사(사용자 지정) — 톤 매칭
+    1: "mcd_feast",        # 후킹 A (넉넉히 지출 → 푸짐한 버거+감자)
+    2: "mcd_friends",      # 후킹 B (아껴 재투자 → 밝은 사람들/성장)
+    4: "mcd_storefront",   # herostat — 실제 맥도날드 매장 외관(establishing)
+    6: "mcd_customer",     # checks 뉴스 — 손님이 버거+콜라(가성비 소비자)
+    7: "mcd_fryer",        # interlude → 백테스트1 (튀김 = 본격 분석)
+    11: "mcd_brunch",      # interlude → 백테스트2 (식사 = 모으는 입장)
+    12: "mcd_wait",        # 3부 타이밍(드라이브스루 대기)
+    13: "mcd_crew",        # 3부 적립(주방 꾸준함)
+    19: "mcd_reflect",     # quotebig (무드 있는 식사 = 결론)
+    20: "mcd_interior",    # card — 따뜻한 매장 인테리어(브랜딩 마무리)
 }
 
 scenes = []
 solo_ct = {}               # 섹션별 solostory 카운터
+# 후킹(명목 40만) 실측 파생 — accent 문구 드리프트 방지
+_hkA = SC["nominal_400000_3000"]; _hkB = SC["nominal_400000_1000"]
+_hkA_yr = _hkA["depletion"][:4]; _hkA_n = int(_hkA_yr) - 2000
+_hkB_mult = round(_hkB["final"] / 400000)
+
+# ── 새 element TPL 데이터 (비차트 씬 다양화 · 전부 실측 인용) ──
+def _bal(scen, yr):
+    c = [p for p in scen.get("pts", []) if abs(p[0] - yr) < 0.6]
+    return round(c[-1][1]) if c else 0
+NEWSOLO = {}
+RECEIPT = {"side": "a", "who": "A · 넉넉히", "amount": "$3,000", "note": "매달 인출 · 부족분 주식 매도",
+    "subhead": "은퇴계좌 명세", "foot": "거래 승인 거부", "stamp": "파산",
+    "rows": [["은퇴자금", "$400,000", "top"], ["매달 인출", "−$3,000", "dim"],
+             [f"2005 잔고", money(_bal(_hkA, 2005)), ""],
+             [f"2007 잔고", money(_bal(_hkA, 2007)), ""],
+             [f"{_hkA_yr} 잔고", "$0", "bust"]]}
+PASSBOOK = {"side": "b", "who": "B · 아껴", "amount": "$1,000", "note": "남는 배당 전액 재투자",
+    "subhead": "적립 통장", "foot": f"— 약 {_hkB_mult}배 —", "stamp": "생존",
+    "rows": [["은퇴자금", "$400,000", "top"], ["배당 재투자", "＋", "dim"],
+             [f"2015 잔고", money(_bal(_hkB, 2015)), ""],
+             [f"2020 잔고", money(_bal(_hkB, 2020)), ""],
+             [f"2026 잔고", money(_hkB["final"]), "win"]]}
+HERO = {"eye": BIZ["div_label"], "big": f"{BIZ['div_years']}년", "under": "연속 배당 증액"}
+MENU = {"title": "햄버거보다 [부동산]",
+    "sub": f"FY2025 매출 구성 · SEC 10-K · 배당수익률 {BIZ['dividend_yield_pct']}%",
+    "rows": [["임대료", f"${BIZ['rents_b']:.1f}B", f"전체 {BIZ['rent_share_pct']:.0f}%"],
+             ["로열티", f"${BIZ['royalties_b']:.1f}B", ""],
+             ["총매출", f"${BIZ['rev_total_b']:.1f}B", f"+{BIZ['fy2025_yoy_pct']:.0f}%"],
+             ["연 배당", f"${BIZ['annual_dividend_ps']}", f"{BIZ['div_years']}년째"]]}
+SECT_P2 = {"tone": "d", "part": "2부 · 파산 시나리오", "head": "얼마면, 매달 얼마까지|써도 버틸까?", "sub": "물가상승까지 반영한, 진짜 냉혹한 그림."}
+SECT_P3 = {"tone": "g", "part": "3부 · 매수 방법", "head": "매달 천 달러씩 25년,|어떻게 사야 가장 클까?", "sub": "두 투자자가 있습니다."}
+DRIVETHRU = {"head": "DRIVE-THRU · 타이밍 투자자", "corner": "2000~",
+    "items": [["폭락 대기 (−30%)", "현금 연 3%"], ["배당", "전액 재투자"]],
+    "wait": "▶ −30% 대기 중…", "tot": f"25년간 폭락 [{len(TRIG_Y)}]시기뿐"}
+STAMPCARD = {"title": "적립 투자자 · 시간을 믿는다", "sub": "매달 1칸씩 · 25년 · 배당 전액 재투자",
+    "total": 25, "filled": 25, "foot": f"꼬박꼬박 → {money(SCOMP['steady']['final_on'])}"}
 for n in NARR:
     tpl, lines = n["tpl"], n["lines"]
     cam = {"s": 1.0 if tpl == "videohook" else 1.03, "x": 50, "y": 50}
-    sc = {"tpl": tpl, "dur": dur_for(lines), "cam": cam, "bgid": BGID.get(n["scene"]),
+    sc = {"tpl": tpl, "dur": dur_for(lines), "cam": cam,
+          "bgid": {"checks": "mcd_customer", "quotebig": "mcd_reflect", "card": "mcd_interior"}.get(tpl),
           "subLines": lines, "data": {}}
     d = sc["data"]
+
+    # ── 새 element TPL 리매핑 (비차트 씬만; 차트·notice·checks·hbars2·divbars·quote·card는 유지) ──
+    _rm = None   # (tpl, data, bgid) — 새 TPL 뒤에 배경영상 배치(반투명 오버레이로 은은히)
+    if tpl == "herostat":
+        _rm = ("hero", HERO, "mcd_storefront")
+    elif tpl == "kpirow":
+        _rm = ("menuboard", MENU, None)          # 메뉴판은 가독성 위해 솔리드 유지
+    elif tpl == "interlude":
+        _rm = ("sectint", SECT_P2, "mcd_fryer") if n["sec"] == "part2" else ("sectint", SECT_P3, "mcd_brunch")
+    elif tpl == "solostory":
+        _r = NEWSOLO.get(n["sec"], 0); NEWSOLO[n["sec"]] = _r + 1
+        if n["sec"] == "hook":
+            _rm = ("stmt", RECEIPT, "mcd_feast") if _r == 0 else ("stmt", PASSBOOK, "mcd_friends")
+        elif n["sec"] == "part3":
+            _rm = ("drivethru", DRIVETHRU, "mcd_wait") if _r == 0 else ("stampcard", STAMPCARD, "mcd_crew")
+    if _rm:
+        sc["tpl"], sc["data"], sc["bgid"] = _rm
+        scenes.append(sc); continue
 
     if tpl == "videohook":
         d["src"] = "bg/elderly_calm.mp4"  # 오프닝 훅 = 노부부(같은 돈 다른 운명)
@@ -232,12 +290,12 @@ for n in NARR:
             d.update({"_fire": True, "side": "a", "label": "A", "kick": "2000년, MCD로 은퇴한 두 사람",
                       "tag": "같은 돈, 넉넉한 생활비", "rows": [
                         "은퇴자금 <b>$400,000</b>", "매달 <b>$3,000</b>씩 넉넉하게 썼다",
-                        "부족분은 주식을 팔아 충당"], "accent": "18년 뒤 2018년, 잔고 $0 — 파산"})
+                        "부족분은 주식을 팔아 충당"], "accent": f"{_hkA_n}년 뒤 {_hkA_yr}년, 잔고 $0 — 파산"})
         elif n["sec"] == "hook":                  # 후킹 B 생존
             d.update({"side": "b", "label": "B", "kick": "2000년, MCD로 은퇴한 두 사람",
                       "tag": "같은 돈, 아낀 생활비", "rows": [
                         "은퇴자금 <b>$400,000</b> — A와 동일", "매달 <b>$1,000</b>씩만 아껴 썼다",
-                        "남는 배당은 재투자"], "accent": "26년 뒤 $2,435,842 — 6배로 증가"})
+                        "남는 배당은 재투자"], "accent": f"26년 뒤 {money(_hkB['final'])} — 약 {_hkB_mult}배로 증가"})
         elif role == 0:                           # 3부 타이밍(폭락)
             d.update({"_fire": True, "side": "a", "label": "타이밍", "kick": "2000년, 두 투자자",
                       "tag": "타이밍을 노린다", "rows": [
@@ -250,23 +308,22 @@ for n in NARR:
                         "배당은 전액 재투자"], "accent": "25년 →"})
     elif tpl == "herostat":
         d.update({"eyebrow": "머니 리서치 — 종목 소개",
-                  "num": f"{BIZ['dividend_king_years']}년",
-                  "label": "연속 배당 증액 — 배당왕  {{mcd}}",
-                  "sub": f"2023년 Kenvue(소비자건강) 분사 → 제약 + 의료기기 두 축 · 시총 ${BIZ['market_cap_b']:.0f}B"})
+                  "num": f"{BIZ['div_years']}년",
+                  "label": f"연속 배당 증액 — {BIZ['div_label']}  {{{{mcd}}}}",
+                  "sub": f"전 세계 {BIZ['restaurants_k']//10}만 {BIZ['restaurants_k']%10}천여 매장의 95%가 프랜차이즈 · 임대·로열티로 버는 사실상 부동산 회사 · 시총 ${BIZ['market_cap_b']:.0f}B"})
     elif tpl == "kpirow":
-        seg = {s["ko"]: s for s in BIZ["segments"]}
-        d.update({"title": "사업은 견조하게 [성장] 중",
-                  "sub": f"2025 회계연도 (전년 대비) · 배당수익률 {BIZ['dividend_yield_pct']}%",
+        d.update({"title": "햄버거보다 [부동산]에 가깝다",
+                  "sub": f"FY2025 매출 구성 · 배당수익률 {BIZ['dividend_yield_pct']}% ({BIZ['yield_asof']})",
                   "tiles": [
-                    {"value": f"${seg['제약']['fy2025_rev_b']:.1f}B", "label": "제약 매출",
-                     "delta": f"{seg['제약']['share_pct']:.0f}%", "dir": "up"},
-                    {"value": f"${seg['의료기기']['fy2025_rev_b']:.1f}B", "label": "의료기기 매출",
-                     "delta": f"{seg['의료기기']['share_pct']:.0f}%", "dir": "up"},
-                    {"value": f"${BIZ['fy2025_revenue_b']:.1f}B", "label": "총매출",
+                    {"value": f"${BIZ['rents_b']:.1f}B", "label": "임대료 (최대 매출)",
+                     "delta": f"전체 {BIZ['rent_share_pct']:.0f}%", "dir": "up"},
+                    {"value": f"${BIZ['royalties_b']:.1f}B", "label": "로열티",
+                     "delta": "프랜차이즈", "dir": "up"},
+                    {"value": f"${BIZ['rev_total_b']:.1f}B", "label": "총매출",
                      "delta": f"+{BIZ['fy2025_yoy_pct']:.0f}%", "dir": "up"},
                     {"value": f"${BIZ['annual_dividend_ps']}", "label": "연 배당(주당)",
-                     "delta": f"{BIZ['dividend_king_years']}년째", "dir": "up"}],
-                  "src": "MCD IR · SEC 8-K (FY2025)"})
+                     "delta": f"{BIZ['div_years']}년째", "dir": "up"}],
+                  "src": "MCD FY2025 10-K · SEC"})
     elif tpl == "interlude":
         pass  # 자막만
     elif tpl == "survheat":
@@ -290,20 +347,25 @@ for n in NARR:
             d.update({"_fire": True, "sub": "",
                       "title": f"{money(init)} · {yr_tag} [물가반영]",
                       "chart": fire_chart(init, strat_key)})
-            if is2002:   # 닷컴버블 저점 은퇴 = 은퇴 직후 폭락(순서 위험)
-                dep = lambda mo: (rN2(init, mo)["depletion"] or "")[:4]
-                d["annoMain"] = {200000: "셋 다 파산 — 은퇴 직후 폭락의 저주",
-                                 400000: f"월 $2천마저 {dep(2000)}년 파산",
-                                 600000: f"월 $3천은 {dep(3000)}년 파산"}[init]
+            if is2002:   # 닷컴 저점(2002)에 싸게 진입 → MCD는 오히려 크게 유리 (실측 기반)
+                _sv = [mo for mo in (1000, 2000, 3000) if rN2(init, mo)["survived"]]
+                if len(_sv) == 3:
+                    d["annoMain"] = "닷컴 저점 진입 — 물가 반영해도 셋 다 생존"
+                elif _sv:
+                    d["annoMain"] = f"월 ${_sv[-1] // 1000}천까지 생존 · 나머지는 파산"
+                else:
+                    d["annoMain"] = "셋 다 파산"
             else:
-                d["annoMain"] = {200000: "월 $1천도 겨우 · $2천·$3천 파산",
-                                 400000: "월 $3천은 2013년 파산",
-                                 600000: "물가 반영해도 셋 다 생존"}[init]
+                _ry = lambda mo: (SC[f"real_{init}_{mo}"]["depletion"] or "")[:4]
+                d["annoMain"] = {
+                    200000: f"물가 반영하면 셋 다 파산 — 월 $1천도 {_ry(1000)}년",
+                    400000: f"월 $1천만 생존 · $2천 {_ry(2000)}·$3천 {_ry(3000)}년 파산",
+                    600000: f"월 $3천은 물가에 밀려 {_ry(3000)}년 파산"}[init]
                 if init == 200000:
                     d["table"] = infl_table
         elif chart_id == "price_trigger":   # 씬24: 주가 + 폭락 신호
             d.update({"sub": "", "title": "MCD 주가와 [−30% 폭락] 매수 신호",
-                      "annoMain": f"25년간 −30% 폭락은 {TRIG_Y[0]}·{TRIG_Y[1]}년, 딱 2번",
+                      "annoMain": f"25년간 −30% 폭락은 {'·'.join(str(y) for y in TRIG_Y)}년, 세 시기뿐",
                       "chart": price_trigger_chart()})
         elif chart_id == "smart_result":    # 씬25: 폭락 매수 결과
             d.update({"_fire": True, "sub": "", "title": "[폭락 때만] 몰아 투자",
@@ -340,14 +402,14 @@ for n in NARR:
                   "annoMain": f"완벽한 타이밍도 오히려 [{gap:+.0f}%]",
                   "annoSub": f"수익률(XIRR)도 적립 {sd['xirr_on']:.1f}% > 폭락 {sm['xirr_on']:.1f}% · 폭락매수는 현금 {sm['avg_cash_ratio_pct']:.0f}%가 놀았다"})
     elif tpl == "quotebig":
-        d.update({"quote": "타이밍을 맞히려 하지 말고,|쓰는 돈을 지키고 [꾸준히 모아 재투자]하라.",
-                  "source": f"{BIZ['dividend_king_years']}년 연속 증배, 배당왕 존슨앤드존슨", "img": None})
+        d.update({"quote": "폭락에 대비하려다 잃은 돈이,|정작 폭락으로 잃은 돈보다 [훨씬 많았다]",
+                  "source": "피터 린치 — 마젤란 펀드 전설적 운용역", "img": None})
     elif tpl == "card":
         d.update({"eyebrow": "머니 리서치 — 배당주 백테스트",
-                  "main": "{{mcd}}|[64년 배당왕]",
+                  "main": f"{{{{mcd}}}}|[{BIZ['div_years']}년 {BIZ['div_label']}]",
                   "sub": "배당으로 은퇴하는 이야기 — 다음 종목도 이어집니다",
-                  "chips": [[f"${BIZ.get('annual_dividend_ps',5.36)}", "연 배당"],
-                            [f"{BIZ['dividend_king_years']}년", "연속 증배"],
+                  "chips": [[f"${BIZ['annual_dividend_ps']}", "연 배당"],
+                            [f"{BIZ['div_years']}년", "연속 증배"],
                             [f"${BIZ['market_cap_b']:.0f}B", "시가총액"]]})
     scenes.append(sc)
 
@@ -365,7 +427,7 @@ override = ("/* ══ MCD 덱 주입 — 저장된 편집(localStorage) 있으�
             "      코카콜라 패치 IIFE 4종은 편집 오염 방지 위해 제거함. ══ */\n"
             "if(!localStorage.getItem(KEY)){\n"
             "  SCENES = " + json.dumps(scenes, ensure_ascii=False) + ";\n"
-            "  OV = {}; CP = {}; THEME='paper'; PAPER='photo';\n"
+            "  OV = " + json.dumps(DECK_OV, ensure_ascii=False) + "; CP = {}; THEME='paper'; PAPER='photo';\n"
             "}\n")
 html = html[:blk_start] + override + html[blk_end:]
 

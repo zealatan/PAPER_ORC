@@ -1,0 +1,85 @@
+# McDonald's Corp (MCD) 사업개요 — 결정론 소스 없음, 리서치+큐레이션. 각 claim에 출처.
+# ⚠ MCD 앵글: JNJ의 "제약+의료기기 64년 배당왕"이 아니라 →
+#   "49년 연속 증배 배당귀족(2026 가을 50년=배당왕 예정) + ~95% 프랜차이즈 + 사실상 부동산회사(임대료가 최대 매출) + 불황방어 가성비(맥밸류)".
+# 리서치: 5-에이전트 교차검증(≥2 독립출처), as-of 2026-07-22~23. 가격·시총·수익률은 스냅샷(변동).
+
+dividend_aristocrat:
+  consecutive_years: 49            # MCD 공식 표현: "1976년 첫 배당 후 49년 연속 증배". S&P500 배당귀족.
+  king_pending: "2026-10경 50년차(배당왕) 예상 — 아직 미선언. 화면표기: '49년 연속·배당귀족'"
+  last_raise: {date: "2025-10-22", pct: 5, from: 1.77, to: 1.86}  # 분기배당 $1.77→$1.86, 12/15 지급
+  annual_dividend_per_share: 7.44  # 분기 $1.86 × 4 (MCD 릴리스 명시)
+  fy2025_dividends_paid_ps: 7.17   # 2025 달력연도 실지급 (3×1.77 + 1×1.86). ⚠ 오류값 7.05 쓰지 말 것
+  dividend_yield_pct: 2.82         # $7.44 ÷ $263.57 (2026-07-22 종가). 화면에 가격·날짜 병기 필수
+  payout_ratio_pct: 60             # ~60%. GAAP EPS $11.95 기준 62% · 조정 EPS $12.20 기준 61%
+  payout_ratio_note: "화면: '약 60% (FY2025 GAAP EPS $11.95=62%, 조정 $12.20=61%)'"
+
+business_model:                    # "부동산 회사" 앵글 — FY2025 10-K (2026-02-24 제출, CIK 0000063908)
+  franchised_pct: 95              # 43,317 프랜차이즈 / 2,039 직영 / 45,356 총 = 95.5%
+  restaurants_total: 45356
+  countries: "100+ 개국"
+  revenue_split_b:                # 단위 $B (FY2025)
+    franchised: 16.548            # 임대+로열티+수수료 (총매출의 61.5%)
+    company_operated: 9.690       # 직영 매장 매출 (36.0%)
+    other: 0.647
+    total: 26.885
+  franchised_breakdown_b:         # 프랜차이즈 매출의 내역 — 임대료가 로열티보다 큼
+    rents: 10.442                 # 전체 매출의 ~38.8% = MCD 단일 최대 매출라인 (부동산회사 논거의 핵심)
+    royalties: 6.018              # 22.4%
+    initial_fees: 0.088
+  net_ppe_b: 28.241               # 순 유형자산 (토지 $8.169B 포함), 취득원가 기준 총 $49.29B
+  real_estate_note: "일반 프랜차이즈에서 MCD가 토지·건물을 소유하거나 장기임차 → 가맹점에 임대. 임대료 $10.4B > 로열티 $6.0B."
+
+segments_b:                        # MCD 실제 보고부문 (FY2025, $B)
+  - {name: "International Operated Markets", ko: "해외 직영시장", rev_b: 13.633, share_pct: 50.7}  # 영·독·불·캐·호 등, 매출 최대
+  - {name: "U.S.",                          ko: "미국",        rev_b: 10.825, share_pct: 40.3}  # 매장수 최대
+  - {name: "Int'l Developmental Licensed",  ko: "해외 라이선스", rev_b: 2.427,  share_pct: 9.0}   # 중국·일본 지분법 포함
+
+recent_results:
+  fy2025:                          # 2026-02-11 발표
+    revenue_b: 26.885
+    yoy_pct: 4                     # +4% (불변환율 +2%)
+    systemwide_sales_b: 139        # 시스템와이드 +7%, $139B+
+    comparable_sales_pct: 3.1      # 글로벌 comps +3.1% (US +2.1 / IOM +3.2 / IDL +4.6)
+    net_income_b: 8.563
+    gaap_diluted_eps: 11.95
+    adjusted_diluted_eps: 12.20
+  latest_quarter:                  # ⚠ Q2 2026 미발표(8/4 예정). 최신 실적分기 = Q1 2026
+    label: "Q1 2026"
+    reported: "2026-05-07"
+    revenue_b: 6.517
+    yoy_pct: 9                     # +9%, 약 8분기 만의 최강 매출성장
+    comparable_sales_pct: 3.8      # 글로벌 +3.8%, US +3.9%
+    gaap_diluted_eps: 2.78
+    note: "CEO: 가성비 리더십·마케팅·메뉴혁신"
+
+story_beats:                       # 2025~2026 서사 (근황 씬용)
+  mcvalue: "2025-01-07 맥밸류 상설 가성비 플랫폼 출범 ($5 세트 + 원플러스원 $1). Q3'25 기준 미국 거래의 ~30%가 밸류. 가맹점 지원 ~$90M(2025)."
+  traffic_arc: "Q1'25 미국 comps −3.6%(코로나 이후 최악, 저소득층 트래픽 두자릿수 급감) → 밸류로 회복: Q2 +2.5, Q3 +2.4, Q4 +6.8, Q1'26 +3.9. CEO '양극화된 미국 경제' 언급."
+  cosmcs: "코스맥스(CosMc's) 테스트 5개점 2025-06말 전면 폐점. 음료 컨셉만 일반 매장서 테스트."
+  loyalty: "2025말 ~2.1억 90일 활성 로열티 유저(+19%), 시스템와이드 로열티 매출 ~$37B(+20%), 70+ 시장. 2027 목표 2.5억/~$45B."
+  caution: "Q3'25 EPS $3.18은 컨센 $3.35 하회(매출은 상회)."
+
+brand:
+  market_cap_b: 187.2             # $263.5 × 710,505,859주 (2026-07-22 종가). ⚠ 초순 ~$199-200B은 stale
+  shares_outstanding: 710505859   # 10-Q 표지 (2026-03-31 기준)
+  price_snapshot: {price: 263.5, date: "2026-07-22", range_52w: "261.85–341.75", note: "52주 저점 부근(약 1% 이내), 고점 2026-03-02"}
+  tagline: "49년 연속 증배한 배당귀족 — 전 세계 4만5천여 매장의 95%를 프랜차이즈에 맡기고 그 토지·건물 임대료(전체 매출의 약 39%)를 챙기는 사실상 '부동산 회사', 불황에 강한 가성비 방어형 배당성장주"
+  logo_token: mcd
+
+# 물가반영 백테스트/전략비교 수치는 spec/MCD.json backtest 참조 (엔진 산출, 여기 중복 안 함)
+
+sources:
+  - {claim: "49년 연속 증배·배당귀족·직전 인상 +5% $1.77→$1.86", asof: "2025-10-22",
+     url: "https://www.prnewswire.com/news-releases/mcdonalds-raises-quarterly-cash-dividend-by-5-302591449.html"}
+  - {claim: "연배당 $7.44 / 2025 실지급 $7.17 / 수익률 2.82%", asof: "2026-07-22",
+     url: "https://stockanalysis.com/stocks/mcd/dividend/"}
+  - {claim: "FY2025 매출 $26.885B(+4%), 프랜차이즈 $16.548B(임대 $10.442B/로열티 $6.018B), 직영 $9.690B, 95% 프랜차이즈, 45,356매장, 순PP&E $28.241B, GAAP EPS $11.95/조정 $12.20", asof: "2026-02-24",
+     url: "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"}
+  - {claim: "FY2025 실적요약·comps +3.1%·시스템와이드 +7% $139B+", asof: "2026-02-11",
+     url: "https://www.prnewswire.com/news-releases/mcdonalds-reports-fourth-quarter-and-full-year-2025-results-302685288.html"}
+  - {claim: "Q1 2026 매출 $6.517B(+9%)·comps +3.8%·EPS $2.78", asof: "2026-05-07",
+     url: "https://www.prnewswire.com/news-releases/mcdonalds-reports-first-quarter-2026-results-302764628.html"}
+  - {claim: "발행주식 710,505,859 / 시총 ~$187.2B", asof: "2026-03-31",
+     url: "https://www.sec.gov/Archives/edgar/data/63908/000006390826000051/mcd-20260331.htm"}
+  - {claim: "맥밸류·트래픽 회복·CosMc's 폐점", asof: "2025",
+     url: "https://corporate.mcdonalds.com/corpmcd/our-stories/article/mcdonalds-launching-mcvalue-platform-inus-restaurants-in2025.html"}

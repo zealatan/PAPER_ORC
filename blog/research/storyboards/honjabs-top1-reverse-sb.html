@@ -1,0 +1,193 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>혼잡스 벤치마킹 — 조회수 TOP10 공식 + 1위 영상 리버스 스토리보드</title><style>
+:root{--bg:#14161b;--panel:#1b1e24;--line:#2a2e37;--ink:#e7e9ee;--mute:#8b929e;--amber:#e8a33d;--red:#e4483c;--green:#43c07a;--blue:#4a9ce6}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;color:var(--ink);line-height:1.7;margin:0;padding:0 20px 90px}
+.wrap{max-width:1000px;margin:0 auto}
+.masthead{padding:52px 0 24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:ui-monospace,Consolas,monospace;font-size:12px;letter-spacing:.16em;color:var(--red);text-transform:uppercase}
+h1{font-size:clamp(22px,3.6vw,32px);font-weight:800;letter-spacing:-.02em;margin:10px 0 6px}
+.sub{color:var(--mute);font-size:14.5px;margin:0}.sub b{color:var(--ink)}
+.meta{display:flex;gap:26px;margin-top:20px;flex-wrap:wrap}
+.meta div{display:flex;flex-direction:column;gap:2px}
+.meta dt{font-size:11px;color:var(--mute);letter-spacing:.08em}
+.meta dd{margin:0;font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;font-family:ui-monospace,Consolas,monospace}
+h2{font-size:15px;letter-spacing:.03em;margin:44px 0 14px;color:var(--amber);font-family:ui-monospace,Consolas,monospace;text-transform:uppercase}
+/* top10 표 */
+.t10{width:100%;border-collapse:collapse;font-size:13.5px}
+.t10 td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:middle}
+.t10 .rk{color:var(--mute);font-family:ui-monospace,Consolas,monospace;width:28px;text-align:center}
+.t10 tr:nth-child(1) .rk{color:var(--amber);font-weight:800}
+.t10 .vw{font-family:ui-monospace,Consolas,monospace;font-weight:700;color:var(--green);width:60px}
+.t10 .ln{font-family:ui-monospace,Consolas,monospace;color:var(--mute);width:52px}
+.t10 .ti{color:var(--ink)}
+.kind{font-size:11px;color:var(--blue);border:1px solid #2f4a63;border-radius:999px;padding:2px 9px;white-space:nowrap}
+/* 공식 */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.fcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.fcard h3{margin:0 0 7px;font-size:14.5px;color:var(--amber)}
+.fcard p{margin:0;font-size:13.5px;color:#cfd3db}
+.fcard b{color:var(--ink)}
+/* 타임라인 */
+.tlbox{position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 80%,transparent);padding:12px 0 16px;margin-top:20px}
+.tllabel{font-size:11px;color:var(--mute);letter-spacing:.1em;margin-bottom:6px;font-family:ui-monospace,Consolas,monospace;display:flex;justify-content:space-between}
+.timeline{display:flex;gap:2px;height:26px;align-items:flex-end}
+.seg{flex:1;background:#20242c;border-radius:3px 3px 0 0;display:flex;align-items:flex-end;overflow:hidden;transition:.15s}
+.seg span{width:100%;background:linear-gradient(var(--red),#7a2620);border-radius:3px 3px 0 0}
+.seg:hover{outline:1px solid var(--amber)}
+/* 씬 카드 */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:0;margin:14px 0;overflow:hidden;scroll-margin-top:70px}
+.card.hot{border-color:#5a2f2b}
+.info{padding:16px 20px}
+.info header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.num{font-family:ui-monospace,Consolas,monospace;font-size:13px;font-weight:800;color:var(--bg);background:var(--amber);border-radius:6px;padding:2px 8px}
+.fn{font-weight:800;font-size:14.5px;letter-spacing:.01em}
+.tc{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--mute)}
+.tc em{color:#565c66;font-style:normal}
+.dur{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--mute)}
+.durbar{flex:1;min-width:60px;height:5px;background:#23272f;border-radius:3px;overflow:hidden}
+.durbar i{display:block;height:100%;background:var(--red)}
+.script{margin:0 0 12px;font-size:14.5px;color:#e2e5ea}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{font-size:11.5px;border-radius:999px;padding:3px 10px;border:1px solid var(--line)}
+.chip.bg{color:#c9a24a;border-color:#4a3d1f}
+.chip.el{color:#a9b0bc}
+.chip.fx{color:#7fb0d8;border-color:#2f4557}
+.ana,.remap{margin:8px 0 0;font-size:13px;border-left:3px solid;padding:8px 12px;border-radius:0 8px 8px 0;background:#181b21}
+.ana{border-color:var(--green);color:#cdd2da}.ana b{color:var(--green)}
+.remap{border-color:var(--blue);color:#cdd2da}.remap b{color:var(--blue)}
+.foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--mute);font-size:12.5px}
+.foot b{color:var(--ink)}
+</style></head><body>
+<div class="wrap">
+<header class="masthead">
+<div class="eyebrow">Benchmark Storyboard · 혼잡스 · UCidyOPC0…</div>
+<h1>혼잡스 벤치마킹 — 조회수 TOP10 공식 + 1위 영상 리버스 스토리보드</h1>
+<p class="sub">배투실 리서치 · 1위 영상 <b>하루 10분 부업하고 가만히 월 30만원 (628,480회 · 4:42)</b> 리버스 스토리보드 + 채널 TOP10 공식 · <b>원문 대본 미저장, 우리 요지·분석만</b></p>
+<dl class="meta">
+<div><dt>채널 구독</dt><dd>78,100</dd></div>
+<div><dt>1위 조회</dt><dd>628,480</dd></div>
+<div><dt>1위 길이</dt><dd>4:42</dd></div>
+<div><dt>재구성 씬</dt><dd>9</dd></div>
+<div><dt>TOP10 평균</dt><dd>6.3분</dd></div>
+</dl></header>
+
+<h2>1 · 채널 TOP10 (조회수순)</h2>
+<table class="t10"><tbody><tr><td class="rk">1</td><td class="vw">628K</td><td class="ln">4:42</td><td class="ti">하루 10분 부업하고 가만히 월 30만원 버는법 (난이도 최하, 유튜브최초)</td><td><span class="kind">부업·튜토리얼</span></td></tr><tr><td class="rk">2</td><td class="vw">182K</td><td class="ln">5:04</td><td class="ti">하루 15분! 부업으로 월100~500만원 (0원으로 집에서 누구나 가능)</td><td><span class="kind">부업·튜토리얼</span></td></tr><tr><td class="rk">3</td><td class="vw">177K</td><td class="ln">5:18</td><td class="ti">복사붙여넣기로 월 500번다는 부업? 사실일까 — 할까말까 시리즈</td><td><span class="kind">검증</span></td></tr><tr><td class="rk">4</td><td class="vw">166K</td><td class="ln">5:58</td><td class="ti">퇴근길 딱 5분 부업하고 월 30만원 더 (핸드폰 가능, 난이도 극하, 유튜브최초)</td><td><span class="kind">부업·튜토리얼</span></td></tr><tr><td class="rk">5</td><td class="vw">138K</td><td class="ln">8:05</td><td class="ti">클로드로 당장 수익 만드는 확실한 방법 5가지 (500만원 쓰고 검증)</td><td><span class="kind">AI·리스티클</span></td></tr><tr><td class="rk">6</td><td class="vw">94K</td><td class="ln">8:02</td><td class="ti">AI 시대에 월급쟁이였던 내가 1인 기업가가 된 과정</td><td><span class="kind">AI·서사</span></td></tr><tr><td class="rk">7</td><td class="vw">72K</td><td class="ln">5:22</td><td class="ti">딱한번 1시간 일하고 월 10~30만원 (인형 눈 붙이기 수준, 난이도 하)</td><td><span class="kind">부업·튜토리얼</span></td></tr><tr><td class="rk">8</td><td class="vw">71K</td><td class="ln">4:48</td><td class="ti">퇴근후 30분 월 50만원 벌기. 일부만 알던 꿀부업</td><td><span class="kind">부업·튜토리얼</span></td></tr><tr><td class="rk">9</td><td class="vw">61K</td><td class="ln">9:29</td><td class="ti">클로드 직원 5명이 제 사이트로 돈 벌어줍니다 (AI 직원 세팅 8가지)</td><td><span class="kind">AI·튜토리얼</span></td></tr><tr><td class="rk">10</td><td class="vw">58K</td><td class="ln">5:43</td><td class="ti">딱 한번 1시간 만들고 매달 연금처럼 수익 (0원 가능, 2024 자료)</td><td><span class="kind">부업·튜토리얼</span></td></tr></tbody></table>
+<p class="sub" style="margin-top:10px">상위는 <b>부업·튜토리얼</b>이 장악(4~5분, 챕터 없는 단일서사). <b>Claude/AI</b>물은 뒤에 붙은 신규 피벗(8~9분·챕터형 리스티클). 검증형 '<b>할까말까</b>' 시리즈도 상위(3위).</p>
+
+<h2>2 · 조회수를 만든 6개 공식</h2>
+<div class="fgrid"><div class="fcard"><h3>① 인트로 0초 — 첫 5초가 곧 훅</h3><p>채널 소개·브금 인트로 없음. 0초부터 <b>[금액]+[시간]+[난이도]+[독점성]</b>을 한 호흡에 쏟는다. "A4로 10분 만에 올리고 30만원, 자면서도 수익, 아직 아무 유튜버도 안 다룬 초블루오션."</p></div><div class="fcard"><h3>② 호기심 미끼로 리텐션</h3><p>"앞으로 길에서 A4 들고 다니는 사람 많이 보게 될 것" — 방법을 살짝 미루고 궁금증을 걸어 이탈 방지. 정답(=손 촬영)은 0:36에야 공개.</p></div><div class="fcard"><h3>③ 진입장벽 선제 제거</h3><p>"보정 기술 없어도", "사진 못 찍어도", "0원으로", "누구나". 시청자가 '나는 못하겠다' 생각하기 전에 반박을 미리 깔아둠.</p></div><div class="fcard"><h3>④ 본문 = 화면녹화 따라하기</h3><p>3분 내내 실제 화면녹화로 클릭 단위 스텝. "지금 모니터 앞에서 바로 따라하세요." 정보 밀도↑·체류시간↑, 저장·재방문 유도.</p></div><div class="fcard"><h3>⑤ 스케일업 트릭(추가 방법)</h3><p>기본법 뒤에 "무한대로 늘리는 법"(A4로 자연물·다이소·과일 촬영) + 멀티플랫폼(프리픽·셔터스톡·어도비스톡). "이것 때문에 A4를 쓴다"로 앞의 떡밥 회수.</p></div><div class="fcard"><h3>⑥ 짧게, 시리즈 약속으로 닫기</h3><p>4~6분 초압축. "앞으로 이런 부업 정보 더 알려드림 + 구독·알림"으로 채널 재방문 루프. TOP10 평균 6.3분(부업물은 4~5분).</p></div></div>
+
+<h2>3 · 1위 영상 리버스 스토리보드 (9씬)</h2>
+<nav class="tlbox" aria-label="씬 타임라인">
+<div class="tllabel"><span>TIMELINE — 폭·높이 = 씬 길이 · 클릭 이동</span><span>00:00 &rarr; 04:42</span></div>
+<div class="timeline"><a class="seg" href="#s1" title="01 · 00:36"><span style="height:80%"></span></a><a class="seg" href="#s2" title="02 · 00:25"><span style="height:56%"></span></a><a class="seg" href="#s3" title="03 · 00:33"><span style="height:73%"></span></a><a class="seg" href="#s4" title="04 · 00:21"><span style="height:47%"></span></a><a class="seg" href="#s5" title="05 · 00:31"><span style="height:69%"></span></a><a class="seg" href="#s6" title="06 · 00:45"><span style="height:100%"></span></a><a class="seg" href="#s7" title="07 · 00:30"><span style="height:67%"></span></a><a class="seg" href="#s8" title="08 · 00:43"><span style="height:96%"></span></a><a class="seg" href="#s9" title="09 · 00:18"><span style="height:40%"></span></a></div></nav>
+<main><article class="card" id="s1">
+<div class="info"><header>
+<span class="num">01</span>
+<span class="fn">HOOK — 약속 스택 + 미끼</span>
+<span class="tc">00:00 <em>&rarr;</em> 00:36</span>
+<span class="dur">36s</span>
+<span class="durbar"><i style="width:80%"></i></span></header>
+<p class="script">A4 한 장으로 10분이면 등록, 월 30만원+·자면서도 수익. 아직 아무도 안 다룬 초블루오션·초간단. 지금 바로 따라할 수 있으니 빨리 선점하라. (+미끼: 앞으로 길에서 A4 든 사람 자주 볼 것)</p>
+<div class="tags"><span class="chip bg">화면+내레이션</span><span class="chip el">금액 대형자막</span><span class="chip el">월30만↑</span><span class="chip el">유튜브최초 배지</span><span class="chip fx">풀블리드</span></div>
+<p class="ana"><b>왜 통하나</b> 0초 인트로 없이 금액·시간·난이도·독점성 4종을 5초 안에 투하. 미끼로 정답 공개를 지연시켜 리텐션 확보.</p>
+<p class="remap"><b>배당 치환</b> "4억으로 파이어, 25년 백테스트로 직접 검증. 아무도 실측으로 안 보여준 결과"로 치환. 미끼='끝까지 보면 월100은 살고 월150은 죽는 이유'.</p>
+</div></article><article class="card" id="s2">
+<div class="info"><header>
+<span class="num">02</span>
+<span class="fn">REVEAL — 방법 공개</span>
+<span class="tc">00:36 <em>&rarr;</em> 01:01</span>
+<span class="dur">25s</span>
+<span class="durbar"><i style="width:56%"></i></span></header>
+<p class="script">방법은 &#x27;자신의 손을 촬영해 이미지 판매 사이트에 등록&#x27;. 보정·촬영 기술 없어도 가능하고, A4를 쓰는 추가 방법까지 더하면 월 100만원도 현실적.</p>
+<div class="tags"><span class="chip bg">화면+내레이션</span><span class="chip el">방법 타이틀 카드</span><span class="chip fx">슬라이드인</span></div>
+<p class="ana"><b>왜 통하나</b> 정답을 짧게 공개하되 곧바로 '추가 방법 있음'을 예고해 두 번째 후킹을 심음. 진입장벽 선제 제거.</p>
+<p class="remap"><b>배당 치환</b> 우리는 '방법'이 곧 '백테스트 결과 요약'. 은퇴자금×인출액 조합의 생존/파산을 30초 프리뷰로 먼저 던짐.</p>
+</div></article><article class="card" id="s3">
+<div class="info"><header>
+<span class="num">03</span>
+<span class="fn">STEP 1 — 준비·배경제거</span>
+<span class="tc">01:01 <em>&rarr;</em> 01:34</span>
+<span class="dur">33s</span>
+<span class="durbar"><i style="width:73%"></i></span></header>
+<p class="script">A4에 손을 올려 폰으로 촬영 → PC로 옮김 → 어도비 익스프레스 배경제거로 손만 분리 → 다운로드.</p>
+<div class="tags"><span class="chip bg">화면녹화</span><span class="chip el">커서 하이라이트</span><span class="chip el">단계 넘버 1</span><span class="chip fx">줌인</span></div>
+<p class="ana"><b>왜 통하나</b> 본문 진입 즉시 실제 화면. '검색어 그대로 따라치면 됨' 수준의 손쉬움을 시각적으로 증명.</p>
+<p class="remap"><b>배당 치환</b> 배당 버전엔 튜토리얼 단계 없음. 대신 '백테스트 조건 세팅'(종목·기간·인출액) 화면으로 대체 가능.</p>
+</div></article><article class="card" id="s4">
+<div class="info"><header>
+<span class="num">04</span>
+<span class="fn">STEP 2 — 파일 변환·사이트 진입</span>
+<span class="tc">01:34 <em>&rarr;</em> 01:55</span>
+<span class="dur">21s</span>
+<span class="durbar"><i style="width:47%"></i></span></header>
+<p class="script">PNG→JPG 변환(검색해서 나오는 변환 사이트 이용) → 다운로드 → 프리픽 사이트 접속.</p>
+<div class="tags"><span class="chip bg">화면녹화</span><span class="chip el">단계 넘버 2</span><span class="chip fx">줌인</span></div>
+<p class="ana"><b>왜 통하나</b> 사소한 마찰(파일 포맷)까지 떠먹여 '나도 되겠다' 확신을 쌓음. 이탈 지점을 미리 메움.</p>
+<p class="remap"><b>배당 치환</b> 해당 없음(우리는 데이터 그래프가 주인공). 이 자리에 '그래프 읽는 법 10초 가이드' 삽입 여지.</p>
+</div></article><article class="card" id="s5">
+<div class="info"><header>
+<span class="num">05</span>
+<span class="fn">STEP 3 — 컨트리뷰터 가입</span>
+<span class="tc">01:55 <em>&rarr;</em> 02:26</span>
+<span class="dur">31s</span>
+<span class="durbar"><i style="width:69%"></i></span></header>
+<p class="script">프리픽 컨트리뷰터 가입(이메일/구글) → 프로필 작성. SNS 주소를 넣으면 검수 승인에 유리하다는 팁 추가.</p>
+<div class="tags"><span class="chip bg">화면녹화</span><span class="chip el">단계 넘버 3</span><span class="chip fx">슬라이드인</span></div>
+<p class="ana"><b>왜 통하나</b> '승인 잘 받는 팁' 같은 내부자 디테일로 신뢰·전문성 신호. 정보성 채널의 무기.</p>
+<p class="remap"><b>배당 치환</b> 우리 버전의 '꿀팁'='세율 15% 반영, 물가(CPI) 연동' 같은 현실 조건을 짚어 신뢰 확보.</p>
+</div></article><article class="card" id="s6">
+<div class="info"><header>
+<span class="num">06</span>
+<span class="fn">STEP 4 — 업로드·타이틀</span>
+<span class="tc">02:26 <em>&rarr;</em> 03:11</span>
+<span class="dur">45s</span>
+<span class="durbar"><i style="width:100%"></i></span></header>
+<p class="script">업로드 버튼 → JPG 드래그 → 파일 클릭 → 수정 아이콘 → 타이틀 입력(예: One Hand) → 저장. 업로드 완료.</p>
+<div class="tags"><span class="chip bg">화면녹화</span><span class="chip el">단계 넘버 4</span><span class="chip fx">팝인</span></div>
+<p class="ana"><b>왜 통하나</b> 가장 긴 씬(45s). '실제로 되는 걸 끝까지 보여줌'이 이 포맷의 신뢰 핵심.</p>
+<p class="remap"><b>배당 치환</b> 우리 최장 씬은 '라인차트 드로우인'(자산 생존/소진 그래프). 결과를 눈앞에서 그려 보이는 게 신뢰 근거.</p>
+</div></article><article class="card" id="s7">
+<div class="info"><header>
+<span class="num">07</span>
+<span class="fn">STEP 5 — 10개 제출·한계 인지</span>
+<span class="tc">03:11 <em>&rarr;</em> 03:41</span>
+<span class="dur">30s</span>
+<span class="durbar"><i style="width:67%"></i></span></header>
+<p class="script">프리픽은 10개 제출 후 검수. 같은 방식으로 손의 여러 각도·동작 10개 업로드. 단, 손동작은 금방 한계가 옴을 지적.</p>
+<div class="tags"><span class="chip bg">화면녹화</span><span class="chip el">단계 넘버 5</span><span class="chip fx">순차 등장</span></div>
+<p class="ana"><b>왜 통하나</b> 일부러 '한계'를 스스로 꺼내 → 다음 씬(스케일업)의 필요성을 만든다. 반전·해결 구조.</p>
+<p class="remap"><b>배당 치환</b> 우리도 '20만 달러로는 아무리 아껴도 26년 못 버팀'이라는 한계를 먼저 던지고 다음 씬에서 해법 제시.</p>
+</div></article><article class="card" id="s8">
+<div class="info"><header>
+<span class="num">08</span>
+<span class="fn">SCALE-UP — 무한 생성·멀티플랫폼</span>
+<span class="tc">03:41 <em>&rarr;</em> 04:24</span>
+<span class="dur">43s</span>
+<span class="durbar"><i style="width:96%"></i></span></header>
+<p class="script">A4를 밖에 들고 나가 돌·자연물, 다이소·마트의 물건/과일 위에 깔고 촬영 → 수천 개 무한 생성. 프리픽 외 셔터스톡·어도비스톡에도 등록해 수익 배가.</p>
+<div class="tags"><span class="chip bg">화면+실사</span><span class="chip el">&#x27;무한대&#x27; 대형자막</span><span class="chip el">플랫폼 로고 3</span><span class="chip fx">강조팝</span></div>
+<p class="ana"><b>왜 통하나</b> 앞의 A4 미끼를 여기서 회수(=구조적 완결). '한계→무한'의 반전으로 가치 정점. 저장·공유 유발 지점.</p>
+<p class="remap"><b>배당 치환</b> 우리 정점='닷컴 꼭대기 2000년 최악 타이밍에도 월100만이면 26년 생존·7.6억 잔존'. 반전으로 클라이맥스.</p>
+</div></article><article class="card" id="s9">
+<div class="info"><header>
+<span class="num">09</span>
+<span class="fn">CTA — 시리즈 약속</span>
+<span class="tc">04:24 <em>&rarr;</em> 04:42</span>
+<span class="dur">18s</span>
+<span class="durbar"><i style="width:40%"></i></span></header>
+<p class="script">정말 쉬우니 지금 바로 손 촬영·업로드 해보라. 앞으로 이런 부업 정보 더 올림. 좋아요·구독 부탁. 감사 인사.</p>
+<div class="tags"><span class="chip bg">화면+내레이션</span><span class="chip el">CTA 타이틀</span><span class="chip fx">로고팝</span></div>
+<p class="ana"><b>왜 통하나</b> 짧고 명확한 행동 촉구 + '다음 정보' 예고로 채널 재방문 루프. 총 4:42로 초압축 마감.</p>
+<p class="remap"><b>배당 치환</b> '다음엔 다른 배당주로 같은 백테스트. 보고 싶은 종목 댓글로' — 우리 기존 CTA 그대로 호환.</p>
+</div></article></main>
+
+<div class="foot">
+<b>구조 요약</b> 훅(약속스택+미끼) → 방법 공개 → 화면녹화 5스텝 → 한계 지적 → <b>스케일업 반전(떡밥 회수)</b> → 짧은 CTA·시리즈 약속.
+&nbsp;·&nbsp; <b>배투실 이식</b> 각 씬 파랑 박스 참조 — 튜토리얼 스텝만 '백테스트 결과 드로우인'으로 치환하면 동일 골격이 성립.
+&nbsp;·&nbsp; <b>주의</b> 원저작 대본은 저장하지 않음(README 규칙). 본 문서는 사실정보(제목·조회·타임코드)와 우리 분석만 포함.
+</div>
+</div></body></html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>설계 청사진 · PROTOCOL</title>
+<style>*{margin:0;padding:0}img{max-width:100%}</style>
+<style>
+  :root{
+    --bg:#f5f2ec; --surface:#fffdf9; --surface2:#faf6ee;
+    --ink:#1d1a15; --muted:#6d675c; --faint:#948d80;
+    --line:#e6dfd2; --line2:#ded5c4;
+    --accent:#b07d15; --accent-ink:#8a6210; --accent-soft:rgba(176,125,21,.10);
+    --done:#2f7d59; --active:#b07d15; --todo:#a49b8d;
+    --done-soft:rgba(47,125,89,.12); --active-soft:rgba(176,125,21,.14); --todo-soft:rgba(164,155,141,.12);
+    --warn:#b1462b; --warn-soft:rgba(177,70,43,.10); --warn-line:rgba(177,70,43,.30);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#14120d; --surface:#1d1a14; --surface2:#211d16;
+      --ink:#ece6da; --muted:#9c9488; --faint:#736c60;
+      --line:#2c281f; --line2:#37311f;
+      --accent:#dda637; --accent-ink:#eabf5c; --accent-soft:rgba(221,166,55,.13);
+      --done:#4fb083; --active:#dda637; --todo:#8c8474;
+      --done-soft:rgba(79,176,131,.14); --active-soft:rgba(221,166,55,.15); --todo-soft:rgba(140,132,116,.14);
+      --warn:#e0846a; --warn-soft:rgba(224,132,106,.12); --warn-line:rgba(224,132,106,.32);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#f5f2ec; --surface:#fffdf9; --surface2:#faf6ee;
+    --ink:#1d1a15; --muted:#6d675c; --faint:#948d80;
+    --line:#e6dfd2; --line2:#ded5c4;
+    --accent:#b07d15; --accent-ink:#8a6210; --accent-soft:rgba(176,125,21,.10);
+    --done:#2f7d59; --active:#b07d15; --todo:#a49b8d;
+    --done-soft:rgba(47,125,89,.12); --active-soft:rgba(176,125,21,.14); --todo-soft:rgba(164,155,141,.12);
+    --warn:#b1462b; --warn-soft:rgba(177,70,43,.10); --warn-line:rgba(177,70,43,.30);
+  }
+  :root[data-theme="dark"]{
+    --bg:#14120d; --surface:#1d1a14; --surface2:#211d16;
+    --ink:#ece6da; --muted:#9c9488; --faint:#736c60;
+    --line:#2c281f; --line2:#37311f;
+    --accent:#dda637; --accent-ink:#eabf5c; --accent-soft:rgba(221,166,55,.13);
+    --done:#4fb083; --active:#dda637; --todo:#8c8474;
+    --done-soft:rgba(79,176,131,.14); --active-soft:rgba(221,166,55,.15); --todo-soft:rgba(140,132,116,.14);
+    --warn:#e0846a; --warn-soft:rgba(224,132,106,.12); --warn-line:rgba(224,132,106,.32);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace}
+  .wrap{max-width:1060px;margin:0 auto;padding:26px 22px 60px}
+
+  a{color:var(--accent-ink);text-decoration:none}
+  a:hover{text-decoration:underline}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--faint);
+    border:1px solid var(--line2);border-radius:20px;padding:4px 12px;margin-bottom:18px}
+  .back:hover{color:var(--accent-ink);text-decoration:none;border-color:var(--accent)}
+
+  header{padding-bottom:16px;border-bottom:1px solid var(--line2)}
+  header .eb{font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  h1{font-size:24px;font-weight:680;letter-spacing:-.01em;margin:6px 0 0;text-wrap:balance}
+  .sub{color:var(--muted);font-size:13.5px;margin-top:7px;max-width:74ch}
+  .path{font-size:11.5px;color:var(--faint)}
+
+  .principle{margin:18px 0 8px;padding:11px 15px;border-radius:10px;
+    background:var(--accent-soft);border:1px solid var(--line2);
+    font-size:13.5px;color:var(--ink);display:flex;gap:9px;align-items:flex-start;flex-wrap:wrap}
+  .principle b{color:var(--accent-ink)}
+  .principle .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);font-weight:700;padding-top:1px}
+
+  .eyebrow{font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--faint);font-weight:700;margin:34px 0 12px}
+
+  section{scroll-margin-top:16px}
+  h2{font-size:16.5px;font-weight:670;margin:0 0 4px;letter-spacing:-.005em}
+  .sec{margin-top:32px;padding-top:20px;border-top:1px solid var(--line2)}
+  .lead{color:var(--muted);font-size:13px;margin:8px 0 0;max-width:74ch}
+  p{font-size:13.4px;color:var(--ink);margin:11px 0 0;line-height:1.58}
+  p.m{color:var(--muted)}
+
+  .chip,code.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:11.6px;background:var(--surface2);border:1px solid var(--line);border-radius:5px;
+    padding:1px 6px;color:var(--accent-ink);white-space:nowrap}
+
+  ul.list{margin:11px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+  ul.list>li{position:relative;padding-left:16px;font-size:13.2px;line-height:1.55;color:var(--ink)}
+  ul.list>li::before{content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  ul.list>li b{font-weight:640}
+
+  pre.code{overflow-x:auto;background:var(--surface2);border:1px solid var(--line);border-radius:12px;
+    padding:13px 15px;margin:14px 0 0;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:11.8px;line-height:1.65;color:var(--ink);scrollbar-width:thin}
+  pre.code .c{color:var(--faint)}
+  pre.code .k{color:var(--accent-ink)}
+
+  /* legend chips for spec markers */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .lchip{font-size:11.5px;border:1px solid var(--line2);border-radius:7px;padding:5px 10px;background:var(--surface)}
+  .lchip b{font-family:ui-monospace,Menlo,monospace;color:var(--accent-ink)}
+
+  /* directory tree */
+  .scrollx{overflow-x:auto;margin:14px 0 0;border:1px solid var(--line);border-radius:12px;scrollbar-width:thin}
+  table{border-collapse:collapse;width:100%;font-size:12.6px;min-width:600px}
+  thead th{background:var(--surface2);text-align:left;font-weight:660;color:var(--muted);
+    font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:9px 13px;border-bottom:1px solid var(--line2)}
+  tbody td{padding:9px 13px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink);line-height:1.5}
+  tbody tr:last-child td{border-bottom:none}
+  tbody td:first-child{white-space:nowrap;font-family:ui-monospace,Menlo,monospace;font-size:11.6px;color:var(--accent-ink)}
+  .st{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+    padding:2px 7px;border-radius:5px;white-space:nowrap}
+  .st.done{background:var(--done-soft);color:var(--done)}
+  .st.todo{background:var(--todo-soft);color:var(--todo)}
+  .st.plan{background:var(--active-soft);color:var(--active)}
+
+  /* build order steps */
+  ol.steps{margin:14px 0 0;padding:0;list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:7px}
+  ol.steps>li{counter-increment:st;position:relative;padding:10px 14px 10px 44px;font-size:12.9px;line-height:1.55;
+    background:var(--surface);border:1px solid var(--line);border-radius:9px}
+  ol.steps>li::before{content:counter(st);position:absolute;left:12px;top:10px;width:20px;height:20px;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:750;
+    color:var(--accent-ink);background:var(--accent-soft);border-radius:6px}
+  ol.steps>li b{font-weight:660}
+  ol.steps>li .done{color:var(--done);font-weight:700}
+
+  /* risk cards */
+  .risks{margin-top:14px;display:flex;flex-direction:column;gap:9px}
+  .risk{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);
+    border-radius:9px;padding:11px 14px;font-size:12.9px;line-height:1.56}
+  .risk .rt{font-weight:660;display:flex;gap:9px;align-items:baseline}
+  .risk .rt .num{font-size:11px;font-weight:750;color:var(--warn);background:var(--warn-soft);
+    border-radius:6px;padding:2px 7px}
+  .risk p{margin-top:5px;font-size:12.6px;color:var(--muted)}
+
+  .call{margin:14px 0 0;border-radius:11px;padding:12px 15px;border:1px solid var(--line2);
+    background:var(--accent-soft);font-size:13px;line-height:1.55}
+  .call .h{font-weight:660;font-size:12.5px;color:var(--accent-ink);margin-bottom:5px}
+
+  footer{margin-top:40px;padding-top:15px;border-top:1px solid var(--line2);
+    font-size:12px;color:var(--faint);display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+  .totop{margin-left:auto}
+
+  @media (max-width:720px){ .legend{flex-direction:column} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../ARCHITECTURE.html">← 아키텍처</a>
+
+  <header id="top">
+    <div class="eb">② 설계 청사진 · 대부분 stub</div>
+    <h1>배투실 영상 파이프라인 — 프로토콜</h1>
+    <div class="path mono">blog/JNJ/PROTOCOL.md · = pipeline/README.md</div>
+    <p class="sub">배당 백테스트 유튜브 영상을 <b>종목만 바꾸면 찍히는 라인</b>으로. 종목 1편 = <code class="chip">video_spec.json</code> 하나 — 모든 단계가 이 spec을 읽고/되채운다. 이게 <b>프로토콜</b>이다. (실행이 아닌 구조·의도 조망용.)</p>
+  </header>
+
+  <div class="call">
+    <div class="h">설계 근거</div>
+    멀티에이전트 병렬 조사 <code class="chip">wf_0c9ec72e-2f1</code>(백테스트/FIRE/덱/더빙·렌더 4개 서브시스템).
+    아키텍처 문서: <a href="https://claude.ai/code/artifact/45ab02e4-037c-4db0-8b24-b431e967606d">claude.ai/code/artifact/45ab02e4…</a>
+  </div>
+
+  <section class="sec">
+    <h2>프로토콜 (<code class="chip">spec.py</code>)</h2>
+    <p class="lead">계약은 <code class="chip">spec.py</code>가 단일 원천. 필드는 세 종류로 태깅된다.</p>
+    <div class="legend">
+      <span class="lchip"><b>[IN]</b> — 사람/큐레이션 입력</span>
+      <span class="lchip"><b>[CALC]</b> — 엔진 산출(덮어씀)</span>
+      <span class="lchip"><b>[DERIVED]</b> — 조립</span>
+    </div>
+    <pre class="code"><span class="k">python spec.py spec/KO.golden.json</span>           <span class="c"># 계약 검증</span>
+<span class="k">python spec.py spec/KO.golden.json backtest</span>  <span class="c"># 단계별 선행필드 검증</span></pre>
+  </section>
+
+  <section class="sec">
+    <h2>디렉토리 (<code class="chip">pipeline/</code>)</h2>
+    <div class="scrollx">
+      <table>
+        <thead><tr><th>경로</th><th>역할</th><th>상태</th></tr></thead>
+        <tbody>
+          <tr><td>spec.py</td><td>★ 계약: VideoSpec new_spec/validate/merge_calc/load/save</td><td><span class="st done">구현됨</span></td></tr>
+          <tr><td>orchestrate.py</td><td>최상위 러너 (--spec --from --to)</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>data/loader.py</td><td>headless 로더 + 월봉 리샘플 + CPI</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>backtest/run.py</td><td>run(spec): FIRE 그리드 + 전략비교(목돈/적립/폭락매수)</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>sources/fundamentals.py</td><td>data.business (★결정론 소스 없음 → 큐레이션)</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>story/narration.py</td><td>대본 + 인용검증(대본 숫자 == 엔진값)</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>deck/adapters.py</td><td>★핵심: spec → tpl data 변환 (enginechart 등 18종)</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>deck/build.py</td><td>spec.scenes+deck_layout → 덱 JSON (sid 키)</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>deck/template.html</td><td>cocacola_final.html 종목고정부 제거 범용 렌더러</td><td><span class="st plan">예정</span></td></tr>
+          <tr><td>dub/run_dub.py</td><td>TTS→타이밍→음성트랙 폐루프</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>render/run_render.sh</td><td>덱주입→녹화→믹싱 (DUR 자동)</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>assets/build_assets.py</td><td>썸네일·bg매핑·publish 메타</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>qa/reconcile.py</td><td>대조: 대본↔엔진, 덱↔backtest, 골든회귀</td><td><span class="st todo">stub</span></td></tr>
+          <tr><td>curation/overrides/KO.yaml</td><td>큐레이션 사업개요(+출처)</td><td><span class="st done">작성됨</span></td></tr>
+          <tr><td>spec/KO.golden.json</td><td>코카콜라 [IN] spec + 골든 참조</td><td><span class="st done">작성됨</span></td></tr>
+          <tr><td>out/KO/golden/</td><td>★리팩터 전 동결한 회귀 기준선</td><td><span class="st done">동결됨</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>재사용 (★ 이미 구축됨 — 종목무관)</h2>
+    <ul class="list">
+      <li><b>백테스트</b>: <code class="chip">global_cup/{fire_engine,golden_engine,backtest_engine,data_loader,dividend_reinvest}.py</code> (검증됨)</li>
+      <li><b>더빙</b>: <code class="chip">rec/{gen_tts,build_timing,build_voice,extract_lines}.py</code></li>
+      <li><b>렌더</b>: <code class="chip">rec/{record_full.sh,keep_fs.py,send_key.py,nav_raise.py,mix_audio.sh}</code></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <h2>구축 순서</h2>
+    <ol class="steps">
+      <li><b>spec.py</b> — 계약 확정 <span class="done">✅</span></li>
+      <li><b>골든 동결</b> — <code class="chip">out/KO/golden/</code>(deck_dubbed·TTS·입력CSV) <span class="done">✅</span> · <code class="chip">spec/KO.golden.json</code> <span class="done">✅</span> · <code class="chip">overrides/KO.yaml</code> <span class="done">✅</span></li>
+      <li><b>data/loader.py</b> — streamlit 캐시 분리 headless + 월봉 리샘플 + CPI</li>
+      <li><b>backtest/run.py</b> — FIRE 그리드+전략비교. <code class="chip">validate_fire</code> 불변식 통과 확인</li>
+      <li><b>deck/adapters.py</b> — spec→tpl data (골든 좌표와 diff, <b>최난도</b>)</li>
+      <li><b>deck/build.py</b> + <b>template.html</b> — sid 기반 ov/cp + 하드코딩 5블록 외부화</li>
+      <li><b>sources/fundamentals.py</b> + <b>story/narration.py</b> — 큐레이션 + 인용검증</li>
+      <li><b>dub/run_dub.py</b> — TTS 폐루프 (타이밍은 허용오차 대조)</li>
+      <li><b>render/run_render.sh</b> — DUR 자동·{ticker} 경로화</li>
+      <li><b>assets</b> + <b>orchestrate.py</b> + <b>qa/reconcile.py</b> — end-to-end 재현 → 골든 회귀 그린</li>
+      <li>다른 티커 스모크(MSFT 등) — data→backtest→deck 구동, 에셋/큐레이션 공백 노출</li>
+    </ol>
+  </section>
+
+  <section class="sec">
+    <h2>5대 리스크</h2>
+    <div class="risks">
+      <div class="risk"><div class="rt"><span class="num">1</span>사업개요 결정론 소스 부재</div>
+        <p>지역매출·브랜드는 코드로 못 만듦(증배연수만 계산 가능). 큐레이션 YAML+출처를 1급 입력으로.</p></div>
+      <div class="risk"><div class="rt"><span class="num">2</span>덱 HTML baked-in 5블록</div>
+        <p>DEFAULT_SCENES/IIFE/SUBS/CHAPBG/MEDIA. OV/CP가 index 기반 → <b>sid 안정키 선행</b>, playwright 스냅샷 회귀 필수.</p></div>
+      <div class="risk"><div class="rt"><span class="num">3</span>TTS 타이밍 비결정성</div>
+        <p>subTimes/subHold가 실측 길이 의존. tts/ 클립 캐시(voice_id+텍스트 해시) 고정 안 하면 매번 재녹화.</p></div>
+      <div class="risk"><div class="rt"><span class="num">4</span>엔진 계약 위반</div>
+        <p>ZigZag close.max() 금지, fixed_real은 외부 cpi 주입 필수(USD→CPIAUCSL), golden mode 한국어 리터럴.</p></div>
+      <div class="risk"><div class="rt"><span class="num">5</span>에셋 종목의존</div>
+        <p>bg클립·로고·썸네일은 수동 제작물. "종목만 바꾸면"은 데이터/백테스트/덱까지만 참. 에셋=수동 슬롯으로 경계 명확히.</p></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>원칙</h2>
+    <div class="principle">
+      <span class="k">원칙</span>
+      <span><b>데이터는 엔진 · 대본은 인용 · QA는 대조.</b> 금융 콘텐츠라 정확성이 1순위 — LLM이 숫자를 지어내지 못하게 막는 게 파이프라인의 존재 이유.</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>blog/JNJ/PROTOCOL.md · 설계 청사진</span>
+    <a class="totop" href="#top">↑ 맨 위로</a>
+  </footer>
+</div>
+</body>
+</html>
