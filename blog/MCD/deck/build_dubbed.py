@@ -6,6 +6,9 @@ import json, base64
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 scenes = json.load(open(ROOT / "deck" / "mcd_deck_dubbed.json", encoding="utf-8"))["scenes"]
+# 사용자 HUD 편집분(라벨 위치·anno 숨김) 주입 — 렌더에서도 유지
+_ovf = ROOT / "spec" / "deck_ov.json"
+DECK_OV = json.load(open(_ovf, encoding="utf-8")) if _ovf.exists() else {}
 
 html = (ROOT / "deck" / "mcd_final.html").read_text(encoding="utf-8")
 html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_mcd_dubbed';")
@@ -15,7 +18,7 @@ blk_end = html.index("})();", p) + len("})();")
 override = ("/* ══ MCD 더빙 덱 주입(subTimes/subHold 포함) ══ */\n"
             "if(!localStorage.getItem(KEY)){\n"
             "  SCENES = " + json.dumps(scenes, ensure_ascii=False) + ";\n"
-            "  OV = {}; CP = {}; THEME='paper'; PAPER='photo';\n"
+            "  OV = " + json.dumps(DECK_OV, ensure_ascii=False) + "; CP = {}; THEME='paper'; PAPER='photo';\n"
             "}\n")
 html = html[:blk_start] + override + html[blk_end:]
 

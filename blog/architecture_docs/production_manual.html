@@ -177,7 +177,7 @@
   }
 </style>
 </head>
-<body>
+<body><nav data-tag="batusil-docnav" style="font-family:ui-monospace,Consolas,monospace;font-size:12.5px;padding:9px 16px;background:#17282a;color:#cfd3d1;display:flex;gap:15px;flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:9999;border-bottom:1px solid #2c4144"><span style="color:#c98a1a;font-weight:700;letter-spacing:.04em">배투실 문서</span><a href="top_pipeline_standalone.html" style="color:#cfd3d1;text-decoration:none">◆ 파이프라인 허브</a><a href="protocol.html" style="color:#cfd3d1;text-decoration:none">프로토콜</a><span style="color:#e8a33d;font-weight:700">제작 매뉴얼</span><a href="dec_pipeline.html" style="color:#cfd3d1;text-decoration:none">덱 세부</a><a href="research.html" style="color:#cfd3d1;text-decoration:none">리서치</a><a href="handover.html" style="color:#cfd3d1;text-decoration:none">인수인계</a></nav>
 <div class="wrap">
   <a class="back" href="../ARCHITECTURE.html">← 아키텍처</a>
 
@@ -411,11 +411,7 @@ json.dump(out, open(<span class="c">'rec/narration_lines.json'</span>,<span clas
     <div class="call warn"><div class="h">소급 적용 주의</div>2·3·4·5는 JNJ 소스에 반영됨. <b>이미 업로드된 JNJ 롱폼/쇼츠에 소급 적용하려면 재렌더 필요</b>(사용자가 원할 때만). 기본은 "다음 제작부터". MCD는 클론이라 자동 상속.</div>
   </section>
 
-  <section class="sec" id="s10">
-    <div class="sechd"><span class="no">10</span><h2>리서치·벤치마킹</h2></div>
-    <p>다른 채널 영상을 분석해 후킹·구조·썸네일 패턴을 축적(<code class="chip">blog/research/</code>). <code class="chip">benchmarks/&lt;slug&gt;.md</code>(우리 분석 위주, 원저작물 전문 저장 금지) · <code class="chip">thumbs/</code>(레퍼 썸네일) · <code class="chip">hooks/</code>(후킹 캡처). 첫 항목: <code class="chip">4uk-fire-sp500.md</code>(4억 파이어 → S&amp;P500 리메이크, 백테스트 답 확정). 기획 시 여기 훑고, 썸네일 작업 시 thumbnail-designer에 함께 참고시킴.</p>
-    <p class="m">→ 자세히: <a href="research.html">리서치 공간 문서 열기 →</a></p>
-  </section>
+  <section class="sec" id="s10"><div class="sechd"><span class="no">10</span><h2>리서치·벤치마킹</h2></div><p style="color:var(--muted,#5c6d6b)">다른 채널을 분석해 후킹·구조·썸네일 패턴을 축적. <b>저장 규칙·폴더 구조·벤치마크 추가법은 <a href="research.html">리서치 문서</a>로 통합</b> — 중복 제거됨.</p></section>
 
   <footer>
     <span>blog/PRODUCTION_MANUAL.md · as-built 실전 바이블</span>

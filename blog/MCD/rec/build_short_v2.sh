@@ -4,26 +4,28 @@
 set -e
 cd "$(dirname "$0")/.."
 SRC="$1"; GS="$2"; GD="$3"; HOOK="$4"; OUT="$5"
-BATU="assets/shorts/batusil.png"
+BATU="assets/shorts/batusil_label.png"
 CARD="assets/shorts/card_clean.png"
 TMP="$(mktemp -d)"
 mkdir -p "$(dirname "$OUT")"
 
-# 공통 세로 합성 필터 (검은 배경 + 가운데 16:9 + 상단 훅 + 하단 배투실)
-VF="[0:v]scale=1080:-2,pad=1080:1920:(ow-iw)/2:(oh-ih)/2+170:black,fps=30[v1];\
-[2:v]scale=140:-1[wm];\
-[v1][1:v]overlay=(W-w)/2:400[v2];\
-[v2][wm]overlay=(W-w)/2:1650,format=yuv420p[v]"
+# 공통 베이스: 자막박스 크롭(914) → 세로 캔버스 배치 + 하단 배투실
+# 카드 인트로는 훅 없음(카드 자체 아치 로고와 중복 방지). 그래프에만 상단 훅.
+# crop=1795 → 슬라이드 우상단 배투실 마크 제거(라벨은 유지). 하단엔 배투실+글자 마크
+BASE="[0:v]crop=1795:914:0:0,scale=1080:-2,pad=1080:1920:(ow-iw)/2:(oh-ih)/2+40:black,fps=30[v1];\
+[2:v]scale=170:-1[wm]"
+VF_INTRO="${BASE};[v1][wm]overlay=(W-w)/2:1470,format=yuv420p[v]"
+VF_GRAPH="${BASE};[v1][1:v]overlay=(W-w)/2:200[v2];[v2][wm]overlay=(W-w)/2:1470,format=yuv420p[v]"
 
-# 1) 카드 인트로 1초 (무음)
+# 1) 카드 인트로 1초 (무음) — 훅 미적용
 ffmpeg -hide_banner -loglevel error -y \
   -loop 1 -t 1.0 -i "$CARD" -i "$HOOK" -i "$BATU" -f lavfi -t 1.0 -i anullsrc=r=48000:cl=stereo \
-  -filter_complex "$VF" -map "[v]" -map 3:a \
+  -filter_complex "$VF_INTRO" -map "[v]" -map 3:a \
   -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p -r 30 -c:a aac -b:a 256k -t 1.0 "$TMP/intro.mp4"
 
-# 2) 그래프 구간
+# 2) 그래프 구간 — 상단 훅 적용
 ffmpeg -hide_banner -loglevel error -y -ss "$GS" -t "$GD" -i "$SRC" -i "$HOOK" -i "$BATU" \
-  -filter_complex "$VF" -map "[v]" -map 0:a \
+  -filter_complex "$VF_GRAPH" -map "[v]" -map 0:a \
   -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p -r 30 -c:a aac -b:a 256k "$TMP/graphs.mp4"
 
 # 3) 이어붙이기 (concat 필터, 재인코딩)

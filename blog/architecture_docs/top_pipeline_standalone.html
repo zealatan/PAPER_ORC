@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><!-- frame-runtime --><!-- base href="https://45ab02e4-037c-4db0-8b24-b431e967606d.frame.claudeusercontent.com/_f/1784703721-0b06/" --><script>window.__FRAME_PREAMBLE={"capabilities":{"downloads":"downloads.BABDwU1K.js","mcp":"mcp.hoz5jxDa.js","permissions":"permissions.ByA9Fd8x.js","self":"self.D3u1zjZe.js","user":"user.Cp1-RnjB.js"},"transforms":"_transforms.DYk1Ltlh.js","comments":"_comments.Dp6RDy7J.js","translate":"_translate.C5leZL2A.js"}</script><script>(function(){"use strict";const we="modulepreload",Oe=function(e){return"/"+e},Se={},ee=function(t,n,c){let i=Promise.resolve();function s(f){const a=new Event("vite:preloadError",{cancelable:!0});if(a.payload=f,window.dispatchEvent(a),!a.defaultPrevented)throw f}return i.then(f=>{for(const a of f||[])a.status==="rejected"&&s(a.reason);return t().catch(s)})},te=["light","dark","system"];function ne(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_init;return t!==null&&typeof t=="object"}function Y(e){return e!==null&&typeof e=="object"&&e.__frame_size_poke===!0}function re(e){if(e===null||typeof e!="object")return!1;const t=e.__frame_theme;if(t===null||typeof t!="object")return!1;const n=t.theme;return typeof n=="string"&&te.includes(n)}function se(e){try{typeof reportError=="function"?reportError(e):setTimeout(()=>{throw e},0)}catch{}}const oe=Object.freeze(Object.assign(Object.create(null),{user:Object.freeze(Object.assign(Object.create(null),{id:null,isOwner:!1,canEdit:!1,name:null,avatarUrl:null,email:null}))})),ie={};function K(e){if(window===top||e.type==="auxclick"&&e.button!==1)return;const t=e.composedPath?e.composedPath():[e.target];let n=null;for(let f=0;f<t.length;f++){const a=t[f];if(a&&a.matches&&a.matches("a[href],area[href]")){n=a;break}}if(!n&&e.target&&e.target.closest&&(n=e.target.closest("a[href],area[href]")),!n)return;const c=n.getAttribute("href");if(!c)return;let i,s;try{i=new URL(c,document.baseURI),s=new URL(document.baseURI).origin}catch{return}(i.protocol==="http:"||i.protocol==="https:")&&i.origin!==s&&(e.preventDefault(),parent.postMessage({__frame_nav:!0,url:i.href},"*"))}const x={};function I(e){if(window===top)return;const t=Date.now();t-(x[e]||0)<500||(x[e]=t,parent.postMessage({__frame_engaged:!0,kind:e},"*"))}const ae=2e3,J=["wheel","touchstart","touchmove","keydown","pointerdown"];let G=0;function ce(e){e.isTrusted&&(G=Date.now())}function le(){addEventListener("click",K,!0),addEventListener("auxclick",K,!0)}function ue(){for(let e=0;e<J.length;e++)addEventListener(J[e],ce,{capture:!0,passive:!0});addEventListener("scroll",e=>{e.isTrusted&&Date.now()-G<ae&&I("scroll")},{capture:!0,passive:!0}),addEventListener("pointermove",e=>{e.isTrusted&&I("pointer")},{capture:!0,passive:!0}),addEventListener("click",e=>{e.isTrusted&&I("click")},{capture:!0,passive:!0})}const U="__frame_scroll",fe=150,de=310,pe=160,me=3e4;function he(){let e=0,t=!1,n=!1,c=!1,i=0;const s=p=>{try{sessionStorage.setItem(U,JSON.stringify({y:p}))}catch{}},f=()=>{if(t){t=!1;return}n=!0,clearTimeout(e),e=setTimeout(()=>s(scrollY),fe)};try{addEventListener("scroll",f,{passive:!0}),addEventListener("pagehide",()=>{clearTimeout(e),s(scrollY)})}catch{}const a=()=>{let p;try{p=sessionStorage.getItem(U)}catch{return null}if(p===null)return null;let b;try{b=JSON.parse(p)}catch{b=null}const l=b?.y;if(!(typeof l=="number"&&Number.isFinite(l)&&l>=0)){try{sessionStorage.removeItem(U)}catch{}return null}return l};let _=!1;const h=p=>{try{const b=scrollY;scrollTo({top:p,left:0,behavior:"instant"}),i=p,c=!0,s(p);const l=scrollY;l!==b&&(t=!0),l!==p&&!_&&(_=!0,addEventListener("load",()=>{try{if(scrollY===l){const g=a();h(g!==null?g:i)}}catch{}},{once:!0}))}catch{}},o=()=>{try{return!!location.hash}catch{return!0}};let u=!1;const d=()=>{try{if(u||innerWidth>de||innerHeight>pe)return;u=!0;const p=Date.now(),b=()=>{try{removeEventListener("resize",b)}catch{}if(Date.now()-p>me||n||o())return;const l=a();h(l!==null?l:i)};addEventListener("resize",b)}catch{}};let m=!1,y=!1;return{restore(){if(m||(m=!0,o()))return;const p=a();p!==null&&(h(p),d())},promoted(){if(y||(y=!0,o()))return;const p=a();p!==null?(h(p),d()):c&&h(i)}}}function ge(e,t,n){const c=[...t.values()].filter(i=>i.targets.some(s=>s.startsWith(e+".")));return{wrap(i,s){const f=`${e}.${i}`,a=c.filter(_=>_.targets.includes(f));return a.length===0?(..._)=>{try{return s(..._)}catch(h){return Promise.reject(h)}}:(..._)=>{let h=_;for(const u of a){const d=u.module.parameters;if(d)try{h=d(h)}catch{return Promise.reject({code:"transform_error",id:u.id,scope:e,message:"parameters transform failed"})}}let o;try{o=s(...h)}catch(u){o=Promise.reject(u)}return o.then(u=>{for(let d=a.length-1;d>=0;d--){const m=a[d],y=m.module.returns;if(y)try{u=y(u)}catch{return n({id:m.id,scope:e,leg:"returns"}),u}}return u},u=>{for(let d=a.length-1;d>=0;d--){const m=a[d],y=m.module.throws;if(y)try{u=y(u)}catch{return n({id:m.id,scope:e,leg:"throws"}),Promise.reject(u)}}return Promise.reject(u)})}}}}function _e(e,t,n,c=()=>{}){const i=new Set(e.changes??[]),s=new Map;for(const f of i){const a=t[f];a&&s.set(f,a)}return{contract:e.contract,changes:i,flags:new Set(e.flags??[]),capabilities:e.capabilities??{},capBudgets:e.capBudgets??{},transforms:s,shellOrigin:n.shellOrigin,mount:n.mount,pipe:f=>ge(f,s,c)}}(function(){const e=Object.defineProperty,t=globalThis,n=["RTCPeerConnection","webkitRTCPeerConnection","RTCDataChannel","RTCIceCandidate","RTCSessionDescription","RTCRtpSender","RTCRtpReceiver"];let c=0;for(let i=0;i<n.length;i++){const s=n[i];try{e(t,s,{value:void 0,writable:!1,configurable:!1})}catch{try{delete t[s]}catch{}try{e(t,s,{value:void 0,writable:!1,configurable:!0})}catch{}}typeof t[s]=="function"&&c++}if(c&&window!==top)try{parent.postMessage({__frame_rtc_lockdown_failed:c},"*")}catch{}})();const ye=1e4,be=Object.freeze([...window.__FRAME_PREAMBLE?.origins??["https://claude.ai","https://preview.claude.ai"]]);function V(e){for(const t of be)if(t.endsWith(":*"))try{const n=new URL(e);if(`${n.protocol}//${n.hostname}:*`===t)return!0}catch{}else if(e===t)return!0;return!1}const T=Object.freeze({...window.__FRAME_PREAMBLE?.capabilities}),z=window.__FRAME_PREAMBLE?.transforms,q=window.__FRAME_PREAMBLE?.comments,$=window.__FRAME_PREAMBLE?.translate,C=/^[\w.-]+\.js$/,ve=/^[a-z][a-z0-9_-]{0,63}$/;let X=null,P=null;function B(e,t,n){try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!1,enumerable:!0})}catch{try{Object.defineProperty(e,t,{value:n,writable:!1,configurable:!0,enumerable:!0})}catch{}}}let F=!1;function Q(e){const t=document.documentElement;e==="light"||e==="dark"?(t.dataset.theme=e,t.style.colorScheme=e,F=!0):F&&(delete t.dataset.theme,t.style.colorScheme="",F=!1)}const M=Object.assign(Object.create(null),{mcp:Object.assign(Object.create(null),{watchTool:{handlerArg:3}})}),R=new Map;function Z(e,t){const n=R.get(e);if(!n)return;const c=Object.assign(Object.create(null),t);Object.assign(n.impl,c),n.impl.__settled=()=>Promise.reject({code:"capability_removed",message:`${e}: method not in this runtime`});const i=n.queue;n.queue=[];for(const s of i){const f=c[s.method];if(f)if(M[e]?.[s.method])try{s.resolve(f(...s.args))}catch{k(s,M[e][s.method].handlerArg,{code:"transform_error",message:`${e}.${s.method} rejected its arguments`})}else f(...s.args).then(s.resolve,s.reject);else{const a={code:"capability_removed",message:`${e}.${s.method} is not in this runtime`},_=M[e]?.[s.method];if(_){k(s,_.handlerArg,a);continue}s.reject(a)}}}function Ee(e,t){const n=R.get(e);if(!n)return;n.impl.__settled=()=>Promise.reject(t);const c=n.queue;n.queue=[];for(const i of c){const s=M[e]?.[i.method];if(s){k(i,s.handlerArg,t);continue}i.reject(t)}}function N(e,t){const n=oe[e];if(!n){Ee(e,t);return}Z(e,Object.fromEntries(Object.entries(n).map(([c,i])=>[c,()=>Promise.resolve(i)])))}function k(e,t,n){if(e.syncState?.dead)return;const c=e.args[t];typeof c=="function"&&queueMicrotask(()=>{if(!e.syncState?.dead)try{c({type:"error",error:n})}catch(i){se(i)}})}const H=Object.getOwnPropertyDescriptor(window,"claude");if(window!==top&&!(H&&H.writable===!1)){le(),ue();let e=null;try{e=he()}catch{}const t=H?.value??{};B(window,"claude",t);const n=o=>{const u={impl:Object.create(null),queue:[]};R.set(o,u);const d=u.impl,m=ie[o],y=m===void 0?d:()=>{},p=new Proxy(y,{apply:(b,l,g)=>{const v=m,O=d[v]??d.__settled;return O?O(...g):new Promise((E,w)=>{u.queue.push({method:v,args:g,resolve:E,reject:w})})},get:(b,l)=>{if(typeof l!="string"||l==="then"||l==="toJSON"||l==="valueOf")return;if(l==="toString")return Object.prototype.toString;if(m!==void 0&&(l==="call"||l==="apply"||l==="bind"))return Function.prototype[l];const g=M[o]?.[l];return g?(...v)=>{if(typeof v[g.handlerArg]!="function")throw new TypeError(`${o}.${l} requires a handler function`);const O=d[l];if(O)return O(...v);if(d.__settled){const S={dead:!1},A={args:[...v],syncState:S};return d.__settled().catch(D=>k(A,g.handlerArg,D)),()=>{S.dead=!0}}let E=null;const w={dead:!1};return u.queue.push({method:l,args:v,resolve:S=>{E=typeof S=="function"?S:null,w.dead&&E?.()},reject:()=>{},syncState:w}),()=>{w.dead=!0,E?.()}}:(...v)=>{const O=d[l]??d.__settled;return O?O(...v):new Promise((E,w)=>{u.queue.push({method:l,args:v,resolve:E,reject:w})})}},set:()=>!1});B(t,o,p)};for(const o of Object.keys(T)){if(t[o]!==void 0){B(t,o,t[o]);continue}n(o)}let c=null,i=null,s=0;const f=o=>{o.source!==parent||!V(o.origin)||ne(o.data)&&(c=o.data.__frame_init,P=o.origin,removeEventListener("message",f),clearTimeout(s),i?.())};addEventListener("message",f),parent.postMessage({__frame_connect:!0},"*");const a=new Promise(o=>{i=o,s=setTimeout(()=>{removeEventListener("message",f),o()},ye)}),_=document.readyState==="loading"?new Promise(o=>document.addEventListener("DOMContentLoaded",()=>o(),{once:!0})):Promise.resolve();_.then(()=>{try{e?.restore()}catch{}});const h=o=>{if(!(o.source!==parent||!V(o.origin))&&Y(o.data)){removeEventListener("message",h);try{e?.promoted()}catch{}}};addEventListener("message",h),a.then(async()=>{if(!c||!P){for(const r of R.keys())N(r,{code:"not_granted",message:"frame initialization did not arrive - capability unavailable"});return}Q(c.theme);const o=P;let u=!1,d=!1;addEventListener("message",r=>{if(r.source!==parent||r.origin!==o)return;re(r.data)&&Q(r.data.__frame_theme.theme);const j=r.data?.__fc_mode;j&&typeof j=="object"&&!u&&q&&C.test(q)&&(u=!0,m(q).then(W=>W.install?.(o,j.on===!0)).catch(()=>{}));const L=r.data?.__ft_cmd;L&&typeof L=="object"&&!d&&$&&C.test($)&&(d=!0,m($).then(W=>W.install?.(o,L)).catch(()=>{}))});const m=r=>ee(()=>import("/_runtime/"+r),void 0),y=Object.keys(c.capabilities??{});for(const r of y)Object.hasOwn(T,r)||ve.test(r)&&t[r]===void 0&&(n(r),N(r,{code:"capability_disabled",message:"capability not in this runtime generation"}));const p=y.filter(r=>Object.hasOwn(T,r)).map(r=>[r,T[r]]).filter(r=>typeof r[1]=="string"&&C.test(r[1])),[b,...l]=await Promise.allSettled([z&&C.test(z)?m(z):Promise.resolve({}),...p.map(([,r])=>m(r))]),g=P;X=_e(c,b.status==="fulfilled"&&b.value?.TRANSFORMS||{},{shellOrigin:g,mount:Z},r=>parent.postMessage({__frame_cap_telemetry:r},g));const v=r=>parent.postMessage({__frame_cap_telemetry:{kind:"cap-load-error",cap:r}},g),O=X;l.forEach((r,j)=>{const L=p[j][0];if(r.status!=="fulfilled"){v(L);return}try{r.value?.install?.(O)}catch{v(L)}});for(const[r,j]of R)if(!(j.queue.length===0&&Object.keys(j.impl).length>0)){if(y.includes(r)){N(r,{code:"capability_disabled",message:"capability not available in this session"});continue}N(r,{code:"not_granted",message:"capability not available in this session"})}await _,parent.postMessage({__frame_ready:!0},P);let E=-1,w=0;const S=()=>{w=0;const r=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0);r!==E&&(E=r,parent.postMessage({__frame_size:!0,h:r},g))},A=()=>{w||(w=setTimeout(S,200))},D=new ResizeObserver(A);D.observe(document.documentElement),document.body&&D.observe(document.body),document.addEventListener("load",A,!0),document.fonts?.ready.then(A,()=>{}),addEventListener("beforeprint",()=>{E=-1,S()}),A(),addEventListener("message",r=>{if(!(r.source!==parent||r.origin!==g)&&Y(r.data)){try{e?.promoted()}catch{}E=-1,A()}})})}})();</script><!-- /frame-runtime --><meta charset="utf8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body><nav data-tag="batusil-docnav" style="font-family:ui-monospace,Consolas,monospace;font-size:12.5px;padding:9px 16px;background:#17282a;color:#cfd3d1;display:flex;gap:15px;flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:9999;border-bottom:1px solid #2c4144"><span style="color:#c98a1a;font-weight:700;letter-spacing:.04em">배투실 문서</span><span style="color:#e8a33d;font-weight:700">◆ 파이프라인 허브</span><a href="protocol.html" style="color:#cfd3d1;text-decoration:none">프로토콜</a><a href="production_manual.html" style="color:#cfd3d1;text-decoration:none">제작 매뉴얼</a><a href="dec_pipeline.html" style="color:#cfd3d1;text-decoration:none">덱 세부</a><a href="research.html" style="color:#cfd3d1;text-decoration:none">리서치</a><a href="handover.html" style="color:#cfd3d1;text-decoration:none">인수인계</a></nav>
+<title>배투실 영상 파이프라인 · 아키텍처</title>
+<style>
+  :root{
+    --ground:#0c1f22; --surface:#12292d; --surface-2:#164046; --line:#25474c;
+    --ink:#eef4f2; --muted:#9fb6b4; --faint:#6f8a89;
+    --gold:#f0c33c; --green:#43bd73; --amber:#eb9a3f; --red:#e5593f; --blue:#5093e4;
+    --spine:#f0c33c;
+    --radius:14px; --maxw:1120px;
+    --sans:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,monospace;
+    --shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 18px 40px -24px rgba(0,0,0,.7);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --ground:#f2ede2; --surface:#fbf8f1; --surface-2:#f4eee1; --line:#ddd4c3;
+      --ink:#17282a; --muted:#5c6d6b; --faint:#8a9895;
+      --gold:#b8860a; --green:#2b8f52; --amber:#c2761f; --red:#c33f28; --blue:#2f6dc0;
+      --spine:#c99a10;
+      --shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 16px 34px -22px rgba(60,50,20,.45);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0c1f22; --surface:#12292d; --surface-2:#164046; --line:#25474c;
+    --ink:#eef4f2; --muted:#9fb6b4; --faint:#6f8a89;
+    --gold:#f0c33c; --green:#43bd73; --amber:#eb9a3f; --red:#e5593f; --blue:#5093e4; --spine:#f0c33c;
+    --shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 18px 40px -24px rgba(0,0,0,.7);
+  }
+  :root[data-theme="light"]{
+    --ground:#f2ede2; --surface:#fbf8f1; --surface-2:#f4eee1; --line:#ddd4c3;
+    --ink:#17282a; --muted:#5c6d6b; --faint:#8a9895;
+    --gold:#b8860a; --green:#2b8f52; --amber:#c2761f; --red:#c33f28; --blue:#2f6dc0; --spine:#c99a10;
+    --shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 16px 34px -22px rgba(60,50,20,.45);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 700px at 85% -5%, color-mix(in srgb,var(--gold) 8%, transparent), transparent 60%),
+      radial-gradient(900px 600px at -10% 110%, color-mix(in srgb,var(--blue) 10%, transparent), transparent 55%),
+      var(--ground);
+    color:var(--ink); font-family:var(--sans); line-height:1.55;
+    font-feature-settings:"tnum" 0; letter-spacing:-.01em;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:clamp(22px,4vw,52px) clamp(18px,4vw,40px) 72px;}
+
+  /* ── header ── */
+  header{display:flex; flex-direction:column; gap:14px; padding-bottom:26px; border-bottom:1px solid var(--line);}
+  .eyebrow{display:inline-flex; align-items:center; gap:9px; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700;}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 22%,transparent);}
+  h1{font-size:clamp(30px,5.4vw,52px); line-height:1.02; margin:0; font-weight:900; letter-spacing:-.03em; text-wrap:balance;}
+  h1 .k{color:var(--gold);}
+  .lede{max-width:60ch; color:var(--muted); font-size:clamp(15px,1.7vw,18px); margin:0;}
+  .lede b{color:var(--ink); font-weight:700;}
+
+  /* ── section scaffold ── */
+  section{margin-top:clamp(34px,5vw,56px);}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:20px; flex-wrap:wrap;}
+  .sec-num{font-family:var(--mono); font-size:13px; color:var(--faint); letter-spacing:.05em;}
+  .sec-head h2{font-size:clamp(20px,2.7vw,27px); margin:0; font-weight:800; letter-spacing:-.02em;}
+  .sec-head p{margin:0; color:var(--muted); font-size:14.5px;}
+
+  /* ── pipeline diagram ── */
+  .pipe{display:grid; grid-template-columns:132px 1fr; gap:0; position:relative;}
+  .spine{
+    position:relative; border-radius:12px;
+    background:linear-gradient(180deg, color-mix(in srgb,var(--gold) 22%,var(--surface)), color-mix(in srgb,var(--gold) 10%,var(--surface)));
+    border:1px solid color-mix(in srgb,var(--gold) 45%,var(--line));
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:18px 10px; text-align:center;
+    box-shadow:var(--shadow);
+  }
+  .spine .tag{font-family:var(--mono); font-size:12px; color:var(--gold); font-weight:600; writing-mode:vertical-rl; text-orientation:mixed; letter-spacing:.08em; transform:rotate(180deg);}
+  .spine .label{font-size:12px; color:var(--muted); writing-mode:vertical-rl; transform:rotate(180deg);}
+  .stages{display:flex; flex-direction:column; gap:12px; padding-left:34px; position:relative;}
+  /* connector rail */
+  .stages::before{content:""; position:absolute; left:0; top:26px; bottom:26px; width:2px;
+    background:repeating-linear-gradient(180deg,var(--spine) 0 7px, transparent 7px 14px); opacity:.5;}
+  .stage{position:relative; display:grid; grid-template-columns:44px 1fr auto; align-items:center; gap:16px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; box-shadow:var(--shadow);}
+  .stage::before{content:""; position:absolute; left:-34px; top:50%; width:34px; height:2px; background:var(--spine); opacity:.55;}
+  .stage::after{content:""; position:absolute; left:-6px; top:calc(50% - 5px); width:10px; height:10px; border-radius:50%; background:var(--spine); box-shadow:0 0 0 3px var(--ground);}
+  .stage .no{font-family:var(--mono); font-weight:700; font-size:17px; color:var(--faint); text-align:center;}
+  .stage .body{min-width:0;}
+  .stage .name{font-weight:700; font-size:16px; letter-spacing:-.01em;}
+  .stage .tool{font-family:var(--mono); font-size:12.5px; color:var(--muted); margin-top:3px; overflow-wrap:anywhere;}
+  .stage .rw{display:inline-flex; gap:6px; margin-top:7px;}
+  .rw span{font-family:var(--mono); font-size:10.5px; letter-spacing:.03em; padding:2px 7px; border-radius:6px; border:1px solid var(--line); color:var(--faint);}
+  .rw .r{color:var(--blue); border-color:color-mix(in srgb,var(--blue) 40%,var(--line));}
+  .rw .w{color:var(--gold); border-color:color-mix(in srgb,var(--gold) 40%,var(--line));}
+
+  .badge{font-size:12px; font-weight:700; padding:5px 11px; border-radius:999px; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; letter-spacing:-.01em;}
+  .badge::before{content:""; width:7px; height:7px; border-radius:50%;}
+  .b-built{color:var(--green); background:color-mix(in srgb,var(--green) 15%,transparent); border:1px solid color-mix(in srgb,var(--green) 40%,transparent);} .b-built::before{background:var(--green);}
+  .b-tpl{color:var(--amber); background:color-mix(in srgb,var(--amber) 15%,transparent); border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);} .b-tpl::before{background:var(--amber);}
+  .b-new{color:var(--red); background:color-mix(in srgb,var(--red) 15%,transparent); border:1px solid color-mix(in srgb,var(--red) 40%,transparent);} .b-new::before{background:var(--red);}
+  .stage.agentic{border-color:color-mix(in srgb,var(--blue) 45%,var(--line));}
+  .agent-tag{position:absolute; top:-9px; right:14px; font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--blue); background:var(--ground); padding:1px 8px; border:1px solid color-mix(in srgb,var(--blue) 45%,var(--line)); border-radius:6px;}
+
+  .legend{display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; font-size:13px; color:var(--muted);}
+  .legend .badge{cursor:default;}
+
+  /* ── schema code ── */
+  .code{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;}
+  .code .bar{display:flex; align-items:center; gap:8px; padding:11px 15px; border-bottom:1px solid var(--line); background:var(--surface-2);}
+  .code .bar .fn{font-family:var(--mono); font-size:13px; color:var(--gold); font-weight:600;}
+  .code .bar .why{margin-left:auto; font-size:12px; color:var(--muted);}
+  .code pre{margin:0; padding:18px 18px; overflow-x:auto; font-family:var(--mono); font-size:13px; line-height:1.7; color:var(--ink);}
+  .code pre .k{color:var(--gold);} .code pre .c{color:var(--faint); font-style:italic;} .code pre .s{color:var(--green);} .code pre .n{color:var(--blue);}
+
+  /* ── generic card grids ── */
+  .grid{display:grid; gap:14px;}
+  @media(min-width:720px){ .grid.two{grid-template-columns:1fr 1fr;} .grid.three{grid-template-columns:repeat(3,1fr);} }
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 18px; box-shadow:var(--shadow);}
+  .card h3{margin:0 0 8px; font-size:15.5px; font-weight:800; letter-spacing:-.01em; display:flex; align-items:center; gap:9px;}
+  .card h3 .pin{width:9px;height:9px;border-radius:50%; flex:none;}
+  .card ul{margin:0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .card li{font-size:13.5px; color:var(--muted); padding-left:18px; position:relative;}
+  .card li::before{content:"›"; position:absolute; left:2px; color:var(--faint);}
+  .card li b{color:var(--ink); font-weight:700;}
+  code.inl{font-family:var(--mono); font-size:.86em; background:color-mix(in srgb,var(--ink) 8%,transparent); padding:1px 6px; border-radius:5px; color:var(--ink);}
+
+  /* boundaries */
+  .bound{display:grid; gap:12px;}
+  @media(min-width:720px){ .bound{grid-template-columns:1fr 1fr 1fr;} }
+  .bcol{border-radius:var(--radius); padding:16px 16px; border:1px solid var(--line); background:var(--surface);}
+  .bcol .h{font-weight:800; font-size:14px; margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+  .bcol .h .s{font-family:var(--mono); font-size:11px; padding:2px 8px; border-radius:999px;}
+  .auto .s{color:var(--green); background:color-mix(in srgb,var(--green) 16%,transparent);}
+  .semi .s{color:var(--amber); background:color-mix(in srgb,var(--amber) 16%,transparent);}
+  .risk .s{color:var(--red); background:color-mix(in srgb,var(--red) 16%,transparent);}
+  .bcol p{margin:0; font-size:13px; color:var(--muted);}
+  .bcol p b{color:var(--ink);}
+
+  /* roadmap */
+  .road{display:grid; gap:0;}
+  .step{display:grid; grid-template-columns:52px 1fr; gap:16px; padding:16px 0; border-bottom:1px dashed var(--line);}
+  .step:last-child{border-bottom:0;}
+  .step .rn{font-family:var(--mono); font-weight:800; font-size:22px; color:var(--gold); line-height:1;}
+  .step .st{font-weight:700; font-size:15.5px;}
+  .step .sd{font-size:13.5px; color:var(--muted); margin-top:3px;}
+  .step .out{font-family:var(--mono); font-size:11.5px; color:var(--faint); margin-top:6px;}
+
+  footer{margin-top:52px; padding-top:20px; border-top:1px solid var(--line); color:var(--faint); font-size:12.5px; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .fmark{font-family:var(--mono);}
+
+  @media (max-width:560px){
+    .pipe{grid-template-columns:56px 1fr;}
+    .spine .tag{font-size:11px;} .spine .label{display:none;}
+    .stage{grid-template-columns:34px 1fr; }
+    .stage .badge{grid-column:2; justify-self:start; margin-top:4px;}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .stage{transition:transform .15s ease, border-color .15s ease;}
+    .stage:hover{transform:translateX(2px); border-color:color-mix(in srgb,var(--gold) 35%,var(--line));}
+  }
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px; border-radius:6px;}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow"><span class="dot"></span>배투실 · 배당 백테스트 영상 · 제작 파이프라인</span>
+    <h1>종목만 바꾸면 찍히는 라인.<br><span class="k">video_spec.json</span> 하나가 관통한다.</h1>
+    <p class="lede">종목마다 <b>단일 진실원(spec)</b> 을 두고 모든 단계가 이걸 읽고 씁니다. 그래야 단계가 분리돼 <b>에이전트가 병렬로</b> 일하고, 부품을 갈아끼울 수 있어요 — 이게 <b>프로토콜</b>입니다. 코카콜라 1편을 만들며 부품 대부분이 이미 완성됐고, 지금은 그걸 “라인”으로 세우는 단계.</p>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>파이프라인 &amp; 프로토콜 스파인</h2><p>왼쪽 레일 = 모든 단계가 읽고/쓰는 spec</p></div>
+    <div class="pipe">
+      <div class="spine" aria-hidden="true">
+        <span class="tag">video_spec.json</span>
+        <span class="label">프로토콜 · 단일 진실원</span>
+      </div>
+      <div class="stages">
+
+        <div class="stage"><div class="no">1</div><div class="body">
+          <div class="name">데이터 · 백테스트</div>
+          <div class="tool">global_cup/backtest_engine.py · data_loader.py(yfinance) · FIRE 엔진</div>
+          <div class="rw"><span class="r">reads ticker</span><span class="w">writes data·backtest</span></div>
+        </div><span class="badge b-built">★ 구축됨 · 검증완료</span></div>
+
+        <div class="stage agentic"><span class="agent-tag">multi-agent</span><div class="no">2</div><div class="body">
+          <div class="name">나레이션 대본</div>
+          <div class="tool">LLM 에이전트 — spec 숫자 → 섹션별 대본 (코카콜라 구조 답습)</div>
+          <div class="rw"><span class="r">reads backtest</span><span class="w">writes story</span></div>
+        </div><span class="badge b-tpl">◐ 프롬프트 템플릿화</span></div>
+
+        <div class="stage"><div class="no">3</div><div class="body">
+          <div class="name"><a class="declink" href="dec_pipeline.html" style="color:inherit;text-decoration:none;border-bottom:2px solid var(--amber)">덱 생성 (씬·차트)</a> <a class="declink" href="dec_pipeline.html" style="font-size:12px;font-weight:700;color:var(--amber);text-decoration:none;white-space:nowrap">↗ 25p 세부</a></div>
+          <div class="tool">cocacola_final.html → 템플릿화 + spec로 채우기 → deck.json</div>
+          <div class="rw"><span class="r">reads story·backtest</span><span class="w">writes scenes</span></div>
+        </div><span class="badge b-tpl">◐ 파라미터화</span></div>
+
+        <div class="stage agentic"><span class="agent-tag">multi-agent</span><div class="no">4</div><div class="body">
+          <div class="name">배경 · 썸네일</div>
+          <div class="tool">AI 영상클립 생성 + 썸네일(PIL) + 제목·설명·태그</div>
+          <div class="rw"><span class="r">reads theme·story</span><span class="w">writes assets</span></div>
+        </div><span class="badge b-tpl">◐ 반자동</span></div>
+
+        <div class="stage"><div class="no">5</div><div class="body">
+          <div class="name">TTS 더빙</div>
+          <div class="tool">rec/gen_tts → build_timing → build_voice (클론 보이스, 종목무관)</div>
+          <div class="rw"><span class="r">reads scenes·story</span><span class="w">writes timing·voice</span></div>
+        </div><span class="badge b-built">★ 구축됨</span></div>
+
+        <div class="stage"><div class="no">6</div><div class="body">
+          <div class="name">렌더</div>
+          <div class="tool">rec/record_full.sh (firefox kiosk + keep_fs 자동복구, 1080p60 NVENC)</div>
+          <div class="rw"><span class="r">reads deck·timing</span><span class="w">writes master.mp4</span></div>
+        </div><span class="badge b-built">★ 구축됨</span></div>
+
+        <div class="stage agentic"><span class="agent-tag">multi-agent</span><div class="no">7</div><div class="body">
+          <div class="name">포스트 (쇼츠 · 메타)</div>
+          <div class="tool">세로 쇼츠 재편집 + 믹싱 + 제목/설명 (오늘 만든 스크립트)</div>
+          <div class="rw"><span class="r">reads master·assets</span><span class="w">writes shorts·meta</span></div>
+        </div><span class="badge b-built">★ 대부분 구축</span></div>
+
+        <div class="stage agentic"><span class="agent-tag">adversarial QA</span><div class="no">8</div><div class="body">
+          <div class="name">QA 검증 — 정확성 게이트</div>
+          <div class="tool">대본의 모든 숫자·연도를 backtest 결과와 대조. 불일치 → 반려</div>
+          <div class="rw"><span class="r">reads story·backtest</span><span class="w">writes verdict</span></div>
+        </div><span class="badge b-new">⚠ 신규 · 최우선</span></div>
+
+      </div>
+    </div>
+    <div class="legend">
+      <span class="badge b-built">★ 구축됨</span>
+      <span class="badge b-tpl">◐ 템플릿화 필요</span>
+      <span class="badge b-new">⚠ 신규</span>
+      <span style="color:var(--blue)">▸ multi-agent = Workflow 팬아웃 지점</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>프로토콜 스키마</h2><p>단계 간 계약. 이 형태만 지키면 부품 교체·병렬화 자유</p></div>
+    <div class="code">
+      <div class="bar"><span class="fn">video_spec.json</span><span class="why">모든 단계의 입출력 = 이 객체의 부분집합</span></div>
+<pre><span class="k">video_spec</span> = {
+  ticker, 회사명, 테마,                        <span class="c">// 입력 (사람이 지정)</span>
+  <span class="k">data</span>:     { 월봉가격[], 배당[],                <span class="c">// ← 단계1: 결정론적 엔진</span>
+              사업개요(지역매출·증배연수·배당성향·최근실적·브랜드) },
+  <span class="k">backtest</span>: { FIRE시나리오[ {원금, 월인출, 물가반영,   <span class="c">// ← 단계1: 진실의 숫자</span>
+                         생존여부, 파산연도, 최종자산} ],
+              전략비교{ 목돈, 적립, 폭락매수 } },
+  <span class="k">story</span>:    { 훅(A/B 설정), 섹션별_나레이션[], 자막[] }, <span class="c">// ← 단계2 (QA가 backtest와 대조)</span>
+  <span class="k">scenes</span>:   [ {tpl, data, bgid, subLines,          <span class="c">// ← 단계3 (= 덱 JSON)</span>
+                subTimes, subHold} ],
+  <span class="k">assets</span>:   { bg클립[], 썸네일, 제목, 설명, 태그 }   <span class="c">// ← 단계4</span>
+}</pre>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>멀티에이전트가 들어갈 자리</h2><p>Workflow 오케스트레이션 — 결정론 부분은 코드, 창작·검증은 에이전트</p></div>
+    <div class="grid three">
+      <div class="card">
+        <h3><span class="pin" style="background:var(--blue)"></span>종목 배치 팬아웃</h3>
+        <ul>
+          <li>종목 리스트 → 각 종목 파이프라인 <b>병렬 실행</b></li>
+          <li>한 종목 안: 대본 섹션 · 썸네일안 · 제목/설명 · 차트 캡션 <b>동시 생성</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="pin" style="background:var(--red)"></span>적대적 QA (핵심)</h3>
+        <ul>
+          <li>“<b>2015년 파산</b>이 backtest와 맞나?”를 독립 검증</li>
+          <li>데이터는 <b>엔진에서만</b>, 대본은 인용만 — LLM이 숫자 <b>지어내기 차단</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="pin" style="background:var(--gold)"></span>품질 심사</h3>
+        <ul>
+          <li>훅·대본을 <b>여러 각도로 평가</b>하는 심사 에이전트</li>
+          <li>가장 강한 버전 채택 + 러너업 아이디어 이식</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>정직한 경계</h2><p>어디까지 자동이고 어디서 사람이 필요한가</p></div>
+    <div class="bound">
+      <div class="bcol auto"><div class="h">완전 자동 <span class="s">종목명만</span></div>
+        <p>데이터 → 백테스트 → 대본 → 덱 → 더빙 → 렌더. <b>티커 하나 넣으면</b> 마스터 영상까지.</p></div>
+      <div class="bcol semi"><div class="h">반자동 · 사람손 <span class="s">검수</span></div>
+        <p><b>AI 배경영상 생성</b>(외부 생성기), 최종 크리에이티브 검수. 목소리는 <b>클론으로 자동</b>.</p></div>
+      <div class="bcol risk"><div class="h">1순위 리스크 <span class="s">정확성</span></div>
+        <p>금융 콘텐츠 = 숫자가 생명. <b>데이터는 엔진 · 대본은 인용 · QA는 대조</b> 구조가 방어선.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>구축 로드맵</h2><p>뼈대부터 세우고 멀티에이전트를 얹는다</p></div>
+    <div class="road">
+      <div class="step"><div class="rn">1</div><div><div class="st">재현화 — 코카콜라를 spec 하나에서 다시 찍히게</div><div class="sd">지금 흩어진 하드코딩을 <code class="inl">video_spec.json</code>으로 수렴. “같은 결과를 spec에서 재생성” 확인.</div><div class="out">out · spec 스키마 확정 + 코카콜라 spec 1건</div></div></div>
+      <div class="step"><div class="rn">2</div><div><div class="st">파라미터화 — 덱=템플릿, 백테스트=<code class="inl">run(ticker, scenarios)</code></div><div class="sd">덱 HTML을 플레이스홀더 템플릿으로, 엔진을 임의 종목 입력 함수로.</div><div class="out">out · pipeline/ 스켈레톤 (엔진→spec→덱)</div></div></div>
+      <div class="step"><div class="rn">3</div><div><div class="st">멀티에이전트 얹기 — 대본 · QA · 포스트를 Workflow로</div><div class="sd">섹션 팬아웃 생성 + 적대적 QA 게이트 + 심사. 결정론 단계는 코드로 유지.</div><div class="out">out · 대본 자동생성 + 정확성 게이트</div></div></div>
+      <div class="step"><div class="rn">4</div><div><div class="st">테스트 종목 — 배당귀족 1편 엔드투엔드</div><div class="sd">펩시코 · 맥도날드 · P&amp;G 중 하나로 티커만 넣어 완편 검증.</div><div class="out">out · 재현 가능한 1편 + 러닝 체크리스트</div></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>배투실 영상 파이프라인 · 아키텍처 v1</span>
+    <span class="fmark">protocol: video_spec.json · engine → cite → verify</span>
+  </footer>
+</div>
+
+<script>(function(){var B64="PCFkb2N0eXBlIGh0bWw+PGh0bWwgbGFuZz0ia28iPjxoZWFkPjxtZXRhIGNoYXJzZXQ9InV0Zi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xIj4KPHRpdGxlPuuNsSDsg53shLEgKOyUrMK37LCo7Yq4KSDshLjrtoTtmZQg4oCUIOuwsO2IrOyLpCDtjIzsnbTtlITrnbzsnbggMzwvdGl0bGU+CjxzdHlsZT4KOnJvb3R7LS1ncm91bmQ6I2YyZWRlMjstLXN1cmZhY2U6I2ZiZjhmMTstLXN1cmZhY2UtMjojZjRlZWUxOy0tbGluZTojZGRkNGMzOy0taW5rOiMxNzI4MmE7Ci0tbXV0ZWQ6IzVjNmQ2YjstLWZhaW50OiM4YTk2OTQ7LS1hbWJlcjojYzk4YTFhOy0tYmx1ZTojMmY2ZDhmOy0tcmVkOiNjMDQ0MmU7LS1ncmVlbjojM2Y3ZDRlOwotLW1vbm86dWktbW9ub3NwYWNlLCJTRiBNb25vIiwiQ2FzY2FkaWEgTW9ubyIsQ29uc29sYXMsbW9ub3NwYWNlfQoqe2JveC1zaXppbmc6Ym9yZGVyLWJveH0KaHRtbHtiYWNrZ3JvdW5kOnZhcigtLWdyb3VuZCl9CmJvZHl7bWFyZ2luOjA7Y29sb3I6dmFyKC0taW5rKTtmb250LWZhbWlseToiUHJldGVuZGFyZCIsIkFwcGxlIFNEIEdvdGhpYyBOZW8iLCJNYWxndW4gR290aGljIixzYW5zLXNlcmlmOwpsaW5lLWhlaWdodDoxLjU7cGFkZGluZzowIDIwcHggNzJweH0KLndyYXB7bWF4LXdpZHRoOjkwMHB4O21hcmdpbjowIGF1dG99Ci8qIGhlYWRlciAqLwoubWFzdHtwYWRkaW5nOjUycHggMCA4cHh9Ci5leWVicm93e2ZvbnQtZmFtaWx5OnZhcigtLW1vbm8pO2ZvbnQtc2l6ZToxMnB4O2xldHRlci1zcGFjaW5nOi4xNGVtO2NvbG9yOnZhcigtLWFtYmVyKTt0ZXh0LXRyYW5zZm9ybTp1cHBlcmNhc2V9Ci5leWVicm93IGJ7Y29sb3I6dmFyKC0taW5rKX0KaDF7Zm9udC1zaXplOmNsYW1wKDI2cHgsNHZ3LDM2cHgpO2ZvbnQtd2VpZ2h0OjgwMDtsZXR0ZXItc3BhY2luZzotLjAyZW07bWFyZ2luOjEwcHggMCA4cHh9Ci5zdWJ7Y29sb3I6dmFyKC0tbXV0ZWQpO2ZvbnQtc2l6ZToxNXB4O21hcmdpbjowO21heC13aWR0aDo2NDBweH0KLnN1YiBjb2Rle2ZvbnQtZmFtaWx5OnZhcigtLW1vbm8pO2ZvbnQtc2l6ZToxM3B4O2JhY2tncm91bmQ6dmFyKC0tc3VyZmFjZS0yKTtwYWRkaW5nOjFweCA2cHg7Ym9yZGVyLXJhZGl1czo1cHg7Y29sb3I6dmFyKC0taW5rKX0KLyogc3RhdHMgKi8KLnN0YXRze2Rpc3BsYXk6ZmxleDtnYXA6MTBweDtmbGV4LXdyYXA6d3JhcDttYXJnaW46MjJweCAwIDZweH0KLnN0YXR7YmFja2dyb3VuZDp2YXIoLS1zdXJmYWNlKTtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWxpbmUpO2JvcmRlci1yYWRpdXM6MTJweDtwYWRkaW5nOjEycHggMTZweDttaW4td2lkdGg6OTZweH0KLnN0YXQgYntkaXNwbGF5OmJsb2NrO2ZvbnQtZmFtaWx5OnZhcigtLW1vbm8pO2ZvbnQtc2l6ZToyNHB4O2ZvbnQtd2VpZ2h0OjgwMDtsaW5lLWhlaWdodDoxfQouc3RhdCBzcGFue2ZvbnQtc2l6ZToxMnB4O2NvbG9yOnZhcigtLW11dGVkKX0KLyogbGVnZW5kICovCi5sZWdlbmR7ZGlzcGxheTpmbGV4O2dhcDo4cHg7ZmxleC13cmFwOndyYXA7bWFyZ2luOjE0cHggMCA0cHg7Zm9udC1zaXplOjEycHg7Y29sb3I6dmFyKC0tbXV0ZWQpfQoubGVnZW5kIC5jaGlwe3RyYW5zZm9ybTpzY2FsZSguOTIpfQovKiBhY3RzICovCi5hY3R7bWFyZ2luOjMwcHggMCAwO2JvcmRlci1sZWZ0OjNweCBzb2xpZCB2YXIoLS1hYyk7cGFkZGluZy1sZWZ0OjIwcHg7cG9zaXRpb246cmVsYXRpdmV9Ci5hY3Roe2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjE0cHg7bWFyZ2luOjAgMCAxNHB4fQouYWNtYXJre2ZvbnQtZmFtaWx5OnZhcigtLW1vbm8pO2ZvbnQtc2l6ZToyMnB4O2ZvbnQtd2VpZ2h0OjgwMDtjb2xvcjp2YXIoLS1hYyk7bGluZS1oZWlnaHQ6MTttaW4td2lkdGg6MjZweH0KLmFjbWV0YXtmbGV4OjF9Ci5hY21ldGEgaDJ7Zm9udC1zaXplOjE4cHg7Zm9udC13ZWlnaHQ6ODAwO21hcmdpbjowO2xldHRlci1zcGFjaW5nOi0uMDFlbX0KLmFjbWV0YSBwe2ZvbnQtc2l6ZToxM3B4O2NvbG9yOnZhcigtLW11dGVkKTttYXJnaW46MnB4IDAgMH0KLmFjcm5ne2ZvbnQtZmFtaWx5OnZhcigtLW1vbm8pO2ZvbnQtc2l6ZToxMnB4O2NvbG9yOnZhcigtLWZhaW50KTt3aGl0ZS1zcGFjZTpub3dyYXA7CmJhY2tncm91bmQ6dmFyKC0tc3VyZmFjZS0yKTtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWxpbmUpO2JvcmRlci1yYWRpdXM6OTk5cHg7cGFkZGluZzo0cHggMTBweH0KLyogcGFnZSBjYXJkcyAqLwoucGdze2Rpc3BsYXk6ZmxleDtmbGV4LWRpcmVjdGlvbjpjb2x1bW47Z2FwOjhweH0KLnBne2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjEycHg7YmFja2dyb3VuZDp2YXIoLS1zdXJmYWNlKTtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWxpbmUpOwpib3JkZXItcmFkaXVzOjExcHg7cGFkZGluZzoxMXB4IDE0cHg7dHJhbnNpdGlvbjp0cmFuc2Zvcm0gLjEycyxib3gtc2hhZG93IC4xMnN9Ci5wZzpob3Zlcnt0cmFuc2Zvcm06dHJhbnNsYXRlWCgycHgpO2JveC1zaGFkb3c6MCAzcHggMTJweCByZ2JhKDIzLDQwLDQyLC4wNyl9Ci5wbntmb250LWZhbWlseTp2YXIoLS1tb25vKTtmb250LXNpemU6MTRweDtmb250LXdlaWdodDo4MDA7Y29sb3I6dmFyKC0tYWMpO21pbi13aWR0aDoyNnB4O3RleHQtYWxpZ246Y2VudGVyOwpiYWNrZ3JvdW5kOmNvbG9yLW1peChpbiBzcmdiLHZhcigtLWFjKSAxMiUsdHJhbnNwYXJlbnQpO2JvcmRlci1yYWRpdXM6N3B4O3BhZGRpbmc6M3B4IDB9Ci5wdHtmbGV4OjE7Zm9udC1zaXplOjE1cHg7Zm9udC13ZWlnaHQ6NjAwfQouY2hpcHtmb250LWZhbWlseTp2YXIoLS1tb25vKTtmb250LXNpemU6MTEuNXB4O2ZvbnQtd2VpZ2h0OjcwMDtwYWRkaW5nOjRweCAxMHB4O2JvcmRlci1yYWRpdXM6OTk5cHg7d2hpdGUtc3BhY2U6bm93cmFwOwpib3JkZXI6MXB4IHNvbGlkIHRyYW5zcGFyZW50fQoudGd7Y29sb3I6dmFyKC0tYW1iZXIpO2JhY2tncm91bmQ6Y29sb3ItbWl4KGluIHNyZ2IsdmFyKC0tYW1iZXIpIDEzJSx0cmFuc3BhcmVudCk7Ym9yZGVyLWNvbG9yOmNvbG9yLW1peChpbiBzcmdiLHZhcigtLWFtYmVyKSAzMCUsdHJhbnNwYXJlbnQpfQoudHZ7Y29sb3I6dmFyKC0tYmx1ZSk7YmFja2dyb3VuZDpjb2xvci1taXgoaW4gc3JnYix2YXIoLS1ibHVlKSAxMyUsdHJhbnNwYXJlbnQpO2JvcmRlci1jb2xvcjpjb2xvci1taXgoaW4gc3JnYix2YXIoLS1ibHVlKSAzMCUsdHJhbnNwYXJlbnQpfQoudHR7Y29sb3I6dmFyKC0tbXV0ZWQpO2JhY2tncm91bmQ6dmFyKC0tc3VyZmFjZS0yKTtib3JkZXI6MXB4IGRhc2hlZCB2YXIoLS1saW5lKX0KLnRhe2NvbG9yOnZhcigtLXJlZCk7YmFja2dyb3VuZDpjb2xvci1taXgoaW4gc3JnYix2YXIoLS1yZWQpIDEyJSx0cmFuc3BhcmVudCk7Ym9yZGVyLWNvbG9yOmNvbG9yLW1peChpbiBzcmdiLHZhcigtLXJlZCkgMzAlLHRyYW5zcGFyZW50KX0KLnRie2NvbG9yOnZhcigtLWdyZWVuKTtiYWNrZ3JvdW5kOmNvbG9yLW1peChpbiBzcmdiLHZhcigtLWdyZWVuKSAxMyUsdHJhbnNwYXJlbnQpO2JvcmRlci1jb2xvcjpjb2xvci1taXgoaW4gc3JnYix2YXIoLS1ncmVlbikgMzAlLHRyYW5zcGFyZW50KX0KLnRpe2NvbG9yOnZhcigtLW11dGVkKTtiYWNrZ3JvdW5kOnZhcigtLXN1cmZhY2UtMik7Ym9yZGVyLWNvbG9yOnZhcigtLWxpbmUpfQoudG57Y29sb3I6IzhhNWExYTtiYWNrZ3JvdW5kOiNmMmU2Y2Y7Ym9yZGVyLWNvbG9yOiNlMmNmYTZ9Ci50ciwudHEsLnRve2NvbG9yOnZhcigtLWZhaW50KTtiYWNrZ3JvdW5kOnZhcigtLXN1cmZhY2UtMik7Ym9yZGVyLWNvbG9yOnZhcigtLWxpbmUpfQouZm9vdHttYXJnaW4tdG9wOjQwcHg7cGFkZGluZy10b3A6MTZweDtib3JkZXItdG9wOjFweCBzb2xpZCB2YXIoLS1saW5lKTtjb2xvcjp2YXIoLS1mYWludCk7Zm9udC1zaXplOjEyLjVweDtmb250LWZhbWlseTp2YXIoLS1tb25vKX0KLmZvb3QgYXtjb2xvcjp2YXIoLS1hbWJlcik7dGV4dC1kZWNvcmF0aW9uOm5vbmV9CkBtZWRpYShtYXgtd2lkdGg6NTYwcHgpey5wdHtmb250LXNpemU6MTRweH0gLmFjcm5ne2Rpc3BsYXk6bm9uZX19Cjwvc3R5bGU+PC9oZWFkPjxib2R5PjxkaXYgY2xhc3M9IndyYXAiPgo8aGVhZGVyIGNsYXNzPSJtYXN0Ij4KPGRpdiBjbGFzcz0iZXllYnJvdyI+67Cw7Yis7IukIMK3IOyYgeyDgSDtjIzsnbTtlITrnbzsnbggwrcgPGI+MyDrjbEg7IOd7ISxPC9iPjwvZGl2Pgo8aDE+642xIOyDneyEsSAo7JSswrfssKjtirgpIOyEuOu2hO2ZlDwvaDE+CjxwIGNsYXNzPSJzdWIiPjxjb2RlPmNvY2Fjb2xhX2ZpbmFsLmh0bWw8L2NvZGU+IOyXlOynhOyXkCA8Y29kZT5zcGVjPC9jb2RlPsK3PGNvZGU+c3Rvcnk8L2NvZGU+66GcIOyxhOyasOuKlCA8Yj4yNeqwnCDslKw8L2I+7J2YIOyInOyEnMK36rWs7ISxLiDtm4Ttgrkg4oaSIOyiheuqqeyGjOqwnCDihpIg7YyM7IKwIOuwse2FjOyKpO2KuCDihpIg66ek7IiY67KVIOuwse2FjOyKpO2KuCDihpIg66eI66y066asLCA166eJIOq1rOyEsS48L3A+CjxkaXYgY2xhc3M9InN0YXRzIj4KPGRpdiBjbGFzcz0ic3RhdCI+PGI+MjU8L2I+PHNwYW4+7LSdIO2OmOydtOyngDwvc3Bhbj48L2Rpdj4KPGRpdiBjbGFzcz0ic3RhdCI+PGI+OTwvYj48c3Bhbj7ssKjtirgv6re4656Y7ZSEPC9zcGFuPjwvZGl2Pgo8ZGl2IGNsYXNzPSJzdGF0Ij48Yj4zPC9iPjxzcGFuPuyYgeyDgSDtgbTrpr08L3NwYW4+PC9kaXY+CjxkaXYgY2xhc3M9InN0YXQiPjxiPjU8L2I+PHNwYW4+66eJKGFjdCk8L3NwYW4+PC9kaXY+CjwvZGl2Pgo8ZGl2IGNsYXNzPSJsZWdlbmQiPgo8c3BhbiBjbGFzcz0iY2hpcCB0ZyI+6re4656Y7ZSEPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHR2Ij7smIHsg4E8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdHQiPuyghO2ZmO2ZlOuptDwvc3Bhbj4KPHNwYW4gY2xhc3M9ImNoaXAgdGEiPuyduOusvCBBPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRiIj7snbjrrLwgQjwvc3Bhbj48c3BhbiBjbGFzcz0iY2hpcCB0aSI+7KCV67O0PC9zcGFuPgo8c3BhbiBjbGFzcz0iY2hpcCB0biI+64m07IqkPC9zcGFuPgo8L2Rpdj4KPC9oZWFkZXI+CjxzZWN0aW9uIGNsYXNzPSJhY3QiIHN0eWxlPSItLWFjOnZhcigtLWFtYmVyKSI+PGhlYWRlciBjbGFzcz0iYWN0aCI+PHNwYW4gY2xhc3M9ImFjbWFyayI+4pGgPC9zcGFuPjxkaXYgY2xhc3M9ImFjbWV0YSI+PGgyPu2bhO2CuTwvaDI+PHA+6rCZ7J2AIOyiheuqqSwg64uk66W4IOyatOuqhSDigJQg6raB6riI7KadIOycoOuwnDwvcD48L2Rpdj48c3BhbiBjbGFzcz0iYWNybmciPjHigJM0cDwvc3Bhbj48L2hlYWRlcj48ZGl2IGNsYXNzPSJwZ3MiPjxkaXYgY2xhc3M9InBnIj48c3BhbiBjbGFzcz0icG4iPjAxPC9zcGFuPjxzcGFuIGNsYXNzPSJwdCI+6rK96rOg7JiB7IOBPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHR2Ij7smIHsg4E8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MDI8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij7tiKzsnpDsnpAgQTwvc3Bhbj48c3BhbiBjbGFzcz0iY2hpcCB0YSI+7J2466y8IEE8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MDM8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij7tiKzsnpDsnpAgQjwvc3Bhbj48c3BhbiBjbGFzcz0iY2hpcCB0YiI+7J2466y8IEI8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MDQ8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij7qsrDqs7w8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdHIiPuqysOqzvDwvc3Bhbj48L2Rpdj48L2Rpdj48L3NlY3Rpb24+PHNlY3Rpb24gY2xhc3M9ImFjdCIgc3R5bGU9Ii0tYWM6dmFyKC0tYmx1ZSkiPjxoZWFkZXIgY2xhc3M9ImFjdGgiPjxzcGFuIGNsYXNzPSJhY21hcmsiPuKRoTwvc3Bhbj48ZGl2IGNsYXNzPSJhY21ldGEiPjxoMj7sooXrqqkg7IaM6rCcPC9oMj48cD7snbQg7KKF66qp7J20IOutkOqzoCDsp4DquIgg7Ja065ak6rCAPC9wPjwvZGl2PjxzcGFuIGNsYXNzPSJhY3JuZyI+NeKAkzhwPC9zcGFuPjwvaGVhZGVyPjxkaXYgY2xhc3M9InBncyI+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MDU8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij7sooXrqqnrqoUg67CPIO2KueynlTwvc3Bhbj48c3BhbiBjbGFzcz0iY2hpcCB0aSI+7KCV67O0PC9zcGFuPjwvZGl2PjxkaXYgY2xhc3M9InBnIj48c3BhbiBjbGFzcz0icG4iPjA2PC9zcGFuPjxzcGFuIGNsYXNzPSJwdCI+7IiY7J21IOuwjyDsg4Htmak8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdGkiPuygleuztDwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4wNzwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPuy1nOyLoCDqt7ztmakg64m07IqkPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRuIj7ribTsiqQ8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MDg8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij7tmozsgqwg7J6s66y07IOB7ZmpPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRpIj7soJXrs7Q8L3NwYW4+PC9kaXY+PC9kaXY+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJhY3QiIHN0eWxlPSItLWFjOnZhcigtLXJlZCkiPjxoZWFkZXIgY2xhc3M9ImFjdGgiPjxzcGFuIGNsYXNzPSJhY21hcmsiPuKRojwvc3Bhbj48ZGl2IGNsYXNzPSJhY21ldGEiPjxoMj4x67aAIMK3IO2MjOyCsCDsi5zrgpjrpqzsmKQg67Cx7YWM7Iqk7Yq4PC9oMj48cD7slrzrp4gg7J6I7Jy866m0IC8g7Ja866eIIOyTsOuptCDrsoTti7DrgpjCt+2MjOyCsO2VmOuCmDwvcD48L2Rpdj48c3BhbiBjbGFzcz0iYWNybmciPjnigJMxNXA8L3NwYW4+PC9oZWFkZXI+PGRpdiBjbGFzcz0icGdzIj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4wOTwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPuuwse2FjOyKpO2KuCDsoIQg7KCE7ZmY7ZmU66m0PC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHR0Ij7soITtmZjtmZTrqbQ8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MTA8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij4yMDAw64WEIOydgO2HtCDCtyAyMOunjOu2iDwvc3Bhbj48c3BhbiBjbGFzcz0iY2hpcCB0ZyI+6re4656Y7ZSEPC9zcGFuPjwvZGl2PjxkaXYgY2xhc3M9InBnIj48c3BhbiBjbGFzcz0icG4iPjExPC9zcGFuPjxzcGFuIGNsYXNzPSJwdCI+MjAwMOuFhCDsnYDth7QgwrcgNDDrp4zrtog8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdGciPuq3uOuemO2UhDwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4xMjwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPjIwMDDrhYQg7J2A7Ye0IMK3IDYw66eM67aIPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRnIj7qt7jrnpjtlIQ8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MTM8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij4yMDAy64WEIOydgO2HtCDCtyAyMOunjOu2iDwvc3Bhbj48c3BhbiBjbGFzcz0iY2hpcCB0ZyI+6re4656Y7ZSEPC9zcGFuPjwvZGl2PjxkaXYgY2xhc3M9InBnIj48c3BhbiBjbGFzcz0icG4iPjE0PC9zcGFuPjxzcGFuIGNsYXNzPSJwdCI+MjAwMuuFhCDsnYDth7QgwrcgNDDrp4zrtog8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdGciPuq3uOuemO2UhDwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4xNTwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPjIwMDLrhYQg7J2A7Ye0IMK3IDYw66eM67aIPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRnIj7qt7jrnpjtlIQ8L3NwYW4+PC9kaXY+PC9kaXY+PC9zZWN0aW9uPjxzZWN0aW9uIGNsYXNzPSJhY3QiIHN0eWxlPSItLWFjOnZhcigtLWdyZWVuKSI+PGhlYWRlciBjbGFzcz0iYWN0aCI+PHNwYW4gY2xhc3M9ImFjbWFyayI+4pGjPC9zcGFuPjxkaXYgY2xhc3M9ImFjbWV0YSI+PGgyPjLrtoAgwrcg66ek7IiYIOuwqeuylSDrsLHthYzsiqTtirg8L2gyPjxwPuuqqeuPiCB2cyDsoIHrpr0gdnMg7Y+t652966ek7IiYLCDrrZDqsIAg7J206riw64KYPC9wPjwvZGl2PjxzcGFuIGNsYXNzPSJhY3JuZyI+MTbigJMyMXA8L3NwYW4+PC9oZWFkZXI+PGRpdiBjbGFzcz0icGdzIj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4xNjwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPuu2hO2VoOunpOyImCAvIOyggOygkOunpOyImCDsoITtmZjtmZTrqbQ8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdHQiPuyghO2ZmO2ZlOuptDwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4xNzwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPu2IrOyekOyekCBBPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRhIj7snbjrrLwgQTwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4xODwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPu2IrOyekOyekCBCPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRiIj7snbjrrLwgQjwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4xOTwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPu2PreudvSDsi5zsoJAg7IaM6rCcPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHRnIj7qt7jrnpjtlIQ8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MjA8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij4zMCUg7ZWY6529IOyLnCDrp6TsiJg8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdGciPuq3uOuemO2UhDwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4yMTwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPuunpOyblCDqvrjspIDtnogg67aE7ZWgIOunpOyImDwvc3Bhbj48c3BhbiBjbGFzcz0iY2hpcCB0ZyI+6re4656Y7ZSEPC9zcGFuPjwvZGl2PjwvZGl2Pjwvc2VjdGlvbj48c2VjdGlvbiBjbGFzcz0iYWN0IiBzdHlsZT0iLS1hYzp2YXIoLS1tdXRlZCkiPjxoZWFkZXIgY2xhc3M9ImFjdGgiPjxzcGFuIGNsYXNzPSJhY21hcmsiPuKRpDwvc3Bhbj48ZGl2IGNsYXNzPSJhY21ldGEiPjxoMj7rp4jrrLTrpqw8L2gyPjxwPuygleumrMK366qF7Ja4wrdDVEE8L3A+PC9kaXY+PHNwYW4gY2xhc3M9ImFjcm5nIj4yMuKAkzI1cDwvc3Bhbj48L2hlYWRlcj48ZGl2IGNsYXNzPSJwZ3MiPjxkaXYgY2xhc3M9InBnIj48c3BhbiBjbGFzcz0icG4iPjIyPC9zcGFuPjxzcGFuIGNsYXNzPSJwdCI+67mE6rWQ7JiB7IOBPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHR2Ij7smIHsg4E8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MjM8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij7rsLDri7kg7IaM6rCc7JiB7IOBPC9zcGFuPjxzcGFuIGNsYXNzPSJjaGlwIHR2Ij7smIHsg4E8L3NwYW4+PC9kaXY+PGRpdiBjbGFzcz0icGciPjxzcGFuIGNsYXNzPSJwbiI+MjQ8L3NwYW4+PHNwYW4gY2xhc3M9InB0Ij7rqoXslrg8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdHEiPuuqheyWuDwvc3Bhbj48L2Rpdj48ZGl2IGNsYXNzPSJwZyI+PHNwYW4gY2xhc3M9InBuIj4yNTwvc3Bhbj48c3BhbiBjbGFzcz0icHQiPuuniOustOumrCDtjpjsnbTsp4A8L3NwYW4+PHNwYW4gY2xhc3M9ImNoaXAgdG8iPuuniOustOumrDwvc3Bhbj48L2Rpdj48L2Rpdj48L3NlY3Rpb24+CjxkaXYgY2xhc3M9ImZvb3QiPuuwsO2IrOyLpCDsmIHsg4Eg7YyM7J207ZSE65287J24IOKGkiAz64uo6rOEIOuNsSDsg53shLEg7IOB7IS4IMK3IDxhIGhyZWY9IiMiPnJlYWRzIHN0b3J5wrdiYWNrdGVzdCDihpIgd3JpdGVzIHNjZW5lczwvYT4gwrcgZGVjay5qc29uPC9kaXY+CjwvZGl2PjwvYm9keT48L2h0bWw+";function op(e){e.preventDefault();var bin=atob(B64),a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);var u=URL.createObjectURL(new Blob([a],{type:"text/html;charset=utf-8"}));window.open(u,"_blank");}document.querySelectorAll("a.declink").forEach(function(a){a.addEventListener("click",op);});})();</script><section data-tag="batusil-docindex" style="max-width:900px;margin:36px auto 8px;padding:0 20px;font-family:Pretendard,'Apple SD Gothic Neo','Malgun Gothic',sans-serif"><div style="font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:#c98a1a;text-transform:uppercase">📚 상세 문서</div><h2 style="font-size:20px;font-weight:800;color:#17282a;margin:8px 0 14px">이 파이프라인의 문서</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px"><a href="protocol.html" style="display:block;text-decoration:none;background:#fbf8f1;border:1px solid #ddd4c3;border-radius:12px;padding:14px 16px;transition:transform .12s"><div style="font-weight:800;font-size:15px;color:#17282a">프로토콜 <span style="color:#c98a1a">→</span></div><div style="font-size:12.5px;color:#5c6d6b;margin-top:3px">설계 청사진 — spec.py 계약·디렉토리·5대 리스크·원칙</div></a><a href="production_manual.html" style="display:block;text-decoration:none;background:#fbf8f1;border:1px solid #ddd4c3;border-radius:12px;padding:14px 16px;transition:transform .12s"><div style="font-weight:800;font-size:15px;color:#17282a">제작 매뉴얼 <span style="color:#c98a1a">→</span></div><div style="font-size:12.5px;color:#5c6d6b;margin-top:3px">as-built 워크플로우 A~G·핵심 함정·검증·업로드·재사용 자산</div></a><a href="dec_pipeline.html" style="display:block;text-decoration:none;background:#fbf8f1;border:1px solid #ddd4c3;border-radius:12px;padding:14px 16px;transition:transform .12s"><div style="font-weight:800;font-size:15px;color:#17282a">덱 세부 <span style="color:#c98a1a">→</span></div><div style="font-size:12.5px;color:#5c6d6b;margin-top:3px">3단계 덱 생성 25씬 5막 구성 (씬·차트 목록)</div></a><a href="research.html" style="display:block;text-decoration:none;background:#fbf8f1;border:1px solid #ddd4c3;border-radius:12px;padding:14px 16px;transition:transform .12s"><div style="font-weight:800;font-size:15px;color:#17282a">리서치·벤치마킹 <span style="color:#c98a1a">→</span></div><div style="font-size:12.5px;color:#5c6d6b;margin-top:3px">경쟁 채널 분석·후킹·썸네일 축적 규칙</div></a><a href="handover.html" style="display:block;text-decoration:none;background:#fbf8f1;border:1px solid #ddd4c3;border-radius:12px;padding:14px 16px;transition:transform .12s"><div style="font-weight:800;font-size:15px;color:#17282a">인수인계 <span style="color:#c98a1a">→</span></div><div style="font-size:12.5px;color:#5c6d6b;margin-top:3px">현재 제작건(MCD) 상태·해야 할 일</div></a></div></section></body></html>

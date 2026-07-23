@@ -147,7 +147,7 @@
   @media (max-width:720px){ .legend{flex-direction:column} }
 </style>
 </head>
-<body>
+<body><nav data-tag="batusil-docnav" style="font-family:ui-monospace,Consolas,monospace;font-size:12.5px;padding:9px 16px;background:#17282a;color:#cfd3d1;display:flex;gap:15px;flex-wrap:wrap;align-items:center;position:sticky;top:0;z-index:9999;border-bottom:1px solid #2c4144"><span style="color:#c98a1a;font-weight:700;letter-spacing:.04em">배투실 문서</span><a href="top_pipeline_standalone.html" style="color:#cfd3d1;text-decoration:none">◆ 파이프라인 허브</a><span style="color:#e8a33d;font-weight:700">프로토콜</span><a href="production_manual.html" style="color:#cfd3d1;text-decoration:none">제작 매뉴얼</a><a href="dec_pipeline.html" style="color:#cfd3d1;text-decoration:none">덱 세부</a><a href="research.html" style="color:#cfd3d1;text-decoration:none">리서치</a><a href="handover.html" style="color:#cfd3d1;text-decoration:none">인수인계</a></nav>
 <div class="wrap">
   <a class="back" href="../ARCHITECTURE.html">← 아키텍처</a>
 
@@ -203,14 +203,7 @@
     </div>
   </section>
 
-  <section class="sec">
-    <h2>재사용 (★ 이미 구축됨 — 종목무관)</h2>
-    <ul class="list">
-      <li><b>백테스트</b>: <code class="chip">global_cup/{fire_engine,golden_engine,backtest_engine,data_loader,dividend_reinvest}.py</code> (검증됨)</li>
-      <li><b>더빙</b>: <code class="chip">rec/{gen_tts,build_timing,build_voice,extract_lines}.py</code></li>
-      <li><b>렌더</b>: <code class="chip">rec/{record_full.sh,keep_fs.py,send_key.py,nav_raise.py,mix_audio.sh}</code></li>
-    </ul>
-  </section>
+  <section class="sec"><h2>재사용 (★ 이미 구축됨 — 종목무관)</h2><p style="color:#5c6d6b">백테스트·더빙·렌더 엔진은 종목무관으로 상속된다. <b>전체 자산 목록·경로는 <a href="production_manual.html" style="color:#c98a1a">제작 매뉴얼 → 재사용 자산</a>으로 통합.</b></p></section>
 
   <section class="sec">
     <h2>구축 순서</h2>
