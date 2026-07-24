@@ -321,17 +321,17 @@ EDIT_CSS = ("*{box-sizing:border-box}html,body{margin:0;height:100%}"
             "border:1px solid #2c4144;border-radius:7px;padding:5px 11px;cursor:pointer;white-space:nowrap}"
             ".bar button:hover{background:#2c4a4e}.bar button:disabled{opacity:.6;cursor:default}"
             ".bar button.save{color:#bfe3c4;border-color:#2f5a3a}.bar button.reload{color:#e8cfa0;border-color:#5a4420}"
-            # 본문 = 좌 iframe + 우 자막패널
-            ".work{flex:1 1 auto;display:flex;min-height:0}"
-            "iframe{flex:1 1 auto;height:100%;border:0;background:#0d0d0d}"
-            ".subs{flex:0 0 360px;background:#f4efe3;color:#1a2b2d;overflow-y:auto;padding:20px 22px;border-left:1px solid #2c4144}"
+            # 본문 = 위 iframe(영상) + 아래 자막패널 (세로 배치)
+            ".work{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}"
+            "iframe{flex:1 1 auto;width:100%;border:0;background:#0d0d0d;min-height:0}"
+            ".subs{flex:0 0 auto;max-height:32vh;background:#f4efe3;color:#1a2b2d;overflow-y:auto;padding:12px 22px;border-top:1px solid #2c4144;display:flex;flex-direction:column;gap:8px}"
+            ".subs .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}"
+            ".subs .lns{display:flex;gap:10px 22px;flex-wrap:wrap}"
             ".subs h3{margin:0 0 4px;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.12em;"
             "color:#8a5a1a;text-transform:uppercase}"
             ".subs .cap{margin:0 0 14px;font-size:12.5px;color:#5c6d6b}"
-            ".subs .ln{font-size:19px;line-height:1.62;font-weight:600;color:#17282a;padding:11px 0;"
-            "border-bottom:1px dashed #d8cfbb;position:relative;padding-left:20px}"
-            ".subs .ln:before{content:'';position:absolute;left:2px;top:19px;width:7px;height:7px;border-radius:50%;background:#c98a1a}"
-            ".subs .ln:last-child{border-bottom:0}"
+            ".subs .ln{flex:1 1 300px;min-width:240px;font-size:16px;line-height:1.5;font-weight:600;color:#17282a;"
+            "border-left:3px solid #c98a1a;padding:4px 0 4px 12px}"
             ".subs .none{color:#8a9694;font-size:15px;font-style:italic}"
             "@media(max-width:820px){.work{flex-direction:column}.subs{flex:0 0 auto;max-height:38vh;border-left:0;border-top:1px solid #2c4144}}")
 for n in range(1, TOTAL + 1):
@@ -356,9 +356,9 @@ for n in range(1, TOTAL + 1):
            '</span></div>'
            '<div class="work">'
            f'<iframe src="{DECK_REL}?page={n}&edit=1&stock={STOCK}" title="deck page {n}"></iframe>'
-           f'<aside class="subs"><h3>자막 · {n:02d}p</h3>'
-           f'<p class="cap">이 페이지 내레이션 {len(sl)}줄 · 덱에서 <b>💬 자막</b>/<b>글자편집</b>으로 수정 → <b>💾 저장</b></p>'
-           f'{subs}</aside>'
+           f'<aside class="subs"><div class="hd"><h3>자막 · {n:02d}p</h3>'
+           f'<p class="cap">내레이션 {len(sl)}줄 · 덱에서 <b>💬 자막</b>/<b>글자편집</b> 수정 → <b>💾 저장</b></p></div>'
+           f'<div class="lns">{subs}</div></aside>'
            '</div>'
            '<script>'
            'var fr=document.querySelector("iframe"),bs=document.getElementById("bsave"),br=document.getElementById("breload");'
