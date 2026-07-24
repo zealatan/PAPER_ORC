@@ -333,11 +333,10 @@ EDIT_CSS = ("*{box-sizing:border-box}html,body{margin:0;height:100%}"
             ".subs h3{margin:0 0 4px;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.12em;"
             "color:#8a5a1a;text-transform:uppercase}"
             ".subs .cap{margin:0 0 14px;font-size:12.5px;color:#5c6d6b}"
-            ".subs .lns{display:flex;flex-direction:column;gap:5px}"
-            ".subs .ln{font-size:15px;line-height:1.45;font-weight:600;color:#17282a;padding:2px 5px;border-radius:4px;outline:none;cursor:text}"
-            ".subs .ln:hover{background:#ece5d6}"
-            ".subs .ln:focus{background:#fff;box-shadow:inset 0 0 0 1px #c98a1a}"
-            ".subs .ln:empty:before{content:'(빈 줄 — 클릭해 입력)';color:#b7ae9c;font-weight:400}"
+            ".subs .lns{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}"
+            ".subs .subsarea{width:100%;flex:1 1 auto;min-height:12vh;resize:none;border:1px solid #cfc6b2;border-radius:8px;"
+            "padding:8px 12px;font:inherit;font-size:15px;line-height:1.85;font-weight:600;color:#17282a;background:#fff;outline:none;box-sizing:border-box}"
+            ".subs .subsarea:focus{border-color:#c98a1a;box-shadow:inset 0 0 0 1px #c98a1a}"
             ".subs .none{color:#8a9694;font-size:15px;font-style:italic}"
             "@media(max-width:820px){.work{flex-direction:column}.subs{flex:0 0 auto;max-height:38vh;border-left:0;border-top:1px solid #2c4144}}")
 for n in range(1, TOTAL + 1):
@@ -346,8 +345,7 @@ for n in range(1, TOTAL + 1):
     tpl = _scs[n - 1]["tpl"] if n - 1 < len(_scs) else (it.get("chip") or "")
     sl = sublines(n - 1)
     _scene = (it.get("ref") or n) - 1          # narration_final 키 = 원본 씬 인덱스(sid-1=ref-1)
-    subs = ("".join(f'<div class="ln" contenteditable="true">{esc(x)}</div>' for x in sl) if sl
-            else '<div class="none">이 페이지는 내레이션(자막)이 없습니다.</div>')
+    subs = f'<textarea class="subsarea" id="subsarea" spellcheck="false" placeholder="한 줄에 자막 한 문장 · 엔터로 줄 추가·삭제">{esc(chr(10).join(sl))}</textarea>'
     doc = ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
            '<meta name="viewport" content="width=device-width,initial-scale=1">'
            f'<title>{n}p 편집 · {esc(title)}</title><style>' + EDIT_CSS + '</style></head><body>'
@@ -380,7 +378,7 @@ for n in range(1, TOTAL + 1):
            'br.onclick=function(){var w=fr.contentWindow;if(w&&w.__pipelineReload)w.__pipelineReload();else fr.src=fr.src;};'
            'var sv=document.getElementById("subsave");'
            'if(sv)sv.onclick=function(){'
-           'var L=[].map.call(document.querySelectorAll(".subs .ln"),function(d){return d.textContent.replace(/\\s+/g," ").trim();}).filter(Boolean);'
+           'var ta=document.getElementById("subsarea");var L=(ta?ta.value:"").split("\\n").map(function(s){return s.trim();}).filter(Boolean);'
            'sv.disabled=true;sv.textContent="저장 중…(재굽기)";'
            'fetch("/api/save-subs",{method:"POST",headers:{"Content-Type":"application/json"},'
            f'body:JSON.stringify({{stock:"{STOCK}",scene:{_scene},lines:L}})}})'
