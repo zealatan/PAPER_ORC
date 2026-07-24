@@ -472,7 +472,7 @@ if _planf.exists():
     except Exception as _e:
         print("deck_plan 적용 실패(원본 유지):", _e)
 
-deck = {"scenes": scenes, "ov": {}, "cp": {}, "theme": "paper", "paper": "photo"}
+deck = {"scenes": scenes, "ov": {}, "cp": {}, "theme": "blueprint", "paper": "photo"}  # 사용자 선택: 블루프린트(설계도) 배경
 json.dump(deck, open(ROOT / "deck" / "pg_deck.json", "w"), ensure_ascii=False, indent=1)
 
 # ── HTML 주입: KEY 교체 + 코카콜라 패치 IIFE 블록 제거 + '저장된 편집 우선' 조건부 주입 ──
@@ -486,7 +486,7 @@ override = ("/* ══ PG 덱 주입 — 저장된 편집(localStorage) 있으�
             "      코카콜라 패치 IIFE 4종은 편집 오염 방지 위해 제거함. ══ */\n"
             "if(!localStorage.getItem(KEY)){\n"
             "  SCENES = " + json.dumps(scenes, ensure_ascii=False) + ";\n"
-            "  OV = " + json.dumps(DECK_OV, ensure_ascii=False) + "; CP = {}; THEME='paper'; PAPER='photo';\n"
+            "  OV = " + json.dumps(DECK_OV, ensure_ascii=False) + "; CP = {}; THEME='blueprint'; PAPER='photo';\n"
             "}\n")
 html = html[:blk_start] + override + html[blk_end:]
 
