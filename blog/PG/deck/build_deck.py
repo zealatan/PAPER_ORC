@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """D단계 덱 조립 → 자립형 viewable HTML.
-   spec(scenarios/strategy/narration/business) → 씬 JSON → mcd_final.html DEFAULT 이후 강제주입.
+   spec(scenarios/strategy/narration/business) → 씬 JSON → pg_final.html DEFAULT 이후 강제주입.
    철칙: 차트 pts·수치는 backtest 인용. cocacola 패치 IIFE(v8-hook/revert1/survheat1/src1)는
    1889라인 직후 SCENES 덮어쓰기로 무력화.
-   사용: python deck/build_deck.py  →  deck/mcd_v1.html · deck/mcd_deck.json
+   사용: python deck/build_deck.py  →  deck/pg_v1.html · deck/pg_deck.json
 """
 import json, sys, math
 from pathlib import Path
@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "spec"))
 import spec as S
 import pandas as pd
 
-spec = S.load_spec(str(ROOT / "spec" / "MCD.json"))
+spec = S.load_spec(str(ROOT / "spec" / "PG.json"))
 SC = {s["id"]: s for s in spec["backtest"]["fire"]["scenarios"]}
 STRAT = spec["backtest"]["strategy_compare"]["strategies"]
 BIZ = spec["data"]["business"]
@@ -75,12 +75,12 @@ TRIG_Y = sorted({int(t["date"][:4]) for t in SCOMP["deck_triggers"]})
 
 
 def price_trigger_chart():
-    """씬24: MCD 주가 + -30% 폭락 매수 신호(★)."""
+    """씬24: PG 주가 + -30% 폭락 매수 신호(★)."""
     ps = SCOMP["price_series"]; lo, hi = SCOMP["price_range"]
     ymax = nice_ceil(hi); ymin = 0
     yt = [[v, f"${v}"] for v in range(0, ymax + 1, max(50, round(ymax / 5 / 50) * 50))][1:]
     return {"kind": "line", "x": [2000, 2026.6], "y": [ymin, ymax], "yticks": yt, "xticks": XTICKS,
-            "series": [{"pts": ps, "c": INK, "w": 2.8, "name": "MCD 주가", "end": f"${ps[-1][1]}"}],
+            "series": [{"pts": ps, "c": INK, "w": 2.8, "name": "PG 주가", "end": f"${ps[-1][1]}"}],
             "stars": {"series": 0, "years": TRIG_Y, "label": "−30% 폭락 매수",
                       "labelAt": [2013, round(ymax * 0.28)]},
             "legAt": [30, 18]}
@@ -173,8 +173,8 @@ def survheat_grid():
 
 
 def news_checks():
-    return {"title": "MCD, 요즘 어떤가 — [최신 근황]", "sub": f"{BIZ['latest_q_label']} 기준 · 출처 MCD IR·SEC",
-            "name": "맥도날드 (MCD)", "tag": f"{BIZ['div_years']}년 {BIZ['div_label']}",
+    return {"title": "PG, 요즘 어떤가 — [최신 근황]", "sub": f"{BIZ['latest_q_label']} 기준 · 출처 PG IR·SEC",
+            "name": "맥도날드 (PG)", "tag": f"{BIZ['div_years']}년 {BIZ['div_label']}",
             "items": [
                 ["가성비 반격", "맥밸류·$5 세트로 지친 소비자 다시 유치"],
                 ["실적 반등", f"{BIZ['latest_q_label']} 매출 +{BIZ['latest_q_yoy_pct']}% — 약 2년 만의 최강 성장"],
@@ -200,16 +200,16 @@ def dur_for(lines):
 # 씬 인덱스 → 배경영상 bgid (내러티브 씬만; 차트/생존지도/막대 씬은 종이=null 유지)
 # 씬 인덱스 → 배경영상 (23씬 기준; 차트/생존지도/막대 씬은 종이=null)
 BGID = {                   # 전 씬 맥도날드 실사(사용자 지정) — 톤 매칭
-    1: "mcd_feast",        # 후킹 A (넉넉히 지출 → 푸짐한 버거+감자)
-    2: "mcd_friends",      # 후킹 B (아껴 재투자 → 밝은 사람들/성장)
-    4: "mcd_storefront",   # herostat — 실제 맥도날드 매장 외관(establishing)
-    6: "mcd_customer",     # checks 뉴스 — 손님이 버거+콜라(가성비 소비자)
-    7: "mcd_fryer",        # interlude → 백테스트1 (튀김 = 본격 분석)
-    11: "mcd_brunch",      # interlude → 백테스트2 (식사 = 모으는 입장)
-    12: "mcd_wait",        # 3부 타이밍(드라이브스루 대기)
-    13: "mcd_crew",        # 3부 적립(주방 꾸준함)
-    19: "mcd_reflect",     # quotebig (무드 있는 식사 = 결론)
-    20: "mcd_interior",    # card — 따뜻한 매장 인테리어(브랜딩 마무리)
+    1: "pg_feast",        # 후킹 A (넉넉히 지출 → 푸짐한 버거+감자)
+    2: "pg_friends",      # 후킹 B (아껴 재투자 → 밝은 사람들/성장)
+    4: "pg_storefront",   # herostat — 실제 맥도날드 매장 외관(establishing)
+    6: "pg_customer",     # checks 뉴스 — 손님이 버거+콜라(가성비 소비자)
+    7: "pg_fryer",        # interlude → 백테스트1 (튀김 = 본격 분석)
+    11: "pg_brunch",      # interlude → 백테스트2 (식사 = 모으는 입장)
+    12: "pg_wait",        # 3부 타이밍(드라이브스루 대기)
+    13: "pg_crew",        # 3부 적립(주방 꾸준함)
+    19: "pg_reflect",     # quotebig (무드 있는 식사 = 결론)
+    20: "pg_interior",    # card — 따뜻한 매장 인테리어(브랜딩 마무리)
 }
 
 scenes = []
@@ -254,24 +254,24 @@ for n in NARR:
     tpl, lines = n["tpl"], n["lines"]
     cam = {"s": 1.0 if tpl == "videohook" else 1.03, "x": 50, "y": 50}
     sc = {"tpl": tpl, "dur": dur_for(lines), "cam": cam,
-          "bgid": {"checks": "mcd_customer", "quotebig": "mcd_reflect", "card": "mcd_interior"}.get(tpl),
+          "bgid": {"checks": "pg_customer", "quotebig": "pg_reflect", "card": "pg_interior"}.get(tpl),
           "subLines": lines, "data": {}}
     d = sc["data"]
 
     # ── 새 element TPL 리매핑 (비차트 씬만; 차트·notice·checks·hbars2·divbars·quote·card는 유지) ──
     _rm = None   # (tpl, data, bgid) — 새 TPL 뒤에 배경영상 배치(반투명 오버레이로 은은히)
     if tpl == "herostat":
-        _rm = ("hero", HERO, "mcd_storefront")
+        _rm = ("hero", HERO, "pg_storefront")
     elif tpl == "kpirow":
         _rm = ("menuboard", MENU, None)          # 메뉴판은 가독성 위해 솔리드 유지
     elif tpl == "interlude":
-        _rm = ("sectint", SECT_P2, "mcd_fryer") if n["sec"] == "part2" else ("sectint", SECT_P3, "mcd_brunch")
+        _rm = ("sectint", SECT_P2, "pg_fryer") if n["sec"] == "part2" else ("sectint", SECT_P3, "pg_brunch")
     elif tpl == "solostory":
         _r = NEWSOLO.get(n["sec"], 0); NEWSOLO[n["sec"]] = _r + 1
         if n["sec"] == "hook":
-            _rm = ("stmt", RECEIPT, "mcd_feast") if _r == 0 else ("stmt", PASSBOOK, "mcd_friends")
+            _rm = ("stmt", RECEIPT, "pg_feast") if _r == 0 else ("stmt", PASSBOOK, "pg_friends")
         elif n["sec"] == "part3":
-            _rm = ("drivethru", DRIVETHRU, "mcd_wait") if _r == 0 else ("stampcard", STAMPCARD, "mcd_crew")
+            _rm = ("drivethru", DRIVETHRU, "pg_wait") if _r == 0 else ("stampcard", STAMPCARD, "pg_crew")
     if _rm:
         sc["tpl"], sc["data"], sc["bgid"] = _rm
         scenes.append(sc); continue
@@ -287,12 +287,12 @@ for n in NARR:
         # 섹션 기반(씬 번호 변동에 견고): 각 섹션의 첫 solostory=a, 둘째=b
         role = solo_ct.get(n["sec"], 0); solo_ct[n["sec"]] = role + 1
         if n["sec"] == "hook" and role == 0:      # 후킹 A 파산
-            d.update({"_fire": True, "side": "a", "label": "A", "kick": "2000년, MCD로 은퇴한 두 사람",
+            d.update({"_fire": True, "side": "a", "label": "A", "kick": "2000년, PG로 은퇴한 두 사람",
                       "tag": "같은 돈, 넉넉한 생활비", "rows": [
                         "은퇴자금 <b>$400,000</b>", "매달 <b>$3,000</b>씩 넉넉하게 썼다",
                         "부족분은 주식을 팔아 충당"], "accent": f"{_hkA_n}년 뒤 {_hkA_yr}년, 잔고 $0 — 파산"})
         elif n["sec"] == "hook":                  # 후킹 B 생존
-            d.update({"side": "b", "label": "B", "kick": "2000년, MCD로 은퇴한 두 사람",
+            d.update({"side": "b", "label": "B", "kick": "2000년, PG로 은퇴한 두 사람",
                       "tag": "같은 돈, 아낀 생활비", "rows": [
                         "은퇴자금 <b>$400,000</b> — A와 동일", "매달 <b>$1,000</b>씩만 아껴 썼다",
                         "남는 배당은 재투자"], "accent": f"26년 뒤 {money(_hkB['final'])} — 약 {_hkB_mult}배로 증가"})
@@ -309,7 +309,7 @@ for n in NARR:
     elif tpl == "herostat":
         d.update({"eyebrow": "머니 리서치 — 종목 소개",
                   "num": f"{BIZ['div_years']}년",
-                  "label": f"연속 배당 증액 — {BIZ['div_label']}  {{{{mcd}}}}",
+                  "label": f"연속 배당 증액 — {BIZ['div_label']}  {{{{pg}}}}",
                   "sub": f"전 세계 {BIZ['restaurants_k']//10}만 {BIZ['restaurants_k']%10}천여 매장의 95%가 프랜차이즈 · 임대·로열티로 버는 사실상 부동산 회사 · 시총 ${BIZ['market_cap_b']:.0f}B"})
     elif tpl == "kpirow":
         d.update({"title": "햄버거보다 [부동산]에 가깝다",
@@ -323,7 +323,7 @@ for n in NARR:
                      "delta": f"+{BIZ['fy2025_yoy_pct']:.0f}%", "dir": "up"},
                     {"value": f"${BIZ['annual_dividend_ps']}", "label": "연 배당(주당)",
                      "delta": f"{BIZ['div_years']}년째", "dir": "up"}],
-                  "src": "MCD FY2025 10-K · SEC"})
+                  "src": "PG FY2025 10-K · SEC"})
     elif tpl == "interlude":
         pass  # 자막만
     elif tpl == "survheat":
@@ -347,7 +347,7 @@ for n in NARR:
             d.update({"_fire": True, "sub": "",
                       "title": f"{money(init)} · {yr_tag} [물가반영]",
                       "chart": fire_chart(init, strat_key)})
-            if is2002:   # 닷컴 저점(2002)에 싸게 진입 → MCD는 오히려 크게 유리 (실측 기반)
+            if is2002:   # 닷컴 저점(2002)에 싸게 진입 → PG는 오히려 크게 유리 (실측 기반)
                 _sv = [mo for mo in (1000, 2000, 3000) if rN2(init, mo)["survived"]]
                 if len(_sv) == 3:
                     d["annoMain"] = "닷컴 저점 진입 — 물가 반영해도 셋 다 생존"
@@ -364,7 +364,7 @@ for n in NARR:
                 if init == 200000:
                     d["table"] = infl_table
         elif chart_id == "price_trigger":   # 씬24: 주가 + 폭락 신호
-            d.update({"sub": "", "title": "MCD 주가와 [−30% 폭락] 매수 신호",
+            d.update({"sub": "", "title": "PG 주가와 [−30% 폭락] 매수 신호",
                       "annoMain": f"25년간 −30% 폭락은 {'·'.join(str(y) for y in TRIG_Y)}년, 세 시기뿐",
                       "chart": price_trigger_chart()})
         elif chart_id == "smart_result":    # 씬25: 폭락 매수 결과
@@ -406,7 +406,7 @@ for n in NARR:
                   "source": "피터 린치 — 마젤란 펀드 전설적 운용역", "img": None})
     elif tpl == "card":
         d.update({"eyebrow": "머니 리서치 — 배당주 백테스트",
-                  "main": f"{{{{mcd}}}}|[{BIZ['div_years']}년 {BIZ['div_label']}]",
+                  "main": f"{{{{pg}}}}|[{BIZ['div_years']}년 {BIZ['div_label']}]",
                   "sub": "배당으로 은퇴하는 이야기 — 다음 종목도 이어집니다",
                   "chips": [[f"${BIZ['annual_dividend_ps']}", "연 배당"],
                             [f"{BIZ['div_years']}년", "연속 증배"],
@@ -426,7 +426,7 @@ if _planf.exists():
         if _pgs:
             _base = {s["sid"]: s for s in scenes}
             _prev = {}
-            _pf = ROOT / "deck" / "mcd_deck.json"
+            _pf = ROOT / "deck" / "pg_deck.json"
             if _pf.exists():
                 try:
                     _prev = {s.get("sid"): s for s in json.load(open(_pf))["scenes"] if s.get("sid") is not None}
@@ -454,16 +454,16 @@ if _planf.exists():
         print("deck_plan 적용 실패(원본 유지):", _e)
 
 deck = {"scenes": scenes, "ov": {}, "cp": {}, "theme": "paper", "paper": "photo"}
-json.dump(deck, open(ROOT / "deck" / "mcd_deck.json", "w"), ensure_ascii=False, indent=1)
+json.dump(deck, open(ROOT / "deck" / "pg_deck.json", "w"), ensure_ascii=False, indent=1)
 
 # ── HTML 주입: KEY 교체 + 코카콜라 패치 IIFE 블록 제거 + '저장된 편집 우선' 조건부 주입 ──
 #   → HUD 편집(localStorage 저장)이 새로고침 후에도 유지됨. 최초 로드(저장본 없음)에만 하드코딩 주입.
-html = (ROOT / "deck" / "mcd_final.html").read_text(encoding="utf-8")
-html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_mcd_v2';")
+html = (ROOT / "deck" / "pg_final.html").read_text(encoding="utf-8")
+html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_pg_v2';")
 blk_start = html.index("/* FIRE 세트")             # 패치 IIFE 블록 시작(v8-hook 앞 주석)
 p = html.index("var VER='src1';", blk_start)
 blk_end = html.index("})();", p) + len("})();")     # src1 IIFE 끝
-override = ("/* ══ MCD 덱 주입 — 저장된 편집(localStorage) 있으면 그대로 유지, 없을 때만 주입.\n"
+override = ("/* ══ PG 덱 주입 — 저장된 편집(localStorage) 있으면 그대로 유지, 없을 때만 주입.\n"
             "      코카콜라 패치 IIFE 4종은 편집 오염 방지 위해 제거함. ══ */\n"
             "if(!localStorage.getItem(KEY)){\n"
             "  SCENES = " + json.dumps(scenes, ensure_ascii=False) + ";\n"
@@ -479,9 +479,9 @@ for mp4 in sorted(bgdir.glob("*.mp4")):
     if ref in html:
         uri = "data:video/mp4;base64," + base64.b64encode(mp4.read_bytes()).decode()
         html = html.replace(ref, uri)
-(ROOT / "deck" / "mcd_v1.html").write_text(html, encoding="utf-8")
+(ROOT / "deck" / "pg_v1.html").write_text(html, encoding="utf-8")
 
 print(f"씬 {len(scenes)}개 조립 · 총 dur {sum(s['dur'] for s in scenes)/1000:.0f}s")
 print("enginechart:", [n.get("chart") for n in NARR if n["tpl"] == "enginechart"])
 print("물가표 최근행:", infl_rows[-1])
-print(f"→ deck/mcd_v1.html ({len(html)//1024}KB, 자립형) · deck/mcd_deck.json")
+print(f"→ deck/pg_v1.html ({len(html)//1024}KB, 자립형) · deck/pg_deck.json")
