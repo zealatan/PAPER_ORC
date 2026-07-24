@@ -167,3 +167,401 @@ Super Micro Computer / SMCI,SMCI,Stock,United States,USD
 Arm Holdings / ARM,ARM,Stock,United States,USD
 Dell Technologies / DELL,DELL,Stock,United States,USD
 Alphabet Class C / GOOG,GOOG,Stock,United States,USD
+GE Vernova / GEV,GEV,Stock,United States,USD
+Sandisk / SNDK,SNDK,Stock,United States,USD
+IBM / IBM,IBM,Stock,United States,USD
+Amphenol / APH,APH,Stock,United States,USD
+Western Digital / WDC,WDC,Stock,United States,USD
+Marvell Technology / MRVL,MRVL,Stock,United States,USD
+CrowdStrike / CRWD,CRWD,Stock,United States,USD
+Analog Devices / ADI,ADI,Stock,United States,USD
+Verizon / VZ,VZ,Stock,United States,USD
+T-Mobile US / TMUS,TMUS,Stock,United States,USD
+Welltower / WELL,WELL,Stock,United States,USD
+Walt Disney / DIS,DIS,Stock,United States,USD
+AT&T / T,T,Stock,United States,USD
+Interactive Brokers / IBKR,IBKR,Stock,United States,USD
+Southern Copper / SCCO,SCCO,Stock,United States,USD
+CVS Health / CVS,CVS,Stock,United States,USD
+Corning / GLW,GLW,Stock,United States,USD
+AppLovin / APP,APP,Stock,United States,USD
+Parker-Hannifin / PH,PH,Stock,United States,USD
+Capital One / COF,COF,Stock,United States,USD
+Altria Group / MO,MO,Stock,United States,USD
+Vertiv Holdings / VRT,VRT,Stock,United States,USD
+Howmet Aerospace / HWM,HWM,Stock,United States,USD
+Fortinet / FTNT,FTNT,Stock,United States,USD
+Southern Company / SO,SO,Stock,United States,USD
+General Dynamics / GD,GD,Stock,United States,USD
+Newmont / NEM,NEM,Stock,United States,USD
+Duke Energy / DUK,DUK,Stock,United States,USD
+PNC Financial Services / PNC,PNC,Stock,United States,USD
+US Bancorp / USB,USB,Stock,United States,USD
+Constellation Energy / CEG,CEG,Stock,United States,USD
+Quanta Services / PWR,PWR,Stock,United States,USD
+CSX / CSX,CSX,Stock,United States,USD
+United Parcel Service / UPS,UPS,Stock,United States,USD
+McKesson / MCK,MCK,Stock,United States,USD
+Marriott International / MAR,MAR,Stock,United States,USD
+Waste Management / WM,WM,Stock,United States,USD
+Cloudflare / NET,NET,Stock,United States,USD
+Williams Companies / WMB,WMB,Stock,United States,USD
+Snowflake / SNOW,SNOW,Stock,United States,USD
+Cummins / CMI,CMI,Stock,United States,USD
+Monster Beverage / MNST,MNST,Stock,United States,USD
+Robinhood / HOOD,HOOD,Stock,United States,USD
+Freeport-McMoRan / FCX,FCX,Stock,United States,USD
+Marathon Petroleum / MPC,MPC,Stock,United States,USD
+Valero Energy / VLO,VLO,Stock,United States,USD
+KKR / KKR,KKR,Stock,United States,USD
+3M / MMM,MMM,Stock,United States,USD
+Datadog / DDOG,DDOG,Stock,United States,USD
+Simon Property Group / SPG,SPG,Stock,United States,USD
+Enterprise Products / EPD,EPD,Stock,United States,USD
+HCA Healthcare / HCA,HCA,Stock,United States,USD
+Phillips 66 / PSX,PSX,Stock,United States,USD
+Moody's / MCO,MCO,Stock,United States,USD
+Airbnb / ABNB,ABNB,Stock,United States,USD
+Cintas / CTAS,CTAS,Stock,United States,USD
+Emerson Electric / EMR,EMR,Stock,United States,USD
+Intercontinental Exchange / ICE,ICE,Stock,United States,USD
+Illinois Tool Works / ITW,ITW,Stock,United States,USD
+Travelers / TRV,TRV,Stock,United States,USD
+Comcast / CMCSA,CMCSA,Stock,United States,USD
+Norfolk Southern / NSC,NSC,Stock,United States,USD
+EOG Resources / EOG,EOG,Stock,United States,USD
+Sherwin-Williams / SHW,SHW,Stock,United States,USD
+Royal Caribbean / RCL,RCL,Stock,United States,USD
+Northrop Grumman / NOC,NOC,Stock,United States,USD
+FedEx / FDX,FDX,Stock,United States,USD
+Ross Stores / ROST,ROST,Stock,United States,USD
+Ecolab / ECL,ECL,Stock,United States,USD
+DoorDash / DASH,DASH,Stock,United States,USD
+American Electric Power / AEP,AEP,Stock,United States,USD
+General Motors / GM,GM,Stock,United States,USD
+Kinder Morgan / KMI,KMI,Stock,United States,USD
+Hilton Worldwide / HLT,HLT,Stock,United States,USD
+O'Reilly Automotive / ORLY,ORLY,Stock,United States,USD
+United Rentals / URI,URI,Stock,United States,USD
+Schlumberger / SLB,SLB,Stock,United States,USD
+Energy Transfer / ET,ET,Stock,United States,USD
+Paccar / PCAR,PCAR,Stock,United States,USD
+Monolithic Power Systems / MPWR,MPWR,Stock,United States,USD
+Apollo Global Management / APO,APO,Stock,United States,USD
+TransDigm / TDG,TDG,Stock,United States,USD
+Motorola Solutions / MSI,MSI,Stock,United States,USD
+Digital Realty / DLR,DLR,Stock,United States,USD
+Republic Services / RSG,RSG,Stock,United States,USD
+Carvana / CVNA,CVNA,Stock,United States,USD
+Air Products and Chemicals / APD,APD,Stock,United States,USD
+Allstate / ALL,ALL,Stock,United States,USD
+Warner Bros Discovery / WBD,WBD,Stock,United States,USD
+Lumentum / LITE,LITE,Stock,United States,USD
+WW Grainger / GWW,GWW,Stock,United States,USD
+Comfort Systems USA / FIX,FIX,Stock,United States,USD
+Aflac / AFL,AFL,Stock,United States,USD
+Hewlett Packard Enterprise / HPE,HPE,Stock,United States,USD
+Dominion Energy / D,D,Stock,United States,USD
+Truist Financial / TFC,TFC,Stock,United States,USD
+Arthur J Gallagher / AJG,AJG,Stock,United States,USD
+Bloom Energy / BE,BE,Stock,United States,USD
+Targa Resources / TRGP,TRGP,Stock,United States,USD
+Coherent / COHR,COHR,Stock,United States,USD
+Sempra / SRE,SRE,Stock,United States,USD
+Target / TGT,TGT,Stock,United States,USD
+Realty Income / O,O,Stock,United States,USD
+MetLife / MET,MET,Stock,United States,USD
+Corteva / CTVA,CTVA,Stock,United States,USD
+Cencora / COR,COR,Stock,United States,USD
+Public Storage / PSA,PSA,Stock,United States,USD
+Oneok / OKE,OKE,Stock,United States,USD
+Teradyne / TER,TER,Stock,United States,USD
+MPLX / MPLX,MPLX,Stock,United States,USD
+Diamondback Energy / FANG,FANG,Stock,United States,USD
+Ciena / CIEN,CIEN,Stock,United States,USD
+Carrier Global / CARR,CARR,Stock,United States,USD
+Occidental Petroleum / OXY,OXY,Stock,United States,USD
+Cheniere Energy / LNG,LNG,Stock,United States,USD
+Vistra / VST,VST,Stock,United States,USD
+Ford / F,F,Stock,United States,USD
+Astera Labs / ALAB,ALAB,Stock,United States,USD
+L3Harris Technologies / LHX,LHX,Stock,United States,USD
+Baker Hughes / BKR,BKR,Stock,United States,USD
+Keysight Technologies / KEYS,KEYS,Stock,United States,USD
+Ametek / AME,AME,Stock,United States,USD
+Nucor / NUE,NUE,Stock,United States,USD
+Entergy / ETR,ETR,Stock,United States,USD
+Delta Air Lines / DAL,DAL,Stock,United States,USD
+Fastenal / FAST,FAST,Stock,United States,USD
+Cardinal Health / CAH,CAH,Stock,United States,USD
+Electronic Arts / EA,EA,Stock,United States,USD
+Devon Energy / DVN,DVN,Stock,United States,USD
+Fifth Third Bancorp / FITB,FITB,Stock,United States,USD
+Rockwell Automation / ROK,ROK,Stock,United States,USD
+Nasdaq / NDAQ,NDAQ,Stock,United States,USD
+State Street / STT,STT,Stock,United States,USD
+Xcel Energy / XEL,XEL,Stock,United States,USD
+Wabtec / WAB,WAB,Stock,United States,USD
+PayPal / PYPL,PYPL,Stock,United States,USD
+eBay / EBAY,EBAY,Stock,United States,USD
+Exelon / EXC,EXC,Stock,United States,USD
+Edwards Lifesciences / EW,EW,Stock,United States,USD
+Old Dominion Freight Line / ODFL,ODFL,Stock,United States,USD
+AutoZone / AZO,AZO,Stock,United States,USD
+Ventas / VTR,VTR,Stock,United States,USD
+HEICO / HEI,HEI,Stock,United States,USD
+Humana / HUM,HUM,Stock,United States,USD
+PG&E / PCG,PCG,Stock,United States,USD
+Ameriprise Financial / AMP,AMP,Stock,United States,USD
+Block / XYZ,XYZ,Stock,United States,USD
+CoreWeave / CRWV,CRWV,Stock,United States,USD
+Microchip Technology / MCHP,MCHP,Stock,United States,USD
+Credo Technology / CRDO,CRDO,Stock,United States,USD
+Rocket Lab / RKLB,RKLB,Stock,United States,USD
+Autodesk / ADSK,ADSK,Stock,United States,USD
+Take-Two Interactive / TTWO,TTWO,Stock,United States,USD
+IDEXX Laboratories / IDXX,IDXX,Stock,United States,USD
+Coinbase / COIN,COIN,Stock,United States,USD
+Waste Connections / WCN,WCN,Stock,United States,USD
+Becton Dickinson / BDX,BDX,Stock,United States,USD
+Archer Daniels Midland / ADM,ADM,Stock,United States,USD
+Consolidated Edison / ED,ED,Stock,United States,USD
+American International Group / AIG,AIG,Stock,United States,USD
+Chipotle Mexican Grill / CMG,CMG,Stock,United States,USD
+Live Nation / LYV,LYV,Stock,United States,USD
+Prudential Financial / PRU,PRU,Stock,United States,USD
+Yum Brands / YUM,YUM,Stock,United States,USD
+Keurig Dr Pepper / KDP,KDP,Stock,United States,USD
+MSCI / MSCI,MSCI,Stock,United States,USD
+Revolution Medicines / RVMD,RVMD,Stock,United States,USD
+Ares Management / ARES,ARES,Stock,United States,USD
+DR Horton / DHI,DHI,Stock,United States,USD
+Public Service Enterprise / PEG,PEG,Stock,United States,USD
+CBRE Group / CBRE,CBRE,Stock,United States,USD
+Axon Enterprise / AXON,AXON,Stock,United States,USD
+Agilent Technologies / A,A,Stock,United States,USD
+Paychex / PAYX,PAYX,Stock,United States,USD
+Sysco / SYY,SYY,Stock,United States,USD
+Hartford / HIG,HIG,Stock,United States,USD
+Natera / NTRA,NTRA,Stock,United States,USD
+Venture Global / VG,VG,Stock,United States,USD
+Waters / WAT,WAT,Stock,United States,USD
+United Airlines / UAL,UAL,Stock,United States,USD
+WEC Energy Group / WEC,WEC,Stock,United States,USD
+Iron Mountain / IRM,IRM,Stock,United States,USD
+Kenvue / KVUE,KVUE,Stock,United States,USD
+Rocket Companies / RKT,RKT,Stock,United States,USD
+Alnylam Pharmaceuticals / ALNY,ALNY,Stock,United States,USD
+Vulcan Materials / VMC,VMC,Stock,United States,USD
+M&T Bank / MTB,MTB,Stock,United States,USD
+Kimberly-Clark / KMB,KMB,Stock,United States,USD
+Huntington Bancshares / HBAN,HBAN,Stock,United States,USD
+Roper Technologies / ROP,ROP,Stock,United States,USD
+ON Semiconductor / ON,ON,Stock,United States,USD
+Hershey / HSY,HSY,Stock,United States,USD
+Steel Dynamics / STLD,STLD,Stock,United States,USD
+Carnival / CCL,CCL,Stock,United States,USD
+IQVIA / IQV,IQV,Stock,United States,USD
+TKO Group Holdings / TKO,TKO,Stock,United States,USD
+Emcor / EME,EME,Stock,United States,USD
+Strategy / MSTR,MSTR,Stock,United States,USD
+Kroger / KR,KR,Stock,United States,USD
+Roblox / RBLX,RBLX,Stock,United States,USD
+Jabil / JBL,JBL,Stock,United States,USD
+EQT / EQT,EQT,Stock,United States,USD
+Martin Marietta Materials / MLM,MLM,Stock,United States,USD
+Crown Castle / CCI,CCI,Stock,United States,USD
+Reddit / RDDT,RDDT,Stock,United States,USD
+Casey's General Stores / CASY,CASY,Stock,United States,USD
+NetApp / NTAP,NTAP,Stock,United States,USD
+Extra Space Storage / EXR,EXR,Stock,United States,USD
+Ubiquiti / UI,UI,Stock,United States,USD
+Raymond James Financial / RJF,RJF,Stock,United States,USD
+Cheniere Energy Partners / CQP,CQP,Stock,United States,USD
+Workday / WDAY,WDAY,Stock,United States,USD
+Centene / CNC,CNC,Stock,United States,USD
+Ameren / AEE,AEE,Stock,United States,USD
+Zoetis / ZTS,ZTS,Stock,United States,USD
+GlobalFoundries / GFS,GFS,Stock,United States,USD
+Expedia Group / EXPE,EXPE,Stock,United States,USD
+DTE Energy / DTE,DTE,Stock,United States,USD
+Edison International / EIX,EIX,Stock,United States,USD
+Las Vegas Sands / LVS,LVS,Stock,United States,USD
+Citizens Financial Group / CFG,CFG,Stock,United States,USD
+Teledyne Technologies / TDY,TDY,Stock,United States,USD
+NRG Energy / NRG,NRG,Stock,United States,USD
+Kraft Heinz / KHC,KHC,Stock,United States,USD
+Carpenter Technology / CRS,CRS,Stock,United States,USD
+Cboe Global Markets / CBOE,CBOE,Stock,United States,USD
+Illumina / ILMN,ILMN,Stock,United States,USD
+Atmos Energy / ATO,ATO,Stock,United States,USD
+Biogen / BIIB,BIIB,Stock,United States,USD
+Texas Pacific Land / TPL,TPL,Stock,United States,USD
+Veeva Systems / VEEV,VEEV,Stock,United States,USD
+VICI Properties / VICI,VICI,Stock,United States,USD
+CenterPoint Energy / CNP,CNP,Stock,United States,USD
+Estee Lauder / EL,EL,Stock,United States,USD
+FirstEnergy / FE,FE,Stock,United States,USD
+MasTec / MTZ,MTZ,Stock,United States,USD
+GE HealthCare / GEHC,GEHC,Stock,United States,USD
+Tapestry / TPR,TPR,Stock,United States,USD
+Twilio / TWLO,TWLO,Stock,United States,USD
+Eversource Energy / ES,ES,Stock,United States,USD
+Coupang / CPNG,CPNG,Stock,United States,USD
+Fair Isaac / FICO,FICO,Stock,United States,USD
+ResMed / RMD,RMD,Stock,United States,USD
+Xylem / XYL,XYL,Stock,United States,USD
+Cincinnati Financial / CINF,CINF,Stock,United States,USD
+Curtiss-Wright / CW,CW,Stock,United States,USD
+Halliburton / HAL,HAL,Stock,United States,USD
+AvalonBay Communities / AVB,AVB,Stock,United States,USD
+ATI / ATI,ATI,Stock,United States,USD
+PPL / PPL,PPL,Stock,United States,USD
+WR Berkley / WRB,WRB,Stock,United States,USD
+DexCom / DXCM,DXCM,Stock,United States,USD
+JB Hunt / JBHT,JBHT,Stock,United States,USD
+Otis Worldwide / OTIS,OTIS,Stock,United States,USD
+Mettler-Toledo / MTD,MTD,Stock,United States,USD
+Fiserv / FISV,FISV,Stock,United States,USD
+Dover / DOV,DOV,Stock,United States,USD
+EchoStar / ECHO,ECHO,Stock,United States,USD
+Equity Residential / EQR,EQR,Stock,United States,USD
+United Therapeutics / UTHR,UTHR,Stock,United States,USD
+American Water Works / AWK,AWK,Stock,United States,USD
+Copart / CPRT,CPRT,Stock,United States,USD
+Regions Financial / RF,RF,Stock,United States,USD
+LPL Financial / LPLA,LPLA,Stock,United States,USD
+Hubbell / HUBB,HUBB,Stock,United States,USD
+Williams-Sonoma / WSM,WSM,Stock,United States,USD
+Dollar General / DG,DG,Stock,United States,USD
+PPG Industries / PPG,PPG,Stock,United States,USD
+Verisk Analytics / VRSK,VRSK,Stock,United States,USD
+First Citizens BancShares / FCNCA,FCNCA,Stock,United States,USD
+XPO / XPO,XPO,Stock,United States,USD
+Quest Diagnostics / DGX,DGX,Stock,United States,USD
+West Pharmaceutical / WST,WST,Stock,United States,USD
+Zoom / ZM,ZM,Stock,United States,USD
+T Rowe Price / TROW,TROW,Stock,United States,USD
+Markel Group / MKL,MKL,Stock,United States,USD
+Woodward / WWD,WWD,Stock,United States,USD
+Symbotic / SYM,SYM,Stock,United States,USD
+KeyCorp / KEY,KEY,Stock,United States,USD
+CH Robinson / CHRW,CHRW,Stock,United States,USD
+Formula One Group / FWONK,FWONK,Stock,United States,USD
+MongoDB / MDB,MDB,Stock,United States,USD
+Okta / OKTA,OKTA,Stock,United States,USD
+LabCorp / LH,LH,Stock,United States,USD
+Affirm / AFRM,AFRM,Stock,United States,USD
+Corpay / CPAY,CPAY,Stock,United States,USD
+Rivian / RIVN,RIVN,Stock,United States,USD
+VeriSign / VRSN,VRSN,Stock,United States,USD
+Loews / L,L,Stock,United States,USD
+PulteGroup / PHM,PHM,Stock,United States,USD
+Bunge Global / BG,BG,Stock,United States,USD
+Synchrony Financial / SYF,SYF,Stock,United States,USD
+MKS Instruments / MKSI,MKSI,Stock,United States,USD
+Incyte / INCY,INCY,Stock,United States,USD
+Insmed / INSM,INSM,Stock,United States,USD
+Principal Financial Group / PFG,PFG,Stock,United States,USD
+Expeditors International / EXPD,EXPD,Stock,United States,USD
+AST SpaceMobile / ASTS,ASTS,Stock,United States,USD
+iShares Bitcoin Trust ETF / IBIT,IBIT,ETF,United States,USD
+Invesco NASDAQ 100 ETF / QQQM,QQQM,ETF,United States,USD
+iShares Russell 2000 ETF / IWM,IWM,ETF,United States,USD
+iShares Russell 1000 Value ETF / IWD,IWD,ETF,United States,USD
+iShares Russell 1000 ETF / IWB,IWB,ETF,United States,USD
+iShares Russell Mid-Cap ETF / IWR,IWR,ETF,United States,USD
+iShares Russell Top 200 Growth ETF / IWY,IWY,ETF,United States,USD
+iShares S&P 500 Growth ETF / IVW,IVW,ETF,United States,USD
+iShares S&P 500 Value ETF / IVE,IVE,ETF,United States,USD
+iShares Core S&P U.S. Growth ETF / IUSG,IUSG,ETF,United States,USD
+iShares Core S&P U.S. Value ETF / IUSV,IUSV,ETF,United States,USD
+iShares Core MSCI Total International Stock ETF / IXUS,IXUS,ETF,United States,USD
+iShares Core Total USD Bond Market ETF / IUSB,IUSB,ETF,United States,USD
+iShares S&P 100 ETF / OEF,OEF,ETF,United States,USD
+iShares MSCI ACWI ETF / ACWI,ACWI,ETF,United States,USD
+iShares MSCI Emerging Markets ETF / EEM,EEM,ETF,United States,USD
+iShares MSCI Japan ETF / EWJ,EWJ,ETF,United States,USD
+iShares MSCI India ETF / INDA,INDA,ETF,United States,USD
+iShares MSCI China ETF / MCHI,MCHI,ETF,United States,USD
+iShares China Large-Cap ETF / FXI,FXI,ETF,United States,USD
+iShares U.S. Technology ETF / IYW,IYW,ETF,United States,USD
+iShares U.S. Treasury Bond ETF / GOVT,GOVT,ETF,United States,USD
+iShares 1-3 Year Treasury Bond ETF / SHY,SHY,ETF,United States,USD
+iShares 3-7 Year Treasury Bond ETF / IEI,IEI,ETF,United States,USD
+iShares Short Treasury Bond ETF / SHV,SHV,ETF,United States,USD
+iShares TIPS Bond ETF / TIP,TIP,ETF,United States,USD
+iShares 0-5 Year TIPS Bond ETF / STIP,STIP,ETF,United States,USD
+iShares MBS ETF / MBB,MBB,ETF,United States,USD
+iShares National Muni Bond ETF / MUB,MUB,ETF,United States,USD
+iShares Broad USD High Yield Corporate Bond ETF / USHY,USHY,ETF,United States,USD
+iShares 1-5 Year Investment Grade Corporate Bond ETF / IGSB,IGSB,ETF,United States,USD
+iShares 5-10 Year Investment Grade Corporate Bond ETF / IGIB,IGIB,ETF,United States,USD
+iShares Broad USD Investment Grade Corporate Bond ETF / USIG,USIG,ETF,United States,USD
+iShares J.P. Morgan USD Emerging Markets Bond ETF / EMB,EMB,ETF,United States,USD
+iShares Floating Rate Bond ETF / FLOT,FLOT,ETF,United States,USD
+iShares Preferred and Income Securities ETF / PFF,PFF,ETF,United States,USD
+iShares MSCI USA Min Vol Factor ETF / USMV,USMV,ETF,United States,USD
+iShares MSCI USA Quality Factor ETF / QUAL,QUAL,ETF,United States,USD
+iShares MSCI USA Momentum Factor ETF / MTUM,MTUM,ETF,United States,USD
+iShares MSCI USA Value Factor ETF / VLUE,VLUE,ETF,United States,USD
+iShares U.S. Equity Factor Rotation Active ETF / DYNF,DYNF,ETF,United States,USD
+Fidelity Wise Origin Bitcoin Fund / FBTC,FBTC,ETF,United States,USD
+Grayscale Bitcoin Trust ETF / GBTC,GBTC,ETF,United States,USD
+Vanguard Total World Stock ETF / VT,VT,ETF,United States,USD
+Vanguard FTSE All-World ex-US ETF / VEU,VEU,ETF,United States,USD
+Vanguard FTSE Europe ETF / VGK,VGK,ETF,United States,USD
+Vanguard Small-Cap ETF / VB,VB,ETF,United States,USD
+Vanguard Small-Cap Value ETF / VBR,VBR,ETF,United States,USD
+Vanguard Mid-Cap Value ETF / VOE,VOE,ETF,United States,USD
+Vanguard Large-Cap ETF / VV,VV,ETF,United States,USD
+Vanguard Extended Market ETF / VXF,VXF,ETF,United States,USD
+Vanguard Mega Cap Growth ETF / MGK,MGK,ETF,United States,USD
+Vanguard Health Care ETF / VHT,VHT,ETF,United States,USD
+Vanguard Intermediate-Term Corporate Bond ETF / VCIT,VCIT,ETF,United States,USD
+Vanguard Short-Term Corporate Bond ETF / VCSH,VCSH,ETF,United States,USD
+Vanguard Short-Term Treasury ETF / VGSH,VGSH,ETF,United States,USD
+Vanguard Intermediate-Term Treasury ETF / VGIT,VGIT,ETF,United States,USD
+Vanguard Long-Term Treasury ETF / VGLT,VGLT,ETF,United States,USD
+Vanguard Mortgage-Backed Securities ETF / VMBS,VMBS,ETF,United States,USD
+Vanguard Short-Term Inflation-Protected Securities ETF / VTIP,VTIP,ETF,United States,USD
+Vanguard Short-Term Bond ETF / BSV,BSV,ETF,United States,USD
+Vanguard Tax-Exempt Bond ETF / VTEB,VTEB,ETF,United States,USD
+Schwab U.S. Large-Cap ETF / SCHX,SCHX,ETF,United States,USD
+Schwab U.S. Large-Cap Growth ETF / SCHG,SCHG,ETF,United States,USD
+Schwab U.S. Broad Market ETF / SCHB,SCHB,ETF,United States,USD
+Schwab International Equity ETF / SCHF,SCHF,ETF,United States,USD
+Schwab U.S. Small-Cap ETF / SCHA,SCHA,ETF,United States,USD
+Schwab U.S. Mid-Cap ETF / SCHM,SCHM,ETF,United States,USD
+Schwab U.S. TIPS ETF / SCHP,SCHP,ETF,United States,USD
+Schwab U.S. Aggregate Bond ETF / SCHZ,SCHZ,ETF,United States,USD
+Schwab Fundamental U.S. Large Company ETF / FNDX,FNDX,ETF,United States,USD
+Schwab Fundamental International Large Company ETF / FNDF,FNDF,ETF,United States,USD
+Schwab U.S. REIT ETF / SCHH,SCHH,ETF,United States,USD
+Invesco S&P 500 Low Volatility ETF / SPLV,SPLV,ETF,United States,USD
+Invesco Senior Loan ETF / BKLN,BKLN,ETF,United States,USD
+SPDR Dow Jones Industrial Average ETF Trust / DIA,DIA,ETF,United States,USD
+SPDR S&P MidCap 400 ETF Trust / MDY,MDY,ETF,United States,USD
+SPDR Portfolio S&P 500 Growth ETF / SPYG,SPYG,ETF,United States,USD
+SPDR Portfolio S&P 500 Value ETF / SPYV,SPYV,ETF,United States,USD
+SPDR Portfolio Developed World ex-US ETF / SPDW,SPDW,ETF,United States,USD
+SPDR Portfolio Emerging Markets ETF / SPEM,SPEM,ETF,United States,USD
+SPDR Portfolio Aggregate Bond ETF / SPAB,SPAB,ETF,United States,USD
+SPDR Portfolio Long Term Treasury ETF / SPTL,SPTL,ETF,United States,USD
+SPDR Bloomberg High Yield Bond ETF / JNK,JNK,ETF,United States,USD
+SPDR Bloomberg 1-3 Month T-Bill ETF / BIL,BIL,ETF,United States,USD
+SPDR Gold MiniShares Trust / GLDM,GLDM,ETF,United States,USD
+SPDR S&P Dividend ETF / SDY,SDY,ETF,United States,USD
+Real Estate Select Sector SPDR Fund / XLRE,XLRE,ETF,United States,USD
+iShares Silver Trust / SLV,SLV,ETF,United States,USD
+VanEck Gold Miners ETF / GDX,GDX,ETF,United States,USD
+Dimensional U.S. Core Equity 2 ETF / DFAC,DFAC,ETF,United States,USD
+Avantis U.S. Small Cap Value ETF / AVUV,AVUV,ETF,United States,USD
+JPMorgan Ultra-Short Income ETF / JPST,JPST,ETF,United States,USD
+Janus Henderson AAA CLO ETF / JAAA,JAAA,ETF,United States,USD
+WisdomTree Floating Rate Treasury Fund / USFR,USFR,ETF,United States,USD
+Capital Group Dividend Value ETF / CGDV,CGDV,ETF,United States,USD
+First Trust Rising Dividend Achievers ETF / RDVY,RDVY,ETF,United States,USD
+Pacer US Cash Cows 100 ETF / COWZ,COWZ,ETF,United States,USD
+VanEck Morningstar Wide Moat ETF / MOAT,MOAT,ETF,United States,USD
+Fidelity MSCI Information Technology Index ETF / FTEC,FTEC,ETF,United States,USD
