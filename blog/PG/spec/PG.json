@@ -1828,13 +1828,17 @@
    ]
   ],
   "business": {
-   "_source": "TODO: PG 리서치(B) — curation/PG.yaml로 채울 것 (현재 플레이스홀더)",
-   "div_years": null,
-   "div_label": "배당왕(추정 — 확인필요)",
+   "_source": "curation/PG.yaml (deep-research 95에이전트 교차검증, SEC 8-K·FY2025 연차보고서 원문, as-of 2026-07-24)",
+   "div_years": 70,
+   "div_label": "배당왕(Dividend King) · 70년 연속 증배",
    "annual_dividend_ps": 4.18,
-   "dividend_yield_pct": null,
-   "payout_ratio_pct": null,
-   "market_cap_b": null
+   "dividend_yield_pct": 2.9,
+   "payout_ratio_pct": 62,
+   "market_cap_b": 342,
+   "paid_since_years": 136,
+   "segments_top": "Fabric&Home 36% · Baby/Fem/Family 24% · Beauty 18% · Health 14% · Grooming 8%",
+   "flagship_brands": "Tide·Pampers·Gillette·Oral-B·Head&Shoulders·Charmin",
+   "fy2025": "매출 $84.3B(유기 +2%) · 순이익 $16.1B(+7%) · EPS $6.51(+8%)"
   }
  },
  "backtest": {
