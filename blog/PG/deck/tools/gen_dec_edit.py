@@ -324,7 +324,7 @@ EDIT_CSS = ("*{box-sizing:border-box}html,body{margin:0;height:100%}"
             # 본문 = 위 iframe(영상) + 아래 자막패널 (세로 배치)
             ".work{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}"
             "iframe{flex:1 1 auto;width:100%;border:0;background:#0d0d0d;min-height:0}"
-            ".subs{flex:0 0 46vh;max-height:46vh;background:#f4efe3;color:#1a2b2d;overflow-y:auto;padding:14px 24px 18px;border-top:2px solid #2c4144;display:flex;flex-direction:column;gap:10px}"
+            ".subs{flex:0 0 28vh;max-height:28vh;background:#f4efe3;color:#1a2b2d;overflow-y:auto;padding:12px 24px 14px;border-top:2px solid #2c4144;display:flex;flex-direction:column;gap:8px}"
             ".subs .hd{display:flex;align-items:center;gap:12px;flex-wrap:wrap}"
             ".subs .lns{display:flex;flex-direction:column;gap:6px}"
             ".subs .svbtn{font:inherit;font-size:12.5px;font-weight:700;color:#bfe3c4;background:#22383b;"
