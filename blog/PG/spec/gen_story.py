@@ -38,7 +38,7 @@ narration = [
  # 1페이지(유의사항): 더빙 없음 — 효과음(beep)만, 자막 없음 (사용자 요청)
  {"scene": 0, "sec": "hook", "tpl": "notice", "lines": []},
  {"scene": 2, "sec": "hook", "tpl": "solostory", "lines": [
-   "같은 날 맥도날드로 은퇴한 두 사람이 있습니다. 먼저 A입니다.",
+   "같은 날 P&G로 은퇴한 두 사람이 있습니다. 먼저 A입니다.",
    "40만 달러로 은퇴해, 매달 3천 달러씩 넉넉히 썼습니다.",
    "배당으로 모자란 돈은 주식을 팔아 메웠죠."]},
  {"scene": 3, "sec": "hook", "tpl": "solostory", "lines": [
@@ -79,7 +79,7 @@ narration = [
    f"2천 달러는 {yr(r(400000,2000)['depletion'])}년, 3천 달러는 {yr(r(400000,3000)['depletion'])}년에 무너집니다."]},
  {"scene": 11, "sec": "part2", "tpl": "enginechart", "chart": "fire_600k", "lines": [
    "60만 달러라도 물가 앞에선 완벽하지 않습니다.",
-   f"천·2천 달러는 살아남아 {man(r(600000,2000)['final'])}가 남지만,",
+   f"천 달러는 {man(r(600000,1000)['final'])}, 2천 달러는 {man(r(600000,2000)['final'])}까지 살아남지만,",
    f"3천 달러는 결국 {yr(r(600000,3000)['depletion'])}년에 파산합니다.",
    "원금이 크든 작든, 많이 쓰면 물가가 이깁니다."]},
  # ═══════ 2부-B: 은퇴 시점 2년의 차이 (닷컴 저점 2002년 은퇴) ═══════
@@ -88,12 +88,12 @@ narration = [
    f"같은 20만 달러도 월 천 달러는 {man(r2(200000,1000)['final'])}까지 불어납니다.",
    "싸게 진입한 것만으로 결과가 갈리죠."]},
  {"scene": 13, "sec": "part2", "tpl": "enginechart", "chart": "fire_400k_2002", "lines": [
-   "40만 달러라면 이야기가 완전히 달라집니다.",
-   "물가를 반영해도 셋 다 살아남고,",
-   f"매달 3천 달러를 써도 {man(r2(400000,3000)['final'])}가 남죠."]},
+   "40만 달러라면 한결 나아집니다.",
+   f"천 달러는 {man(r2(400000,1000)['final'])}, 2천 달러도 {man(r2(400000,2000)['final'])}까지 살아남지만,",
+   f"3천 달러는 여기서도 {yr(r2(400000,3000)['depletion'])}년에 파산합니다."]},
  {"scene": 14, "sec": "part2", "tpl": "enginechart", "chart": "fire_600k_2002", "lines": [
    "60만 달러는 아주 여유롭습니다.",
-   f"매달 3천 달러를 써도 {man(r2(600000,3000)['final'])}가 남고요.",
+   f"이번엔 3천 달러를 써도 셋 다 살아남아, {man(r2(600000,3000)['final'])}가 남죠.",
    "같은 돈, 같은 종목 — 진입 시점 2년이 생사를 갈랐습니다."]},
  # ═══════ 3부 매수 방법 (코카콜라와 동일 2전략 구조) ═══════
  {"scene": 13, "sec": "part3", "tpl": "interlude", "lines": [
@@ -109,7 +109,7 @@ narration = [
    "매달 꼬박꼬박 사 모으고,",
    "배당은 전액 재투자합니다."]},
  {"scene": 16, "sec": "part3", "tpl": "enginechart", "chart": "price_trigger", "lines": [
-   "먼저 맥도날드 주가와 폭락 신호부터.",
+   "먼저 P&G 주가와 폭락 신호부터.",
    f"25년간 30퍼센트 폭락은 {'·'.join(trig_years)}년, {len(trig_years)}번뿐이었습니다.",
    "방어주라 싸게 살 기회 자체가 드물었죠."]},
  {"scene": 17, "sec": "part3", "tpl": "enginechart", "chart": "smart_result", "lines": [
@@ -128,7 +128,7 @@ narration = [
  # ═══════ 마무리 ═══════
  {"scene": 20, "sec": "outro", "tpl": "divbars", "lines": [
    "이 모든 걸 가능하게 한 건 결국 배당입니다.",
-   f"맥도날드는 {BIZ['div_years']}년 동안 단 한 해도 거르지 않고 배당을 늘려왔습니다."]},
+   f"P&G는 {BIZ['div_years']}년 동안 단 한 해도 거르지 않고 배당을 늘려왔습니다."]},
  {"scene": 21, "sec": "outro", "tpl": "quotebig", "lines": [
    "결론은 단순합니다.",
    "타이밍을 맞히려 애쓰지 말고,",
@@ -161,7 +161,7 @@ if _finalf.exists():
     print(f"[자막 오버라이드] narration_final.json 적용 {_ov}씬")
 SEC_TITLES = {"hook": "1부 후킹 — 같은 돈, 다른 운명", "intro": "종목 소개 + 최신 근황",
               "part2": "2부 파산 시나리오 — 물가 반영 생존지도",
-              "part3": "3부 매수 방법 — 폭락 타이밍 vs 매달 적립", "outro": "마무리 — 배당귀족의 꾸준함"}
+              "part3": "3부 매수 방법 — 폭락 타이밍 vs 매달 적립", "outro": "마무리 — 배당왕의 꾸준함"}
 grp = OrderedDict()
 for n in narration:
     grp.setdefault(n["sec"], []).append(n["scene"])
