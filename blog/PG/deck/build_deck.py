@@ -133,10 +133,17 @@ def cpi_at(y):
     sub = cpi[cpi.index <= pd.Timestamp(y, 6, 1)]
     return float(sub.iloc[-1])
 base = cpi_at(2000)
+_infl_years = (2000, 2005, 2010, 2015, 2020, 2026)
 infl_rows = [[f"'{str(y)[2:]}", *[f"${round(mo*cpi_at(y)/base):,}" for mo in (1000,2000,3000)]]
-             for y in (2000, 2005, 2010, 2015, 2020, 2026)]
-infl_table = {"title": "물가연동 실제 월 인출액", "cols": ["연", "$1k", "$2k", "$3k"],
-              "rows": infl_rows, "x": 60, "y": 5}  # 상단 빈 공간(생존선·끝점라벨과 겹침 방지)
+             for y in _infl_years]
+# 가로형(전치) 표 — 헤더밴드(플롯 위 빈 띠)에 얹어 차트 원금별로 선·기준선라벨과 안 겹치게.
+_yr_cols = [f"'{str(y)[2:]}" for y in _infl_years]
+infl_table = {"title": "물가연동 실제 월 인출액 (CPI)",
+              "cols": ["인출", *_yr_cols],
+              "rows": [["월 $1천", *[r[1] for r in infl_rows]],
+                       ["월 $2천", *[r[2] for r in infl_rows]],
+                       ["월 $3천", *[r[3] for r in infl_rows]]],
+              "x": 52, "y": 2}  # 제목 우측·플롯 상단 빈 띠(모든 원금 차트에서 선/기준선라벨과 비겹침)
 
 # ── 씬별 data 조립 ──
 # 파산 차트는 물가반영(real) 중심 (사용자 결정)
@@ -372,8 +379,7 @@ for n in NARR:
                     200000: f"물가 반영하면 셋 다 파산 — 월 $1천도 {_ry(1000)}년",
                     400000: f"월 $1천만 생존 · $2천 {_ry(2000)}·$3천 {_ry(3000)}년 파산",
                     600000: f"월 $3천은 물가에 밀려 {_ry(3000)}년 파산"}[init]
-                if init == 200000:
-                    d["table"] = infl_table
+            d["table"] = infl_table   # 모든 FIRE 차트(real·real2002 · 20/40/60만)에 물가표 부착
         elif chart_id == "price_trigger":   # 씬24: 주가 + 폭락 신호
             d.update({"sub": "", "title": "PG 주가와 [−30% 폭락] 매수 신호",
                       "annoMain": f"25년간 −30% 폭락은 {'·'.join(str(y) for y in TRIG_Y)}년, 세 시기뿐",

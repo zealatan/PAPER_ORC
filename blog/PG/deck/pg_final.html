@@ -14,7 +14,7 @@
   }
   :root{
     --ink:#2b2724; --ink-soft:#6f6a64; --paper:#fdfcf9; --desk:#e9e6df;
-    --hl:#ffe45c; --hl-deep:#ffd83d; --hl-op:1; --red:#e04f3a;
+    --hl:#ffd21f; --hl-deep:#f7b500; --hl-op:1; --red:#e04f3a;
     --bar-gray:#d3dae7; --sticky:#fff3a8; --sticky2:#f4e07f; --sticky-ink:#5a4a12;
     --green:#2e8b57; --line:#cfc9bd; --credit:#c4bdb0;
     --winbg1:#fff8d2; --winbg2:#ffefad; --edit:#4a8dff; --blue:#2c66c4; --card:#fffaf0;
@@ -74,6 +74,7 @@
   /* ══ 종이 질감 (선택형, 콘텐츠 뒤 레이어) ══ */
   #papertex{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0; transition:opacity .3s; background-repeat:repeat; }
   .frame.has-bg #papertex{ opacity:0 !important; }   /* 배경 영상 슬라이드에선 숨김 */
+  .frame:has(.tpl-enginechart) #papertex{ opacity:0 !important; }   /* 차트 슬라이드: 종이질감 제거 → 매끈한 단색 표면 */
   body[data-paper=grain] #papertex{ opacity:.55;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/></svg>"); }
   body[data-paper=laid] #papertex{ opacity:.7;
@@ -1622,16 +1623,16 @@
   .tpl-sect .s{ font-size:2.5cqw; opacity:.95; text-shadow:0 .15cqw .6cqw rgba(0,0,0,.4); }
 
   /* enginechart 보조 표 (물가연동 인출액 등) */
-  .tpl-enginechart .engtable{ position:absolute; z-index:5; background:rgba(255,255,255,.74);
-    border:.14cqw solid var(--line); border-radius:1cqw; padding:.5cqw .7cqw .55cqw;
-    box-shadow:.22cqw .4cqw 0 rgba(60,40,20,.08); }
-  .tpl-enginechart .engtable .ettl{ font-size:1.55cqw; color:var(--ink); font-weight:bold;
-    margin-bottom:.35cqw; white-space:nowrap; }
+  .tpl-enginechart .engtable{ position:absolute; z-index:5; background:#ffffff;
+    border:.16cqw solid rgba(60,50,30,.30); border-radius:1cqw; padding:.5cqw .7cqw .55cqw;
+    box-shadow:0 .5cqw 1.5cqw rgba(60,45,25,.20), 0 0 0 .1cqw rgba(255,255,255,.9); }
+  .tpl-enginechart .engtable .ettl{ font-size:1.4cqw; color:var(--ink); font-weight:bold;
+    margin-bottom:.3cqw; white-space:nowrap; }
   .tpl-enginechart .engtable table{ border-collapse:collapse; }
-  .tpl-enginechart .engtable th{ font-size:1.3cqw; color:var(--ink-soft); font-weight:normal;
-    text-align:right; padding:.05cqw .55cqw; border-bottom:.1cqw solid var(--line); }
-  .tpl-enginechart .engtable td{ font-size:1.45cqw; color:var(--ink); text-align:right;
-    padding:.05cqw .55cqw; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .tpl-enginechart .engtable th{ font-size:1.18cqw; color:var(--ink-soft); font-weight:normal;
+    text-align:right; padding:.05cqw .48cqw; border-bottom:.1cqw solid var(--line); }
+  .tpl-enginechart .engtable td{ font-size:1.28cqw; color:var(--ink); text-align:right;
+    padding:.05cqw .48cqw; font-variant-numeric:tabular-nums; white-space:nowrap; }
   .tpl-enginechart .engtable th:first-child{ text-align:left; }
   .tpl-enginechart .engtable td:first-child{ text-align:left; color:var(--ink-soft); }
   /* 배경영상(has-bg) 슬라이드: 표를 다크 카드로 뒤집어 가독성 확보 · 낙폭은 붉게 강조 */
