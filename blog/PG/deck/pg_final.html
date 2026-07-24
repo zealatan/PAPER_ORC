@@ -2150,7 +2150,7 @@ function engChart(c){
   if(c.kind==='line'){
     if(c.dline){ const q=c.dline.p;
       svg+=`<path class="edash" style="--d:1s" d="${q.map((pt,ii)=>(ii?'L':'M')+X(pt[0]).toFixed(1)+' '+Y(pt[1]).toFixed(1)).join(' ')}" stroke="${c.dline.c}"/>`;
-      html+=`<span class="eguide" style="--d:2.7s;left:${p(X(q[q.length-1][0])-3,W)}%;top:${p(Y(q[q.length-1][1])-13,H)}%;transform:translate(-100%,0)">${esc(c.dline.label)}</span>`;
+      html+=`<span class="eguide" data-ek="dline" style="--d:2.7s;left:${p(X(q[q.length-1][0])-3,W)}%;top:${p(Y(q[q.length-1][1])-13,H)}%;transform:translate(-100%,0)">${esc(c.dline.label)}</span>`;
     }
     if(c.hline){ const y=Y(c.hline.v);
       svg+=`<line class="edash" style="--d:1s" x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="${c.hline.c}"/>`;
