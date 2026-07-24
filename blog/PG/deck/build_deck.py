@@ -183,15 +183,15 @@ def survheat_grid():
 
 
 def news_checks():
-    return {"title": "PG, 요즘 어떤가 — [최신 근황]", "sub": f"{BIZ['latest_q_label']} 기준 · 출처 PG IR·SEC",
-            "name": "맥도날드 (PG)", "tag": f"{BIZ['div_years']}년 {BIZ['div_label']}",
+    return {"title": "PG, 요즘 어떤가 — [FY2025 실적]", "sub": f"{BIZ['latest_q_label']}(6/30 종료) 기준 · 출처 PG IR·SEC 8-K",
+            "name": "P&G (PG)", "tag": f"{BIZ['div_years']}년 배당왕",
             "items": [
-                ["가성비 반격", "맥밸류·$5 세트로 지친 소비자 다시 유치"],
-                ["실적 반등", f"{BIZ['latest_q_label']} 매출 +{BIZ['latest_q_yoy_pct']}% — 약 2년 만의 최강 성장"],
-                ["부동산 파워", f"임대료 {BIZ['rents_b']*10:.0f}억 달러 — 로열티보다 큰 최대 매출"],
-                ["관전 포인트", "저소득층 트래픽 회복이 지속될지"]],
-            "verdict": "불황에 강한 가성비 + 임대수익의 배당귀족",
-            "anno": "가성비 방어력 vs 소비 양극화 속 트래픽 회복 관건"}
+                [f"매출 ${BIZ['rev_total_b']:.1f}B", f"유기적 매출 +{BIZ['organic_sales_pct']:.0f}% — 가격·믹스로 성장"],
+                [f"순이익 ${BIZ['net_income_b']:.1f}B", f"전년비 +{BIZ['net_income_growth_pct']:.0f}%"],
+                [f"EPS ${BIZ['eps']}", f"+{BIZ['eps_growth_pct']:.0f}% · 주주환원 ${BIZ['shareholder_return_b']:.0f}B+"],
+                [f"배당수익률 ~{BIZ['dividend_yield_pct']}%", f"시총 ${BIZ['market_cap_b']:.0f}B · payout {BIZ['payout_ratio_pct']:.0f}%"]],
+            "verdict": "생활필수품 브랜드로 버는 70년 배당왕",
+            "anno": "매출은 제자리여도 가격·믹스로 이익 성장"}
 
 
 def divbars_data():
@@ -246,13 +246,19 @@ PASSBOOK = {"side": "b", "who": "B · 아껴", "amount": "$1,000", "note": "남�
              [f"2015 잔고", money(_bal(_hkB, 2015)), ""],
              [f"2020 잔고", money(_bal(_hkB, 2020)), ""],
              [f"2026 잔고", money(_hkB["final"]), "win"]]}
-HERO = {"eye": BIZ["div_label"], "big": f"{BIZ['div_years']}년", "under": "연속 배당 증액"}
-MENU = {"title": "햄버거보다 [부동산]",
-    "sub": f"FY2025 매출 구성 · SEC 10-K · 배당수익률 {BIZ['dividend_yield_pct']}%",
-    "rows": [["임대료", f"${BIZ['rents_b']:.1f}B", f"전체 {BIZ['rent_share_pct']:.0f}%"],
-             ["로열티", f"${BIZ['royalties_b']:.1f}B", ""],
-             ["총매출", f"${BIZ['rev_total_b']:.1f}B", f"+{BIZ['fy2025_yoy_pct']:.0f}%"],
-             ["연 배당", f"${BIZ['annual_dividend_ps']}", f"{BIZ['div_years']}년째"]]}
+HERO = {"eye": f"생활필수품 배당왕 · 전 세계 단 {BIZ['rarity_count']}곳뿐",
+    "big": f"{BIZ['div_years']}년", "under": "연속 배당 증액 — Dividend King"}
+_SEG = BIZ["segments"]                                    # 5개 보고부문
+_HG_REV = _SEG[3]["rev_b"] + _SEG[4]["rev_b"]            # 헬스케어+그루밍 합산
+_HG_SHR = _SEG[3]["share_pct"] + _SEG[4]["share_pct"]
+# menuboard TPL은 4행까지 자막바와 안 겹침 → 최소 부문(헬스케어·그루밍)을 한 줄로 묶어 매출 내림차순 표기(합계 100%)
+MENU = {"title": f"생활필수품 [브랜드 제국] · {BIZ['brands_count']}개 브랜드",
+    "sub": "FY2025 부문별 매출 · Tide·Pampers·Gillette · SEC 8-K",
+    "rows": [
+        [_SEG[0]["ko"], f"${_SEG[0]['rev_b']:.1f}B", f"{_SEG[0]['share_pct']:.0f}% · {_SEG[0]['brands']}"],
+        [_SEG[1]["ko"], f"${_SEG[1]['rev_b']:.1f}B", f"{_SEG[1]['share_pct']:.0f}% · {_SEG[1]['brands']}"],
+        ["헬스·그루밍",  f"${_HG_REV:.1f}B",          f"{_HG_SHR:.0f}% · Oral-B·Gillette"],
+        [_SEG[2]["ko"], f"${_SEG[2]['rev_b']:.1f}B", f"{_SEG[2]['share_pct']:.0f}% · {_SEG[2]['brands']}"]]}
 SECT_P2 = {"tone": "d", "part": "2부 · 파산 시나리오", "head": "얼마면, 매달 얼마까지|써도 버틸까?", "sub": "물가상승까지 반영한, 진짜 냉혹한 그림."}
 SECT_P3 = {"tone": "g", "part": "3부 · 매수 방법", "head": "매달 천 달러씩 25년,|어떻게 사야 가장 클까?", "sub": "두 투자자가 있습니다."}
 DRIVETHRU = {"head": "DRIVE-THRU · 타이밍 투자자", "corner": "2000~",
@@ -316,24 +322,19 @@ for n in NARR:
                       "tag": "시간을 믿는다", "rows": [
                         "매달 꼬박꼬박 매수 <b>(적립식)</b>", "타이밍은 신경 안 씀",
                         "배당은 전액 재투자"], "accent": "25년 →"})
-    elif tpl == "herostat":
+    elif tpl == "herostat":   # (사문화 — herostat은 위 _rm에서 hero로 치환·continue됨. 참조 안전용 PG 값 유지)
         d.update({"eyebrow": "머니 리서치 — 종목 소개",
                   "num": f"{BIZ['div_years']}년",
                   "label": f"연속 배당 증액 — {BIZ['div_label']}  {{{{pg}}}}",
-                  "sub": f"전 세계 {BIZ['restaurants_k']//10}만 {BIZ['restaurants_k']%10}천여 매장의 95%가 프랜차이즈 · 임대·로열티로 버는 사실상 부동산 회사 · 시총 ${BIZ['market_cap_b']:.0f}B"})
-    elif tpl == "kpirow":
-        d.update({"title": "햄버거보다 [부동산]에 가깝다",
-                  "sub": f"FY2025 매출 구성 · 배당수익률 {BIZ['dividend_yield_pct']}% ({BIZ['yield_asof']})",
+                  "sub": f"세제·기저귀·면도 등 {BIZ['brands_count']}개 핵심 브랜드 · 전 세계 단 {BIZ['rarity_count']}곳뿐인 배당왕 · 시총 ${BIZ['market_cap_b']:.0f}B"})
+    elif tpl == "kpirow":     # (사문화 — kpirow은 위 _rm에서 menuboard로 치환·continue됨)
+        d.update({"title": "생활필수품 [브랜드 제국]",
+                  "sub": f"FY2025 부문별 매출 · 배당수익률 {BIZ['dividend_yield_pct']}% ({BIZ['yield_asof']})",
                   "tiles": [
-                    {"value": f"${BIZ['rents_b']:.1f}B", "label": "임대료 (최대 매출)",
-                     "delta": f"전체 {BIZ['rent_share_pct']:.0f}%", "dir": "up"},
-                    {"value": f"${BIZ['royalties_b']:.1f}B", "label": "로열티",
-                     "delta": "프랜차이즈", "dir": "up"},
-                    {"value": f"${BIZ['rev_total_b']:.1f}B", "label": "총매출",
-                     "delta": f"+{BIZ['fy2025_yoy_pct']:.0f}%", "dir": "up"},
-                    {"value": f"${BIZ['annual_dividend_ps']}", "label": "연 배당(주당)",
-                     "delta": f"{BIZ['div_years']}년째", "dir": "up"}],
-                  "src": "PG FY2025 10-K · SEC"})
+                    {"value": f"${s['rev_b']:.1f}B", "label": s['ko'],
+                     "delta": f"매출 {s['share_pct']:.0f}%", "dir": "up"}
+                    for s in BIZ["segments"][:4]],
+                  "src": "PG FY2025 8-K · SEC"})
     elif tpl == "interlude":
         pass  # 자막만
     elif tpl == "survheat":
@@ -469,7 +470,7 @@ json.dump(deck, open(ROOT / "deck" / "pg_deck.json", "w"), ensure_ascii=False, i
 # ── HTML 주입: KEY 교체 + 코카콜라 패치 IIFE 블록 제거 + '저장된 편집 우선' 조건부 주입 ──
 #   → HUD 편집(localStorage 저장)이 새로고침 후에도 유지됨. 최초 로드(저장본 없음)에만 하드코딩 주입.
 html = (ROOT / "deck" / "pg_final.html").read_text(encoding="utf-8")
-html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_pg_v2';")
+html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_pg_v3';")  # v2→v3: 24→22p 구조변경으로 옛 localStorage 스냅샷 무력화
 blk_start = html.index("/* FIRE 세트")             # 패치 IIFE 블록 시작(v8-hook 앞 주석)
 p = html.index("var VER='src1';", blk_start)
 blk_end = html.index("})();", p) + len("})();")     # src1 IIFE 끝

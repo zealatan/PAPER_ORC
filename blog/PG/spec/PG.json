@@ -1844,11 +1844,46 @@
    "latest_q_label": "FY2025",
    "yield_asof": "2026-07",
    "rev_total_b": 84.3,
-   "rents_b": 29.6,
-   "rent_share_pct": 36,
-   "royalties_b": 20.2,
-   "restaurants_k": 0,
-   "_placeholder_biz_keys": "rents_b/rent_share_pct/royalties_b/restaurants_k/latest_q_label = MCD 앵글 임시값. C/D에서 PG(브랜드 포트폴리오)로 교체"
+   "brands_count": 65,
+   "rarity_count": 6,
+   "net_income_b": 16.1,
+   "net_income_growth_pct": 7,
+   "eps": 6.51,
+   "eps_growth_pct": 8,
+   "organic_sales_pct": 2,
+   "shareholder_return_b": 16.4,
+   "segments": [
+    {
+     "ko": "섬유·홈케어",
+     "rev_b": 29.6,
+     "share_pct": 36,
+     "brands": "Tide·Downy·Dawn"
+    },
+    {
+     "ko": "베이비·여성·가족",
+     "rev_b": 20.2,
+     "share_pct": 24,
+     "brands": "Pampers·Always·Charmin"
+    },
+    {
+     "ko": "뷰티",
+     "rev_b": 15.0,
+     "share_pct": 18,
+     "brands": "Pantene·Olay·Head&Shoulders"
+    },
+    {
+     "ko": "헬스케어",
+     "rev_b": 12.0,
+     "share_pct": 14,
+     "brands": "Oral-B·Crest·Vicks"
+    },
+    {
+     "ko": "그루밍",
+     "rev_b": 6.7,
+     "share_pct": 8,
+     "brands": "Gillette·Venus"
+    }
+   ]
   }
  },
  "backtest": {
