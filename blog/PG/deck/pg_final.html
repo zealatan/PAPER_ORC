@@ -2162,7 +2162,7 @@ function engChart(c){
         if(g>hbg){ hbg=g; hbx=X(xw); }
       });
       const hbelow = y < T+PH*0.4;  /* 기준선이 위쪽이면 라벨을 아래로, 아니면 위로 */
-      html+=`<span class="eguide" style="--d:2.7s;left:${p(hbx,W)}%;top:${p(y+(hbelow?16:-15),H)}%;transform:translate(-50%,0)">${esc(c.hline.label)}</span>`;
+      html+=`<span class="eguide" data-ek="hline" style="--d:2.7s;left:${p(hbx,W)}%;top:${p(y+(hbelow?16:-15),H)}%;transform:translate(-50%,0)">${esc(c.hline.label)}</span>`;
     }
     const eends=[];
     (c.series||[]).forEach((s,si)=>{
@@ -2184,11 +2184,11 @@ function engChart(c){
         svg+=`<path class="estar" style="--d:${(2.6+k*.12).toFixed(2)}s" d="${ecStarPath(sx, sy-15)}" fill="var(--red)"/>`;
       });
       const y0=c.stars.years[0];
-      html+=`<span class="estarlab" style="--d:3.2s;left:${p(c.stars.labelAt?X(c.stars.labelAt[0]):X(y0),W)}%;top:${p(c.stars.labelAt?Y(c.stars.labelAt[1]):Y(ecInterpY(s.pts,y0))-46,H)}%">${esc(c.stars.label)} ×${c.stars.years.length}</span>`;
+      html+=`<span class="estarlab" data-ek="starlab" style="--d:3.2s;left:${p(c.stars.labelAt?X(c.stars.labelAt[0]):X(y0),W)}%;top:${p(c.stars.labelAt?Y(c.stars.labelAt[1]):Y(ecInterpY(s.pts,y0))-46,H)}%">${esc(c.stars.label)} ×${c.stars.years.length}</span>`;
     }
     if(c.dot){ const dx=X(c.dot.x), dy=Y(c.dot.y);
       svg+=`<circle class="edot" style="--d:3s" cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="5.5" fill="${c.dot.c}"/>`;
-      html+=`<span class="enow" style="--d:3.2s;left:${p(dx,W)}%;top:${p(dy-22,H)}%;transform:translate(-50%,0)">${esc(c.dot.label)} $${Math.round(c.dot.y)}</span>`;
+      html+=`<span class="enow" data-ek="dotnow" style="--d:3.2s;left:${p(dx,W)}%;top:${p(dy-22,H)}%;transform:translate(-50%,0)">${esc(c.dot.label)} $${Math.round(c.dot.y)}</span>`;
     }
     if(!c.noLegend){
       let lg=''; (c.series||[]).forEach((s,si)=>{ lg+=`<span class="eleg" style="--d:${(2.9+si*.15).toFixed(2)}s"><i style="background:${s.c}"></i>${esc(s.name)}</span>`; });
