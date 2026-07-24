@@ -60,13 +60,23 @@ def fire_chart(init, strat_key):
     for mo, c, w in specs:
         s = SC[f"{strat_key}_{init}_{mo}"]
         ally += [p[1] for p in s["pts"]]
-        tag = f"월 ${mo//1000}천"                       # 월 $1천 / $2천 / $3천 (선 색으로 구분)
-        end = f"{tag} {money_short(s['final'])}" if s["survived"] else f"{tag} {s['depletion'][:4]} 파산"
-        series.append({"pts": s["pts"], "c": c, "w": w, "name": f"월 ${mo:,}", "end": end})
+        # 범례가 색→월 식별 → 끝라벨은 짧게(생존=금액 / 파산='YY 파산)로 겹침 최소화
+        end = money_short(s['final']) if s["survived"] else f"'{s['depletion'][2:4]} 파산"
+        series.append({"pts": s["pts"], "c": c, "w": w, "name": f"월 ${mo//1000}천", "end": end})
+    # 파산 끝라벨 겹침 방지: 파산 연도가 3년 이내로 붙으면 뒤엣것 라벨 숨김(annoMain·범례가 정보 보완)
+    deps = sorted((float(SC[f"{strat_key}_{init}_{mo}"]["depletion"][:4]), i)
+                  for i, (mo, _, _) in enumerate(specs)
+                  if not SC[f"{strat_key}_{init}_{mo}"]["survived"])
+    _kx = -999
+    for _yr, _i in deps:
+        if _yr - _kx < 3:
+            series[_i]["end"] = ""
+        else:
+            _kx = _yr
     ymax = nice_ceil(max(ally))
-    # 범례 제거 → 각 선 끝 라벨(월 $X)로 대체(라벨이 선에 붙어 겹침 불가)
+    # 색 범례 복원(🔵월$1천 🟠월$2천 🔴월$3천) — series.name 사용. 물가표(우상단)·선시작(좌상단) 회피 위해 좌중단 배치.
     return {"kind": "line", "x": [2000, 2026.6], "y": [0, ymax], "yticks": yticks(ymax),
-            "xticks": XTICKS, "series": series, "noLegend": True,
+            "xticks": XTICKS, "series": series, "legAt": [20, 46],
             "hline": {"v": init, "c": INK, "dash": 1, "label": f"은퇴 원금 {money(init)}"}}
 
 

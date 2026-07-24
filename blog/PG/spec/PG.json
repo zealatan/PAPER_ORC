@@ -1838,7 +1838,17 @@
    "paid_since_years": 136,
    "segments_top": "Fabric&Home 36% · Baby/Fem/Family 24% · Beauty 18% · Health 14% · Grooming 8%",
    "flagship_brands": "Tide·Pampers·Gillette·Oral-B·Head&Shoulders·Charmin",
-   "fy2025": "매출 $84.3B(유기 +2%) · 순이익 $16.1B(+7%) · EPS $6.51(+8%)"
+   "fy2025": "매출 $84.3B(유기 +2%) · 순이익 $16.1B(+7%) · EPS $6.51(+8%)",
+   "latest_q_yoy_pct": 2,
+   "fy2025_yoy_pct": 2,
+   "latest_q_label": "FY2025",
+   "yield_asof": "2026-07",
+   "rev_total_b": 84.3,
+   "rents_b": 29.6,
+   "rent_share_pct": 36,
+   "royalties_b": 20.2,
+   "restaurants_k": 0,
+   "_placeholder_biz_keys": "rents_b/rent_share_pct/royalties_b/restaurants_k/latest_q_label = MCD 앵글 임시값. C/D에서 PG(브랜드 포트폴리오)로 교체"
   }
  },
  "backtest": {
@@ -14363,15 +14373,15 @@
     "init": 400000,
     "monthly": 3000,
     "outcome": "파산",
-    "year": 2009
+    "year": 2011
    },
    "b": {
     "init": 400000,
     "monthly": 1000,
     "outcome": "생존",
-    "final": 2488143
+    "final": 992220
    },
-   "question": "같은 40만 달러·같은 MCD·같은 26년, 매달 쓰는 돈만 달랐다."
+   "question": "같은 40만 달러·같은 PG·같은 26년, 매달 쓰는 돈만 달랐다."
   },
   "sections": [
    {

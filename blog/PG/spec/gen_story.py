@@ -110,7 +110,7 @@ narration = [
    "배당은 전액 재투자합니다."]},
  {"scene": 16, "sec": "part3", "tpl": "enginechart", "chart": "price_trigger", "lines": [
    "먼저 맥도날드 주가와 폭락 신호부터.",
-   f"25년간 30퍼센트 폭락은 {trig_years[0]}·{trig_years[1]}·{trig_years[2]}년, 세 시기뿐이었습니다.",
+   f"25년간 30퍼센트 폭락은 {'·'.join(trig_years)}년, {len(trig_years)}번뿐이었습니다.",
    "방어주라 싸게 살 기회 자체가 드물었죠."]},
  {"scene": 17, "sec": "part3", "tpl": "enginechart", "chart": "smart_result", "lines": [
    "타이밍을 노린 쪽의 결과입니다.",
