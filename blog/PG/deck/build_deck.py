@@ -421,8 +421,8 @@ for n in NARR:
                   "annoMain": f"완벽한 타이밍도 오히려 [{gap:+.0f}%]",
                   "annoSub": f"수익률(XIRR)도 적립 {sd['xirr_on']:.1f}% > 폭락 {sm['xirr_on']:.1f}% · 폭락매수는 현금 {sm['avg_cash_ratio_pct']:.0f}%가 놀았다"})
     elif tpl == "quotebig":
-        d.update({"quote": "폭락에 대비하려다 잃은 돈이,|정작 폭락으로 잃은 돈보다 [훨씬 많았다]",
-                  "source": "피터 린치 — 마젤란 펀드 전설적 운용역", "img": None})
+        d.update({"quote": "시간은 당신의 친구,|충동은 당신의 [적]이다",
+                  "source": "존 보글 — 뱅가드 창업자·인덱스펀드의 아버지", "img": None})
     elif tpl == "card":
         d.update({"eyebrow": "머니 리서치 — 배당주 백테스트",
                   "main": f"{{{{pg}}}}|[{BIZ['div_years']}년 {BIZ['div_label']}]",
