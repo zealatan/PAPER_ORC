@@ -166,8 +166,8 @@ def reveal_chart():
     return {"kind": "line", "x": [2000, 2026.6], "y": [0, ymax], "yticks": yticks(ymax),
             "xticks": XTICKS,
             "series": [
-                {"pts": b["pts"], "c": BLUE, "w": 3.6, "name": "B · 월 $1천 (아껴 씀)", "end": money_short(b["final"])},
-                {"pts": a["pts"], "c": RED, "w": 3.2, "name": "A · 월 $3천 (넉넉히)",
+                {"pts": b["pts"], "c": BLUE, "w": 3.6, "name": "B · 월 $1천", "end": money_short(b["final"])},
+                {"pts": a["pts"], "c": RED, "w": 3.2, "name": "A · 월 $3천",
                  "end": f"{a['depletion'][:4]} 파산"}],
             "hline": {"v": 400000, "c": INK, "dash": 1, "label": "은퇴 원금 $400,000"},
             "legAt": [34, 20]}
@@ -202,11 +202,13 @@ def news_checks():
 
 
 def divbars_data():
-    vals = [[int(y), round(v, 2)] for y, v in spec["data"]["annual_dividends"] if int(y) <= 2025]
+    src = spec["data"].get("annual_dividends_full") or spec["data"]["annual_dividends"]  # 전체 배당 이력(1962~) 우선
+    vals = [[int(y), round(v, 2)] for y, v in src if int(y) <= 2025]
+    yr0, v0, vN = int(src[0][0]), float(src[0][1]), float(src[-1][1])
     return {"_divcupRevert": "revert1", "title": f"{BIZ['div_years']}년 연속 [배당 인상]",
-            "sub": "주당 연간 배당금 · $ (2000~2025 실측)", "vals": vals, "unit": "$", "cut": [], "flat": [],
+            "sub": f"주당 연간 배당금 · $ ({yr0}~2025 실측 · 분할조정)", "vals": vals, "unit": "$", "cut": [], "flat": [],
             "annoMain": "한 해도 거르지 않고 매년 인상",
-            "annoSub": f"${vals[0][1]:.2f} → ${vals[-1][1]:.2f} · 주당 연배당 약 {vals[-1][1]/vals[0][1]:.0f}배"}
+            "annoSub": f"${v0:.2f} → ${vN:.2f} · 주당 연배당 약 {round(vN/v0)}배"}
 
 
 def dur_for(lines):

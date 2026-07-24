@@ -74,7 +74,7 @@
   /* ══ 종이 질감 (선택형, 콘텐츠 뒤 레이어) ══ */
   #papertex{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0; transition:opacity .3s; background-repeat:repeat; }
   .frame.has-bg #papertex{ opacity:0 !important; }   /* 배경 영상 슬라이드에선 숨김 */
-  .frame:has(.tpl-enginechart) #papertex{ opacity:0 !important; }   /* 차트 슬라이드: 종이질감 제거 → 매끈한 단색 표면 */
+  .frame:has(.tpl-enginechart) #papertex, .frame:has(.tpl-divbars) #papertex, .frame:has(.tpl-hbars) #papertex{ opacity:0 !important; }   /* 차트 슬라이드: 종이질감 제거 → 매끈한 단색 표면 */
   body[data-paper=grain] #papertex{ opacity:.55;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/></svg>"); }
   body[data-paper=laid] #papertex{ opacity:.7;
@@ -365,11 +365,11 @@
     from{ clip-path:inset(-10% 102% -14% -2%); transform:rotate(1.1deg) translateY(.14cqw); }
     to  { clip-path:inset(-10% -6% -14% -2%);  transform:none; }
   }
-  .hl{ position:relative; z-index:0; white-space:nowrap; color:#2b2724; }
+  .hl{ position:relative; z-index:0; white-space:nowrap; color:#fff; }
   .hl::before{
     content:''; position:absolute; z-index:-1;
     left:-3%; right:-4%; top:-6%; bottom:2%;
-    background:linear-gradient(100deg, var(--hl) 0%, var(--hl-deep) 55%, var(--hl) 100%);
+    background:linear-gradient(100deg, #e0218a 0%, #c2185b 55%, #e0218a 100%);
     border-radius:.9cqw .5cqw 1cqw .6cqw;
     transform:scaleX(0) skewX(-6deg); transform-origin:left center;
     filter:url(#rough); opacity:var(--hl-op);
@@ -1554,8 +1554,8 @@
   .tpl-menu{ position:absolute; inset:0; background:#17140f; color:#ffd64a; }
   .tpl-menu>.fit{ padding:4.5cqw 6cqw; }
   .tpl-menu .mtitle{ font-size:4.9cqw; color:#fff; margin:0 0 .5cqw; }
-  .tpl-menu .msub{ font-size:2.1cqw; color:#c9a83e; margin-bottom:3cqw; }
-  .tpl-menu .mrow{ display:flex; align-items:baseline; gap:1cqw; font-size:4.7cqw; margin:2.2cqw 0; color:#ffe08a; }
+  .tpl-menu .msub{ font-size:2.0cqw; color:#c9a83e; margin-bottom:2cqw; }
+  .tpl-menu .mrow{ display:flex; align-items:baseline; gap:1cqw; font-size:3.8cqw; margin:1.5cqw 0; color:#ffe08a; }
   .tpl-menu .mrow .dot{ flex:1; border-bottom:.35cqw dotted #6b5a26; transform:translateY(-.9cqw); }
   .tpl-menu .mrow .pr{ color:#fff; }
   .tpl-menu .mrow small{ font-size:1.85cqw; color:#b98f2e; font-weight:700; margin-left:.7cqw; letter-spacing:.02em; }
@@ -1624,17 +1624,17 @@
 
   /* enginechart 보조 표 (물가연동 인출액 등) */
   .tpl-enginechart .engtable{ position:absolute; z-index:5; background:#ffffff;
-    border:.26cqw solid rgba(40,30,12,.62); border-radius:1cqw; padding:.5cqw .7cqw .55cqw;
+    border:.28cqw solid #000; border-radius:1cqw; padding:.5cqw .7cqw .55cqw;
     box-shadow:0 .5cqw 1.5cqw rgba(60,45,25,.20), 0 0 0 .1cqw rgba(255,255,255,.9); }
-  .tpl-enginechart .engtable .ettl{ font-size:1.6cqw; color:var(--ink); font-weight:bold;
+  .tpl-enginechart .engtable .ettl{ font-size:1.6cqw; color:#000; font-weight:bold;
     margin-bottom:.3cqw; white-space:nowrap; }
   .tpl-enginechart .engtable table{ border-collapse:collapse; }
-  .tpl-enginechart .engtable th{ font-size:1.46cqw; color:var(--ink); font-weight:normal;
+  .tpl-enginechart .engtable th{ font-size:1.46cqw; color:#000; font-weight:normal;
     text-align:right; padding:.05cqw .48cqw; border-bottom:.16cqw solid rgba(50,40,18,.42); }
-  .tpl-enginechart .engtable td{ font-size:1.6cqw; color:var(--ink); text-align:right;
+  .tpl-enginechart .engtable td{ font-size:1.6cqw; color:#000; text-align:right;
     padding:.05cqw .48cqw; font-variant-numeric:tabular-nums; white-space:nowrap; }
   .tpl-enginechart .engtable th:first-child{ text-align:left; }
-  .tpl-enginechart .engtable td:first-child{ text-align:left; color:var(--ink-soft); }
+  .tpl-enginechart .engtable td:first-child{ text-align:left; color:#000; }
   /* 배경영상(has-bg) 슬라이드: 표를 다크 카드로 뒤집어 가독성 확보 · 낙폭은 붉게 강조 */
   .frame.has-bg .tpl-enginechart .engtable{ background:rgba(16,21,34,.84); border-color:rgba(200,215,240,.30); box-shadow:0 .5cqw 1.6cqw rgba(0,0,0,.34); }
   .frame.has-bg .tpl-enginechart .engtable .ettl{ color:#f6f9ff; }
@@ -2191,7 +2191,7 @@ function engChart(c){
     }
     if(!c.noLegend){
       let lg=''; (c.series||[]).forEach((s,si)=>{ lg+=`<span class="eleg" style="--d:${(2.9+si*.15).toFixed(2)}s"><i style="background:${s.c}"></i>${esc(s.name)}</span>`; });
-      html+=`<div class="elegbox" style="left:${c.legAt?c.legAt[0]:p(L+6,W)}%;top:${c.legAt?c.legAt[1]:p(T+3,H)}%">${lg}</div>`;
+      html+=`<div class="elegbox" data-ek="legend" style="left:${c.legAt?c.legAt[0]:p(L+6,W)}%;top:${c.legAt?c.legAt[1]:p(T+3,H)}%">${lg}</div>`;
     }
   }
 
@@ -2208,7 +2208,7 @@ function engChart(c){
       if(c.showTotal && c.showTotal.indexOf(i)>=0){ html+=`<span class="ebtot" style="--d:${(1.7+i*.06).toFixed(2)}s;left:${p(cx,W)}%;top:${p(Y(b.total)-7,H)}%">$${b.total.toLocaleString()}</span>`; }
     });
     let lg=''; (c.series||[]).forEach((nm,si)=>{ lg+=`<span class="eleg" style="--d:${(2.9+si*.15).toFixed(2)}s"><i style="background:${c.colors[si]}"></i>${esc(nm)}</span>`; });
-    html+=`<div class="elegbox" style="left:${p(L+6,W)}%;top:${p(T+1,H)}%">${lg}</div>`;
+    html+=`<div class="elegbox" data-ek="legend" style="left:${p(L+6,W)}%;top:${p(T+1,H)}%">${lg}</div>`;
   }
 
   return `<svg viewBox="0 0 960 360" preserveAspectRatio="xMidYMid meet">${svg}</svg><div class="numlay" style="position:absolute;inset:0;pointer-events:none">${html}</div>`;
@@ -2363,7 +2363,7 @@ const TPL = {
     if(d.table){ const t=d.table;
       const head = t.cols ? `<tr>${t.cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr>` : '';
       const rows = (t.rows||[]).map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('');
-      tableHTML = `<div class="engtable f" style="--d:2.4s;left:${t.x!=null?t.x:62}%;top:${t.y!=null?t.y:40}%">${t.title?`<div class="ettl">${esc(t.title)}</div>`:''}<table>${head}${rows}</table></div>`;
+      tableHTML = `<div class="engtable f" data-ek="table" style="--d:2.4s;left:${t.x!=null?t.x:62}%;top:${t.y!=null?t.y:40}%">${t.title?`<div class="ettl">${esc(t.title)}</div>`:''}<table>${head}${rows}</table></div>`;
     }
     return `<div class="zoom tpl-enginechart">
       <h1 class="btitle" data-ek="title" data-tx="title">${writeHTML(d.title||'',.2)}</h1>
@@ -3423,7 +3423,7 @@ const TPL = {
       const [x,y,r] = POS[i%3];
       return `<figure class="pclip" data-ek="p${i}" style="--d:${(1+i*.6).toFixed(2)}s;--rot:${r}deg;left:${x}cqw;top:${y}cqw;margin:0;z-index:${2+i}">
         <div class="ph"><b data-ek="p${i}.press" data-tx="items.${i}.press">${esc(it.press)}</b><span data-ek="p${i}.date" data-tx="items.${i}.date">${esc(it.date||'')}</span></div>
-        <h2 data-ek="p${i}.hl" data-tx="items.${i}.headline">${esc(it.headline).replace(/\[([^\]]+)\]/g,'<mark style="background:var(--hl);color:#2a2008;padding:.04cqw .34cqw;border-radius:.25cqw">$1</mark>')}</h2>
+        <h2 data-ek="p${i}.hl" data-tx="items.${i}.headline">${esc(it.headline).replace(/\[([^\]]+)\]/g,'<mark style="background:#e0218a;color:#fff;padding:.04cqw .34cqw;border-radius:.25cqw">$1</mark>')}</h2>
         ${it.quote?`<p data-ek="p${i}.q" data-tx="items.${i}.quote">${esc(it.quote)}</p>`:''}
       </figure>`;
     }).join('');
