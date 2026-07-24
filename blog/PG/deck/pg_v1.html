@@ -115,9 +115,10 @@
   html,body{height:100%}
   body{
     margin:0; background:var(--desk);
-    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:1.6vmin;
+    display:flex; align-items:center; justify-content:center; flex-direction:row; gap:1.2vmin;
     font-family:'Pen',sans-serif; padding:2vmin; box-sizing:border-box;
   }
+  body.rec{ flex-direction:column; }   /* 렌더모드는 원래대로(프레임만 풀스크린) */
 
   /* ── 무대 ── */
   .frame{
@@ -522,7 +523,9 @@
   }
 
   /* ── HUD ── */
-  .hud{ display:flex; align-items:center; gap:1.4vmin; z-index:20; flex-wrap:wrap; justify-content:center; }
+  .hud{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:.5vmin; z-index:20;
+        align-content:start; flex:0 0 auto; width:min(38vmin,380px); max-height:94vh; overflow-y:auto; padding-right:.4vmin; }
+  .hud .dots, .hud .lbl{ grid-column:1 / -1; }
   .hud .dots{ display:flex; gap:.9vmin; margin-right:1vmin; }
   .hud .dot{ width:1.5vmin; height:1.5vmin; border-radius:50%; background:#c8c2b6;
     border:none; padding:0; cursor:pointer; transition:transform .2s, background .2s; }

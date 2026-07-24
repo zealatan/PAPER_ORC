@@ -72,12 +72,39 @@ def save_pipeline(data):
             "rebuild": rb, "regen": (gen.stdout + gen.stderr)[-400:]}
 
 
+def save_subs(data):
+    """편집화면 자막 패널에서 수정한 문장 → narration_final.json[scene] 저장 → gen_story→build_deck→gen_dec_edit."""
+    stock = data.get("stock", "PG")
+    d = sdir(stock)
+    if not d:
+        return {"ok": False, "err": "잘못된 종목: " + str(stock)}
+    scene = data.get("scene")
+    if not isinstance(scene, int):
+        return {"ok": False, "err": "scene 인덱스(정수) 필요"}
+    lines = [str(x) for x in (data.get("lines") or [])]
+    nf = d / "spec" / "narration_final.json"
+    obj = json.loads(nf.read_text(encoding="utf-8")) if nf.exists() else {}
+    obj[str(scene)] = lines
+    nf.write_text(json.dumps(obj, ensure_ascii=False, indent=1), encoding="utf-8")
+    for script in ("spec/gen_story.py", "deck/build_deck.py", "deck/tools/gen_dec_edit.py"):
+        p = subprocess.run([sys.executable, script], cwd=str(d), capture_output=True, text=True, timeout=300)
+        if p.returncode != 0:
+            return {"ok": False, "err": script + " 실패", "log": (p.stdout + p.stderr)[-500:]}
+    return {"ok": True, "written": ["narration_final.json"], "scene": scene, "lines": lines}
+
+
 class H(SimpleHTTPRequestHandler):
     def __init__(self, *a, **k):
         super().__init__(*a, directory=str(ROOT), **k)
 
     def log_message(self, *a):
         pass
+
+    def end_headers(self):
+        # 브라우저가 옛 pg_v1.html(12MB) 등을 캐시해 '안 바뀜'으로 보이던 문제 → 항상 최신 받도록 no-store
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        super().end_headers()
 
     def _j(self, code, obj):
         b = json.dumps(obj, ensure_ascii=False).encode()
@@ -101,6 +128,8 @@ class H(SimpleHTTPRequestHandler):
                 return self._j(200, rebuild(data.get("stock", "MCD")))
             if route == "/api/save-pipeline":
                 return self._j(200, save_pipeline(data))
+            if route == "/api/save-subs":
+                return self._j(200, save_subs(data))
             return self._j(404, {"ok": False, "err": "unknown route " + route})
         except Exception as e:
             import traceback

@@ -325,13 +325,18 @@ EDIT_CSS = ("*{box-sizing:border-box}html,body{margin:0;height:100%}"
             ".work{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}"
             "iframe{flex:1 1 auto;width:100%;border:0;background:#0d0d0d;min-height:0}"
             ".subs{flex:0 0 auto;max-height:32vh;background:#f4efe3;color:#1a2b2d;overflow-y:auto;padding:12px 22px;border-top:1px solid #2c4144;display:flex;flex-direction:column;gap:8px}"
-            ".subs .hd{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}"
-            ".subs .lns{display:flex;gap:10px 22px;flex-wrap:wrap}"
+            ".subs .hd{display:flex;align-items:center;gap:12px;flex-wrap:wrap}"
+            ".subs .lns{display:flex;flex-direction:column;gap:6px}"
+            ".subs .svbtn{font:inherit;font-size:12.5px;font-weight:700;color:#bfe3c4;background:#22383b;"
+            "border:1px solid #2f5a3a;border-radius:7px;padding:5px 12px;cursor:pointer}"
+            ".subs .svbtn:hover{background:#2c4a4e}.subs .svbtn:disabled{opacity:.6}"
             ".subs h3{margin:0 0 4px;font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.12em;"
             "color:#8a5a1a;text-transform:uppercase}"
             ".subs .cap{margin:0 0 14px;font-size:12.5px;color:#5c6d6b}"
-            ".subs .ln{flex:1 1 300px;min-width:240px;font-size:16px;line-height:1.5;font-weight:600;color:#17282a;"
-            "border-left:3px solid #c98a1a;padding:4px 0 4px 12px}"
+            ".subs .ln{font-size:16px;line-height:1.5;font-weight:600;color:#17282a;border-left:3px solid #c98a1a;"
+            "padding:6px 10px 6px 12px;border-radius:0 6px 6px 0;background:#fbf6ea;outline:none;cursor:text}"
+            ".subs .ln:focus{background:#fff;box-shadow:inset 0 0 0 2px #c98a1a}"
+            ".subs .ln:empty:before{content:'(빈 줄)';color:#b7ae9c}"
             ".subs .none{color:#8a9694;font-size:15px;font-style:italic}"
             "@media(max-width:820px){.work{flex-direction:column}.subs{flex:0 0 auto;max-height:38vh;border-left:0;border-top:1px solid #2c4144}}")
 for n in range(1, TOTAL + 1):
@@ -339,7 +344,8 @@ for n in range(1, TOTAL + 1):
     title = it.get("title", "")
     tpl = _scs[n - 1]["tpl"] if n - 1 < len(_scs) else (it.get("chip") or "")
     sl = sublines(n - 1)
-    subs = ("".join(f'<div class="ln">{esc(x)}</div>' for x in sl) if sl
+    _scene = (it.get("ref") or n) - 1          # narration_final 키 = 원본 씬 인덱스(sid-1=ref-1)
+    subs = ("".join(f'<div class="ln" contenteditable="true">{esc(x)}</div>' for x in sl) if sl
             else '<div class="none">이 페이지는 내레이션(자막)이 없습니다.</div>')
     doc = ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
            '<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -357,7 +363,8 @@ for n in range(1, TOTAL + 1):
            '<div class="work">'
            f'<iframe src="{DECK_REL}?page={n}&edit=1&stock={STOCK}" title="deck page {n}"></iframe>'
            f'<aside class="subs"><div class="hd"><h3>자막 · {n:02d}p</h3>'
-           f'<p class="cap">내레이션 {len(sl)}줄 · 덱에서 <b>💬 자막</b>/<b>글자편집</b> 수정 → <b>💾 저장</b></p></div>'
+           f'<span class="cap">문장을 직접 고치고 →</span>'
+           f'<button class="svbtn" id="subsave">💾 자막 저장</button></div>'
            f'<div class="lns">{subs}</div></aside>'
            '</div>'
            '<script>'
@@ -370,6 +377,17 @@ for n in range(1, TOTAL + 1):
            'setTimeout(function(){bs.textContent="💾 저장(영구)";bs.disabled=false;},2400);})'
            '.catch(function(e){bs.textContent="⚠ 오류";bs.disabled=false;console.error(e);});};'
            'br.onclick=function(){var w=fr.contentWindow;if(w&&w.__pipelineReload)w.__pipelineReload();else fr.src=fr.src;};'
+           'var sv=document.getElementById("subsave");'
+           'if(sv)sv.onclick=function(){'
+           'var L=[].map.call(document.querySelectorAll(".subs .ln"),function(d){return d.textContent.replace(/\\s+/g," ").trim();}).filter(Boolean);'
+           'sv.disabled=true;sv.textContent="저장 중…(재굽기)";'
+           'fetch("/api/save-subs",{method:"POST",headers:{"Content-Type":"application/json"},'
+           f'body:JSON.stringify({{stock:"{STOCK}",scene:{_scene},lines:L}})}})'
+           '.then(function(r){return r.json();}).then(function(r){'
+           'sv.textContent=(r&&r.ok)?"✅ 저장+재굽기 완료":"⚠ 실패(콘솔)";if(!(r&&r.ok))console.warn("save-subs",r);'
+           'if(r&&r.ok)setTimeout(function(){fr.src=fr.src;},700);'
+           'setTimeout(function(){sv.textContent="💾 자막 저장";sv.disabled=false;},2600);})'
+           '.catch(function(e){sv.textContent="⚠ 오류";sv.disabled=false;console.error(e);});};'
            '</script>'
            '</body></html>')
     (ARCH / f"dec_edit_page{n}.html").write_text(doc, encoding="utf-8")
