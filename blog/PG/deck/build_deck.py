@@ -268,8 +268,8 @@ MENU = {"title": f"생활필수품 [브랜드 제국] · {BIZ['brands_count']}�
         [_SEG[1]["ko"], f"${_SEG[1]['rev_b']:.1f}B", f"{_SEG[1]['share_pct']:.0f}% · {_SEG[1]['brands']}"],
         ["헬스·그루밍",  f"${_HG_REV:.1f}B",          f"{_HG_SHR:.0f}% · Oral-B·Gillette"],
         [_SEG[2]["ko"], f"${_SEG[2]['rev_b']:.1f}B", f"{_SEG[2]['share_pct']:.0f}% · {_SEG[2]['brands']}"]]}
-SECT_P2 = {"tone": "d", "part": "2부 · 파산 시나리오", "head": "얼마면, 매달 얼마까지|써도 버틸까?", "sub": "물가상승까지 반영한, 진짜 냉혹한 그림."}
-SECT_P3 = {"tone": "g", "part": "3부 · 매수 방법", "head": "매달 천 달러씩 25년,|어떻게 사야 가장 클까?", "sub": "두 투자자가 있습니다."}
+SECT_P2 = {"tone": "d", "num": "2", "phrase": "파산 시나리오", "part": "2부 · 파산 시나리오", "head": "얼마면, 매달 얼마까지|써도 버틸까?", "sub": "물가상승까지 반영한, 진짜 냉혹한 그림."}
+SECT_P3 = {"tone": "g", "num": "3", "phrase": "매수 방법", "part": "3부 · 매수 방법", "head": "매달 천 달러씩 25년,|어떻게 사야 가장 클까?", "sub": "두 투자자가 있습니다."}
 DRIVETHRU = {"head": "DRIVE-THRU · 타이밍 투자자", "corner": "2000~",
     "items": [["폭락 대기 (−30%)", "현금 연 3%"], ["배당", "전액 재투자"]],
     "wait": "▶ −30% 대기 중…", "tot": f"25년간 폭락 [{len(TRIG_Y)}]시기뿐"}
@@ -290,7 +290,7 @@ for n in NARR:
     elif tpl == "kpirow":
         _rm = ("menuboard", MENU, None)          # 메뉴판은 가독성 위해 솔리드 유지
     elif tpl == "interlude":
-        _rm = ("sectint", SECT_P2, "pg_fryer") if n["sec"] == "part2" else ("sectint", SECT_P3, "pg_brunch")
+        _rm = ("sectint", SECT_P2, "pg_reflect") if n["sec"] == "part2" else ("sectint", SECT_P3, "pg_storefront")
     elif tpl == "solostory":
         _r = NEWSOLO.get(n["sec"], 0); NEWSOLO[n["sec"]] = _r + 1
         if n["sec"] == "hook":

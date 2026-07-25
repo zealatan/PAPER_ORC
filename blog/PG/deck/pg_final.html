@@ -1619,13 +1619,17 @@
   .tpl-hero .u{ font-size:4cqw; background:var(--hl); color:#3a2f00; padding:.35cqw 2cqw; border-radius:1cqw; margin-top:1.4cqw; }
 
   /* 섹션 컬러 인터루드 (interlude 대체) */
+  /* 섹션 전환 — 블러 배경(PG영상) + 큰 금색 숫자 + 짧은 흰 문구 */
   .tpl-sect{ position:absolute; inset:0; color:#fff; }
-  .tpl-sect.d{ background:linear-gradient(160deg,rgba(180,55,42,.74),rgba(120,34,26,.82)); }
-  .tpl-sect.g{ background:linear-gradient(160deg,rgba(40,120,74,.72),rgba(22,86,52,.82)); }
-  .tpl-sect>.fit{ display:flex; flex-direction:column; justify-content:center; padding:0 8.5cqw; gap:1.9cqw; }
-  .tpl-sect .p{ font-size:2.3cqw; opacity:.9; letter-spacing:.12em; text-shadow:0 .15cqw .6cqw rgba(0,0,0,.4); }
-  .tpl-sect .h{ font-size:6cqw; line-height:1.12; text-shadow:0 .2cqw .9cqw rgba(0,0,0,.45); }
-  .tpl-sect .s{ font-size:2.5cqw; opacity:.95; text-shadow:0 .15cqw .6cqw rgba(0,0,0,.4); }
+  .tpl-sect::before{ content:''; position:absolute; inset:0; z-index:0;
+    backdrop-filter:blur(30px) brightness(.55); -webkit-backdrop-filter:blur(30px) brightness(.55); }
+  .tpl-sect.d::after{ content:''; position:absolute; inset:0; z-index:0; background:linear-gradient(160deg,rgba(150,44,34,.28),rgba(18,22,32,.58)); }
+  .tpl-sect.g::after{ content:''; position:absolute; inset:0; z-index:0; background:linear-gradient(160deg,rgba(28,96,60,.28),rgba(18,22,32,.58)); }
+  .tpl-sect>.fit{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:.4cqw; padding:0 7cqw; }
+  .tpl-sect .sect-num{ font-family:'Arial Black',Arial,sans-serif; font-size:27cqw; font-weight:900; line-height:.82;
+    color:#f2c744; text-shadow:0 .5cqw 1.8cqw rgba(0,0,0,.55); }
+  .tpl-sect .sect-phrase{ font-size:6.4cqw; font-weight:800; letter-spacing:-.01em; color:#fff; line-height:1.12;
+    text-shadow:0 .3cqw 1.1cqw rgba(0,0,0,.6); }
 
   /* enginechart 보조 표 (물가연동 인출액 등) */
   .tpl-enginechart .engtable{ position:absolute; z-index:5; background:#ffffff;
@@ -2266,9 +2270,8 @@ const TPL = {
   },
   sectint(d){
     return `<div class="zoom tpl-sect ${d.tone==='g'?'g':'d'}">
-      <div class="p f" style="--d:.25s">${esc(d.part||'')}</div>
-      <div class="h f" style="--d:.5s">${esc(d.head||'').replace(/\|/g,'<br>')}</div>
-      <div class="s f" style="--d:.95s">${esc(d.sub||'')}</div></div>`;
+      <div class="sect-num f" style="--d:.3s" data-ek="num" data-tx="num">${esc(d.num||'')}</div>
+      <div class="sect-phrase f" style="--d:.65s" data-ek="phrase" data-tx="phrase">${esc(d.phrase||d.part||'').replace(/\|/g,'<br>')}</div></div>`;
   },
   videohook(d){
     return `<div class="zoom videohook"><video class="hookvid fullbleed" muted playsinline preload="auto" src="${d.src}"></video>
