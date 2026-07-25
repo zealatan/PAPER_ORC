@@ -1556,14 +1556,33 @@
   /* ═══ 새 element TPL 7종 (pg_sample 이식) — 비차트 씬 다양화 ═══ */
   /* 엔진이 콘텐츠를 .fit(safe-area, scale .88)로 감싸므로 레이아웃은 .fit에, 배경은 루트(.zoom)에 전체출혈 */
   /* 메뉴판 (kpirow 대체) */
-  .tpl-menu{ position:absolute; inset:0; background:#17140f; color:#ffd64a; }
-  .tpl-menu>.fit{ padding:4.5cqw 6cqw; }
-  .tpl-menu .mtitle{ font-size:4.9cqw; color:#fff; margin:0 0 .5cqw; }
-  .tpl-menu .msub{ font-size:2.0cqw; color:#c9a83e; margin-bottom:2cqw; }
-  .tpl-menu .mrow{ display:flex; align-items:baseline; gap:1cqw; font-size:3.8cqw; margin:1.5cqw 0; color:#ffe08a; }
-  .tpl-menu .mrow .dot{ flex:1; border-bottom:.35cqw dotted #6b5a26; transform:translateY(-.9cqw); }
-  .tpl-menu .mrow .pr{ color:#fff; }
-  .tpl-menu .mrow small{ font-size:1.85cqw; color:#b98f2e; font-weight:700; margin-left:.7cqw; letter-spacing:.02em; }
+  /* ── page4 부문별 매출: 배경영상(pg_storefront) 위 애니메이션 도넛 파이 + 색상 범례 ── */
+  .tpl-menu{ position:absolute; inset:0; background:transparent; color:#fff; }
+  .tpl-menu>.fit{ padding:4cqw 6cqw; display:flex; flex-direction:column; }
+  .tpl-menu .mtitle{ font-size:4.6cqw; color:#fff; margin:0 0 .5cqw; text-shadow:0 .2cqw .9cqw rgba(0,0,0,.7); }
+  .tpl-menu .msub{ font-size:1.9cqw; color:#e6ecf6; margin-bottom:2cqw; text-shadow:0 .15cqw .6cqw rgba(0,0,0,.7); }
+  .tpl-menu .mbody{ display:flex; align-items:center; gap:4.5cqw; flex:1; min-height:0; }
+  .tpl-menu .mpie{ position:relative; width:37cqw; height:37cqw; flex:none; }
+  .tpl-menu .mpie svg{ width:100%; height:100%; overflow:visible;
+    filter:drop-shadow(0 .6cqw 1.8cqw rgba(0,0,0,.55)); }
+  .tpl-menu .pieseg{ stroke-dashoffset:var(--len); stroke-linecap:butt; }
+  .playing .tpl-menu .pieseg{ animation:pieDraw .8s cubic-bezier(.4,0,.2,1) forwards; animation-delay:var(--d); }
+  @keyframes pieDraw{ from{ stroke-dashoffset:var(--len); } to{ stroke-dashoffset:0; } }
+  .tpl-menu .mctr{ position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; pointer-events:none; }
+  .tpl-menu .mctr b{ font-size:5.4cqw; color:#fff; line-height:1; letter-spacing:-.01em;
+    text-shadow:0 .2cqw .8cqw rgba(0,0,0,.8); }
+  .tpl-menu .mctr span{ font-size:1.6cqw; color:#cdd6e6; margin-top:.5cqw; font-weight:700; }
+  .tpl-menu .mlegend{ flex:1; display:flex; flex-direction:column; gap:1.1cqw; }
+  .tpl-menu .mleg{ display:grid; grid-template-columns:auto 1fr auto auto; align-items:center;
+    column-gap:1.2cqw; row-gap:.35cqw; padding:1cqw 1.5cqw;
+    background:rgba(12,17,28,.56); border:.12cqw solid rgba(200,215,240,.22); border-radius:1cqw;
+    box-shadow:0 .35cqw 1cqw rgba(0,0,0,.32); }
+  .tpl-menu .msw{ width:1.7cqw; height:1.7cqw; border-radius:.35cqw; box-shadow:0 0 .7cqw rgba(0,0,0,.45); }
+  .tpl-menu .mnm{ font-size:2.5cqw; font-weight:800; color:#fff; }
+  .tpl-menu .mpct{ font-size:2.9cqw; font-weight:900; letter-spacing:-.01em; }
+  .tpl-menu .mrev{ font-size:2cqw; font-weight:800; color:#eef3fb; }
+  .tpl-menu .mbr{ grid-column:2 / -1; font-size:1.6cqw; font-weight:600; color:#b6c2d6; letter-spacing:.01em; }
 
   /* 영수증 / 통장 (후킹 solostory 대체) */
   .tpl-stmt{ position:absolute; inset:0; }
@@ -2225,11 +2244,38 @@ function engChart(c){
 const TPL = {
   /* ═══ 새 element TPL 7종 (비차트 씬 다양화) ═══ */
   menuboard(d){
-    const rows=(d.rows||[]).map((r,i)=>`<div class="mrow f" style="--d:${(.8+i*.28).toFixed(2)}s"><span>${esc(r[0])}</span><span class="dot"></span><span class="pr">${esc(r[1])}</span>${r[2]?`<small>${esc(r[2])}</small>`:''}</div>`).join('');
+    /* 부문별 매출: 배경영상 위 애니메이션 도넛 파이(5조각 순차 그리기) + 색상 범례 */
+    const segs=d.segments||[];
+    const R=41.5, CX=50, CY=50, C=2*Math.PI*R;    /* viewBox 100 · 도넛 반지름/둘레 */
+    let acc=0;
+    const arcs=segs.map((s,i)=>{
+      const frac=(Number(s.pct)||0)/100, segLen=frac*C;
+      const startAng=(-90+acc*360).toFixed(2); acc+=frac;
+      const dl=(.7+i*.5).toFixed(2);
+      return `<circle class="pieseg" cx="${CX}" cy="${CY}" r="${R}" fill="none" stroke="${s.color}"
+        stroke-width="16" stroke-dasharray="${segLen.toFixed(2)} ${C.toFixed(2)}"
+        transform="rotate(${startAng} ${CX} ${CY})" style="--len:${segLen.toFixed(2)}; --d:${dl}s"/>`;
+    }).join('');
+    const legend=segs.map((s,i)=>{
+      const dl=(.7+i*.5+.15).toFixed(2);
+      return `<div class="mleg f" style="--d:${dl}s">
+        <span class="msw" style="background:${s.color}"></span>
+        <span class="mnm">${esc(s.ko)}</span>
+        <span class="mpct" style="color:${s.color}">${esc(s.pct)}%</span>
+        <span class="mrev">${esc(s.rev)}</span>
+        <span class="mbr">${esc(s.brands)}</span>
+      </div>`;
+    }).join('');
     return `<div class="zoom tpl-menu">
       <h3 class="mtitle" data-ek="title" data-tx="title">${writeHTML(d.title||'',.2)}</h3>
-      <p class="msub f" style="--d:.6s" data-ek="sub" data-tx="sub">${esc(d.sub||'')}</p>
-      ${rows}</div>`;
+      <p class="msub f" style="--d:.5s" data-ek="sub" data-tx="sub">${esc(d.sub||'')}</p>
+      <div class="mbody">
+        <div class="mpie">
+          <svg viewBox="0 0 100 100">${arcs}</svg>
+          <div class="mctr"><b>${esc(d.total||'')}</b><span>FY2025 매출</span></div>
+        </div>
+        <div class="mlegend">${legend}</div>
+      </div></div>`;
   },
   stmt(d){
     const rows=(d.rows||[]).map((r,i)=>`<div class="r ${r[2]||''} f" style="--d:${(.9+i*.22).toFixed(2)}s"><span>${esc(r[0])}</span><span>${esc(r[1])}</span></div>`).join('');

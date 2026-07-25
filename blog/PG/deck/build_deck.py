@@ -258,16 +258,17 @@ PASSBOOK = {"side": "b", "who": "B · 아껴", "amount": "$1,000", "note": "남�
 HERO = {"eye": f"생활필수품 배당왕 · 전 세계 단 {BIZ['rarity_count']}곳뿐",
     "big": f"{BIZ['div_years']}년", "under": "연속 배당 증액 — Dividend King"}
 _SEG = BIZ["segments"]                                    # 5개 보고부문
-_HG_REV = _SEG[3]["rev_b"] + _SEG[4]["rev_b"]            # 헬스케어+그루밍 합산
-_HG_SHR = _SEG[3]["share_pct"] + _SEG[4]["share_pct"]
-# menuboard TPL은 4행까지 자막바와 안 겹침 → 최소 부문(헬스케어·그루밍)을 한 줄로 묶어 매출 내림차순 표기(합계 100%)
+# 파이차트 부문색 (덱 톤과 조화: 파랑·주황·초록·빨강·골드) — 범례·조각 공용
+_SEG_COLORS = ["#4a8dff", "#e08a3c", "#3fc890", "#ff7a68", "#ffd64a"]
+_SEG_TOT = sum(s["rev_b"] for s in _SEG)                  # 83.5B (합계)
+# page4: 배경영상(pg_storefront) 위 애니메이션 도넛 파이(5부문 순차 그리기)+색상 범례
 MENU = {"title": f"생활필수품 [브랜드 제국] · {BIZ['brands_count']}개 브랜드",
-    "sub": "FY2025 부문별 매출 · Tide·Pampers·Gillette · SEC 8-K",
-    "rows": [
-        [_SEG[0]["ko"], f"${_SEG[0]['rev_b']:.1f}B", f"{_SEG[0]['share_pct']:.0f}% · {_SEG[0]['brands']}"],
-        [_SEG[1]["ko"], f"${_SEG[1]['rev_b']:.1f}B", f"{_SEG[1]['share_pct']:.0f}% · {_SEG[1]['brands']}"],
-        ["헬스·그루밍",  f"${_HG_REV:.1f}B",          f"{_HG_SHR:.0f}% · Oral-B·Gillette"],
-        [_SEG[2]["ko"], f"${_SEG[2]['rev_b']:.1f}B", f"{_SEG[2]['share_pct']:.0f}% · {_SEG[2]['brands']}"]]}
+    "sub": "FY2025 부문별 매출 · SEC 8-K (as-of 2026-07)",
+    "total": f"${_SEG_TOT:.1f}B",
+    "segments": [
+        {"ko": s["ko"], "pct": s["share_pct"], "rev": f"${s['rev_b']:.1f}B",
+         "brands": s["brands"], "color": c}
+        for s, c in zip(_SEG, _SEG_COLORS)]}
 SECT_P2 = {"tone": "d", "num": "2", "phrase": "파산 시나리오", "part": "2부 · 파산 시나리오", "head": "얼마면, 매달 얼마까지|써도 버틸까?", "sub": "물가상승까지 반영한, 진짜 냉혹한 그림."}
 SECT_P3 = {"tone": "g", "num": "3", "phrase": "매수 방법", "part": "3부 · 매수 방법", "head": "매달 천 달러씩 25년,|어떻게 사야 가장 클까?", "sub": "두 투자자가 있습니다."}
 DRIVETHRU = {"head": "DRIVE-THRU · 타이밍 투자자", "corner": "2000~",
@@ -288,7 +289,7 @@ for n in NARR:
     if tpl == "herostat":
         _rm = ("hero", HERO, "pg_storefront")
     elif tpl == "kpirow":
-        _rm = ("menuboard", MENU, None)          # 메뉴판은 가독성 위해 솔리드 유지
+        _rm = ("menuboard", MENU, "pg_storefront")   # 부문별 매출: 슈퍼마켓 매대 영상 위 애니 파이차트
     elif tpl == "interlude":
         _rm = ("sectint", SECT_P2, "pg_reflect") if n["sec"] == "part2" else ("sectint", SECT_P3, "pg_storefront")
     elif tpl == "solostory":

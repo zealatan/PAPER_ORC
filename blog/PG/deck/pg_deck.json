@@ -774,7 +774,7 @@
     "x": 50,
     "y": 50
    },
-   "bgid": null,
+   "bgid": "pg_storefront",
    "subLines": [
     "그럼 P&G는 뭘 팔아 이 배당을 지탱할까요?",
     "타이드 세제, 팸퍼스 기저귀, 질레트 면도기까지 — 65개 핵심 브랜드를 거느린 생활필수품 제국입니다.",
@@ -782,28 +782,44 @@
    ],
    "data": {
     "title": "생활필수품 [브랜드 제국] · 65개 브랜드",
-    "sub": "FY2025 부문별 매출 · Tide·Pampers·Gillette · SEC 8-K",
-    "rows": [
-     [
-      "섬유·홈케어",
-      "$29.6B",
-      "36% · Tide·Downy·Dawn"
-     ],
-     [
-      "베이비·여성·가족",
-      "$20.2B",
-      "24% · Pampers·Always·Charmin"
-     ],
-     [
-      "헬스·그루밍",
-      "$18.7B",
-      "22% · Oral-B·Gillette"
-     ],
-     [
-      "뷰티",
-      "$15.0B",
-      "18% · Pantene·Olay·Head&Shoulders"
-     ]
+    "sub": "FY2025 부문별 매출 · SEC 8-K (as-of 2026-07)",
+    "total": "$83.5B",
+    "segments": [
+     {
+      "ko": "섬유·홈케어",
+      "pct": 36,
+      "rev": "$29.6B",
+      "brands": "Tide·Downy·Dawn",
+      "color": "#4a8dff"
+     },
+     {
+      "ko": "베이비·여성·가족",
+      "pct": 24,
+      "rev": "$20.2B",
+      "brands": "Pampers·Always·Charmin",
+      "color": "#e08a3c"
+     },
+     {
+      "ko": "뷰티",
+      "pct": 18,
+      "rev": "$15.0B",
+      "brands": "Pantene·Olay·Head&Shoulders",
+      "color": "#3fc890"
+     },
+     {
+      "ko": "헬스케어",
+      "pct": 14,
+      "rev": "$12.0B",
+      "brands": "Oral-B·Crest·Vicks",
+      "color": "#ff7a68"
+     },
+     {
+      "ko": "그루밍",
+      "pct": 8,
+      "rev": "$6.7B",
+      "brands": "Gillette·Venus",
+      "color": "#ffd64a"
+     }
     ]
    },
    "sid": 6
