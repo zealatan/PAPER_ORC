@@ -5,6 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<style id="drawcard-css">
+.tpl-drawcard{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%;padding:2.6cqw 4.5cqw 2cqw;text-align:center;box-sizing:border-box}
+.tpl-drawcard .dchead{display:flex;align-items:flex-start;justify-content:space-between;width:100%}
+.tpl-drawcard .drank{font-family:'Black Han Sans','Pretendard',sans-serif;font-size:5.4cqw;color:var(--red);line-height:.85;letter-spacing:-.02em}
+.tpl-drawcard .dcheadr{display:flex;flex-direction:column;align-items:flex-end;gap:.35cqw;margin-right:7cqw}
+.tpl-drawcard .dcat{font-size:2cqw;font-weight:800;color:var(--ink-soft);background:rgba(23,40,42,.06);padding:.5cqw 1.5cqw;border-radius:3cqw;white-space:nowrap}
+.tpl-drawcard .ddpk{font-size:1.55cqw;color:var(--ink-soft);font-weight:700;white-space:nowrap}
+.tpl-drawcard .dctop{display:flex;align-items:center;justify-content:center;gap:3.2cqw;width:100%;margin:-1cqw 0 .2cqw;min-height:6cqw}
+.tpl-drawcard .dcname{display:flex;align-items:center;justify-content:center}
+.tpl-drawcard .dclogo{height:6cqw;max-width:36cqw;width:auto;object-fit:contain}
+.tpl-drawcard .dcname-etf{display:flex;align-items:center;gap:1.6cqw}
+.tpl-drawcard .dclogo-sm{height:3.6cqw;max-width:16cqw;width:auto;object-fit:contain}
+.tpl-drawcard .dctitle{margin:0;font-size:4.4cqw!important}
+.tpl-drawcard .ddbig{display:flex;align-items:baseline;gap:.7cqw}
+.tpl-drawcard .ddlab{font-size:2.1cqw;color:var(--ink-soft);font-weight:700}
+.tpl-drawcard .ddnum{font-family:ui-monospace,monospace;font-size:5cqw;font-weight:900;color:var(--red);letter-spacing:-.01em}
+.tpl-drawcard .dcchart{position:relative;flex:1 1 auto;width:100%;min-height:0;display:flex;align-items:center;justify-content:center}
+.tpl-drawcard .dcreason{font-size:2.1cqw;color:var(--ink);font-weight:600;margin-top:.3cqw;max-width:88%}
+.tpl-drawcard .dctab{position:absolute;top:.3cqw;left:.3cqw;border-collapse:collapse;font-size:1.7cqw;z-index:4}
+.tpl-drawcard .dctab caption{font-size:1.4cqw;color:var(--ink-soft);font-weight:700;margin-bottom:.25cqw;text-align:left;letter-spacing:.02em;caption-side:top}
+.tpl-drawcard .dctab th{font-size:1.5cqw;font-weight:800;color:#fff;background:var(--red);padding:.3cqw 1.6cqw;border:1px solid rgba(255,255,255,.5)}
+.tpl-drawcard .dctab td{font-family:ui-monospace,monospace;font-weight:800;color:var(--ink);background:rgba(251,248,241,.92);padding:.35cqw 1.6cqw;border:1px solid rgba(23,40,42,.14);text-align:center}
+.echart .ehl{position:absolute;font-family:ui-monospace,monospace;font-weight:800;font-size:2cqw;transform:translateY(-50%);white-space:nowrap;text-shadow:0 0 3px #f2ede2,0 0 3px #f2ede2,0 0 3px #f2ede2}
+.echart .epeak{position:absolute;font-family:ui-monospace,monospace;font-weight:800;font-size:2cqw;color:var(--ink);white-space:nowrap;text-shadow:0 0 3px #f2ede2,0 0 3px #f2ede2,0 0 3px #f2ede2}
+.echart line.ehline{opacity:.65}
+</style>
 <title>[v2] 코카콜라(KO) 백테스트 리포트 — 머니 리서치</title>
 <style>
   @font-face{
@@ -2162,6 +2188,10 @@ function engChart(c){
       const hbelow = y < T+PH*0.4;  /* 기준선이 위쪽이면 라벨을 아래로, 아니면 위로 */
       html+=`<span class="eguide" style="--d:2.7s;left:${p(hbx,W)}%;top:${p(y+(hbelow?16:-15),H)}%;transform:translate(-50%,0)">${esc(c.hline.label)}</span>`;
     }
+    (c.hlines||[]).forEach((hl,hi)=>{ const y=Y(hl.v);
+      svg+=`<line class="edash ehline" style="--d:${(1.1+hi*.14).toFixed(2)}s" x1="${L}" y1="${y.toFixed(1)}" x2="${W-R}" y2="${y.toFixed(1)}" stroke="${hl.c}"/>`;
+      html+=`<span class="ehl" style="--d:${(2.4+hi*.12).toFixed(2)}s;left:${p(L+3,W)}%;top:${p(y-13,H)}%;color:${hl.c}">${esc(hl.label)}</span>`;
+    });
     const eends=[];
     (c.series||[]).forEach((s,si)=>{
       const Yf=(s.a2&&c.y2)?Y2:Y;
@@ -2186,7 +2216,12 @@ function engChart(c){
     }
     if(c.dot){ const dx=X(c.dot.x), dy=Y(c.dot.y);
       svg+=`<circle class="edot" style="--d:3s" cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="5.5" fill="${c.dot.c}"/>`;
-      html+=`<span class="enow" style="--d:3.2s;left:${p(dx,W)}%;top:${p(dy-22,H)}%;transform:translate(-50%,0)">${esc(c.dot.label)} $${Math.round(c.dot.y)}</span>`;
+      html+=`<span class="enow" style="--d:3.2s;left:${p(dx,W)}%;top:${p(dy-22,H)}%;transform:translate(-50%,0)">${esc(c.dot.label)} ${c.cur||'$'}${Math.round(c.dot.y).toLocaleString()}</span>`;
+    }
+    if(c.peak){ const px=X(c.peak.x), py=Y(c.peak.y);
+      svg+=`<circle class="edot" style="--d:2.7s" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5.5" fill="${c.peak.c||'var(--ink)'}"/>`;
+      const pk = px > (L+W-R)/2;   /* 꼭대기가 오른쪽이면 라벨 왼쪽으로 */
+      html+=`<span class="epeak" style="--d:2.9s;left:${p(px+(pk?-1.4:1.4),W)}%;top:${p(py-18,H)}%;transform:translate(${pk?'-100%':'0'},0)">${esc(c.peak.label)}</span>`;
     }
     if(!c.noLegend){
       let lg=''; (c.series||[]).forEach((s,si)=>{ lg+=`<span class="eleg" style="--d:${(2.9+si*.15).toFixed(2)}s"><i style="background:${s.c}"></i>${esc(s.name)}</span>`; });
@@ -2371,6 +2406,28 @@ const TPL = {
       ${tableHTML}
       <p class="anno" style="--d:2.6s" data-ek="anno"><span data-ek="anno.main" data-tx="annoMain">${esc(d.annoMain||'')}</span><small data-ek="anno.sub" data-tx="annoSub">${esc(d.annoSub||'')}</small></p>
       ${d.src?`<p class="esrc f" style="--d:3.4s" data-ek="src" data-tx="src">출처: ${esc(d.src)}</p>`:''}
+      <p class="scredit f" style="--d:5s" data-ek="credit">${esc(CREDIT)}</p></div>`;
+  },
+  /* NEWTPL:drawcard — 주간 낙폭 카운트다운 (종목 1개 = 슬라이드 1개) */
+  drawcard(d){
+    const chart = d.chart ? engChart(d.chart) : '';
+    const c = d.counts || null;
+    const dctitle = `<h1 class="btitle dctitle" data-ek="title" data-tx="title">${writeHTML(d.title||'',.2)}</h1>`;
+    const nameEl = d.logo
+      ? (d.issuerlogo
+          ? `<div class="dcname-etf"><img class="dclogo-sm f" style="--d:.5s" src="${d.logo}" alt="issuer">${dctitle}</div>`
+          : `<img class="dclogo f" style="--d:.5s" src="${d.logo}" alt="${esc(d.title||'')}">`)
+      : dctitle;
+    const tbl = c ? `<table class="dctab f" style="--d:3.4s"><caption>전고점 대비 하락 횟수</caption><tr><th>−20%</th><th>−30%</th><th>−50%</th></tr><tr><td>${c.d20||0}회</td><td>${c.d30||0}회</td><td>${c.d50||0}회</td></tr></table>` : '';
+    return `<div class="zoom tpl-drawcard">
+      <div class="dchead f" style="--d:.35s"><span class="drank" data-ek="rank" data-tx="rank">${esc(d.rank||'')}</span>
+        <span class="dcheadr"><span class="dcat" data-ek="cat" data-tx="cat">${esc(d.cat||'')}</span>${d.peakdate?`<span class="ddpk">전고점 ${esc(d.peakdate)}</span>`:''}</span></div>
+      <div class="dctop">
+        <div class="dcname">${nameEl}</div>
+        <div class="ddbig f" style="--d:1.1s"><span class="ddlab">전고점 대비</span> <b class="ddnum" data-ek="dd" data-tx="dd">${esc(d.dd||'')}</b></div>
+      </div>
+      <div class="echart dcchart" data-ek="chart">${chart}${tbl}</div>
+      <p class="dcreason f" style="--d:3.7s" data-ek="reason" data-tx="reason">${d.reason?('💬 '+esc(d.reason)):''}</p>
       <p class="scredit f" style="--d:5s" data-ek="credit">${esc(CREDIT)}</p></div>`;
   },
   /* NEWTPL:orbit */
