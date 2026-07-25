@@ -112,14 +112,23 @@ def draw_chart(row):
         "hline": {"v": hi, "c": BLUE, "label": ""},   # 전고점 수평선(파랑) · 라벨은 peak 마커에
         "hlines": [{"v": hi * 0.8, "c": "#e0902f", "label": "−20%"},
                    {"v": hi * 0.5, "c": RED, "label": "−50%"}],
-        "peak": {"x": pts[pk_i][0], "y": pts[pk_i][1], "c": BLUE, "label": f"전고점 {money(hi, sym)}"},
+        "peak": {"x": pts[pk_i][0], "y": pts[pk_i][1], "c": BLUE, "label": f"전고점 {sym}{hi:,.0f}"},
         "dot": {"x": xs[-1], "y": cur, "c": RED, "label": "현재"},
         "noLegend": True,
     }
-    if crash_x:   # 과거 −30% 폭락 시점 = 빨간 별표 + 세로 점선 (PG '폭락 매수 신호' 방식)
-        chart["stars"] = {"series": 0, "years": crash_x, "label": "−30% 폭락",
+    if crash_x:   # 과거 −30% 하락 시점 = 빨간 별표 + 세로 점선 (PG '폭락 신호' 방식)
+        chart["stars"] = {"series": 0, "years": crash_x, "label": "−30% 하락",
                           "labelAt": [crash_x[0], hi * 0.58]}
     return chart
+
+
+def week_label():
+    from datetime import date as _d
+    try:
+        y, w, _ = _d.fromisoformat(WEEK.get("date", "")).isocalendar()
+        return f"{y}년 {w}주차"
+    except Exception:
+        return ""
 
 
 def notice_scene():
@@ -157,7 +166,7 @@ def drawcard_scene(row, rank, market):
 # ── 씬 조립 ──────────────────────────────────────────────────────────────────────
 scenes = [
     notice_scene(),
-    sectint_scene("", "이번 주, 전고점에서|가장 많이 무너진 종목은?",
+    sectint_scene(week_label(), "이번 주, 전고점에서|가장 많이 무너진 종목은?",
                   ["이번 주 전고점 대비 가장 많이 빠진 종목을 시장별로 모았습니다."]),
 ]
 sec_no = 0
@@ -203,7 +212,7 @@ for _i, _sc in enumerate(scenes):
 
 # ── HTML 주입: KEY 교체 + 코카콜라 패치 IIFE 블록 제거 + 조건부 SCENES 주입 ──
 html = (DECK / "stock_alert_final.html").read_text(encoding="utf-8")
-html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_stock_alert_v17';")
+html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_stock_alert_v29';")
 bs = html.index("/* FIRE 세트")
 p = html.index("var VER='src1';", bs)
 be = html.index("})();", p) + len("})();")
