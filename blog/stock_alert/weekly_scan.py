@@ -102,29 +102,50 @@ HIST_START = date(2000, 1, 1)     # 차트 = 2000년~현재(없으면 상장 이
 
 
 def _enrich(row: dict, n: int = 80) -> dict:
-    """drawcard 확장 데이터: 전체 히스토리(2000~/상장이후) 가격경로 + 낙폭 횟수(20/30/50).
-    build_drawdown_cycles 로 전 기간 고점→저점 사이클을 세어 각 깊이 도달 횟수 집계(누적 '이상').
+    """drawcard 확장 데이터: 전체 히스토리(2000~/상장이후) 가격경로 + '폭락 시점'(트리거).
+
+    폭락 시점 = 롤링 전고점 대비 th% 하락한 순간(신호). 저점에서 th% 반등하면 재장전 →
+    2000·2009 처럼 드물고 굵직한 시기만 잡힘(PG 덱 '−30% 폭락 매수 신호' 방식).
+    crash_x = −30% 폭락 시점을 pts 인덱스로(별표 표시용). counts = 20/30/50 폭락 횟수.
     """
-    from global_cup.golden_engine import build_drawdown_cycles
     try:
-        import pandas as pd
+        import pandas as pd  # noqa: F401
         df = download_price(row["ticker"], HIST_START, date.today())
         c = get_close_series(df)
         if c.empty:
-            return {"pts": [], "counts": {"d20": 0, "d30": 0, "d50": 0}, "listed": ""}
+            return {"pts": [], "counts": {"d20": 0, "d30": 0, "d50": 0}, "listed": "", "crash_x": []}
         step = max(1, len(c) // n)
         s = c.iloc[::step]
         if s.index[-1] != c.index[-1]:
             s = pd.concat([s, c.iloc[[-1]]])
         pts = [[i, round(float(v), 2)] for i, v in enumerate(s)]
-        cyc = build_drawdown_cycles(c, row["label"], row["ticker"], "Scan", threshold=0.10)
-        dd = [x.get("하락률 숫자", 0.0) for x in (cyc or [])]   # 리스트 of dict, '하락률 숫자'=음수
-        def cnt(th):
-            return int(sum(1 for x in dd if x <= -th))
-        return {"pts": pts, "counts": {"d20": cnt(20), "d30": cnt(30), "d50": cnt(50)},
-                "listed": s.index[0].strftime("%Y-%m-%d")}
+        s_dates = list(s.index)
+
+        def _near(dt):
+            return min(range(len(s_dates)), key=lambda k: abs((s_dates[k] - dt).days))
+
+        def crash_dates(th):
+            t = th / 100.0
+            roll = float(c.iloc[0]); armed = True; out = []
+            for dt, v in c.items():
+                v = float(v)
+                newhigh = v > roll
+                if newhigh:
+                    roll = v
+                if armed:
+                    if v <= roll * (1 - t):
+                        out.append(dt); armed = False        # 폭락 신호
+                elif newhigh:
+                    armed = True                             # 신고가 회복 시에만 재장전(굵직한 폭락만)
+            return out
+
+        c30 = crash_dates(30)
+        crash_x = sorted(set(_near(dt) for dt in c30))
+        counts = {"d20": len(crash_dates(20)), "d30": len(c30), "d50": len(crash_dates(50))}
+        return {"pts": pts, "counts": counts,
+                "listed": s.index[0].strftime("%Y-%m-%d"), "crash_x": crash_x}
     except Exception:
-        return {"pts": [], "counts": {"d20": 0, "d30": 0, "d50": 0}, "listed": ""}
+        return {"pts": [], "counts": {"d20": 0, "d30": 0, "d50": 0}, "listed": "", "crash_x": []}
 
 
 def run(week: int, top: int, top3: int, pool: int) -> dict:
@@ -155,6 +176,7 @@ def run(week: int, top: int, top3: int, pool: int) -> dict:
         if "pts" not in r:
             e = _enrich(r)
             r["pts"], r["counts"], r["listed"] = e["pts"], e["counts"], e["listed"]
+            r["crash_x"] = e.get("crash_x", [])
 
     result = {
         "week": week, "date": end.strftime("%Y-%m-%d"),

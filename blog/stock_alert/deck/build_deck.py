@@ -22,6 +22,8 @@ if not weeks:
 WEEK = json.loads(weeks[-1].read_text(encoding="utf-8"))
 
 RED, INK = "var(--red)", "var(--ink-soft)"
+BLUE = "#2563eb"          # 전고점 마커/라벨
+LINE = "#2b3d40"          # 가격 선(전고점=파랑·현재=빨강과 구분되는 먹색)
 CAT = {"ETF": "📊 ETF", "미국": "🇺🇸 미국주식", "한국": "🇰🇷 한국주식", "유럽": "🇪🇺 유럽주식"}
 SEC = {"ETF": ("①", "ETF 낙폭 TOP5"), "미국": ("②", "미국 주식 낙폭 TOP5"),
        "한국": ("③", "한국 주식 낙폭 TOP5"), "유럽": ("④", "유럽 주식 낙폭 TOP5")}
@@ -96,24 +98,28 @@ def draw_chart(row):
     lo = min(min(ys), cur, hi * 0.5)       # -50% 선까지 항상 보이게
     top = max(max(ys), hi)
     span = (top - lo) or (top * 0.1)
-    y0, y1 = max(0, lo - span * 0.05), top + span * 0.22   # 상단 22% = 테이블 놓을 빈 띠
+    y0, y1 = max(0, lo - span * 0.13), top + span * 0.22   # 하단 13%=자막 여백 · 상단 22%=테이블 띠
     ly = (row.get("listed", "") or "")[:4]
     sym = cur_sym(row["ticker"])
     pk_i = max(range(len(pts)), key=lambda i: pts[i][1])   # 그래프상 전고점 위치
-    return {
+    crash_x = row.get("crash_x") or []
+    chart = {
         "kind": "line", "cur": sym,
         "x": [xs[0], xs[-1]], "y": [y0, y1],
         "yticks": [],   # 전고점 가격은 아래 peak 마커에만 표기(중복 제거)
         "xticks": [[xs[0], ly], [xs[-1], "현재"]],
-        "series": [{"pts": pts, "c": RED, "w": 3, "name": row["ticker"]}],
-        "hline": {"v": hi, "c": INK, "label": ""},   # 선만(라벨은 아래 peak 마커에)
+        "series": [{"pts": pts, "c": LINE, "w": 3, "name": row["ticker"]}],
+        "hline": {"v": hi, "c": BLUE, "label": ""},   # 전고점 수평선(파랑) · 라벨은 peak 마커에
         "hlines": [{"v": hi * 0.8, "c": "#e0902f", "label": "−20%"},
-                   {"v": hi * 0.7, "c": "#d5691c", "label": "−30%"},
                    {"v": hi * 0.5, "c": RED, "label": "−50%"}],
-        "peak": {"x": pts[pk_i][0], "y": pts[pk_i][1], "c": INK, "label": f"전고점 {money(hi, sym)}"},
+        "peak": {"x": pts[pk_i][0], "y": pts[pk_i][1], "c": BLUE, "label": f"전고점 {money(hi, sym)}"},
         "dot": {"x": xs[-1], "y": cur, "c": RED, "label": "현재"},
         "noLegend": True,
     }
+    if crash_x:   # 과거 −30% 폭락 시점 = 빨간 별표 + 세로 점선 (PG '폭락 매수 신호' 방식)
+        chart["stars"] = {"series": 0, "years": crash_x, "label": "−30% 폭락",
+                          "labelAt": [crash_x[0], hi * 0.58]}
+    return chart
 
 
 def notice_scene():
@@ -128,6 +134,10 @@ def notice_scene():
 
 def sectint_scene(part, head, lines, tone="d"):
     return base_scene("sectint", lines, {"tone": tone, "part": part, "head": head})
+
+
+def sectnum_scene(num, label, lines, tone="g"):
+    return base_scene("sectnum", lines, {"tone": tone, "num": str(num), "label": label})
 
 
 def drawcard_scene(row, rank, market):
@@ -150,12 +160,14 @@ scenes = [
     sectint_scene("", "이번 주, 전고점에서|가장 많이 무너진 종목은?",
                   ["이번 주 전고점 대비 가장 많이 빠진 종목을 시장별로 모았습니다."]),
 ]
+sec_no = 0
 for market in MARKET_ORDER:
     if market not in WEEK["markets"]:
         continue
+    sec_no += 1
     part, head = SEC[market]
     rows = WEEK["markets"][market]
-    scenes.append(sectint_scene(part, head, [f"{head}, 5위부터 봅니다."], tone="g"))
+    scenes.append(sectnum_scene(sec_no, head, [f"{head}, 5위부터 봅니다."]))   # 큰 숫자 + 라벨
     for row, rank in zip(reversed(rows), range(len(rows), 0, -1)):
         scenes.append(drawcard_scene(row, rank, market))
 
@@ -168,16 +180,37 @@ scenes += [
                   ["매주 낙폭 랭킹을 올립니다. 구독하고 다음 주도 받아보세요."]),
 ]
 
+# ── 라벨 위치 전파: deck_ov.json 의 peak/now/counts 오프셋을 전 drawcard 씬에 적용 ──
+#    한 슬라이드에서 전고점/현재/테이블을 드래그→💾저장 하면 전 슬라이드에 같은 위치로 전파됨.
+_ovf = ROOT / "spec" / "deck_ov.json"
+_saved = {}
+if _ovf.exists():
+    try:
+        _saved = json.loads(_ovf.read_text(encoding="utf-8"))
+    except Exception:
+        _saved = {}
+_tmpl = {}
+for _k, _v in _saved.items():
+    if ":" in _k:
+        _ek = _k.split(":", 1)[1]
+        if _ek in ("peak", "now", "counts") and _ek not in _tmpl:
+            _tmpl[_ek] = _v          # 첫 발견 오프셋을 템플릿으로(= 사용자가 조정한 위치)
+OV_OUT = {}
+for _i, _sc in enumerate(scenes):
+    if _sc["tpl"] == "drawcard":
+        for _ek, _off in _tmpl.items():
+            OV_OUT[f"{_i}:{_ek}"] = _saved.get(f"{_i}:{_ek}", _off)   # 씬별 개별조정 우선, 없으면 템플릿
+
 # ── HTML 주입: KEY 교체 + 코카콜라 패치 IIFE 블록 제거 + 조건부 SCENES 주입 ──
 html = (DECK / "stock_alert_final.html").read_text(encoding="utf-8")
-html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_stock_alert_v3';")
+html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_stock_alert_v17';")
 bs = html.index("/* FIRE 세트")
 p = html.index("var VER='src1';", bs)
 be = html.index("})();", p) + len("})();")
 override = ("/* ══ STOCK_ALERT 낙폭 카운트다운 주입 (localStorage 저장본 있으면 유지) ══ */\n"
             "if(!localStorage.getItem(KEY)){\n"
             "  SCENES = " + json.dumps(scenes, ensure_ascii=False) + ";\n"
-            "  OV = {}; CP = {}; THEME='paper'; PAPER='photo';\n"
+            "  OV = " + json.dumps(OV_OUT, ensure_ascii=False) + "; CP = {}; THEME='paper'; PAPER='photo';\n"
             "}\n")
 html = html[:bs] + override + html[be:]
 
