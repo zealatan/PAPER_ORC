@@ -8,6 +8,7 @@ from global_cup.dividend_reinvest import run_dividend_reinvest_backtest
 from global_cup.ui import (
     inject_css,
     render_annual_dividend_income_tab,
+    render_breakout_scanner_tab,
     render_controls,
     render_data_range_info,
     render_dividend_tab,
@@ -122,7 +123,7 @@ def render():
     with right:
         st.markdown('<div class="right-col-spacer" style="height:18.0rem; margin-top:-12rem;"></div>', unsafe_allow_html=True)
 
-        price_tab, dividend_tab, invest_result_tab, invest_quantity_tab, annual_dividend_income_tab, drawdown_scanner_tab = st.tabs(
+        price_tab, dividend_tab, invest_result_tab, invest_quantity_tab, annual_dividend_income_tab, drawdown_scanner_tab, breakout_scanner_tab = st.tabs(
             [
                 "가격",
                 "배당",
@@ -130,6 +131,7 @@ def render():
                 "투자 수량",
                 "연배당금",
                 "낙폭 스캐너",
+                "신고가 스캐너",
             ]
         )
 
@@ -173,6 +175,9 @@ def render():
 
         with drawdown_scanner_tab:
             render_high_drawdown_tab(config, user_input)
+
+        with breakout_scanner_tab:
+            render_breakout_scanner_tab(config, user_input)
 
     st.markdown('<div style="height:2.5rem;"></div>', unsafe_allow_html=True)
     st.caption("Copyright © zealatan")
