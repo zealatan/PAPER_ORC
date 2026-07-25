@@ -80,7 +80,7 @@ def name_of(label):
 
 
 def dur(lines):
-    return 2500 + sum(1400 for x in lines if str(x).strip())
+    return 5000 + sum(2800 for x in lines if str(x).strip())   # 미리보기 전환 2배 느리게(더빙하면 음성길이로 동기화)
 
 
 def base_scene(tpl, lines, data, bgid=None):
@@ -212,7 +212,7 @@ for _i, _sc in enumerate(scenes):
 
 # ── HTML 주입: KEY 교체 + 코카콜라 패치 IIFE 블록 제거 + 조건부 SCENES 주입 ──
 html = (DECK / "stock_alert_final.html").read_text(encoding="utf-8")
-html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_stock_alert_v29';")
+html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_stock_alert_v31';")
 bs = html.index("/* FIRE 세트")
 p = html.index("var VER='src1';", bs)
 be = html.index("})();", p) + len("})();")

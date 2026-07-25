@@ -1,0 +1,216 @@
+[
+ {
+  "scene": 0,
+  "tpl": "notice",
+  "lines": []
+ },
+ {
+  "scene": 1,
+  "tpl": "sectint",
+  "lines": [
+   "이번 주 전고점 대비 가장 많이 빠진 종목을 시장별로 모았습니다."
+  ]
+ },
+ {
+  "scene": 2,
+  "tpl": "sectnum",
+  "lines": [
+   "ETF 낙폭 TOP5, 5위부터 봅니다."
+  ]
+ },
+ {
+  "scene": 3,
+  "tpl": "drawcard",
+  "lines": [
+   "5위, KODEX AI반도체TOP2플러스.",
+   "전고점 대비 38.1% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 4,
+  "tpl": "drawcard",
+  "lines": [
+   "4위, TIGER Fn반도체TOP10.",
+   "전고점 대비 38.1% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 5,
+  "tpl": "drawcard",
+  "lines": [
+   "3위, SOL AI반도체TOP2플러스.",
+   "전고점 대비 40.6% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 6,
+  "tpl": "drawcard",
+  "lines": [
+   "2위, TIGER 2차전지테마.",
+   "전고점 대비 41.1% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 7,
+  "tpl": "drawcard",
+  "lines": [
+   "1위, KODEX 2차전지산업.",
+   "전고점 대비 41.8% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 8,
+  "tpl": "sectnum",
+  "lines": [
+   "미국 주식 낙폭 TOP5, 5위부터 봅니다."
+  ]
+ },
+ {
+  "scene": 9,
+  "tpl": "drawcard",
+  "lines": [
+   "5위, Uber.",
+   "전고점 대비 31.2% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 10,
+  "tpl": "drawcard",
+  "lines": [
+   "4위, Arm Holdings.",
+   "전고점 대비 35.6% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 11,
+  "tpl": "drawcard",
+  "lines": [
+   "3위, Netflix.",
+   "전고점 대비 36.1% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 12,
+  "tpl": "drawcard",
+  "lines": [
+   "2위, Nike.",
+   "전고점 대비 38.2% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 13,
+  "tpl": "drawcard",
+  "lines": [
+   "1위, Oracle.",
+   "전고점 대비 51.6% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 14,
+  "tpl": "sectnum",
+  "lines": [
+   "한국 주식 낙폭 TOP5, 5위부터 봅니다."
+  ]
+ },
+ {
+  "scene": 15,
+  "tpl": "drawcard",
+  "lines": [
+   "5위, LG Innotek.",
+   "전고점 대비 51.3% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 16,
+  "tpl": "drawcard",
+  "lines": [
+   "4위, LG CNS.",
+   "전고점 대비 55.1% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 17,
+  "tpl": "drawcard",
+  "lines": [
+   "3위, Mirae Asset Securities.",
+   "전고점 대비 56.0% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 18,
+  "tpl": "drawcard",
+  "lines": [
+   "2위, LG Electronics.",
+   "전고점 대비 56.9% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 19,
+  "tpl": "drawcard",
+  "lines": [
+   "1위, Kolon TissueGene.",
+   "전고점 대비 86.7% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 20,
+  "tpl": "sectnum",
+  "lines": [
+   "유럽 주식 낙폭 TOP5, 5위부터 봅니다."
+  ]
+ },
+ {
+  "scene": 21,
+  "tpl": "drawcard",
+  "lines": [
+   "5위, Volkswagen Pref.",
+   "전고점 대비 32.8% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 22,
+  "tpl": "drawcard",
+  "lines": [
+   "4위, Hermes.",
+   "전고점 대비 37.5% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 23,
+  "tpl": "drawcard",
+  "lines": [
+   "3위, Prosus.",
+   "전고점 대비 41.6% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 24,
+  "tpl": "drawcard",
+  "lines": [
+   "2위, BMW.",
+   "전고점 대비 41.6% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 25,
+  "tpl": "drawcard",
+  "lines": [
+   "1위, EssilorLuxottica.",
+   "전고점 대비 49.5% 빠졌습니다."
+  ]
+ },
+ {
+  "scene": 26,
+  "tpl": "sectint",
+  "lines": [
+   "시장을 통틀어 가장 많이 빠진 세 종목입니다."
+  ]
+ },
+ {
+  "scene": 27,
+  "tpl": "sectint",
+  "lines": [
+   "매주 낙폭 랭킹을 올립니다. 구독하고 다음 주도 받아보세요."
+  ]
+ }
+]
