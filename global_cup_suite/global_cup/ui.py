@@ -2268,8 +2268,8 @@ def render_high_drawdown_tab(config: MarketConfig, inp: UserInput) -> None:
 # 수익률(payload) 순으로 보여준다. 신선도는 트리거에서, 극적 숫자는 장기수익률에서.
 
 _BREAKOUT_PERIODS = {"최근 5년": 5, "최근 10년": 10, "최근 3년": 3, "올해 (YTD)": "ytd"}
-_BREAKOUT_FRESH = {"이번 주 (5거래일)": 5, "최근 한 달 (20)": 20, "최근 분기 (60)": 60}
-_BREAKOUT_HIGH = {"52주 신고가": 252, "사상 최고가": None}
+_BREAKOUT_FRESH = {"이번 주 (5거래일)": 5, "최근 한 달 (20)": 20, "최근 분기 (60)": 60,
+                   "최근 1년 (252)": 252}
 
 
 def _breakout_period_start(end_date: "date", spec) -> "date":
@@ -2352,15 +2352,13 @@ def render_breakout_scanner_tab(config: MarketConfig, inp: UserInput) -> None:
                                  key=f"bo_period::{config.key}")
     fresh_name = r1c2.selectbox("신고가 신선도", list(_BREAKOUT_FRESH.keys()),
                                 key=f"bo_fresh::{config.key}")
-    r2c1, r2c2 = st.columns(2)
-    high_name = r2c1.selectbox("신고가 기준", list(_BREAKOUT_HIGH.keys()),
-                               key=f"bo_high::{config.key}")
-    top_n = r2c2.selectbox("표시 개수", [20, 30, 50, 10],
+    r2c1, _r2c2 = st.columns(2)
+    top_n = r2c1.selectbox("표시 개수", [20, 30, 50, 10],
                            key=f"bo_topn::{config.key}")
 
     period_spec = _BREAKOUT_PERIODS[period_name]
     fresh_days = _BREAKOUT_FRESH[fresh_name]
-    high_lookback = _BREAKOUT_HIGH[high_name]
+    high_lookback = 252   # 상승 스캐너는 52주 신고가로 한정
     period_start = _breakout_period_start(inp.end_date, period_spec)
     # 다운로드 시작: 선택 기간과 52주 창을 모두 커버하도록 넉넉히 앞당김.
     dl_start = min(
@@ -2387,7 +2385,7 @@ def render_breakout_scanner_tab(config: MarketConfig, inp: UserInput) -> None:
         status.empty()
         st.session_state[state_key] = {
             "df": df, "end": inp.end_date,
-            "period": period_name, "fresh": fresh_name, "high": high_name,
+            "period": period_name, "fresh": fresh_name,
         }
 
     cached = st.session_state.get(state_key)
@@ -2398,7 +2396,7 @@ def render_breakout_scanner_tab(config: MarketConfig, inp: UserInput) -> None:
 
     df = cached["df"]
     st.caption(
-        f"기준: {cached['high']} · 신선도 {cached['fresh']} · {cached['period']} 수익률 "
+        f"기준: 52주 신고가 · 신선도 {cached['fresh']} · {cached['period']} 수익률 "
         f"· (종료일 {cached['end']})"
     )
     if df is None or df.empty:
