@@ -84,6 +84,50 @@ SCOMP = spec["backtest"]["strategy_compare"]          # 3부 전체 데이터
 TRIG_Y = sorted({int(t["date"][:4]) for t in SCOMP["deck_triggers"]})
 
 
+# ── reelchart (릴스 스타일 개별 그래프) 공용 ──────────────────────
+def _nice_ceil(v):
+    if v <= 0:
+        return 100000
+    e = 10 ** math.floor(math.log10(v)); f = v / e
+    for n in (1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10):
+        if f <= n:
+            return int(n * e)
+    return int(10 * e)
+
+_RCOL = {1000: "#1f6fe0", 2000: "#e0821c", 3000: "#e01e37"}
+
+def reel_fire(init):
+    """파이어 원금별(2000 은퇴·물가반영) 릴스 그래프 — 월$1/2/3천 3선."""
+    lines, mx = [], 0
+    for mo in (1000, 2000, 3000):
+        s = SC[f"real_{init}_{mo}"]; pts = s["pts"]; mx = max(mx, max(p[1] for p in pts))
+        end = (f"생존 ${s['final']//10000}만") if s["survived"] else (f"’{str(s['depletion'])[2:4]} 파산")
+        lines.append({"c": _RCOL[mo], "name": "", "surv": bool(s["survived"]), "end": end, "pts": pts})
+    return {"title1": "물가 반영해서 매달 빼 쓰면", "title2": f"<b>${init//10000}만</b>으로 몇 년 버틸까?",
+            "sub": "2000년 은퇴", "ymax": _nice_ceil(mx * 1.05), "tip": "compact",
+            "hline": {"v": init, "label": f"은퇴 원금 ${init//10000}만"},
+            "legend": [{"c": _RCOL[mo], "label": f"월 ${mo//1000}천 인출"} for mo in (1000, 2000, 3000)],
+            "lines": lines}
+
+def reel_steady():
+    so = SCOMP["steady"]["series_on"]; t0 = so[0][0]
+    prin = SCOMP["premise"]["principal"]; mi = SCOMP["premise"]["monthly_income"]
+    inv = [[x, min(prin, round((x - t0) * 12 * mi))] for x, _ in so]
+    return {"title1": "최악의 고점에서 <b>매달 $1,000씩</b>", "title2": "P&G에 적립했더니",
+            "sub": "매달 $1,000 적립 · 배당 재투자 · ’00.3~’26.7", "ymax": _nice_ceil(so[-1][1] * 1.08),
+            "tip": "full", "hline": None, "legend": None,
+            "lines": [{"c": "#e01e37", "name": "평가금액", "surv": True, "end": "", "pts": so},
+                      {"c": "#111", "name": "원금", "surv": True, "end": "", "pts": inv}]}
+
+def reel_crash():
+    tot = SCOMP["smart"]["total_series"]; invs = SCOMP["smart"]["invested_series"]
+    return {"title1": "<b>폭락 때만</b> 노려서", "title2": "P&G를 담았더니",
+            "sub": "−30% 폭락 때만 매수 · 배당 재투자 · ’00.3~’26.7", "ymax": _nice_ceil(tot[-1][1] * 1.08),
+            "tip": "full", "hline": None, "legend": None,
+            "lines": [{"c": "#e01e37", "name": "평가금액", "surv": True, "end": "", "pts": tot},
+                      {"c": "#8a93a2", "name": "투입원금", "surv": True, "end": "", "pts": invs, "dash": True}]}
+
+
 def price_trigger_chart():
     """씬24: PG 주가 + -30% 폭락 매수 신호(★)."""
     ps = SCOMP["price_series"]; lo, hi = SCOMP["price_range"]
@@ -366,7 +410,10 @@ for n in NARR:
         elif chart_id in CHART_MAP:    # 파산 시나리오 (물가반영)
             strat_key, init = CHART_MAP[chart_id]
             is2002 = chart_id.endswith("_2002")
-            yr_tag = "2002년 은퇴" if is2002 else "2000년 은퇴"
+            if not is2002:   # 2000년 은퇴 세트 → 릴스 스타일 개별 그래프
+                sc["tpl"] = "reelchart"; d.clear(); d.update(reel_fire(init))
+                scenes.append(sc); continue
+            yr_tag = "2002년 은퇴"          # 2002 세트는 유지(deck_plan에서 드롭 예정)
             d.update({"_fire": True, "sub": "",
                       "title": f"{money(init)} · {yr_tag} [물가반영]",
                       "chart": fire_chart(init, strat_key)})
@@ -389,14 +436,10 @@ for n in NARR:
             d.update({"sub": "", "title": "PG 주가와 [−30% 폭락] 매수 신호",
                       "annoMain": f"25년간 −30% 폭락은 {'·'.join(str(y) for y in TRIG_Y)}년, 세 시기뿐",
                       "chart": price_trigger_chart()})
-        elif chart_id == "smart_result":    # 씬25: 폭락 매수 결과
-            d.update({"_fire": True, "sub": "", "title": "[폭락 때만] 몰아 투자",
-                      "annoMain": f"폭락만 노려도 {money(SCOMP['smart']['final_on'])} — 현금 {SCOMP['smart']['avg_cash_ratio_pct']:.0f}%가 놀았다",
-                      "chart": smart_result_chart()})
-        elif chart_id == "steady_result":   # 씬26: 적립 결과
-            d.update({"sub": "", "title": "매달 $1,000 [적립식]",
-                      "annoMain": f"적립 + 배당 재투자 {money(SCOMP['steady']['final_on'])}",
-                      "chart": steady_result_chart()})
+        elif chart_id == "smart_result":    # 씬25: 폭락 매수 결과 → 릴스 스타일
+            sc["tpl"] = "reelchart"; d.clear(); d.update(reel_crash())
+        elif chart_id == "steady_result":   # 씬26: 적립 결과 → 릴스 스타일
+            sc["tpl"] = "reelchart"; d.clear(); d.update(reel_steady())
     elif tpl == "hbars2":
         sm, sd = SCOMP["smart"], SCOMP["steady"]
         prin = SCOMP["premise"]["principal"]
