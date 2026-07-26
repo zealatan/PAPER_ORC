@@ -190,7 +190,7 @@ def survheat_grid():
 
 
 def news_checks():
-    return {"title": "PG, 요즘 어떤가 — [FY2025 실적]", "sub": f"{BIZ['latest_q_label']}(6/30 종료) 기준 · 출처 PG IR·SEC 8-K",
+    return {"title": "PG, 요즘 어떤가 — [FY2025 실적]", "sub": f"실적 {BIZ['latest_q_label']}(6/30 종료) · 배당·밸류에이션 {BIZ['yield_asof']} 기준 · PG IR·SEC",
             "name": "P&G (PG)", "tag": f"{BIZ['div_years']}년 배당왕",
             "items": [
                 [f"매출 ${BIZ['rev_total_b']:.1f}B", f"유기적 매출 +{BIZ['organic_sales_pct']:.0f}% — 가격·믹스로 성장"],
@@ -269,7 +269,9 @@ MENU = {"title": f"생활필수품 [브랜드 제국] · {BIZ['brands_count']}�
         {"ko": s["ko"], "pct": s["share_pct"], "rev": f"${s['rev_b']:.1f}B",
          "brands": s["brands"], "color": c}
         for s, c in zip(_SEG, _SEG_COLORS)]}
-SECT_P2 = {"tone": "d", "num": "2", "phrase": "파산 시나리오", "part": "2부 · 파산 시나리오", "head": "얼마면, 매달 얼마까지|써도 버틸까?", "sub": "물가상승까지 반영한, 진짜 냉혹한 그림."}
+# page4: 제품 엘리먼트 제거(사용자 요청) — 정중앙 파이 카드만. 필요시 assets/products/ 4종 재활용 가능.
+MENU["products"] = []
+SECT_P2 = {"tone": "d", "num": "2", "phrase": "은퇴 시나리오", "part": "2부 · 은퇴 시나리오", "head": "얼마면, 매달 얼마까지|써도 버틸까?", "sub": "물가상승까지 반영한, 진짜 냉혹한 그림."}
 SECT_P3 = {"tone": "g", "num": "3", "phrase": "매수 방법", "part": "3부 · 매수 방법", "head": "매달 천 달러씩 25년,|어떻게 사야 가장 클까?", "sub": "두 투자자가 있습니다."}
 DRIVETHRU = {"head": "DRIVE-THRU · 타이밍 투자자", "corner": "2000~",
     "items": [["폭락 대기 (−30%)", "현금 연 3%"], ["배당", "전액 재투자"]],
@@ -473,22 +475,52 @@ if _planf.exists():
     except Exception as _e:
         print("deck_plan 적용 실패(원본 유지):", _e)
 
+# ── 자막 편집 스냅샷 적용: 덱 에디터 💾저장(→deck_edited_scenes.json)한 자막을 재빌드에도 유지 ──
+#   build_deck가 이 파일을 안 읽어 '최신본'(재빌드) 누르면 자동자막으로 되돌아가던 문제 해결.
+#   sid로 매핑(구조 바뀌어도 안전), 미스 시 인덱스 폴백.
+#   우선순위: 패널 자막저장(narration_final)이 스냅샷보다 최신이면 그 씬은 패널 편집을 유지(스냅샷 스킵).
+_esf = ROOT / "spec" / "deck_edited_scenes.json"
+_nff = ROOT / "spec" / "narration_final.json"
+if _esf.exists():
+    try:
+        _es = json.load(open(_esf, encoding="utf-8"))
+        _es = _es.get("scenes", _es) if isinstance(_es, dict) else _es
+        _sub_by_sid = {s.get("sid"): s.get("subLines") for s in _es
+                       if s.get("sid") is not None and s.get("subLines")}
+        _nf_sids = set()                                # 패널 자막저장(narration_final) = 자막의 소스 오브 트루스 → 항상 우선(스냅샷 스킵)
+        if _nff.exists():                               # 사용자 워크플로우가 패널 편집이므로 무조건 우선(스냅샷은 미편집 씬만 채움)
+            _nf = json.load(open(_nff, encoding="utf-8"))
+            _nf_sids = {int(k) + 1 for k in _nf if str(k).lstrip("-").isdigit()}  # narration_final 키=sid-1
+        _n = 0
+        for _i, _s in enumerate(scenes):
+            if _s.get("sid") in _nf_sids:               # 패널 편집이 더 최신 → base(narration_final) 유지
+                continue
+            _ov = _sub_by_sid.get(_s.get("sid"))
+            if _ov is None and _i < len(_es):           # sid 미스 시 인덱스 폴백
+                _ov = _es[_i].get("subLines") or None
+            if _ov:
+                _s["subLines"] = _ov; _n += 1
+        print(f"자막 스냅샷 적용(deck_edited_scenes): {_n}씬 · 패널최신 제외 {len(_nf_sids)}")
+    except Exception as _e:
+        print("자막 스냅샷 적용 실패(무시):", _e)
+
 deck = {"scenes": scenes, "ov": {}, "cp": {}, "theme": "blueprint", "paper": "photo"}  # 사용자 선택: 블루프린트(설계도) 배경
 json.dump(deck, open(ROOT / "deck" / "pg_deck.json", "w"), ensure_ascii=False, indent=1)
 
 # ── HTML 주입: KEY 교체 + 코카콜라 패치 IIFE 블록 제거 + '저장된 편집 우선' 조건부 주입 ──
 #   → HUD 편집(localStorage 저장)이 새로고침 후에도 유지됨. 최초 로드(저장본 없음)에만 하드코딩 주입.
 html = (ROOT / "deck" / "pg_final.html").read_text(encoding="utf-8")
-html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_pg_v3';")  # v2→v3: 24→22p 구조변경으로 옛 localStorage 스냅샷 무력화
+html = html.replace("const KEY = 'tplCatalog_cocacola_v4g';", "const KEY = 'tplCatalog_pg_v4';")  # v3→v4: 옛 localStorage 스냅샷(자막 가림) 무력화 → 재빌드된 SCENES(자막·OV 포함) 강제 로드
 blk_start = html.index("/* FIRE 세트")             # 패치 IIFE 블록 시작(v8-hook 앞 주석)
 p = html.index("var VER='src1';", blk_start)
 blk_end = html.index("})();", p) + len("})();")     # src1 IIFE 끝
-override = ("/* ══ PG 덱 주입 — 저장된 편집(localStorage) 있으면 그대로 유지, 없을 때만 주입.\n"
+override = ("/* ══ PG 덱 주입 — 항상 서버 빌드본(자막·OV 포함)을 사용. localStorage 스냅샷은 무시.\n"
+            "      (옛 localStorage가 저장·재굽기된 최신본을 가려 '저장해도 안 바뀜'으로 보이던 문제 근절.\n"
+            "       편집분은 서버 deck_ov.json·deck_edited_scenes.json·narration_final.json에 저장돼 매 빌드 재적용됨.)\n"
             "      코카콜라 패치 IIFE 4종은 편집 오염 방지 위해 제거함. ══ */\n"
-            "if(!localStorage.getItem(KEY)){\n"
-            "  SCENES = " + json.dumps(scenes, ensure_ascii=False) + ";\n"
-            "  OV = " + json.dumps(DECK_OV, ensure_ascii=False) + "; CP = {}; THEME='blueprint'; PAPER='photo';\n"
-            "}\n")
+            "SCENES = " + json.dumps(scenes, ensure_ascii=False) + ";\n"
+            "OV = " + json.dumps(DECK_OV, ensure_ascii=False) + "; CP = {}; THEME='blueprint'; PAPER='photo';\n"
+            "try{ localStorage.removeItem(KEY); }catch(e){}\n")
 html = html[:blk_start] + override + html[blk_end:]
 
 # ── 배경영상 data URI embed → 자립형(다운로드 후 바로 재생) ──

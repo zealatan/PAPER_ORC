@@ -1,14 +1,149 @@
 {
- "1:hline": {
-  "x": 33.1,
-  "y": 0.15
+ "6:brand": {
+  "c": "#fdfcf9",
+  "bc": "#fdfcf9"
  },
- "1:eend.0": {
-  "x": 5.59,
-  "y": 1.36
+ "20:grid": {
+  "x": -0.16,
+  "y": 1.79
  },
- "1:eend.1": {
-  "x": 6.8,
-  "y": -1.21
+ "20:grid.c3": {},
+ "20:sub": {},
+ "20:grid.c0": {},
+ "5:eyebrow": {
+  "hide": true
+ },
+ "5:sub": {
+  "hide": true
+ },
+ "5:brand": {},
+ "5:label": {},
+ "6:chips": {
+  "hide": true
+ },
+ "6:sub": {
+  "hide": true
+ },
+ "6:main": {
+  "x": 0.81,
+  "y": 5.12,
+  "s": 0.4
+ },
+ "6:eyebrow": {
+  "hide": true,
+  "x": -12.34,
+  "y": -20.93
+ },
+ "6:copy.mrn4k8lc3y6": {
+  "x": 41.92,
+  "y": 9.69,
+  "s": 2.2
+ },
+ "27:anno": {
+  "hide": true
+ },
+ "27:chart": {
+  "x": 0.41,
+  "y": 3.33
+ },
+ "27:left.head": {},
+ "27:right.head": {},
+ "27:sub": {
+  "hide": true
+ },
+ "25:title": {},
+ "26:title": {},
+ "27:title": {},
+ "17:sub": {
+  "hide": true
+ },
+ "17:chart": {
+  "x": -1.7,
+  "y": 0.25
+ },
+ "17:anno": {
+  "x": 2.27,
+  "y": -16.39
+ },
+ "2:tag": {
+  "hide": true
+ },
+ "2:row.2": {
+  "hide": true
+ },
+ "2:row.0": {},
+ "2:row.1": {},
+ "2:accent": {
+  "x": 44.32,
+  "y": -21.19
+ },
+ "2:kick": {
+  "txt": "2000년, 은퇴한 두 사람"
+ },
+ "3:row.2": {
+  "hide": true
+ },
+ "3:tag": {
+  "hide": true
+ },
+ "3:accent": {
+  "x": 44.4,
+  "y": -26.14
+ },
+ "3:kick": {
+  "txt": "2000년, 은퇴한 두 사람"
+ },
+ "7:anno": {
+  "hide": true
+ },
+ "7:chart": {},
+ "8:anno": {
+  "hide": true
+ },
+ "9:anno": {
+  "hide": true
+ },
+ "10:anno": {
+  "hide": true
+ },
+ "11:anno": {
+  "hide": true
+ },
+ "12:anno": {
+  "hide": true
+ },
+ "13:anno": {
+  "hide": true
+ },
+ "10:title": {
+  "c": "#fdfcf9"
+ },
+ "18:chart": {},
+ "18:anno": {
+  "x": 4.38,
+  "y": 5.19
+ },
+ "18:anno.main": {
+  "x": 16.72,
+  "y": 9.58
+ },
+ "24:chart": {},
+ "24:anno": {
+  "hide": true
+ },
+ "25:anno": {
+  "hide": true
+ },
+ "25:chart": {},
+ "26:anno": {
+  "hide": true
+ },
+ "7:legend": {
+  "x": 9.62,
+  "y": -11.38
+ },
+ "7:hline": {
+  "x": 31.83,
+  "y": 0
  }
 }

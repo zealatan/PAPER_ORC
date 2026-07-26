@@ -16,6 +16,8 @@ ARCH = ROOT / "architecture_docs" / STOCK         # 종목별 편집 UI 출력 �
 ARCH.mkdir(parents=True, exist_ok=True)
 DECK_REL = f"../../{STOCK}/deck/{PFX}_v1.html"    # architecture_docs/<STOCK>/ 기준 상대경로
 DECK_JSON = STOCK_DIR / "deck" / f"{PFX}_deck.json"
+_deck_html = STOCK_DIR / "deck" / f"{PFX}_v1.html"
+DECK_VER = int(_deck_html.stat().st_mtime) if _deck_html.exists() else 0  # 캐시버스터: 빌드마다 바뀜 → 브라우저가 옛 덱 캐시 못 씀
 PLAN_JSON = STOCK_DIR / "spec" / "deck_plan.json"
 
 # 씬별 자막(subLines) — 편집화면 우측 패널에 표시. 페이지 N = 씬 index N-1.
@@ -360,7 +362,7 @@ for n in range(1, TOTAL + 1):
            f'<a class="{("off" if n==TOTAL else "")}" href="dec_edit_page{n+1}.html">다음 ▶</a>'
            '</span></div>'
            '<div class="work">'
-           f'<iframe src="{DECK_REL}?page={n}&edit=1&stock={STOCK}" title="deck page {n}"></iframe>'
+           f'<iframe src="{DECK_REL}?page={n}&edit=1&stock={STOCK}&v={DECK_VER}" title="deck page {n}"></iframe>'
            f'<aside class="subs"><div class="hd"><h3>자막 · {n:02d}p</h3>'
            f'<span class="cap">문장을 직접 고치고 →</span>'
            f'<button class="svbtn" id="subsave">💾 자막 저장</button></div>'
@@ -368,23 +370,26 @@ for n in range(1, TOTAL + 1):
            '</div>'
            '<script>'
            'var fr=document.querySelector("iframe"),bs=document.getElementById("bsave"),br=document.getElementById("breload");'
+           f'var SCENE_IDX={_scene},STK="{STOCK}";'
+           'function subLines(){var ta=document.getElementById("subsarea");return (ta?ta.value:"").split("\\n").map(function(s){return s.trim();}).filter(Boolean);}'
+           'function saveSubs(){return fetch("/api/save-subs",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({stock:STK,scene:SCENE_IDX,lines:subLines()})}).then(function(r){return r.json();});}'
+           'function reloadDeck(){fr.src=fr.src.replace(/&v=\\d+/,"")+"&v="+Date.now();}'
+           # 저장(영구): 자막 패널(narration_final) + 덱 OV/위치(save-deck) 모두 저장 → 재굽기 → 새로고침
            'bs.onclick=function(){var w=fr.contentWindow;'
            'if(!w||!w.__pipelineSave){alert("덱이 아직 로드되지 않았습니다. 잠시 후 다시.");return;}'
-           'bs.disabled=true;bs.textContent="저장 중…";'
-           'w.__pipelineSave().then(function(r){bs.textContent=(r&&r.ok)?"✅ 저장+재굽기 완료":"⚠ 실패(콘솔확인)";'
-           'if(!(r&&r.ok))console.warn("save-deck",r);'
-           'setTimeout(function(){bs.textContent="💾 저장(영구)";bs.disabled=false;},2400);})'
+           'bs.disabled=true;bs.textContent="저장 중…(자막+덱)";'
+           'saveSubs().then(function(){return w.__pipelineSave();}).then(function(r){'
+           'bs.textContent=(r&&r.ok)?"✅ 자막+덱 저장 완료":"⚠ 실패(콘솔확인)";if(!(r&&r.ok))console.warn("save",r);'
+           'if(r&&r.ok)setTimeout(reloadDeck,700);'
+           'setTimeout(function(){bs.textContent="💾 저장(영구)";bs.disabled=false;},2600);})'
            '.catch(function(e){bs.textContent="⚠ 오류";bs.disabled=false;console.error(e);});};'
-           'br.onclick=function(){var w=fr.contentWindow;if(w&&w.__pipelineReload)w.__pipelineReload();else fr.src=fr.src;};'
+           'br.onclick=function(){var w=fr.contentWindow;if(w&&w.__pipelineReload)w.__pipelineReload();else reloadDeck();};'
+           # 자막 저장(자막만) — 패널 전용 버튼도 유지
            'var sv=document.getElementById("subsave");'
-           'if(sv)sv.onclick=function(){'
-           'var ta=document.getElementById("subsarea");var L=(ta?ta.value:"").split("\\n").map(function(s){return s.trim();}).filter(Boolean);'
-           'sv.disabled=true;sv.textContent="저장 중…(재굽기)";'
-           'fetch("/api/save-subs",{method:"POST",headers:{"Content-Type":"application/json"},'
-           f'body:JSON.stringify({{stock:"{STOCK}",scene:{_scene},lines:L}})}})'
-           '.then(function(r){return r.json();}).then(function(r){'
-           'sv.textContent=(r&&r.ok)?"✅ 저장+재굽기 완료":"⚠ 실패(콘솔)";if(!(r&&r.ok))console.warn("save-subs",r);'
-           'if(r&&r.ok)setTimeout(function(){fr.src=fr.src;},700);'
+           'if(sv)sv.onclick=function(){sv.disabled=true;sv.textContent="저장 중…(재굽기)";'
+           'saveSubs().then(function(r){'
+           'sv.textContent=(r&&r.ok)?"✅ 자막 저장 완료":"⚠ 실패(콘솔)";if(!(r&&r.ok))console.warn("save-subs",r);'
+           'if(r&&r.ok)setTimeout(reloadDeck,700);'
            'setTimeout(function(){sv.textContent="💾 자막 저장";sv.disabled=false;},2600);})'
            '.catch(function(e){sv.textContent="⚠ 오류";sv.disabled=false;console.error(e);});};'
            '</script>'
