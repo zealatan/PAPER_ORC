@@ -167,9 +167,25 @@ marquee selection, align/distribute UI, equal-spacing suggestions.
 
 ---
 
+## Milestone 5 — Timeline & Playback ✅ (this pass)
+
+- [x] Pure timeline math (`state/timelineMath.ts`): scene spans, global/scene/element time
+      conversions, clip layout, "nice" ruler ticks, edge snapping. Unit-tested.
+- [x] Full timeline panel: time ruler, scene band, one clip per element, a draggable playhead.
+- [x] Scrubbing — drag the playhead / click the ruler to preview any timestamp.
+- [x] Clip editing — drag to move `timing.start`, trim either edge; snapping to playhead, scene
+      bounds, and neighbouring clip edges. All via the `updateElementTiming` command (undoable).
+- [x] Playback and scrubbing share the same deterministic `renderProjectToSvg(time)` path, so a
+      scrubbed frame matches the played frame.
+
+**Acceptance (smoke-verified):** scrub to 50% → 2.50s preview; trimming a clip shrank it and
+**Undo restored it**; playback matches scrubbed frames. 92 tests pass.
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M5 Timeline/playback**, **M6 Animation**,
+- **M6 Animation**,
   **M7 Production components**, **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
   **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
 

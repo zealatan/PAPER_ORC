@@ -77,6 +77,7 @@ export {
 export {
   type EditorCommand,
   updateElementTransform,
+  updateElementTiming,
   updateElementProps,
   updateElementStyle,
   renameElement,

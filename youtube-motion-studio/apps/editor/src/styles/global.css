@@ -90,7 +90,7 @@ button {
 }
 
 .editor__timeline {
-  height: 150px;
+  height: 220px;
   border-top: 1px solid var(--border);
   background: var(--panel);
   overflow: hidden;
@@ -452,24 +452,93 @@ input:focus-visible,
   border-radius: 8px;
   background: var(--bg);
   overflow: hidden;
-  display: flex;
+  cursor: text;
+}
+
+.timeline__ruler {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.timeline__tick {
+  position: absolute;
+  top: 3px;
+  padding-left: 3px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  border-left: 1px solid var(--border);
+  height: 12px;
+  pointer-events: none;
+}
+
+.timeline__scenes {
+  position: absolute;
+  top: 18px;
+  left: 0;
+  right: 0;
+  height: 20px;
 }
 
 .timeline__scene {
-  position: relative;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  height: 20px;
   border-right: 1px solid var(--border);
-  padding: 6px 8px;
-  font-size: 11px;
+  background: var(--panel-elevated);
+  padding: 3px 6px;
+  font-size: 10px;
   color: var(--text-secondary);
-  cursor: pointer;
   overflow: hidden;
   white-space: nowrap;
+  pointer-events: none;
 }
 
-.timeline__scene--active {
-  background: color-mix(in srgb, var(--selection) 14%, transparent);
+.timeline__clips {
+  position: absolute;
+  top: 42px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.timeline__clip {
+  position: absolute;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--selection) 45%, var(--panel-elevated));
+  border: 1px solid color-mix(in srgb, var(--selection) 60%, transparent);
+  border-radius: 4px;
+  cursor: grab;
+  overflow: hidden;
+}
+
+.timeline__clip--active {
+  background: var(--selection);
+  border-color: var(--accent);
+}
+
+.timeline__clip-label {
+  flex: 1;
+  padding: 0 4px;
+  font-size: 10px;
   color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.timeline__trim {
+  width: 6px;
+  height: 100%;
+  flex: 0 0 auto;
+  cursor: ew-resize;
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .timeline__playhead {
@@ -479,4 +548,5 @@ input:focus-visible,
   width: 2px;
   background: var(--accent);
   pointer-events: none;
+  z-index: 5;
 }

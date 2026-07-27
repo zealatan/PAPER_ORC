@@ -21,8 +21,10 @@ import {
   updateElementById,
   updateElementProps as updateElementPropsCommand,
   updateElementStyle as updateElementStyleCommand,
+  updateElementTiming as updateElementTimingCommand,
   updateElementTransform as updateElementTransformCommand,
   type EditorCommand,
+  type ElementTiming,
   type HistoryState,
   type MotionElement,
   type MotionProject,
@@ -70,6 +72,11 @@ export interface EditorState {
   renameSelected(name: string): void;
   toggleElementVisible(elementId: string): void;
   setElementsTransform(entries: TransformEntry[], mergeKey: string): void;
+  setElementTiming(
+    elementId: string,
+    patch: Partial<ElementTiming>,
+    mergeKey: string,
+  ): void;
   moveSelectedBy(dx: number, dy: number, mergeKey?: string): void;
   deleteSelected(): void;
 
@@ -268,6 +275,10 @@ export const useEditor = create<EditorState>((set, get) => ({
   setElementsTransform(entries, mergeKey) {
     if (entries.length === 0) return;
     get().apply(transformManyCommand(entries, mergeKey), true);
+  },
+
+  setElementTiming(elementId, patch, mergeKey) {
+    get().apply(updateElementTimingCommand(elementId, patch, mergeKey), true);
   },
 
   moveSelectedBy(dx, dy, mergeKey = "nudge") {

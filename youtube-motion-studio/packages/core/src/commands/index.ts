@@ -9,7 +9,13 @@ import {
   removeElementById,
   updateElementById,
 } from "../project/elementOps";
-import type { MotionElement, MotionProject, Scene, Transform2D } from "../project/types";
+import type {
+  ElementTiming,
+  MotionElement,
+  MotionProject,
+  Scene,
+  Transform2D,
+} from "../project/types";
 
 export interface EditorCommand {
   /** Human-readable label for history UI. */
@@ -34,6 +40,22 @@ export function updateElementTransform(
       updateElementById(project, elementId, (element) => ({
         ...element,
         transform: { ...element.transform, ...patch },
+      })),
+  };
+}
+
+export function updateElementTiming(
+  elementId: string,
+  patch: Partial<ElementTiming>,
+  mergeKey?: string,
+): EditorCommand {
+  return {
+    label: "Update timing",
+    mergeKey,
+    execute: (project) =>
+      updateElementById(project, elementId, (element) => ({
+        ...element,
+        timing: { ...element.timing, ...patch },
       })),
   };
 }
