@@ -331,6 +331,22 @@ Remaining work is the _within-milestone_ deferrals noted in each section above (
 into MP4, in-editor Plugins/AI panels, keyframe graph editor, WebVTT, sandboxed plugins) and the
 spec's future/non-goal items — none of which block the implemented foundation.
 
+## Legacy deck integration (spec §26) ✅
+
+- [x] `packages/legacy-adapter`: a `LegacyTemplateAdapter` that **detects and imports the existing
+      PG deck** (`pg_deck.json`) into a MotionProject. Per spec §26.3 (step 1, "isolate the reusable
+      project data"; do not rewrite the original renderer): titles/subtitles/quotes become real text
+      elements, per-scene `subLines` become a time-distributed subtitle, background videos become
+      **asset requests**, and complex chart/table templates are imported as labelled placeholders and
+      listed in a **migration report**.
+- [x] Verified on the real deck: **20 scenes → 91 elements**, 14 chart placeholders + 4 background
+      asset requests reported; a rendered frame shows the hero scene's Korean eyebrow/title/caption
+      and the active subtitle cue. Unit-tested (detect, text translation, subtitle cues, placeholders).
+
+This is the on-ramp for gradually moving the PG deck onto the new engine (spec §26.3 steps 2–8:
+wrap renderer → registry → scenes-as-JSON → replace timing → visual editor → replace legacy
+components incrementally), while the old pipeline keeps working untouched.
+
 ## Verification commands
 
 ```bash

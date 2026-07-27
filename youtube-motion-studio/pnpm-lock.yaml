@@ -75,6 +75,9 @@ importers:
       '@motion-studio/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@motion-studio/legacy-adapter':
+        specifier: workspace:*
+        version: link:../../packages/legacy-adapter
       '@motion-studio/renderer-core':
         specifier: workspace:*
         version: link:../../packages/renderer-core
@@ -113,6 +116,12 @@ importers:
       ajv-formats:
         specifier: ^3.0.1
         version: 3.0.1(ajv@8.20.0)
+
+  packages/legacy-adapter:
+    dependencies:
+      '@motion-studio/core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/plugin-sdk:
     dependencies:
