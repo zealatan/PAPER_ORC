@@ -29,8 +29,16 @@ export class DefaultRenderRegistry implements RenderRegistry {
   }
 }
 
+export interface RenderContextOptions {
+  time?: number;
+  sceneTime?: number;
+}
+
 /** Build a render context from a project, resolving assets from its asset list. */
-export function createRenderContext(project: MotionProject): RenderContext {
+export function createRenderContext(
+  project: MotionProject,
+  options: RenderContextOptions = {},
+): RenderContext {
   const assetsById = new Map<string, AssetReference>(
     project.assets.map((asset) => [asset.id, asset]),
   );
@@ -56,6 +64,8 @@ export function createRenderContext(project: MotionProject): RenderContext {
 
   return {
     project,
+    time: options.time ?? 0,
+    sceneTime: options.sceneTime ?? 0,
     resolveAssetUrl,
     getAsset: (assetId) => assetsById.get(assetId),
   };

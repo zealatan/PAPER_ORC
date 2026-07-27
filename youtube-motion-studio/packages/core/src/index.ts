@@ -90,7 +90,20 @@ export {
   updateScene,
   setVariableValue,
   setTheme,
+  addAudioTrack,
+  updateAudioTrack,
+  removeAudioTrack,
 } from "./commands";
+
+// Subtitles (SRT round-trip, active-cue selection)
+export {
+  type SubtitleCue,
+  parseSrt,
+  serializeSrt,
+  formatSrtTime,
+  parseSrtTime,
+  activeCue,
+} from "./subtitle";
 
 // Variable bindings, theme engine, templates
 export { applyBindings } from "./project/bindings";

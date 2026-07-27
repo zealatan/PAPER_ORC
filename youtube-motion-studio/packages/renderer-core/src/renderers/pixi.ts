@@ -78,8 +78,11 @@ export class PixiFrameRenderer implements FrameRenderer {
       throw new Error("PixiFrameRenderer.initialize must be called first.");
     }
 
-    const ctx = createRenderContext(project);
     const frame = evaluateProjectAtTime(project, timeSeconds);
+    const ctx = createRenderContext(project, {
+      time: timeSeconds,
+      sceneTime: frame.sceneLocalTime,
+    });
 
     app.stage.removeChildren();
     for (const element of frame.elements) {

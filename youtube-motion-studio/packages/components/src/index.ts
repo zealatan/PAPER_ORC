@@ -10,6 +10,7 @@ import { circleComponent } from "./shapes/circle";
 import { textComponent } from "./text/text";
 import { titleComponent } from "./text/title";
 import { captionComponent } from "./text/caption";
+import { subtitleComponent } from "./text/subtitle";
 import { imageComponent } from "./media/image";
 import { imageCardComponent } from "./media/imageCard";
 import { groupComponent } from "./layout/group";
@@ -31,6 +32,7 @@ export { circleComponent } from "./shapes/circle";
 export { textComponent } from "./text/text";
 export { titleComponent } from "./text/title";
 export { captionComponent } from "./text/caption";
+export { subtitleComponent } from "./text/subtitle";
 export { imageComponent } from "./media/image";
 export { imageCardComponent } from "./media/imageCard";
 export { groupComponent } from "./layout/group";
@@ -56,6 +58,7 @@ export const BUILTIN_COMPONENTS: ComponentDefinition<unknown>[] = [
   // text
   titleComponent,
   captionComponent,
+  subtitleComponent,
   // media
   imageCardComponent,
   // social

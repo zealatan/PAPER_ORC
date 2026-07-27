@@ -7,9 +7,13 @@
 import type { AssetReference, MotionElement, MotionProject } from "@motion-studio/core";
 import type { DrawNode } from "./scene-graph";
 
-/** Context handed to element renderers. Provides asset resolution and project settings. */
+/** Context handed to element renderers. Provides asset resolution, settings, and the frame time. */
 export interface RenderContext {
   project: MotionProject;
+  /** Global project time (seconds) of the frame being rendered. */
+  time: number;
+  /** Scene-local time (seconds) of the active scene — used by time-aware components (subtitles). */
+  sceneTime: number;
   /** Resolve an asset id to a usable URL (data/object/remote), or null when unresolved. */
   resolveAssetUrl(assetId: string): string | null;
   /** Look up an asset reference by id. */

@@ -5,6 +5,7 @@
  */
 import { selectSelectedElement, useEditor } from "../state/store";
 import { AnimationSection } from "./AnimationSection";
+import { SubtitleSection } from "./SubtitleSection";
 
 export function Inspector() {
   const element = useEditor(selectSelectedElement);
@@ -139,6 +140,7 @@ export function Inspector() {
         </details>
       ) : null}
 
+      <SubtitleSection />
       <AnimationSection />
     </div>
   );

@@ -240,8 +240,11 @@ export function renderProjectToSvg(
   options: SvgRenderOptions = {},
 ): string {
   const { width, height, backgroundColor } = project.settings;
-  const ctx = createRenderContext(project);
   const frame = evaluateProjectAtTime(project, timeSeconds);
+  const ctx = createRenderContext(project, {
+    time: timeSeconds,
+    sceneTime: frame.sceneLocalTime,
+  });
 
   const base = `<rect x="0" y="0" width="${fmt(width)}" height="${fmt(height)}" fill="${esc(backgroundColor)}"/>`;
   const bg = backgroundToSvg(

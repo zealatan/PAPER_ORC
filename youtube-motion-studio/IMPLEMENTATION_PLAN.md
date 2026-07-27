@@ -243,10 +243,28 @@ spacing theme tokens beyond colors; variable groups/forms.
 
 ---
 
+## Milestone 9 — Audio & Subtitles ✅ (this pass)
+
+- [x] Subtitles as data (`core/subtitle`): `SubtitleCue`, `parseSrt`/`serializeSrt` (lossless
+      round-trip), `activeCue(cues, time)`. Time-aware **subtitle component** renders the active cue
+      via a new `RenderContext.time` / `sceneTime` (threaded through the SVG + Pixi backends).
+- [x] Subtitle inspector: cue count + **Import SRT** (file → parsed cues, undoable).
+- [x] Audio track commands (`addAudioTrack` / `updateAudioTrack` / `removeAudioTrack`) and a preview
+      sync hook (`useAudioPlayback`) that drives one `<audio>` per track from the timeline
+      (position + play/pause), so audio stays in sync during playback and scrubbing.
+
+**Acceptance:** SRT round-trip is unit-tested; subtitle timing is correct (smoke: the cue switched
+at its boundary as the playhead scrubbed 1s → 3.5s); audio is driven off the same timeline clock as
+the preview. 112 tests pass.
+
+Deferred within M9: waveform rendering; audio-clip editing in the timeline lane; WebVTT import;
+karaoke/word-level highlighting (data model supports it).
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M9 Audio/Subtitles**,
-  **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
+- **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
 
 Each remains defined by its spec §36 acceptance criteria. The domain model and validation
 built in M1 are the foundation these consume; no shortcut was taken that blocks them.

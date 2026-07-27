@@ -11,6 +11,7 @@ import {
 } from "../project/elementOps";
 import type {
   AnimationDefinition,
+  AudioTrack,
   ElementTiming,
   MotionElement,
   MotionProject,
@@ -191,6 +192,43 @@ export function setVariableValue(variableId: string, value: unknown): EditorComm
         },
       };
     },
+  };
+}
+
+export function addAudioTrack(track: AudioTrack): EditorCommand {
+  return {
+    label: "Add audio track",
+    execute: (project) => ({
+      ...project,
+      audioTracks: [...project.audioTracks, track],
+    }),
+  };
+}
+
+export function updateAudioTrack(
+  trackId: string,
+  patch: Partial<AudioTrack>,
+  mergeKey?: string,
+): EditorCommand {
+  return {
+    label: "Update audio track",
+    mergeKey,
+    execute: (project) => ({
+      ...project,
+      audioTracks: project.audioTracks.map((track) =>
+        track.id === trackId ? { ...track, ...patch } : track,
+      ),
+    }),
+  };
+}
+
+export function removeAudioTrack(trackId: string): EditorCommand {
+  return {
+    label: "Remove audio track",
+    execute: (project) => ({
+      ...project,
+      audioTracks: project.audioTracks.filter((track) => track.id !== trackId),
+    }),
   };
 }
 

@@ -4,6 +4,7 @@
  */
 import { Canvas } from "./canvas/Canvas";
 import { useKeyboardShortcuts } from "./canvas/useKeyboardShortcuts";
+import { useAudioPlayback } from "./canvas/useAudioPlayback";
 import { TopToolbar } from "./panels/TopToolbar";
 import { LeftPanel } from "./panels/LeftPanel";
 import { Inspector } from "./panels/Inspector";
@@ -12,6 +13,7 @@ import { useEditor } from "./state/store";
 
 export function App() {
   useKeyboardShortcuts();
+  useAudioPlayback();
   const loadError = useEditor((s) => s.loadError);
 
   return (

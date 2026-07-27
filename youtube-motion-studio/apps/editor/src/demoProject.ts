@@ -122,6 +122,20 @@ export const demoProject: MotionProject = {
             },
           },
         ),
+        el(
+          "subs",
+          "subtitle",
+          { x: 90, y: 1760, width: 900, height: 120, zIndex: 20 },
+          {
+            props: {
+              cues: [
+                { start: 0, end: 2.5, text: "Deterministic rendering" },
+                { start: 2.5, end: 5, text: "Preview matches export" },
+              ],
+              fontSize: 40,
+            },
+          },
+        ),
       ],
     },
   ],

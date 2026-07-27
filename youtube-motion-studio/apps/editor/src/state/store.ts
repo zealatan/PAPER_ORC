@@ -7,8 +7,12 @@
 import { create } from "zustand";
 import {
   addAnimation as addAnimationCommand,
+  addAudioTrack as addAudioTrackCommand,
   applyBindings,
   applyTheme,
+  parseSrt,
+  removeAudioTrack as removeAudioTrackCommand,
+  updateAudioTrack as updateAudioTrackCommand,
   canRedo as coreCanRedo,
   canUndo as coreCanUndo,
   createHistory,
@@ -33,6 +37,7 @@ import {
   updateElementTiming as updateElementTimingCommand,
   updateElementTransform as updateElementTransformCommand,
   type AnimationDefinition,
+  type AudioTrack,
   type EditorCommand,
   type ElementTiming,
   type HistoryState,
@@ -100,6 +105,12 @@ export interface EditorState {
   setVariable(variableId: string, value: unknown): void;
   setThemeId(themeId: string): void;
   useTemplate(template: MotionTemplate): void;
+
+  // ── audio / subtitles ──
+  importSrtToSelected(srtText: string): void;
+  addAudio(track: AudioTrack): void;
+  updateAudio(trackId: string, patch: Partial<AudioTrack>): void;
+  removeAudio(trackId: string): void;
 
   // ── playback ──
   time: number;
@@ -370,6 +381,23 @@ export const useEditor = create<EditorState>((set, get) => ({
     projSeq += 1;
     const now = new Date().toISOString();
     get().replaceProject(instantiateTemplate(template, `project-${projSeq}`, now));
+  },
+
+  importSrtToSelected(srtText) {
+    const cues = parseSrt(srtText);
+    get().updateSelectedProps({ cues });
+  },
+
+  addAudio(track) {
+    get().apply(addAudioTrackCommand(track));
+  },
+
+  updateAudio(trackId, patch) {
+    get().apply(updateAudioTrackCommand(trackId, patch, `audio:${trackId}`), true);
+  },
+
+  removeAudio(trackId) {
+    get().apply(removeAudioTrackCommand(trackId));
   },
 
   time: 0,
