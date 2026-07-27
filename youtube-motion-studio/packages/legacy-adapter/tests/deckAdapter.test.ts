@@ -127,6 +127,7 @@ describe("chart translation", () => {
     ]);
 
     const line = findElementById(project, "scene-1-chart")?.element;
-    expect((line?.props.values as number[]).length).toBe(4);
+    const series = line?.props.series as Array<{ values: number[] }>;
+    expect(series[0]?.values.length).toBe(4);
   });
 });
