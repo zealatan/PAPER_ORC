@@ -285,9 +285,28 @@ GIF / WebM outputs.
 
 ---
 
+## Milestone 11 — Plugins ✅ (this pass)
+
+- [x] `packages/plugin-sdk`: plugin **manifest** (id/version/engine/permissions), a permission-gated
+      **PluginAPI** (register components/themes/templates), and a **PluginHost** that loads behind
+      three guards — engine-version check, permission check, and error isolation.
+- [x] Reversible registration: every capability call returns a disposer, so `unload` exactly
+      reverses `activate` (spec §19.4).
+- [x] Example plugin (a "sticker" component + a theme) demonstrating a trusted local plugin.
+- [x] `PluginActivationError` (typed) surfaced instead of crashes.
+
+**Acceptance (unit-tested):** the example plugin registers a component then removes it on unload; a
+plugin requiring a newer engine is rejected; a plugin that throws during activation is isolated and
+its partial registrations are rolled back; capabilities without permission are denied. 119 tests.
+
+Deferred within M11: an in-editor Plugins tab wired to a live/dynamic render registry; untrusted
+plugin sandboxing (spec §19.3 — only trusted local plugins for now).
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M11 Plugins**, **M12 AI draft integration**.
+- **M12 AI draft integration**.
 
 Each remains defined by its spec §36 acceptance criteria. The domain model and validation
 built in M1 are the foundation these consume; no shortcut was taken that blocks them.

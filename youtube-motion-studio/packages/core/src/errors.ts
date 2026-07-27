@@ -67,6 +67,20 @@ export class ProjectValidationError extends MotionStudioError {
   }
 }
 
+export class PluginActivationError extends MotionStudioError {
+  readonly code = "PLUGIN_ACTIVATION_ERROR";
+  readonly pluginId: string;
+
+  constructor(pluginId: string, message: string, suggestion?: string) {
+    super(message, {
+      probableCause: `Plugin "${pluginId}" could not be activated.`,
+      suggestion:
+        suggestion ?? "Check the plugin's manifest, permissions, and engine version.",
+    });
+    this.pluginId = pluginId;
+  }
+}
+
 export class MigrationError extends MotionStudioError {
   readonly code = "MIGRATION_ERROR";
   readonly fromVersion: string;

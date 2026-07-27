@@ -49,6 +49,7 @@ export {
   MotionStudioError,
   ProjectValidationError,
   MigrationError,
+  PluginActivationError,
   type ValidationIssue,
 } from "./errors";
 
