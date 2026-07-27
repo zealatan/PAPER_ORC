@@ -1,0 +1,25 @@
+{
+  "name": "@motion-studio/components",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Registered visual components: text, shapes, media, layout. Each maps to scene-graph primitives.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@motion-studio/core": "workspace:*",
+    "@motion-studio/renderer-core": "workspace:*",
+    "zod": "^3.23.8"
+  }
+}

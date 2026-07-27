@@ -135,3 +135,44 @@ pre.issues {
   color: var(--error);
   font-size: 13px;
 }
+
+.preview {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.preview__frame {
+  width: 220px;
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  line-height: 0;
+}
+
+.preview__frame svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.preview__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.preview__controls input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.preview__controls code {
+  color: var(--text);
+  background: var(--panel-elevated);
+  padding: 1px 5px;
+  border-radius: 4px;
+}

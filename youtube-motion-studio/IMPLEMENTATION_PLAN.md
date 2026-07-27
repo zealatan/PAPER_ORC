@@ -98,10 +98,34 @@ Also enforced: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`.
 
 ---
 
+## Milestone 2 — Renderer Foundation ✅ (this pass)
+
+- [x] Backend-agnostic scene-graph IR (`renderer-core/src/scene-graph.ts`) — rect/ellipse/line/
+      text/image/group primitives; components emit these so backends never duplicate logic.
+- [x] Deterministic timeline (`timeline.ts`) — `evaluateProjectAtTime(project, globalTime)`:
+      global→scene→element-local time, visibility windows, zIndex paint order, nested children.
+- [x] Transform + easing + animation math (`transform.ts`, `easing.ts`, `animation.ts`) — pure,
+      seedless; entrance/exit presets (fade/pop/scale/zoom/slide) + basic numeric keyframes.
+- [x] `RenderRegistry` + `RenderContext` (asset resolution); unknown types render as placeholders.
+- [x] **SVG backend** (`renderers/svg.ts`) — byte-stable `renderProjectToSvg` + `SvgFrameRenderer`
+      (the `FrameRenderer` contract), used for deterministic visual-regression snapshots.
+- [x] **Pixi backend** (`renderers/pixi.ts`) — `PixiFrameRenderer`, lazy `import("pixi.js")` so Node
+      never loads WebGL; browser preview/export behind the same interface.
+- [x] Component pack (`packages/components`): registry + rectangle, circle, text, image, group,
+      each with Zod props schema, defaults, and a primitive renderer.
+- [x] Editor renders a live demo via the SVG backend with a `renderAtTime` scrubber.
+
+**Acceptance:** same time ⇒ same frame (asserted across timeline/svg/animation tests); sample scene
+renders; visual-regression SVG snapshots stored + stable; 74 tests pass across 5 packages. The five
+components + Pixi backend were implemented by a 6-agent leaf workflow against fixed contracts.
+
+Deferred within M2 (documented TODOs): full preset/keyframe library and per-property keyframe
+channels (M6); Pixi image-asset loading; canvas/WebGPU backends.
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M2 Renderer foundation**: `packages/renderer-core` — `FrameRenderer`, Pixi/DOM renderers,
-  `RenderRegistry`, deterministic `renderAtTime`. _Accept:_ same time ⇒ same frame; visual regression.
 - **M3 Editor shell**, **M4 Canvas interaction**, **M5 Timeline/playback**, **M6 Animation**,
   **M7 Production components**, **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
   **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.

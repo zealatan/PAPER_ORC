@@ -9,9 +9,11 @@ milestone; the app stays runnable after every milestone.
 
 ## Current status
 
-Implemented: **Milestone 0 (Repository Foundation)** and **Milestone 1 (Core Project Model)**.
-See [`IMPLEMENTATION_PLAN.md`](./IMPLEMENTATION_PLAN.md) for the full milestone checklist and the
-deferred milestones (renderer, editor shell, timeline, animation, export, plugins, AI).
+Implemented: **M0 (Repository Foundation)**, **M1 (Core Project Model)**, and
+**M2 (Renderer Foundation)** — deterministic `renderAtTime`, scene-graph IR, SVG + Pixi backends,
+and the first component pack. See [`IMPLEMENTATION_PLAN.md`](./IMPLEMENTATION_PLAN.md) for the full
+milestone checklist and the deferred milestones (editor shell, canvas, timeline, animation, export,
+plugins, AI).
 
 ## Architecture at a glance
 
@@ -59,11 +61,13 @@ CI (`.github/workflows/ci.yml`) runs all of the above on every push.
 
 ## Packages
 
-| Package                                        | Purpose                                                  |
-| ---------------------------------------------- | -------------------------------------------------------- |
-| [`@motion-studio/schemas`](./packages/schemas) | Formal JSON Schema for a `MotionProject`.                |
-| [`@motion-studio/core`](./packages/core)       | Domain model, validation, normalization, migrations, IO. |
-| [`@motion-studio/editor`](./apps/editor)       | Browser editor shell (grows across later milestones).    |
+| Package                                                    | Purpose                                                       |
+| ---------------------------------------------------------- | ------------------------------------------------------------- |
+| [`@motion-studio/schemas`](./packages/schemas)             | Formal JSON Schema for a `MotionProject`.                     |
+| [`@motion-studio/core`](./packages/core)                   | Domain model, validation, normalization, migrations, IO.      |
+| [`@motion-studio/renderer-core`](./packages/renderer-core) | Deterministic timeline, scene-graph IR, SVG + Pixi backends.  |
+| [`@motion-studio/components`](./packages/components)       | Built-in components (text, shapes, media, layout) + registry. |
+| [`@motion-studio/editor`](./apps/editor)                   | Browser editor shell (grows across later milestones).         |
 
 ## License
 

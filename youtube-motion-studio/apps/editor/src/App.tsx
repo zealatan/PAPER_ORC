@@ -1,10 +1,13 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   ProjectValidationError,
   importProject,
   ronaldReadProject,
   type MotionProject,
 } from "@motion-studio/core";
+import { renderProjectToSvg } from "@motion-studio/renderer-core";
+import { createDefaultRenderRegistry } from "@motion-studio/components";
+import { demoProject } from "./demoProject";
 
 interface LoadState {
   ok: boolean;
@@ -13,11 +16,6 @@ interface LoadState {
   issues?: string;
 }
 
-/**
- * Milestone 0/1 editor shell: it proves the app is runnable and that it consumes the core
- * project model (import → validate → normalize) rather than hardcoding any content. The full
- * canvas, hierarchy, inspector, and timeline arrive in later milestones.
- */
 function loadSample(): LoadState {
   try {
     const { project } = importProject(ronaldReadProject);
@@ -34,8 +32,19 @@ function totalDuration(project: MotionProject): number {
   return project.scenes.reduce((sum, scene) => sum + scene.duration, 0);
 }
 
+/**
+ * Milestone 0–2 editor shell: it proves the app is runnable and that it consumes the core project
+ * model AND the deterministic renderer (import → validate → renderAtTime → SVG). The full canvas,
+ * hierarchy, inspector, and timeline arrive in later milestones.
+ */
 export function App() {
   const state = useMemo(loadSample, []);
+  const registry = useMemo(() => createDefaultRenderRegistry(), []);
+  const [time, setTime] = useState(1);
+  const svg = useMemo(
+    () => renderProjectToSvg(demoProject, time, registry),
+    [registry, time],
+  );
   const project = state.project;
 
   return (
@@ -44,12 +53,36 @@ export function App() {
         <h1>YouTube Motion Studio</h1>
         <p>
           Local-first, JSON-driven motion graphics for vertical Shorts — editor shell
-          (M0/M1).
+          (M0–M2).
         </p>
       </header>
 
       <section className="card">
-        <h2>Sample project</h2>
+        <h2>Renderer preview · deterministic renderAtTime</h2>
+        <div className="preview">
+          {/* SVG is produced purely from project data at time t (spec §23). */}
+          <div className="preview__frame" dangerouslySetInnerHTML={{ __html: svg }} />
+          <div className="preview__controls">
+            <label htmlFor="time">Time: {time.toFixed(2)}s</label>
+            <input
+              id="time"
+              type="range"
+              min={0}
+              max={5}
+              step={0.05}
+              value={time}
+              onChange={(event) => setTime(Number(event.target.value))}
+            />
+            <p className="muted">
+              Rendered by <code>@motion-studio/renderer-core</code> (SVG backend) from the
+              built-in components. Scrub to see the deterministic pop-in / fade-in.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="card">
+        <h2>Sample project validation</h2>
         {state.ok && project ? (
           <>
             <p>
@@ -58,15 +91,11 @@ export function App() {
             <dl className="kv">
               <dt>Name</dt>
               <dd>{project.name}</dd>
-              <dt>Schema version</dt>
-              <dd>{project.schemaVersion}</dd>
               <dt>Composition</dt>
               <dd>
                 {project.settings.width} × {project.settings.height} @{" "}
                 {project.settings.fps} FPS
               </dd>
-              <dt>Theme</dt>
-              <dd>{project.theme.themeId}</dd>
               <dt>Scenes</dt>
               <dd>{project.scenes.length}</dd>
               <dt>Total duration</dt>
@@ -82,22 +111,6 @@ export function App() {
           </>
         )}
       </section>
-
-      {state.ok && project ? (
-        <section className="card">
-          <h2>Scenes</h2>
-          <ul className="scene-list">
-            {project.scenes.map((scene) => (
-              <li key={scene.id}>
-                <span>{scene.name}</span>
-                <span className="muted">
-                  {scene.elements.length} elements · {scene.duration}s
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
     </div>
   );
 }
