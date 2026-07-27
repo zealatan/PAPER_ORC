@@ -3,6 +3,7 @@
  * A thin view over the store — playback and project I/O are store actions (spec §34.3).
  */
 import { useRef } from "react";
+import { THEMES } from "@motion-studio/core";
 import { selectCanRedo, selectCanUndo, selectDuration, useEditor } from "../state/store";
 
 export function TopToolbar() {
@@ -22,6 +23,8 @@ export function TopToolbar() {
   const redo = useEditor((s) => s.redo);
   const canUndo = useEditor(selectCanUndo);
   const canRedo = useEditor(selectCanRedo);
+  const themeId = useEditor((s) => s.project.theme.themeId);
+  const setThemeId = useEditor((s) => s.setThemeId);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -63,6 +66,18 @@ export function TopToolbar() {
         ↷ Redo
       </button>
       <span className="toolbar__spacer" />
+      <select
+        className="toolbar__theme"
+        value={themeId}
+        onChange={(e) => setThemeId(e.target.value)}
+        title="Theme"
+      >
+        {THEMES.map((theme) => (
+          <option key={theme.id} value={theme.id}>
+            {theme.name}
+          </option>
+        ))}
+      </select>
       <button type="button" className="tbtn" onClick={togglePlay}>
         {playing ? "⏸ Pause" : "▶ Play"}
       </button>

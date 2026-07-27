@@ -88,7 +88,14 @@ export {
   deleteElement,
   addElement,
   updateScene,
+  setVariableValue,
+  setTheme,
 } from "./commands";
+
+// Variable bindings, theme engine, templates
+export { applyBindings } from "./project/bindings";
+export { type Theme, THEMES, DEFAULT_THEME_ID, resolveTheme, applyTheme } from "./theme";
+export { type MotionTemplate, instantiateTemplate } from "./template";
 
 // History (undo/redo)
 export {

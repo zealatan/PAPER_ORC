@@ -7,6 +7,8 @@
 import { create } from "zustand";
 import {
   addAnimation as addAnimationCommand,
+  applyBindings,
+  applyTheme,
   canRedo as coreCanRedo,
   canUndo as coreCanUndo,
   createHistory,
@@ -14,7 +16,11 @@ import {
   exportProject,
   findElementById,
   importProject,
+  instantiateTemplate,
   removeAnimation as removeAnimationCommand,
+  resolveTheme,
+  setTheme as setThemeCommand,
+  setVariableValue as setVariableValueCommand,
   updateAnimation as updateAnimationCommand,
   redo as coreRedo,
   renameElement as renameElementCommand,
@@ -32,13 +38,14 @@ import {
   type HistoryState,
   type MotionElement,
   type MotionProject,
+  type MotionTemplate,
   type Transform2D,
 } from "@motion-studio/core";
 import { projectDuration } from "@motion-studio/renderer-core";
 import { demoProject } from "../demoProject";
 import { elementBox, findScene } from "./projectOps";
 
-export type LeftTab = "scenes" | "hierarchy";
+export type LeftTab = "scenes" | "hierarchy" | "variables" | "templates";
 
 export interface TransformEntry {
   id: string;
@@ -89,6 +96,11 @@ export interface EditorState {
   updateSelectedAnimation(animationId: string, patch: Partial<AnimationDefinition>): void;
   removeSelectedAnimation(animationId: string): void;
 
+  // ── variables / themes / templates ──
+  setVariable(variableId: string, value: unknown): void;
+  setThemeId(themeId: string): void;
+  useTemplate(template: MotionTemplate): void;
+
   // ── playback ──
   time: number;
   playing: boolean;
@@ -131,6 +143,7 @@ function transformManyCommand(
 }
 
 let animSeq = 0;
+let projSeq = 0;
 
 export const useEditor = create<EditorState>((set, get) => ({
   project: demoProject,
@@ -345,6 +358,20 @@ export const useEditor = create<EditorState>((set, get) => ({
     get().apply(removeAnimationCommand(id, animationId));
   },
 
+  setVariable(variableId, value) {
+    get().apply(setVariableValueCommand(variableId, value), true);
+  },
+
+  setThemeId(themeId) {
+    get().apply(setThemeCommand(themeId));
+  },
+
+  useTemplate(template) {
+    projSeq += 1;
+    const now = new Date().toISOString();
+    get().replaceProject(instantiateTemplate(template, `project-${projSeq}`, now));
+  },
+
   time: 0,
   playing: false,
   setTime(time) {
@@ -388,6 +415,14 @@ export function selectCanUndo(state: EditorState): boolean {
 
 export function selectCanRedo(state: EditorState): boolean {
   return coreCanRedo(state.history);
+}
+
+/** The project with variable bindings + theme tokens resolved, ready to render (spec §9, §10). */
+export function selectResolvedProject(state: EditorState): MotionProject {
+  return applyTheme(
+    applyBindings(state.project),
+    resolveTheme(state.project.theme.themeId),
+  );
 }
 
 export { elementBox };

@@ -7,7 +7,13 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { renderProjectToSvg } from "@motion-studio/renderer-core";
 import { createDefaultRenderRegistry } from "@motion-studio/components";
-import type { MotionElement, Transform2D } from "@motion-studio/core";
+import {
+  applyBindings,
+  applyTheme,
+  resolveTheme,
+  type MotionElement,
+  type Transform2D,
+} from "@motion-studio/core";
 import {
   elementBox,
   selectActiveScene,
@@ -91,7 +97,15 @@ export function Canvas() {
     return () => observer.disconnect();
   }, []);
 
-  const svg = useMemo(() => renderProjectToSvg(project, time, registry), [project, time]);
+  // Render the project with variable bindings + theme tokens resolved (spec §9, §10).
+  const resolved = useMemo(
+    () => applyTheme(applyBindings(project), resolveTheme(project.theme.themeId)),
+    [project],
+  );
+  const svg = useMemo(
+    () => renderProjectToSvg(resolved, time, registry),
+    [resolved, time],
+  );
   const scale = stageWidth > 0 ? stageWidth / project.settings.width : 0;
 
   const elements = scene?.elements ?? [];

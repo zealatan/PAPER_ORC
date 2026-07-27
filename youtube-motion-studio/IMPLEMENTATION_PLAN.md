@@ -221,9 +221,31 @@ inspector + data-editable props); richer chart axes/labels.
 
 ---
 
+## Milestone 8 — Variables, Themes & Templates ✅ (this pass)
+
+- [x] Variable bindings (`core/project/bindings.ts`): `applyBindings` writes variable values into
+      bound element paths (with `format-number` / `uppercase` transforms). Edit once → all bound
+      elements update.
+- [x] Theme engine (`core/theme`): a token registry (5 themes) + `applyTheme` resolving
+      `token:<name>` references; manual literals preserved.
+- [x] Templates (`core/template`): `MotionTemplate` + `instantiateTemplate` → a **new independent**
+      deep-cloned project. Two starter templates (Biography Story, Stat Card) as app content.
+- [x] Commands: `setVariableValue`, `setTheme`; store actions + a `selectResolvedProject` selector
+      (bindings + theme applied at render).
+- [x] Editor: Variables tab (edit values), Templates tab (Use template), toolbar theme picker.
+
+**Acceptance (smoke-verified in the browser):** editing `person_name` updated the bound
+profile-card text; switching to the News-Red theme repainted `token:accent` (#e01e37); using a
+template produced a fresh project. 107 tests pass.
+
+Deferred within M8: binding-creation UI (bindings authored in data/templates for now); typography /
+spacing theme tokens beyond colors; variable groups/forms.
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
+- **M9 Audio/Subtitles**,
   **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
 
 Each remains defined by its spec §36 acceptance criteria. The domain model and validation

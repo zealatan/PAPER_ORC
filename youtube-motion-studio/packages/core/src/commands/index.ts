@@ -176,6 +176,34 @@ export function addElement(
   };
 }
 
+export function setVariableValue(variableId: string, value: unknown): EditorCommand {
+  return {
+    label: "Set variable",
+    mergeKey: `var:${variableId}`,
+    execute: (project) => {
+      const variable = project.variables[variableId];
+      if (!variable) return project;
+      return {
+        ...project,
+        variables: {
+          ...project.variables,
+          [variableId]: { ...variable, value },
+        },
+      };
+    },
+  };
+}
+
+export function setTheme(themeId: string): EditorCommand {
+  return {
+    label: "Change theme",
+    execute: (project) =>
+      project.theme.themeId === themeId
+        ? project
+        : { ...project, theme: { ...project.theme, themeId } },
+  };
+}
+
 export function updateScene(
   sceneId: string,
   patch: Partial<Pick<Scene, "name" | "duration" | "background">>,
