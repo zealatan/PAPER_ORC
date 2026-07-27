@@ -124,9 +124,30 @@ channels (M6); Pixi image-asset loading; canvas/WebGPU backends.
 
 ---
 
+## Milestone 3 — Editor Shell ✅ (this pass)
+
+- [x] Zustand store (`apps/editor/src/state/store.ts`) — project + transient editor state
+      (selection, playback, UI) kept separate from serialized project (spec §21); immutable element
+      updates via `projectOps.ts`.
+- [x] Shell layout (spec §11): top toolbar, left panel, center canvas, right inspector, bottom
+      timeline (`App.tsx` + `styles/global.css` dark token theme).
+- [x] Center canvas (`canvas/Canvas.tsx`) — renders the project via the SVG backend at the current
+      time, click-selection with a selection overlay, and a preview playback clock (rAF).
+- [x] Top toolbar — play/pause/stop, time readout, JSON **Save** (download) and **Load** (file).
+- [x] Left panel — Scenes list + Hierarchy tree with visibility toggles and selection.
+- [x] Inspector — collapsible General/Transform/Appearance/Content sections editing the selected
+      element (name, transform, background, text props).
+- [x] Timeline placeholder — scene segments + playhead + click-to-seek.
+
+**Acceptance:** project opens; components render on the canvas; inspector selection + editing works;
+JSON save→reload round-trips the project. The four panels were built by a 4-agent workflow against
+the store contract, then integrated. (Command/undo architecture arrives in M4, spec §20.)
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M3 Editor shell**, **M4 Canvas interaction**, **M5 Timeline/playback**, **M6 Animation**,
+- **M4 Canvas interaction**, **M5 Timeline/playback**, **M6 Animation**,
   **M7 Production components**, **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
   **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
 
