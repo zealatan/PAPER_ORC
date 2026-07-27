@@ -3,3 +3,10 @@ dist/
 coverage/
 pnpm-lock.yaml
 *.tsbuildinfo
+examples/**/preview/
+examples/**/*.png
+examples/**/*.mp4
+examples/**/project.json
+examples/**/validation.json
+examples/gallery/report.json
+examples/gallery/index.html

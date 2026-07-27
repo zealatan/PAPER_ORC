@@ -1,0 +1,26 @@
+{
+  "name": "@motion-studio/examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Ten feature-verification example Shorts rendered with the existing engine.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "examples:generate": "tsx src/cli.ts generate",
+    "examples:preview": "tsx src/cli.ts preview",
+    "examples:render": "tsx src/cli.ts render",
+    "examples:validate": "tsx src/cli.ts validate",
+    "examples:gallery": "tsx src/cli.ts gallery",
+    "examples:all": "tsx src/cli.ts all"
+  },
+  "dependencies": {
+    "@motion-studio/components": "workspace:*",
+    "@motion-studio/core": "workspace:*",
+    "@motion-studio/renderer": "workspace:*",
+    "@motion-studio/renderer-core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.1"
+  }
+}

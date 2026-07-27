@@ -17,7 +17,13 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "examples:generate": "pnpm --filter @motion-studio/examples run examples:generate",
+    "examples:preview": "pnpm --filter @motion-studio/examples run examples:preview",
+    "examples:render": "pnpm --filter @motion-studio/examples run examples:render",
+    "examples:validate": "pnpm --filter @motion-studio/examples run examples:validate",
+    "examples:gallery": "pnpm --filter @motion-studio/examples run examples:gallery",
+    "examples:all": "pnpm --filter @motion-studio/examples run examples:all"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
