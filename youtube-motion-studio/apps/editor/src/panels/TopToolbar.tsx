@@ -3,7 +3,7 @@
  * A thin view over the store — playback and project I/O are store actions (spec §34.3).
  */
 import { useRef } from "react";
-import { selectDuration, useEditor } from "../state/store";
+import { selectCanRedo, selectCanUndo, selectDuration, useEditor } from "../state/store";
 
 export function TopToolbar() {
   const name = useEditor((s) => s.project.name);
@@ -18,6 +18,10 @@ export function TopToolbar() {
   const loadFromJson = useEditor((s) => s.loadFromJson);
   const toJson = useEditor((s) => s.toJson);
   const markSaved = useEditor((s) => s.markSaved);
+  const undo = useEditor((s) => s.undo);
+  const redo = useEditor((s) => s.redo);
+  const canUndo = useEditor(selectCanUndo);
+  const canRedo = useEditor(selectCanRedo);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,6 +56,12 @@ export function TopToolbar() {
       <span className={dirty ? "status-dot status-dot--dirty" : "status-dot"}>
         {dirty ? "● Unsaved" : "● Saved"}
       </span>
+      <button type="button" className="tbtn" onClick={undo} disabled={!canUndo}>
+        ↶ Undo
+      </button>
+      <button type="button" className="tbtn" onClick={redo} disabled={!canRedo}>
+        ↷ Redo
+      </button>
       <span className="toolbar__spacer" />
       <button type="button" className="tbtn" onClick={togglePlay}>
         {playing ? "⏸ Pause" : "▶ Play"}

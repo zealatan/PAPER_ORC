@@ -145,9 +145,31 @@ the store contract, then integrated. (Command/undo architecture arrives in M4, s
 
 ---
 
+## Milestone 4 — Canvas Interaction ✅ (this pass)
+
+- [x] Command/history architecture in core (spec §20): `EditorCommand` + command creators
+      (`commands/`), snapshot-based undo/redo with mergeKey coalescing (`history/`), immutable
+      element ops (`project/elementOps.ts`). Unit-tested.
+- [x] Store refactor: every mutation runs through `runCommand`; `undo`/`redo` actions; multi-select
+      (`selectedElementIds` + primary); drag/nudge via a multi-element transform command.
+- [x] Canvas direct manipulation: click + shift-click select, drag-move, corner **resize** handles,
+      **rotate** handle, multi-select overlays — all command-driven and coalesced per gesture.
+- [x] Snapping engine (pure `computeSnap`) with center/edge guides drawn on the canvas.
+- [x] Keyboard shortcuts hook: undo/redo (Ctrl/Cmd+Z / Shift+Z / Y), delete, arrow-nudge
+      (1px / 10px with Shift), ignoring text inputs.
+- [x] Toolbar Undo/Redo buttons wired to history state.
+
+**Acceptance (smoke-verified):** transforms are command-driven; drag moved an element +100px and
+**Undo restored it exactly** (Δx→0); canvas overlay and inspector stay synchronized. 86 tests pass.
+
+Deferred within M4 (documented): rotation-aware selection overlay/handles (overlay is AABB),
+marquee selection, align/distribute UI, equal-spacing suggestions.
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M4 Canvas interaction**, **M5 Timeline/playback**, **M6 Animation**,
+- **M5 Timeline/playback**, **M6 Animation**,
   **M7 Production components**, **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
   **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
 

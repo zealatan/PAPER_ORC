@@ -1,26 +1,48 @@
 /**
- * Editor store (Zustand). Holds the project plus transient editor state (selection, playback, UI)
- * — kept separate from the serialized project (spec §21). Element edits are immutable updates via
- * `projectOps`. In M3 edits are applied directly through store actions; M4 refactors mutations onto
- * the command/history architecture (spec §20) without changing this public surface much.
+ * Editor store (Zustand). Holds the project plus transient editor state (selection, playback,
+ * history, UI) — separate from the serialized project (spec §21). Every project mutation goes
+ * through the command/history layer in `@motion-studio/core` so undo/redo is exact and drags
+ * coalesce (spec §20). Panel-facing action names are stable across M3→M4.
  */
 import { create } from "zustand";
 import {
+  canRedo as coreCanRedo,
+  canUndo as coreCanUndo,
+  createHistory,
+  deleteElement as deleteElementCommand,
   exportProject,
+  findElementById,
   importProject,
+  redo as coreRedo,
+  renameElement as renameElementCommand,
+  runCommand as coreRunCommand,
+  setElementVisible as setElementVisibleCommand,
+  undo as coreUndo,
+  updateElementById,
+  updateElementProps as updateElementPropsCommand,
+  updateElementStyle as updateElementStyleCommand,
+  updateElementTransform as updateElementTransformCommand,
+  type EditorCommand,
+  type HistoryState,
   type MotionElement,
   type MotionProject,
   type Transform2D,
 } from "@motion-studio/core";
 import { projectDuration } from "@motion-studio/renderer-core";
 import { demoProject } from "../demoProject";
-import { elementBox, findElement, findScene, updateElement } from "./projectOps";
+import { elementBox, findScene } from "./projectOps";
 
 export type LeftTab = "scenes" | "hierarchy";
+
+export interface TransformEntry {
+  id: string;
+  patch: Partial<Transform2D>;
+}
 
 export interface EditorState {
   // ── project ──
   project: MotionProject;
+  history: HistoryState;
   dirty: boolean;
   loadError: string | null;
   loadFromJson(raw: string): boolean;
@@ -28,18 +50,28 @@ export interface EditorState {
   toJson(): string;
   markSaved(): void;
 
-  // ── selection ──
-  selectedSceneId: string | null;
-  selectedElementId: string | null;
-  selectScene(sceneId: string | null): void;
-  selectElement(elementId: string | null): void;
+  // ── commands / history ──
+  apply(command: EditorCommand, coalesce?: boolean): void;
+  undo(): void;
+  redo(): void;
 
-  // ── element editing ──
+  // ── selection (multi) ──
+  selectedSceneId: string | null;
+  selectedElementIds: string[];
+  selectedElementId: string | null; // primary (last selected)
+  selectScene(sceneId: string | null): void;
+  selectElement(elementId: string | null, additive?: boolean): void;
+  clearSelection(): void;
+
+  // ── element editing (via commands) ──
   updateSelectedTransform(patch: Partial<Transform2D>): void;
   updateSelectedProps(patch: Record<string, unknown>): void;
   updateSelectedStyle(patch: Record<string, unknown>): void;
   renameSelected(name: string): void;
   toggleElementVisible(elementId: string): void;
+  setElementsTransform(entries: TransformEntry[], mergeKey: string): void;
+  moveSelectedBy(dx: number, dy: number, mergeKey?: string): void;
+  deleteSelected(): void;
 
   // ── playback ──
   time: number;
@@ -58,8 +90,33 @@ function firstSceneId(project: MotionProject): string | null {
   return project.scenes[0]?.id ?? null;
 }
 
+function pruneSelection(project: MotionProject, ids: string[]): string[] {
+  return ids.filter((id) => findElementById(project, id) !== null);
+}
+
+/** A command that patches several elements' transforms at once (multi-select drag / nudge). */
+function transformManyCommand(
+  entries: TransformEntry[],
+  mergeKey: string,
+): EditorCommand {
+  return {
+    label: "Transform",
+    mergeKey,
+    execute: (project) =>
+      entries.reduce(
+        (acc, entry) =>
+          updateElementById(acc, entry.id, (element) => ({
+            ...element,
+            transform: { ...element.transform, ...entry.patch },
+          })),
+        project,
+      ),
+  };
+}
+
 export const useEditor = create<EditorState>((set, get) => ({
   project: demoProject,
+  history: createHistory(),
   dirty: false,
   loadError: null,
 
@@ -68,9 +125,11 @@ export const useEditor = create<EditorState>((set, get) => ({
       const { project } = importProject(raw);
       set({
         project,
+        history: createHistory(),
         loadError: null,
         dirty: false,
         selectedSceneId: firstSceneId(project),
+        selectedElementIds: [],
         selectedElementId: null,
         time: 0,
         playing: false,
@@ -85,8 +144,10 @@ export const useEditor = create<EditorState>((set, get) => ({
   replaceProject(project) {
     set({
       project,
+      history: createHistory(),
       dirty: true,
       selectedSceneId: firstSceneId(project),
+      selectedElementIds: [],
       selectedElementId: null,
     });
   },
@@ -99,78 +160,137 @@ export const useEditor = create<EditorState>((set, get) => ({
     set({ dirty: false });
   },
 
+  apply(command, coalesce = false) {
+    const state = get();
+    const result = coreRunCommand(state.project, state.history, command, { coalesce });
+    if (result.changed) {
+      set({ project: result.project, history: result.history, dirty: true });
+    }
+  },
+
+  undo() {
+    const state = get();
+    const result = coreUndo(state.project, state.history);
+    if (result) {
+      set({
+        project: result.project,
+        history: result.history,
+        dirty: true,
+        selectedElementIds: pruneSelection(result.project, state.selectedElementIds),
+        selectedElementId: findElementById(result.project, state.selectedElementId)
+          ? state.selectedElementId
+          : null,
+      });
+    }
+  },
+
+  redo() {
+    const state = get();
+    const result = coreRedo(state.project, state.history);
+    if (result) {
+      set({
+        project: result.project,
+        history: result.history,
+        dirty: true,
+        selectedElementIds: pruneSelection(result.project, state.selectedElementIds),
+      });
+    }
+  },
+
   selectedSceneId: firstSceneId(demoProject),
+  selectedElementIds: [],
   selectedElementId: null,
 
   selectScene(sceneId) {
-    set({ selectedSceneId: sceneId, selectedElementId: null });
+    set({ selectedSceneId: sceneId, selectedElementIds: [], selectedElementId: null });
   },
 
-  selectElement(elementId) {
+  selectElement(elementId, additive = false) {
     if (!elementId) {
-      set({ selectedElementId: null });
+      set({ selectedElementIds: [], selectedElementId: null });
       return;
     }
-    const found = findElement(get().project, elementId);
-    set({
-      selectedElementId: elementId,
-      selectedSceneId: found ? found.scene.id : get().selectedSceneId,
+    const found = findElementById(get().project, elementId);
+    set((state) => {
+      let ids: string[];
+      if (additive) {
+        ids = state.selectedElementIds.includes(elementId)
+          ? state.selectedElementIds.filter((id) => id !== elementId)
+          : [...state.selectedElementIds, elementId];
+      } else {
+        ids = [elementId];
+      }
+      return {
+        selectedElementIds: ids,
+        selectedElementId: ids[ids.length - 1] ?? null,
+        selectedSceneId: found ? found.scene.id : state.selectedSceneId,
+      };
     });
+  },
+
+  clearSelection() {
+    set({ selectedElementIds: [], selectedElementId: null });
   },
 
   updateSelectedTransform(patch) {
     const id = get().selectedElementId;
     if (!id) return;
-    set((state) => ({
-      dirty: true,
-      project: updateElement(state.project, id, (element) => ({
-        ...element,
-        transform: { ...element.transform, ...patch },
-      })),
-    }));
+    const key = Object.keys(patch)[0] ?? "t";
+    get().apply(updateElementTransformCommand(id, patch, `field:${id}:${key}`), true);
   },
 
   updateSelectedProps(patch) {
     const id = get().selectedElementId;
     if (!id) return;
-    set((state) => ({
-      dirty: true,
-      project: updateElement(state.project, id, (element) => ({
-        ...element,
-        props: { ...element.props, ...patch },
-      })),
-    }));
+    const key = Object.keys(patch)[0] ?? "p";
+    get().apply(updateElementPropsCommand(id, patch, `prop:${id}:${key}`), true);
   },
 
   updateSelectedStyle(patch) {
     const id = get().selectedElementId;
     if (!id) return;
-    set((state) => ({
-      dirty: true,
-      project: updateElement(state.project, id, (element) => ({
-        ...element,
-        style: { ...element.style, ...patch },
-      })),
-    }));
+    const key = Object.keys(patch)[0] ?? "s";
+    get().apply(updateElementStyleCommand(id, patch, `style:${id}:${key}`), true);
   },
 
   renameSelected(name) {
     const id = get().selectedElementId;
     if (!id) return;
-    set((state) => ({
-      dirty: true,
-      project: updateElement(state.project, id, (element) => ({ ...element, name })),
-    }));
+    get().apply(renameElementCommand(id, name), true);
   },
 
   toggleElementVisible(elementId) {
-    set((state) => ({
-      dirty: true,
-      project: updateElement(state.project, elementId, (element) => ({
-        ...element,
-        visible: !element.visible,
-      })),
-    }));
+    const found = findElementById(get().project, elementId);
+    if (!found) return;
+    get().apply(setElementVisibleCommand(elementId, !found.element.visible));
+  },
+
+  setElementsTransform(entries, mergeKey) {
+    if (entries.length === 0) return;
+    get().apply(transformManyCommand(entries, mergeKey), true);
+  },
+
+  moveSelectedBy(dx, dy, mergeKey = "nudge") {
+    const { project, selectedElementIds } = get();
+    const entries: TransformEntry[] = [];
+    for (const id of selectedElementIds) {
+      const found = findElementById(project, id);
+      if (found) {
+        entries.push({
+          id,
+          patch: { x: found.element.transform.x + dx, y: found.element.transform.y + dy },
+        });
+      }
+    }
+    get().setElementsTransform(entries, mergeKey);
+  },
+
+  deleteSelected() {
+    const ids = get().selectedElementIds;
+    for (const id of ids) {
+      get().apply(deleteElementCommand(id));
+    }
+    set({ selectedElementIds: [], selectedElementId: null });
   },
 
   time: 0,
@@ -194,10 +314,10 @@ export const useEditor = create<EditorState>((set, get) => ({
   },
 }));
 
-// ── selectors (kept out of components to reduce rerenders) ──
+// ── selectors ──
 
 export function selectSelectedElement(state: EditorState): MotionElement | null {
-  return findElement(state.project, state.selectedElementId)?.element ?? null;
+  return findElementById(state.project, state.selectedElementId)?.element ?? null;
 }
 
 export function selectActiveScene(state: EditorState) {
@@ -208,6 +328,14 @@ export function selectActiveScene(state: EditorState) {
 
 export function selectDuration(state: EditorState): number {
   return projectDuration(state.project);
+}
+
+export function selectCanUndo(state: EditorState): boolean {
+  return coreCanUndo(state.history);
+}
+
+export function selectCanRedo(state: EditorState): boolean {
+  return coreCanRedo(state.history);
 }
 
 export { elementBox };

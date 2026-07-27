@@ -3,6 +3,7 @@
  * timeline. Panels are thin views over the Zustand store; they own no domain state (spec §34.3).
  */
 import { Canvas } from "./canvas/Canvas";
+import { useKeyboardShortcuts } from "./canvas/useKeyboardShortcuts";
 import { TopToolbar } from "./panels/TopToolbar";
 import { LeftPanel } from "./panels/LeftPanel";
 import { Inspector } from "./panels/Inspector";
@@ -10,6 +11,7 @@ import { Timeline } from "./panels/Timeline";
 import { useEditor } from "./state/store";
 
 export function App() {
+  useKeyboardShortcuts();
   const loadError = useEditor((s) => s.loadError);
 
   return (

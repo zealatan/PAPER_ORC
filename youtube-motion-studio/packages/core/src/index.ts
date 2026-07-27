@@ -65,5 +65,40 @@ export {
 export { importProject, type ImportOptions, type ImportResult } from "./io/importProject";
 export { exportProject, cloneProject, type ExportOptions } from "./io/exportProject";
 
+// Element operations (immutable)
+export {
+  findElementById,
+  updateElementById,
+  removeElementById,
+  addElementToScene,
+} from "./project/elementOps";
+
+// Commands (spec §20)
+export {
+  type EditorCommand,
+  updateElementTransform,
+  updateElementProps,
+  updateElementStyle,
+  renameElement,
+  setElementVisible,
+  deleteElement,
+  addElement,
+  updateScene,
+} from "./commands";
+
+// History (undo/redo)
+export {
+  type HistoryEntry,
+  type HistoryState,
+  type RunResult,
+  type StepResult,
+  createHistory,
+  runCommand,
+  undo,
+  redo,
+  canUndo,
+  canRedo,
+} from "./history";
+
 // Samples
 export { ronaldReadProject } from "./samples/ronaldRead";

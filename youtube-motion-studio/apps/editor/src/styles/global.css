@@ -336,9 +336,85 @@ input:focus-visible,
 
 .canvas__selection {
   position: absolute;
+  border: 1px solid color-mix(in srgb, var(--selection) 70%, transparent);
+  pointer-events: none;
+}
+
+.canvas__selection--primary {
   border: 2px solid var(--selection);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.canvas__handles {
+  position: absolute;
   pointer-events: none;
+}
+
+.canvas__handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -6px 0 0 -6px;
+  background: var(--panel);
+  border: 2px solid var(--selection);
+  border-radius: 2px;
+  pointer-events: auto;
+}
+
+.canvas__handle--nw {
+  left: 0;
+  top: 0;
+  cursor: nwse-resize;
+}
+.canvas__handle--ne {
+  left: 100%;
+  top: 0;
+  cursor: nesw-resize;
+}
+.canvas__handle--se {
+  left: 100%;
+  top: 100%;
+  cursor: nwse-resize;
+}
+.canvas__handle--sw {
+  left: 0;
+  top: 100%;
+  cursor: nesw-resize;
+}
+
+.canvas__rotate {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  margin: -28px 0 0 -6px;
+  background: var(--accent);
+  border: 2px solid var(--panel);
+  border-radius: 50%;
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.canvas__guide {
+  position: absolute;
+  background: var(--accent);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.canvas__guide--v {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  margin-left: -0.5px;
+}
+
+.canvas__guide--h {
+  left: 0;
+  right: 0;
+  height: 1px;
+  margin-top: -0.5px;
 }
 
 .canvas__meta {
