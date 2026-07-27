@@ -262,9 +262,32 @@ karaoke/word-level highlighting (data model supports it).
 
 ---
 
+## Milestone 10 — MP4 Export ✅ (this pass)
+
+- [x] `apps/renderer` Node export pipeline: deterministic SVG frames → **resvg** rasterization →
+      **FFmpeg** (H.264, yuv420p, +faststart). No browser needed; a frame at `t` depends only on the
+      project and `t`.
+- [x] Applies variable bindings + theme before rendering, so **the export matches the editor
+      preview** exactly.
+- [x] Per-frame progress callback; **cancellation** via AbortSignal (kills FFmpeg, removes the
+      partial file); a full **render report** (resolution, fps, duration, codec, CRF, timing,
+      missing assets, exact FFmpeg command).
+- [x] `render` CLI (via tsx) + an **integration test that actually encodes an MP4 and verifies it
+      with ffprobe** (guarded to skip when ffmpeg is absent).
+
+**Acceptance (verified with a real file):** the sample exported to a valid **1080 × 1920 H.264 MP4**;
+ffprobe reported **duration 5.000s** matching the project; **150 frames** (5s × 30fps, none missing);
+the decoded frame shows the bound "Ronald Read" name and the Korean caption. 115 tests pass.
+
+Deferred within M10: audio mixing into the MP4 (single-track adelay/amix — arg-building only so far,
+no audio asset to exercise); an in-editor Export button (needs a render server/queue); PNG-sequence /
+GIF / WebM outputs.
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
+- **M11 Plugins**, **M12 AI draft integration**.
 
 Each remains defined by its spec §36 acceptance criteria. The domain model and validation
 built in M1 are the foundation these consume; no shortcut was taken that blocks them.
