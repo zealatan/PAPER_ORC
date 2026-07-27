@@ -13,6 +13,7 @@
   "dependencies": {
     "@motion-studio/components": "workspace:*",
     "@motion-studio/core": "workspace:*",
+    "@motion-studio/legacy-adapter": "workspace:*",
     "@motion-studio/renderer-core": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

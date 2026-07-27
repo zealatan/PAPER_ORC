@@ -49,6 +49,7 @@ import {
   type Transform2D,
 } from "@motion-studio/core";
 import { projectDuration } from "@motion-studio/renderer-core";
+import { pgDeckAdapter } from "@motion-studio/legacy-adapter";
 import { demoProject } from "../demoProject";
 import { elementBox, findScene } from "./projectOps";
 
@@ -108,8 +109,9 @@ export interface EditorState {
   setThemeId(themeId: string): void;
   useTemplate(template: MotionTemplate): void;
 
-  // ── ai ──
+  // ── ai / legacy import ──
   importAIDraft(response: AIGenerationResponse): boolean;
+  importDeck(deckText: string): Promise<void>;
 
   // ── audio / subtitles ──
   importSrtToSelected(srtText: string): void;
@@ -386,6 +388,16 @@ export const useEditor = create<EditorState>((set, get) => ({
     projSeq += 1;
     const now = new Date().toISOString();
     get().replaceProject(instantiateTemplate(template, `project-${projSeq}`, now));
+  },
+
+  async importDeck(deckText) {
+    try {
+      const { project } = await pgDeckAdapter.import(deckText);
+      get().replaceProject(project);
+      set({ loadError: null });
+    } catch (error) {
+      set({ loadError: error instanceof Error ? error.message : String(error) });
+    }
   },
 
   importAIDraft(response) {

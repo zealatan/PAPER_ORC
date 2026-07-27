@@ -23,6 +23,8 @@ export function TopToolbar() {
   const redo = useEditor((s) => s.redo);
   const canUndo = useEditor(selectCanUndo);
   const canRedo = useEditor(selectCanRedo);
+  const importDeck = useEditor((s) => s.importDeck);
+  const deckInputRef = useRef<HTMLInputElement>(null);
   const themeId = useEditor((s) => s.project.theme.themeId);
   const setThemeId = useEditor((s) => s.setThemeId);
 
@@ -38,6 +40,14 @@ export function TopToolbar() {
     if (!file) return;
     const text = await file.text();
     loadFromJson(text);
+    event.target.value = "";
+  }
+
+  async function handleDeckFile(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const text = await file.text();
+    await importDeck(text);
     event.target.value = "";
   }
 
@@ -87,6 +97,20 @@ export function TopToolbar() {
       <span className="status-dot">
         {time.toFixed(2)} / {duration.toFixed(2)}s
       </span>
+      <button
+        type="button"
+        className="tbtn"
+        onClick={() => deckInputRef.current?.click()}
+      >
+        Import Deck
+      </button>
+      <input
+        ref={deckInputRef}
+        type="file"
+        accept="application/json,.json"
+        style={{ display: "none" }}
+        onChange={handleDeckFile}
+      />
       <button type="button" className="tbtn" onClick={() => inputRef.current?.click()}>
         Load
       </button>
