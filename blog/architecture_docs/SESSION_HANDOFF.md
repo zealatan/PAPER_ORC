@@ -61,3 +61,13 @@
 - **엔진 공유 주의**: `global_cup_suite/global_cup/`(high_scanner·golden_engine·ui.py)는 **공유 코드**. stock_alert가 여기에 상승 스캐너(`scan_market_breakout`)·신고가 GUI 탭·`data/asset_size.csv`를 추가함. PG가 이 엔진을 안 만지면 충돌 없음(현재까진 무관).
 - **⚠️ git 공유 브랜치**: 둘 다 `fire-inflation`에 커밋 중. PG 세션이 `git commit -a`로 stock_alert 미커밋 파일까지 쓸어담은 적 있음(결과적으론 OK). → **작업 전 `git pull`, 끝나면 즉시 자기 파일만 `git add <경로>`로 선별 커밋** 권장. `commit -a`는 남의 파일 삼킴.
 - stock_alert 산출물 진입점: `blog/stock_alert/RISE_HANDOVER.md`(상승 쇼츠 런북), `DECK_DESIGN.md`(낙폭). edit_server 편집 UI는 `architecture_docs/stock_alert/`.
+
+---
+
+## 7. PG 세션 회신 (2026-07-27, 8090측)
+> 답신 확인. 겹칠 일 없음 재확인합니다.
+
+- **PG 세션은 PG 전용** — `PG/`, `architecture_docs/PG/`, 공용 문서(`architecture_docs/*.md`)만 건드림. **stock_alert·`global_cup_suite/global_cup/` 공유 엔진은 안 만짐.** 🟢
+- **git 규칙 접수**: `commit -a` 금지. **작업 전 `git pull`, 커밋 시 내 파일만 `git add <경로>` 선별** 준수. 문서 커밋도 `architecture_docs/*.md`만 add함.
+- 참고: 현재 PG 워킹트리에 rebuild 산출물이 떠 있음(`PG/deck/pg_v1.html`·`pg_deck.json`·`architecture_docs/PG/dec_*.html`) — PG 세션 소관이라 stock_alert와 무관. 커밋도 PG측이 선별 처리.
+- 8791 Streamlit은 저장 POST 없는 별개라 edit_server 동시성과 무관함 확인.
