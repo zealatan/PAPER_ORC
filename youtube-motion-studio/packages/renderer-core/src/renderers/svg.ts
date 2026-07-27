@@ -28,6 +28,8 @@ import type {
 
 export interface SvgRenderOptions {
   includeXmlDeclaration?: boolean;
+  /** Omit the composition + scene background so the frame is transparent (for video compositing). */
+  skipBackground?: boolean;
 }
 
 function fmt(n: number): string {
@@ -246,14 +248,12 @@ export function renderProjectToSvg(
     sceneTime: frame.sceneLocalTime,
   });
 
-  const base = `<rect x="0" y="0" width="${fmt(width)}" height="${fmt(height)}" fill="${esc(backgroundColor)}"/>`;
-  const bg = backgroundToSvg(
-    frame.background,
-    width,
-    height,
-    ctx,
-    `s${frame.sceneIndex}`,
-  );
+  const base = options.skipBackground
+    ? ""
+    : `<rect x="0" y="0" width="${fmt(width)}" height="${fmt(height)}" fill="${esc(backgroundColor)}"/>`;
+  const bg = options.skipBackground
+    ? ""
+    : backgroundToSvg(frame.background, width, height, ctx, `s${frame.sceneIndex}`);
   const body = frame.elements.map((el) => elementToSvg(el, registry, ctx)).join("");
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${fmt(width)}" height="${fmt(height)}" viewBox="0 0 ${fmt(width)} ${fmt(height)}">${base}${bg}${body}</svg>`;

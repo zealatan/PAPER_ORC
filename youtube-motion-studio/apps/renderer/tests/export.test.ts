@@ -149,4 +149,46 @@ describe("exportVideo (integration)", () => {
       exportVideo(tinyProject(), { outPath: OUT }, undefined, controller.signal),
     ).rejects.toThrow(/cancel/i);
   });
+
+  it.skipIf(!HAS_FFMPEG)("composites a video background into the export", async () => {
+    const bgPath = join(tmpdir(), "motion-studio-test-bg.mp4");
+    const out = join(tmpdir(), "motion-studio-export-bg.mp4");
+    spawnSync("ffmpeg", [
+      "-y",
+      "-f",
+      "lavfi",
+      "-i",
+      "color=c=red:s=320x240:d=1:r=12",
+      "-pix_fmt",
+      "yuv420p",
+      bgPath,
+    ]);
+    const project: MotionProject = {
+      ...tinyProject(),
+      settings: { ...tinyProject().settings, width: 320, height: 240, fps: 12 },
+      assets: [
+        {
+          id: "bg",
+          type: "video",
+          name: "bg",
+          source: { kind: "local-path", path: bgPath },
+        },
+      ],
+      scenes: [
+        {
+          id: "s1",
+          name: "S1",
+          duration: 0.5,
+          background: { type: "video", assetId: "bg", fit: "cover" },
+          elements: [rect("fg")],
+        },
+      ],
+    };
+    const result = await exportVideo(project, { outPath: out });
+    expect(result.report.ffmpegCommand).toContain("overlay");
+    expect(existsSync(out)).toBe(true);
+    expect(ffprobe(out).codec).toBe("h264");
+    rmSync(bgPath, { force: true });
+    rmSync(out, { force: true });
+  });
 });

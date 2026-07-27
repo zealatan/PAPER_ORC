@@ -27,14 +27,15 @@ export function resolveForRender(project: MotionProject): MotionProject {
   return applyTheme(applyBindings(project), resolveTheme(project.theme.themeId));
 }
 
-/** Rasterize one frame to a PNG buffer. */
+/** Rasterize one frame to a PNG buffer. `skipBackground` yields a transparent frame for compositing. */
 export function renderFrameToPng(
   project: MotionProject,
   timeSeconds: number,
   registry: RenderRegistry,
   width: number,
+  skipBackground = false,
 ): Buffer {
-  const svg = renderProjectToSvg(project, timeSeconds, registry);
+  const svg = renderProjectToSvg(project, timeSeconds, registry, { skipBackground });
   const resvg = new Resvg(svg, { fitTo: { mode: "width", value: width } });
   return Buffer.from(resvg.render().asPng());
 }

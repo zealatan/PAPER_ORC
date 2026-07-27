@@ -48,6 +48,11 @@ export interface LegacyImportOptions {
   /** ISO timestamp for created/updated (kept explicit for deterministic imports). */
   now?: string;
   projectId?: string;
+  /**
+   * Directory holding the deck's background videos (`<bgid>.mp4`). When set, backgrounds are
+   * attached as real video assets + video scene backgrounds; otherwise they become asset requests.
+   */
+  assetBasePath?: string;
 }
 
 export interface LegacyTemplateAdapter {

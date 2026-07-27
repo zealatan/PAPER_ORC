@@ -8,6 +8,8 @@
 import {
   createEmptyProject,
   importProject,
+  type AssetReference,
+  type BackgroundDefinition,
   type MotionElement,
   type MotionProject,
   type Scene,
@@ -179,6 +181,9 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
     const unsupported: MigrationNote[] = [];
     const translated: MigrationNote[] = [];
     const assetRequests = new Map<string, string>();
+    const assets: AssetReference[] = [];
+    const seenAssets = new Set<string>();
+    const assetBase = options.assetBasePath;
     let elementCount = 0;
 
     const scenes: Scene[] = deck.scenes.map((deckScene, index) => {
@@ -329,11 +334,23 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
         );
       }
 
+      let background: BackgroundDefinition = { type: "solid", color: "#0e1726" };
       if (deckScene.bgid) {
-        assetRequests.set(
-          deckScene.bgid,
-          `Background video "${deckScene.bgid}" from the PG deck`,
-        );
+        const bgid = deckScene.bgid;
+        if (assetBase) {
+          if (!seenAssets.has(bgid)) {
+            seenAssets.add(bgid);
+            assets.push({
+              id: bgid,
+              type: "video",
+              name: bgid,
+              source: { kind: "local-path", path: `${assetBase}/${bgid}.mp4` },
+            });
+          }
+          background = { type: "video", assetId: bgid, fit: "cover", loop: true };
+        } else {
+          assetRequests.set(bgid, `Background video "${bgid}" from the PG deck`);
+        }
       }
 
       elementCount += elements.length;
@@ -341,7 +358,7 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
         id: sceneId,
         name: `${sid}. ${tpl}`,
         duration,
-        background: { type: "solid", color: "#0e1726" },
+        background,
         elements,
       };
     });
@@ -353,7 +370,7 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
       settings: { width, height },
       themeId: "minimal-dark",
     });
-    const draft: MotionProject = { ...baseProject, scenes };
+    const draft: MotionProject = { ...baseProject, scenes, assets };
 
     // Validate + normalize through the standard pipeline so the result is guaranteed loadable.
     const { project } = importProject(draft);

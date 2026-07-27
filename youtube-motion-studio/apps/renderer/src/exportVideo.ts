@@ -1,12 +1,21 @@
 /**
  * The default {@link VideoExportStrategy}: deterministic SVG frames → FFmpeg → MP4 (spec §24).
  *
- * Pipeline: resolve project (bindings + theme) → for each frame, rasterize the deterministic SVG to
- * PNG → pipe to FFmpeg (H.264, yuv420p, faststart). Reports progress per frame, supports
- * cancellation via an AbortSignal (kills FFmpeg and removes the partial file), and returns a full
- * render report.
+ * Two paths, chosen automatically:
+ *  - **flat**: no video backgrounds → rasterize opaque frames and pipe them straight to FFmpeg.
+ *  - **composited**: any scene has a video background → build a background track that matches the
+ *    timeline (`backgroundTrack.ts`), then overlay transparent element frames on top so the legacy
+ *    deck's background videos appear in the final MP4.
+ *
+ * Both report progress per frame, support cancellation via an AbortSignal (kill FFmpeg + remove the
+ * partial file), and return a full render report.
  */
+import { spawn } from "node:child_process";
+import { mkdtempSync, rmSync } from "node:fs";
 import { unlink } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import type { Writable } from "node:stream";
 import {
   createRegistry,
   missingAssetIds,
@@ -15,6 +24,7 @@ import {
   resolveForRender,
 } from "./frames";
 import { spawnFfmpeg } from "./ffmpeg";
+import { buildBackgroundTrack, hasVideoBackground } from "./backgroundTrack";
 import type {
   ExportOptions,
   ExportProgressCallback,
@@ -23,8 +33,45 @@ import type {
   VideoExportStrategy,
 } from "./types";
 import type { MotionProject } from "@motion-studio/core";
+import type { RenderRegistry } from "@motion-studio/renderer-core";
 
 const APP_VERSION = "0.1.0";
+
+interface PumpConfig {
+  frameCount: number;
+  fps: number;
+  width: number;
+  skipBackground: boolean;
+}
+
+async function pumpFrames(
+  stdin: Writable,
+  project: MotionProject,
+  registry: RenderRegistry,
+  config: PumpConfig,
+  onProgress?: ExportProgressCallback,
+  signal?: AbortSignal,
+): Promise<void> {
+  for (let i = 0; i < config.frameCount; i += 1) {
+    if (signal?.aborted) throw new Error("Export cancelled");
+    const png = renderFrameToPng(
+      project,
+      i / config.fps,
+      registry,
+      config.width,
+      config.skipBackground,
+    );
+    if (!stdin.write(png)) {
+      await new Promise<void>((resolve) => stdin.once("drain", resolve));
+    }
+    onProgress?.({
+      frame: i + 1,
+      totalFrames: config.frameCount,
+      ratio: (i + 1) / config.frameCount,
+    });
+  }
+  stdin.end();
+}
 
 export async function exportVideo(
   project: MotionProject,
@@ -44,18 +91,9 @@ export async function exportVideo(
   const ffmpegPath = options.ffmpegPath ?? "ffmpeg";
   const durationSeconds = projectDuration(project);
   const frameCount = Math.max(1, Math.round(durationSeconds * fps));
+  const composite = hasVideoBackground(resolved);
 
-  const ffmpeg = spawnFfmpeg({ fps, crf, preset, outPath: options.outPath, ffmpegPath });
-  const stdin = ffmpeg.child.stdin;
-
-  const cleanupPartial = async () => {
-    // Swallow the ffmpeg exit rejection we're about to cause by killing it.
-    void ffmpeg.done.catch(() => undefined);
-    try {
-      ffmpeg.child.kill("SIGKILL");
-    } catch {
-      /* already gone */
-    }
+  const removePartial = async () => {
     try {
       await unlink(options.outPath);
     } catch {
@@ -63,25 +101,111 @@ export async function exportVideo(
     }
   };
 
-  try {
-    for (let i = 0; i < frameCount; i += 1) {
-      if (signal?.aborted) throw new Error("Export cancelled");
-      const time = i / fps;
-      const png = renderFrameToPng(resolved, time, registry, width);
-      if (!stdin.write(png)) {
-        await new Promise<void>((resolve) => stdin.once("drain", resolve));
-      }
-      onProgress?.({
-        frame: i + 1,
-        totalFrames: frameCount,
-        ratio: (i + 1) / frameCount,
+  let ffmpegCommand: string;
+
+  if (composite) {
+    const tmpDir = mkdtempSync(join(tmpdir(), "ms-export-"));
+    try {
+      const bgPath = await buildBackgroundTrack(resolved, {
+        width,
+        height,
+        fps,
+        ffmpegPath,
+        tmpDir,
       });
+      const args = [
+        "-y",
+        "-i",
+        bgPath,
+        "-f",
+        "image2pipe",
+        "-framerate",
+        String(fps),
+        "-i",
+        "-",
+        "-filter_complex",
+        "[0:v][1:v]overlay=shortest=1",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "-crf",
+        String(crf),
+        "-preset",
+        preset,
+        "-movflags",
+        "+faststart",
+        "-r",
+        String(fps),
+        options.outPath,
+      ];
+      ffmpegCommand = [ffmpegPath, ...args].join(" ");
+      const child = spawn(ffmpegPath, args, { stdio: ["pipe", "ignore", "pipe"] });
+      let stderr = "";
+      child.stderr?.on("data", (c: Buffer) => {
+        stderr += c.toString();
+        if (stderr.length > 8000) stderr = stderr.slice(-8000);
+      });
+      const done = new Promise<void>((resolve, reject) => {
+        child.on("error", reject);
+        child.on("close", (code) =>
+          code === 0
+            ? resolve()
+            : reject(new Error(`ffmpeg exited ${code}:\n${stderr.slice(-1000)}`)),
+        );
+      });
+      try {
+        await pumpFrames(
+          child.stdin as Writable,
+          resolved,
+          registry,
+          { frameCount, fps, width, skipBackground: true },
+          onProgress,
+          signal,
+        );
+        await done;
+      } catch (error) {
+        void done.catch(() => undefined);
+        try {
+          child.kill("SIGKILL");
+        } catch {
+          /* gone */
+        }
+        await removePartial();
+        throw error;
+      }
+    } finally {
+      rmSync(tmpDir, { recursive: true, force: true });
     }
-    stdin.end();
-    await ffmpeg.done;
-  } catch (error) {
-    await cleanupPartial();
-    throw error;
+  } else {
+    const ffmpeg = spawnFfmpeg({
+      fps,
+      crf,
+      preset,
+      outPath: options.outPath,
+      ffmpegPath,
+    });
+    ffmpegCommand = ffmpeg.command;
+    try {
+      await pumpFrames(
+        ffmpeg.child.stdin,
+        resolved,
+        registry,
+        { frameCount, fps, width, skipBackground: false },
+        onProgress,
+        signal,
+      );
+      await ffmpeg.done;
+    } catch (error) {
+      void ffmpeg.done.catch(() => undefined);
+      try {
+        ffmpeg.child.kill("SIGKILL");
+      } catch {
+        /* gone */
+      }
+      await removePartial();
+      throw error;
+    }
   }
 
   const report: RenderReport = {
@@ -98,7 +222,7 @@ export async function exportVideo(
     preset,
     renderDurationMs: Date.now() - startedAt,
     missingAssets: missingAssetIds(project),
-    ffmpegCommand: ffmpeg.command,
+    ffmpegCommand,
     appVersion: APP_VERSION,
   };
 
