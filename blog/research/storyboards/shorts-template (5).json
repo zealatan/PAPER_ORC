@@ -1,0 +1,125 @@
+{
+  "version": 4,
+  "canvas": {
+    "width": 1080,
+    "height": 1920,
+    "background": "#000"
+  },
+  "layout": {
+    "titleTop": 250,
+    "mediaTop": 696,
+    "mediaHeight": 608,
+    "captionLeft": 40,
+    "captionTop": 1328,
+    "channelTop": 1558
+  },
+  "title": "모두가 가난한             노인인 줄 알았음",
+  "channel": "배투실",
+  "scenes": [
+    {
+      "caption": "한 남자가 세상을 떠났음.",
+      "duration": 2,
+      "kind": "image",
+      "fileName": "ronald_read_scene_11.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_11.png"
+    },
+    {
+      "caption": "작은 집에 살았고 \n낡은 차를 탔음.",
+      "duration": 3,
+      "kind": "image",
+      "fileName": "ronald_read_scene_02.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_02.png"
+    },
+    {
+      "caption": "아무도 그를 부자라고 \n생각하지 않았음.",
+      "duration": 3,
+      "kind": "image",
+      "fileName": "ronald_read_scene_01.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_01.png"
+    },
+    {
+      "caption": "그런데 유언장이 공개됨.",
+      "duration": 2,
+      "kind": "image",
+      "fileName": "ronald_read_scene_03.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_03.png"
+    },
+    {
+      "caption": "그의 재산은 약 800만 달러",
+      "duration": 4,
+      "kind": "image",
+      "fileName": "ronald_read_scene_05.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_05.png"
+    },
+    {
+      "caption": "그 남자의 이름은 로널드 리드.",
+      "duration": 3,
+      "kind": "image",
+      "fileName": "ronald_read_yearbook.png",
+      "media": "web_assets/ronald_read_yearbook.png"
+    },
+    {
+      "caption": "그는 CEO도, 사업가도 아니었음.",
+      "duration": 2,
+      "kind": "image",
+      "fileName": "ronald_read_scene_06.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_06.png"
+    },
+    {
+      "caption": "주유소 직원이자 정비공으로 일했고",
+      "duration": 2,
+      "kind": "video",
+      "fileName": "working_on_truck.webm",
+      "media": "video_assets/working_on_truck.webm"
+    },
+    {
+      "caption": "은퇴 후에는 백화점 청소 업무도 했음.",
+      "duration": 2,
+      "kind": "video",
+      "fileName": "cleaning_work.webm",
+      "media": "video_assets/cleaning_work.webm"
+    },
+    {
+      "caption": "그의 방법은 아주 단순했음.\n월급을 받을 때마다\n우량주를 조금씩 샀음.",
+      "duration": 4,
+      "kind": "image",
+      "fileName": "ronald_read_scene_08.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_08.png"
+    },
+    {
+      "caption": "배당금을 받으면 다시 투자했음.\n그리고 수십 년 동안 거의 팔지 않았음.",
+      "duration": 4,
+      "kind": "video",
+      "fileName": "coin_counter.webm",
+      "media": "video_assets/coin_counter.webm"
+    },
+    {
+      "caption": "닷컴버블도\n금융위기도 지나갔음.\n그런데도 계속 보유했음.",
+      "duration": 5,
+      "kind": "image",
+      "fileName": "ronald_read_scene_04.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_04.png"
+    },
+    {
+      "caption": "결국 그의 계좌에는 \n약 95개 종목이 쌓였음.",
+      "duration": 5,
+      "kind": "image",
+      "fileName": "ronald_read_scene_12.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_12.png"
+    },
+    {
+      "caption": "세상을 떠난 뒤 병원에 480만 달러,\n도서관에 120만 달러를 남겼음.",
+      "duration": 5,
+      "kind": "image",
+      "fileName": "ronald_read_scene_09.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_09.png"
+    },
+    {
+      "caption": "평범한 월급으로 약 800만 달러를 만든 사람이었음.",
+      "duration": 4,
+      "kind": "image",
+      "fileName": "ronald_read_scene_10.png",
+      "media": "ronald_read_13_scenes/ronald_read_scene_10.png"
+    }
+  ]
+}

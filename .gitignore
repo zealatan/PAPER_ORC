@@ -38,3 +38,6 @@ Thumbs.db
 .env
 *.key
 *.pem
+
+# Windows/WSL alternate-data-stream cruft
+*:Zone.Identifier

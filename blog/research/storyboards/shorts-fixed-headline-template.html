@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>로널드 리드 · 배투실 쇼츠 템플릿</title>
+<style>
+  :root{--ink:#111;--muted:#777;--line:#ddd;--accent:#2f6fed;--panel:#f5f6f8}
+  *{box-sizing:border-box}
+  body{margin:0;background:#e9ebef;color:var(--ink);font-family:Pretendard,"Noto Sans KR",Arial,sans-serif}
+  button,input,textarea{font:inherit}
+  .app{display:grid;grid-template-columns:minmax(390px,640px) minmax(340px,1fr);min-height:100vh}
+  .left-rail{min-width:0;padding-bottom:36px}
+  .stage-wrap{display:flex;align-items:flex-start;justify-content:center;padding:24px 24px 16px}
+  .stage-scale{width:min(100%,540px);aspect-ratio:9/16;position:relative}
+  .short{position:absolute;inset:0;width:1080px;height:1920px;transform-origin:top left;background:#000;overflow:hidden}
+  .top-title{position:absolute;left:45px;right:45px;top:250px;min-height:300px;display:flex;align-items:center;justify-content:center;text-align:center;color:#f5f4ef;font-size:128px;font-weight:900;line-height:1.08;letter-spacing:-5px;text-shadow:0 10px 0 #202020;white-space:pre-wrap}
+  .media-slot{position:absolute;left:0;top:696px;width:1080px;height:608px;background:#222;overflow:hidden;cursor:pointer}
+  .media-slot img,.media-slot video{width:100%;height:100%;object-fit:cover;display:block}
+  .media-slot video{background:#111}
+  .placeholder{position:absolute;inset:0;display:grid;place-items:center;background:
+    linear-gradient(135deg,transparent 49.7%,rgba(255,255,255,.55) 50%,transparent 50.3%),
+    linear-gradient(45deg,transparent 49.7%,rgba(255,255,255,.55) 50%,transparent 50.3%),#272a30;color:#ddd}
+  .placeholder div{text-align:center;font-size:31px;font-weight:800}
+  .placeholder small{display:block;font-size:21px;font-weight:500;margin-top:10px}
+  .caption-wrap{position:absolute;left:40px;top:1328px;width:1000px;min-height:210px;color:#fff}
+  .caption{min-height:150px;padding:26px 8px 8px;text-align:center;font-size:68px;font-weight:700;line-height:1.12;letter-spacing:-2.5px;white-space:pre-wrap}
+  .caption-handle{position:absolute;left:0;top:0;padding:5px 11px;border:2px solid rgba(255,255,255,.6);border-radius:15px;background:rgba(20,20,20,.82);color:#fff;font-size:20px;font-weight:800;letter-spacing:0;cursor:move;user-select:none;z-index:3;opacity:.72}
+  .caption-handle:hover{opacity:1}
+  .channel-mark{position:absolute;top:1558px;left:0;width:100%;text-align:center;color:#f5f4ef;font-size:120px;font-weight:900;letter-spacing:-6px;text-shadow:0 8px 0 #202020}
+  [contenteditable]{outline:none;border-radius:8px}
+  [contenteditable]:focus{box-shadow:0 0 0 5px rgba(47,111,237,.24)}
+  .safe{position:absolute;inset:72px 48px 190px;border:3px dashed rgba(255,0,0,.18);pointer-events:none;display:none}
+  .short.show-safe .safe{display:block}
+  .editor{padding:24px 28px 80px;background:#fff;border-left:1px solid #ccd0d7}
+  h1{font-size:25px;margin:0 0 5px} .hint{margin:0 0 22px;color:#666;font-size:14px;line-height:1.5}
+  .toolbar{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+  button,.file-label{border:1px solid #c7cbd2;background:#fff;border-radius:9px;padding:9px 12px;cursor:pointer}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.danger{color:#b42318}
+  button:hover,.file-label:hover{background:#f0f3f8}
+  .field{margin:14px 0}
+  .field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
+  .field input,.field textarea{width:100%;border:1px solid #c7cbd2;border-radius:8px;padding:9px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .compact-controls{display:grid;grid-template-columns:repeat(4,minmax(105px,1fr));gap:5px;padding:7px;background:#f5f6f8;border:1px solid #d8dce2;border-radius:9px}
+  .compact-controls .row{display:contents}
+  .compact-controls .field{min-width:0;margin:0;padding:4px 6px;background:#fff;border:1px solid #e1e4e8;border-radius:6px}
+  .compact-controls .field label{font-size:10px;line-height:1.1;margin-bottom:3px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .compact-controls .field input{height:25px;padding:2px 5px;border-radius:5px;font-size:11px}
+  .compact-controls input[type=range]{padding:0}
+  .scene-head{display:flex;align-items:center;justify-content:space-between;margin-top:28px}
+  .scene-head h2{font-size:18px;margin:0}
+  .scenes{display:grid;gap:7px;margin-top:10px}
+  .scene{display:grid;grid-template-columns:58px 1fr 62px 62px 34px;gap:7px;align-items:center;border:1px solid var(--line);border-radius:9px;padding:7px;background:#fff}
+  .scene.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(47,111,237,.12)}
+  .scene.drop-target,.media-slot.drop-target{outline:6px solid #45d483;outline-offset:-6px}
+  .scene button{padding:6px;border:0;background:transparent}
+  .scene-drop{position:relative;width:58px;height:44px;border:1px dashed #aeb5c0;border-radius:7px;background:#eef1f5;overflow:hidden;display:grid;place-items:center;color:#7c8490;font-size:10px;line-height:1.1;text-align:center;cursor:copy}
+  .scene-drop img,.scene-drop video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+  .scene-drop.drop-target{outline:3px solid #45d483;outline-offset:-3px}
+  .media-clear{position:absolute!important;right:2px;top:2px;width:18px;height:18px!important;padding:0!important;border-radius:50%!important;background:rgba(180,30,30,.88)!important;color:#fff!important;font-size:13px!important;line-height:18px!important;z-index:2}
+  .move-buttons{display:flex;gap:3px}
+  .move-buttons button{width:29px;height:29px;padding:0;border:1px solid #d2d6dc;background:#f7f8fa;border-radius:6px}
+  .move-buttons button:disabled{opacity:.3;cursor:not-allowed}
+  .scene-copy{width:100%;min-height:58px;resize:vertical;border:1px solid #cfd3da;border-radius:7px;padding:7px 8px;background:#fff;color:#222;font-size:13px;line-height:1.35;white-space:pre-wrap}
+  .scene input{width:100%;border:1px solid #ddd;border-radius:6px;padding:5px}
+  .transport{display:flex;align-items:center;gap:8px;margin:10px 0}
+  .progress{height:7px;flex:1;background:#e4e7ec;border-radius:10px;overflow:hidden}
+  .progress i{display:block;height:100%;width:0;background:var(--accent)}
+  .time{font-variant-numeric:tabular-nums;font-size:13px;min-width:72px}
+  .pool-wrap{margin-top:24px;border-top:1px solid var(--line);padding-top:20px}
+  .left-photo-library{margin:0 24px;padding:18px;background:#fff;border:1px solid #ccd0d7;border-radius:12px}
+  .left-photo-library .asset-pool{grid-template-columns:repeat(auto-fill,minmax(82px,1fr));max-height:430px;overflow:auto;margin-bottom:0}
+  .pool-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 9px}
+  .pool-head h2{font-size:18px;margin:0}
+  .asset-pool{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:9px;min-height:82px;padding:10px;border:1px dashed #b7bdc8;border-radius:11px;background:var(--panel);margin-bottom:18px}
+  .asset-pool:empty::after{content:"파일을 추가하세요";grid-column:1/-1;display:grid;place-items:center;color:#8a9099;font-size:13px}
+  .asset{position:relative;aspect-ratio:1;border:1px solid #ccd0d7;border-radius:9px;overflow:hidden;background:#16181c;cursor:grab}
+  .asset:active{cursor:grabbing}
+  .asset img,.asset video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+  .asset span{position:absolute;left:0;right:0;bottom:0;padding:5px;background:linear-gradient(transparent,rgba(0,0,0,.86));color:#fff;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+  .asset b{position:absolute;right:5px;top:5px;padding:2px 5px;border-radius:5px;background:rgba(0,0,0,.72);color:#fff;font-size:10px;pointer-events:none}
+  .note{margin-top:22px;padding:14px;background:var(--panel);border-radius:10px;color:#555;font-size:13px;line-height:1.55}
+  input[type=file]{display:none}
+  @media(max-width:1100px){.compact-controls{grid-template-columns:repeat(2,minmax(105px,1fr))}}
+  @media(max-width:900px){.app{display:block}.editor{border-left:0}.stage-scale{width:360px}.left-photo-library{margin:0 auto 24px;max-width:540px}.compact-controls{grid-template-columns:repeat(4,minmax(90px,1fr))}}
+  @media(max-width:560px){.compact-controls{grid-template-columns:repeat(2,minmax(100px,1fr))}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="left-rail">
+    <div class="stage-wrap">
+      <div class="stage-scale" id="stageScale">
+        <div class="short" id="short">
+          <div class="top-title" id="topTitle" contenteditable="true">모두가 가난한 노인인 줄 알았음</div>
+          <div class="media-slot" id="mediaSlot" title="클릭해서 사진 또는 영상 교체">
+            <div class="placeholder" id="placeholder"><div>사진 / 영상 자리<small>클릭해서 파일 교체 · 1080×608 권장</small></div></div>
+          </div>
+          <div class="caption-wrap" id="captionWrap">
+            <div class="caption-handle" id="captionHandle">↕ 자막 이동</div>
+            <div class="caption" id="caption" contenteditable="true"></div>
+          </div>
+          <div class="channel-mark" id="channelName" contenteditable="true">배투실</div>
+          <div class="safe"></div>
+        </div>
+      </div>
+    </div>
+    <div class="left-photo-library">
+      <div class="pool-head">
+        <h2>사진풀</h2>
+        <label class="file-label" for="photoPoolFiles">+ 사진 추가</label>
+        <input id="photoPoolFiles" type="file" accept="image/*" multiple>
+      </div>
+      <div class="asset-pool" id="photoPool"></div>
+    </div>
+  </section>
+
+  <aside class="editor">
+    <h1>배투실 쇼츠 템플릿</h1>
+    <p class="hint">`short_US_rise.mp4`의 제목·영상·채널명 위치를 반영했습니다. 제목과 자막은 화면에서 직접 수정할 수 있습니다.</p>
+
+    <div class="toolbar">
+      <label class="file-label" for="mediaFile">미디어 교체</label>
+      <input id="mediaFile" type="file" accept="image/*,video/*">
+      <button id="fitBtn">채우기: contain</button>
+      <button id="safeBtn">안전영역</button>
+      <button id="saveJson">JSON 저장</button>
+      <label class="file-label" for="loadJson">JSON 불러오기</label>
+      <input id="loadJson" type="file" accept=".json,application/json">
+    </div>
+
+    <div class="compact-controls">
+      <div class="row">
+        <div class="field"><label>자막 크기</label><input id="captionSize" type="range" min="40" max="100" value="68"></div>
+        <div class="field"><label>채널명 크기</label><input id="channelSize" type="range" min="60" max="160" value="120"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>제목 크기</label><input id="titleSize" type="range" min="70" max="180" value="128"></div>
+        <div class="field"><label>제목 Y</label><input id="titleTop" type="number" value="250"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>미디어 Y</label><input id="mediaTop" type="number" value="696"></div>
+        <div class="field"><label>미디어 높이</label><input id="mediaHeight" type="number" value="608"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>자막 X</label><input id="captionLeft" type="number" value="40"></div>
+        <div class="field"><label>자막 Y</label><input id="captionTop" type="number" value="1328"></div>
+      </div>
+    </div>
+
+    <div class="transport">
+      <button class="primary" id="playBtn">▶ 미리보기</button>
+      <div class="progress"><i id="progressBar"></i></div>
+      <span class="time" id="time">0.0 / 0.0s</span>
+    </div>
+
+    <div class="scene-head">
+      <h2>장면 목록</h2>
+      <button class="primary" id="addScene">+ 장면</button>
+    </div>
+    <div class="scenes" id="scenes"></div>
+
+    <div class="pool-wrap">
+      <div class="pool-head">
+        <h2>영상풀</h2>
+        <label class="file-label" for="videoPoolFiles">+ 영상 추가</label>
+        <input id="videoPoolFiles" type="file" accept="video/*" multiple>
+      </div>
+      <div class="asset-pool" id="videoPool"></div>
+    </div>
+
+    <div class="note">
+      자막의 `↕ 자막 이동` 핸들을 끌면 위치가 바뀝니다. 장면 목록의 문장칸에서 줄을 바꾸면
+      미리보기 재생 시 각 줄이 이전 줄을 교체합니다. 장면은 ↑↓로 이동하고 ×로 삭제할 수 있습니다.
+      미디어 박스의 빨간 ×는 장면을 유지한 채 사진·영상만 제거합니다.
+      기본 캔버스는 1080×1920(9:16), 검정 배경, 제목 Y=250, 미디어 Y=696/H=608, 채널명 Y=1558입니다.
+      로컬 미디어는 브라우저 메모리에서만 미리 보이므로, 재편집용 저장 시에는 JSON과 원본 미디어 파일을 함께 보관하세요.
+    </div>
+  </aside>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const short=$('#short'), mediaSlot=$('#mediaSlot');
+const caption=$('#caption'), captionWrap=$('#captionWrap');
+let scenes=[
+  {caption:'모두가 가난한 노인인 줄 알았음.\\n평생 평범하게 일하던 한 남자가\\n세상을 떠났음.',duration:4,media:'ronald_read_13_scenes/ronald_read_scene_01.png',kind:'image'},
+  {caption:'작은 집에서 살았고 낡은 옷을 입었음.\\n평범한 차를 탔기에 아무도 그를\\n부자라고 생각하지 않았음.',duration:5,media:'ronald_read_13_scenes/ronald_read_scene_02.png',kind:'image'},
+  {caption:'그런데 유언장이 공개됨.\\n사람들이 갑자기 조용해졌음.',duration:4,media:'ronald_read_13_scenes/ronald_read_scene_03.png',kind:'image'},
+  {caption:'그의 재산은 약 800만 달러였음.\\n모두가 믿지 못했음.',duration:4,media:'ronald_read_13_scenes/ronald_read_scene_04.png',kind:'image'},
+  {caption:'더 놀라운 점이 있었음.\\n그는 CEO도, 사업가도 아니었음.',duration:4,media:'ronald_read_13_scenes/ronald_read_scene_05.png',kind:'image'},
+  {caption:'주유소 직원이자 정비공으로 일했음.\\n은퇴 후에는 백화점 청소 업무도 했음.',duration:5,media:'ronald_read_13_scenes/ronald_read_scene_06.png',kind:'image'},
+  {caption:'그의 방법은 아주 단순했음.\\n월급을 받을 때마다\\n우량주를 조금씩 샀음.',duration:4,media:'ronald_read_13_scenes/ronald_read_scene_07.png',kind:'image'},
+  {caption:'배당금을 받으면 다시 투자했음.\\n그리고 수십 년 동안 거의 팔지 않았음.',duration:5,media:'ronald_read_13_scenes/ronald_read_scene_08.png',kind:'image'},
+  {caption:'닷컴버블도, 금융위기도 지나갔음.\\n그런데도 계속 보유했음.',duration:5,media:'ronald_read_13_scenes/ronald_read_scene_09.png',kind:'image'},
+  {caption:'결국 그의 계좌에는 약 95개 종목이 쌓였음.\\n대부분 배당을 주는 우량기업이었음.',duration:5,media:'ronald_read_13_scenes/ronald_read_scene_10.png',kind:'image'},
+  {caption:'세상을 떠난 뒤 병원에 480만 달러,\\n도서관에 120만 달러를 남겼음.',duration:5,media:'ronald_read_13_scenes/ronald_read_scene_11.png',kind:'image'},
+  {caption:'평범한 월급으로\\n약 800만 달러를 만든 사람이었음.',duration:4,media:'ronald_read_13_scenes/ronald_read_scene_12.png',kind:'image'},
+  {caption:'특별한 비법은 없었음.\\n이해하는 기업을 사고 배당금을 재투자했음.\\n결국 시간과 복리가 부를 만들었음.',duration:6,media:'ronald_read_13_scenes/ronald_read_scene_13.png',kind:'image'}
+], current=0, timer=null, elapsed=0, objectFit='contain', playing=false;
+let assets=scenes.map((s,i)=>({
+  id:`default-${i+1}`,name:`ronald_read_scene_${String(i+1).padStart(2,'0')}.png`,
+  url:s.media,kind:'image'
+}));
+
+function scaleStage(){
+  const box=$('#stageScale').getBoundingClientRect();
+  short.style.transform=`scale(${box.width/1080})`;
+}
+addEventListener('resize',scaleStage); scaleStage();
+
+function captureText(){
+  if(playing)return;
+  scenes[current].caption=caption.innerText.trim();
+}
+function renderMedia(scene){
+  mediaSlot.querySelectorAll('img,video').forEach(x=>x.remove());
+  $('#placeholder').style.display=scene.media?'none':'grid';
+  if(!scene.media)return;
+  const el=document.createElement(scene.kind==='video'?'video':'img');
+  el.src=scene.media; el.style.objectFit=objectFit;
+  if(el.tagName==='VIDEO'){el.muted=true;el.loop=true;el.autoplay=true;el.playsInline=true}
+  mediaSlot.appendChild(el);
+}
+function assignAsset(asset,sceneIndex=current){
+  const old=scenes[sceneIndex].media;
+  if(old?.startsWith('blob:')&&!assets.some(a=>a.url===old))URL.revokeObjectURL(old);
+  scenes[sceneIndex].media=asset.url;
+  scenes[sceneIndex].kind=asset.kind;
+  scenes[sceneIndex].fileName=asset.name;
+  if(sceneIndex===current)renderMedia(scenes[current]);
+  renderScenes();
+}
+function assetFromDrop(e){
+  const id=e.dataTransfer.getData('text/x-asset-id');
+  return assets.find(a=>a.id===id);
+}
+function renderPools(){
+  $('#photoPool').innerHTML=''; $('#videoPool').innerHTML='';
+  assets.forEach(asset=>{
+    const card=document.createElement('div');
+    card.className='asset'; card.draggable=true; card.title=`${asset.name} — 장면으로 드래그`;
+    const media=document.createElement(asset.kind==='video'?'video':'img');
+    media.src=asset.url;
+    if(media.tagName==='VIDEO'){media.muted=true;media.preload='metadata'}
+    const label=document.createElement('span');label.textContent=asset.name;
+    const type=document.createElement('b');type.textContent=asset.kind==='video'?'VIDEO':'PHOTO';
+    card.append(media,label,type);
+    card.ondragstart=e=>{e.dataTransfer.effectAllowed='copy';e.dataTransfer.setData('text/x-asset-id',asset.id)};
+    card.ondblclick=()=>assignAsset(asset);
+    (asset.kind==='video'?$('#videoPool'):$('#photoPool')).appendChild(card);
+  });
+}
+const fileToDataUrl=file=>new Promise((resolve,reject)=>{
+  const reader=new FileReader();
+  reader.onload=()=>resolve(reader.result);
+  reader.onerror=()=>reject(reader.error);
+  reader.readAsDataURL(file);
+});
+async function addPoolFiles(files,kind){
+  for(const file of files)assets.push({
+    id:`local-${Date.now()}-${Math.random()}`,name:file.name,
+    url:await fileToDataUrl(file),kind
+  });
+  renderPools();
+}
+function loadScene(i,shouldCapture=true){
+  if(shouldCapture)captureText();
+  current=i; const s=scenes[i];
+  caption.innerText=s.caption||'';
+  renderMedia(s);renderScenes();
+}
+function moveScene(from,to){
+  if(to<0||to>=scenes.length||from===to)return;
+  captureText();
+  const active=scenes[current];
+  const [moved]=scenes.splice(from,1);
+  scenes.splice(to,0,moved);
+  current=scenes.indexOf(active);
+  caption.innerText=scenes[current].caption||'';
+  renderMedia(scenes[current]);renderScenes();
+}
+function renderScenes(){
+  $('#scenes').innerHTML='';
+  scenes.forEach((s,i)=>{
+    const row=document.createElement('div'); row.className='scene'+(i===current?' active':'');
+    row.innerHTML=`<div class="scene-drop" title="클릭해서 장면 선택 · 사진풀/영상풀에서 드래그하여 교체">${s.media?(s.kind==='video'?`<video src="${s.media}" muted></video>`:`<img src="${s.media}" alt="">`):'DROP'}${s.media?'<button class="media-clear" title="이 장면의 미디어만 삭제">×</button>':''}</div>
+      <textarea class="scene-copy" placeholder="한 줄에 한 문장씩 입력"></textarea>
+      <input class="scene-duration" type="number" min=".2" step=".1" value="${s.duration}" title="초">
+      <div class="move-buttons"><button class="move-up" title="위로 이동" ${i===0?'disabled':''}>↑</button><button class="move-down" title="아래로 이동" ${i===scenes.length-1?'disabled':''}>↓</button></div>
+      <button class="danger scene-delete" title="장면 삭제">×</button>`;
+    const copy=row.querySelector('.scene-copy');copy.value=s.caption||'';
+    copy.onfocus=()=>{
+      if(i===current)return;
+      captureText();current=i;caption.innerText=scenes[i].caption||'';renderMedia(scenes[i]);
+      [...$('#scenes').children].forEach((el,index)=>el.classList.toggle('active',index===i));
+    };
+    copy.oninput=e=>{
+      scenes[i].caption=e.target.value;
+      if(i===current&&!playing)caption.innerText=e.target.value;
+    };
+    row.querySelector('.scene-duration').onchange=e=>{s.duration=Math.max(.2,+e.target.value||3);updateTime()};
+    row.querySelector('.scene-delete').onclick=()=>{
+      if(scenes.length===1)return;
+      scenes.splice(i,1);
+      if(i<current)current--;
+      else if(i===current)current=Math.min(current,scenes.length-1);
+      loadScene(current,false);
+    };
+    row.querySelector('.move-up').onclick=()=>moveScene(i,i-1);
+    row.querySelector('.move-down').onclick=()=>moveScene(i,i+1);
+    const drop=row.querySelector('.scene-drop');
+    drop.onclick=e=>{if(!e.target.closest('.media-clear'))loadScene(i)};
+    drop.ondragover=e=>{e.preventDefault();e.stopPropagation();e.dataTransfer.dropEffect='copy';drop.classList.add('drop-target')};
+    drop.ondragleave=e=>{e.stopPropagation();drop.classList.remove('drop-target')};
+    drop.ondrop=e=>{e.preventDefault();e.stopPropagation();drop.classList.remove('drop-target');const asset=assetFromDrop(e);if(asset)assignAsset(asset,i)};
+    drop.ondblclick=()=>loadScene(i);
+    const clear=row.querySelector('.media-clear');
+    if(clear)clear.onclick=e=>{
+      e.preventDefault();e.stopPropagation();
+      scenes[i].media=null;scenes[i].kind=null;scenes[i].fileName=null;
+      if(i===current)renderMedia(scenes[i]);
+      renderScenes();
+    };
+    row.ondragover=e=>{e.preventDefault();e.dataTransfer.dropEffect='copy';row.classList.add('drop-target')};
+    row.ondragleave=()=>row.classList.remove('drop-target');
+    row.ondrop=e=>{e.preventDefault();row.classList.remove('drop-target');const asset=assetFromDrop(e);if(asset)assignAsset(asset,i)};
+    $('#scenes').appendChild(row);
+  }); updateTime();
+}
+caption.addEventListener('input',()=>{
+  scenes[current].caption=caption.innerText;
+  const copy=$('#scenes').children[current]?.querySelector('.scene-copy');
+  if(copy&&document.activeElement!==copy)copy.value=caption.innerText;
+});
+mediaSlot.onclick=()=>$('#mediaFile').click();
+mediaSlot.ondragover=e=>{e.preventDefault();e.dataTransfer.dropEffect='copy';mediaSlot.classList.add('drop-target')};
+mediaSlot.ondragleave=()=>mediaSlot.classList.remove('drop-target');
+mediaSlot.ondrop=e=>{e.preventDefault();e.stopPropagation();mediaSlot.classList.remove('drop-target');const asset=assetFromDrop(e);if(asset)assignAsset(asset)};
+$('#mediaFile').onchange=async e=>{
+  const f=e.target.files[0]; if(!f)return;
+  if(scenes[current].media?.startsWith('blob:'))URL.revokeObjectURL(scenes[current].media);
+  scenes[current].media=await fileToDataUrl(f);
+  scenes[current].kind=f.type.startsWith('video/')?'video':'image';
+  scenes[current].fileName=f.name; renderMedia(scenes[current]); renderScenes();
+};
+$('#photoPoolFiles').onchange=e=>{addPoolFiles(e.target.files,'image');e.target.value=''};
+$('#videoPoolFiles').onchange=e=>{addPoolFiles(e.target.files,'video');e.target.value=''};
+$('#fitBtn').onclick=()=>{
+  objectFit=objectFit==='cover'?'contain':'cover';
+  $('#fitBtn').textContent='채우기: '+objectFit; renderMedia(scenes[current]);
+};
+$('#safeBtn').onclick=()=>short.classList.toggle('show-safe');
+$('#captionSize').oninput=e=>caption.style.fontSize=e.target.value+'px';
+$('#channelSize').oninput=e=>$('#channelName').style.fontSize=e.target.value+'px';
+$('#titleSize').oninput=e=>$('#topTitle').style.fontSize=e.target.value+'px';
+$('#titleTop').oninput=e=>$('#topTitle').style.top=e.target.value+'px';
+$('#mediaHeight').oninput=e=>mediaSlot.style.height=e.target.value+'px';
+$('#mediaTop').oninput=e=>mediaSlot.style.top=e.target.value+'px';
+function setCaptionPosition(left,top){
+  left=Math.max(0,Math.min(1080-captionWrap.offsetWidth,left));
+  top=Math.max(0,Math.min(1920-captionWrap.offsetHeight,top));
+  captionWrap.style.left=left+'px';captionWrap.style.top=top+'px';
+  $('#captionLeft').value=Math.round(left);$('#captionTop').value=Math.round(top);
+}
+$('#captionLeft').oninput=e=>setCaptionPosition(+e.target.value,+$('#captionTop').value);
+$('#captionTop').oninput=e=>setCaptionPosition(+$('#captionLeft').value,+e.target.value);
+$('#captionHandle').onpointerdown=e=>{
+  e.preventDefault();
+  const scale=$('#stageScale').getBoundingClientRect().width/1080;
+  const startX=e.clientX,startY=e.clientY;
+  const startLeft=parseFloat(captionWrap.style.left||getComputedStyle(captionWrap).left);
+  const startTop=parseFloat(captionWrap.style.top||getComputedStyle(captionWrap).top);
+  const move=ev=>setCaptionPosition(startLeft+(ev.clientX-startX)/scale,startTop+(ev.clientY-startY)/scale);
+  const up=()=>{removeEventListener('pointermove',move);removeEventListener('pointerup',up)};
+  addEventListener('pointermove',move);addEventListener('pointerup',up);
+};
+$('#addScene').onclick=()=>{captureText();scenes.push({caption:'',duration:3,media:null,kind:null});loadScene(scenes.length-1)};
+function total(){return scenes.reduce((a,s)=>a+(+s.duration||0),0)}
+function updateTime(){ $('#time').textContent=`${elapsed.toFixed(1)} / ${total().toFixed(1)}s` }
+$('#playBtn').onclick=()=>{
+  if(timer){
+    clearInterval(timer);timer=null;playing=false;
+    caption.innerText=scenes[current].caption||'';
+    $('#playBtn').textContent='▶ 미리보기';return
+  }
+  captureText();elapsed=0;current=0;playing=true;loadScene(0);$('#playBtn').textContent='■ 정지';
+  timer=setInterval(()=>{
+    elapsed+=.1;
+    if(elapsed>=total()){
+      elapsed=total();
+      $('#progressBar').style.width='100%';updateTime();
+      clearInterval(timer);timer=null;playing=false;
+      caption.innerText=scenes[current].caption||'';
+      $('#playBtn').textContent='▶ 미리보기';
+      return;
+    }
+    let sum=0,start=0,next=0;
+    for(let i=0;i<scenes.length;i++){
+      const end=sum+(+scenes[i].duration||0);
+      if(elapsed<end){next=i;start=sum;break}
+      sum=end;
+    }
+    if(next!==current)loadScene(next);
+    const lines=(scenes[current].caption||'').split(/\n+/).filter(Boolean);
+    const local=Math.max(0,elapsed-start);
+    const lineIndex=Math.min(lines.length-1,Math.floor(local/(+scenes[current].duration||1)*lines.length));
+    caption.innerText=lines[lineIndex]||'';
+    $('#progressBar').style.width=Math.min(100,elapsed/total()*100)+'%';updateTime();
+  },100);
+};
+$('#saveJson').onclick=()=>{
+  captureText();
+  const data={version:4,canvas:{width:1080,height:1920,background:'#000'},layout:{titleTop:+$('#titleTop').value,mediaTop:+$('#mediaTop').value,mediaHeight:+$('#mediaHeight').value,captionLeft:+$('#captionLeft').value,captionTop:+$('#captionTop').value,channelTop:1558},title:$('#topTitle').innerText,channel:$('#channelName').innerText,scenes};
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='shorts-template.json';a.click();
+};
+$('#loadJson').onchange=async e=>{
+  const data=JSON.parse(await e.target.files[0].text());
+  const previous=scenes;
+  if(data.title)$('#topTitle').innerText=data.title;
+  if(data.channel)$('#channelName').innerText=data.channel;
+  if(data.layout?.captionLeft!=null)setCaptionPosition(data.layout.captionLeft,data.layout.captionTop);
+  scenes=(data.scenes||scenes).map((s,i)=>{
+    if(s.media)return s;
+    const matchingAsset=s.fileName&&assets.find(a=>a.name===s.fileName);
+    const old=previous[i];
+    const matchingOld=old&&((s.fileName&&old.fileName===s.fileName)||(!s.fileName&&old.media));
+    const source=matchingAsset||matchingOld;
+    return {...s,media:source?.url||source?.media||null,kind:s.kind||source?.kind||null};
+  });
+  scenes.forEach((s,i)=>{
+    if(s.media&&!assets.some(a=>a.url===s.media))assets.push({
+      id:`json-${Date.now()}-${i}`,name:s.fileName||`scene-${i+1}`,url:s.media,kind:s.kind||'image'
+    });
+  });
+  current=0;renderPools();loadScene(0);
+};
+renderPools();renderScenes();loadScene(0);
+</script>
+</body>
+</html>
