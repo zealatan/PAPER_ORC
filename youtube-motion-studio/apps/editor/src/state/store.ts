@@ -11,6 +11,7 @@ import {
   applyBindings,
   applyTheme,
   parseSrt,
+  reviewAIResponse,
   removeAudioTrack as removeAudioTrackCommand,
   updateAudioTrack as updateAudioTrackCommand,
   canRedo as coreCanRedo,
@@ -36,6 +37,7 @@ import {
   updateElementStyle as updateElementStyleCommand,
   updateElementTiming as updateElementTimingCommand,
   updateElementTransform as updateElementTransformCommand,
+  type AIGenerationResponse,
   type AnimationDefinition,
   type AudioTrack,
   type EditorCommand,
@@ -105,6 +107,9 @@ export interface EditorState {
   setVariable(variableId: string, value: unknown): void;
   setThemeId(themeId: string): void;
   useTemplate(template: MotionTemplate): void;
+
+  // ── ai ──
+  importAIDraft(response: AIGenerationResponse): boolean;
 
   // ── audio / subtitles ──
   importSrtToSelected(srtText: string): void;
@@ -381,6 +386,21 @@ export const useEditor = create<EditorState>((set, get) => ({
     projSeq += 1;
     const now = new Date().toISOString();
     get().replaceProject(instantiateTemplate(template, `project-${projSeq}`, now));
+  },
+
+  importAIDraft(response) {
+    const review = reviewAIResponse(response);
+    if (review.ok && review.project) {
+      get().replaceProject(review.project);
+      set({ loadError: null });
+      return true;
+    }
+    set({
+      loadError:
+        review.issues.map((i) => `${i.path || "<root>"}: ${i.message}`).join("; ") ||
+        "AI draft was invalid.",
+    });
+    return false;
   },
 
   importSrtToSelected(srtText) {

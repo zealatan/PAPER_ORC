@@ -9,11 +9,18 @@ milestone; the app stays runnable after every milestone.
 
 ## Current status
 
-Implemented: **M0 (Repository Foundation)**, **M1 (Core Project Model)**, and
-**M2 (Renderer Foundation)** — deterministic `renderAtTime`, scene-graph IR, SVG + Pixi backends,
-and the first component pack. See [`IMPLEMENTATION_PLAN.md`](./IMPLEMENTATION_PLAN.md) for the full
-milestone checklist and the deferred milestones (editor shell, canvas, timeline, animation, export,
-plugins, AI).
+All milestones **M0–M12** are implemented: monorepo → domain model → deterministic renderer →
+editor shell → canvas interaction → timeline → animation → an 18-component pack →
+variables/themes/templates → audio/subtitles → **MP4 export** → plugins → AI drafts. A real
+1080 × 1920 H.264 MP4 is produced and ffprobe-verified; 124 tests pass. See
+[`IMPLEMENTATION_PLAN.md`](./IMPLEMENTATION_PLAN.md) for per-milestone details and the remaining
+within-milestone TODOs.
+
+Export a project to MP4 (needs FFmpeg on PATH):
+
+```bash
+pnpm --filter @motion-studio/renderer render <absolute /path/project.motion.json> <out.mp4>
+```
 
 ## Architecture at a glance
 

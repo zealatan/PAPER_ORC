@@ -96,6 +96,22 @@ export {
   removeAudioTrack,
 } from "./commands";
 
+// AI draft integration (validated data, reviewable edits)
+export {
+  type AIGenerationRequest,
+  type AIGenerationResponse,
+  type AIAdapter,
+  type AIReview,
+  type AIEdit,
+  type AIEditSummary,
+  type AIEditReview,
+  type AssetRequest,
+  reviewAIResponse,
+  applyAIEdit,
+  applyAIEdits,
+  reviewAIEdits,
+} from "./ai";
+
 // Subtitles (SRT round-trip, active-cue selection)
 export {
   type SubtitleCue,

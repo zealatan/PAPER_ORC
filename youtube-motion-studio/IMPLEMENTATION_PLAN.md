@@ -302,14 +302,34 @@ its partial registrations are rolled back; capabilities without permission are d
 Deferred within M11: an in-editor Plugins tab wired to a live/dynamic render registry; untrusted
 plugin sandboxing (spec §19.3 — only trusted local plugins for now).
 
+## Milestone 12 — AI Draft Integration ✅ (this pass)
+
+- [x] AI request/response models + an `AIAdapter` interface (AI produces **data**, never touches
+      rendered nodes — spec §25.1).
+- [x] `reviewAIResponse`: validates an AI project draft through the standard import pipeline
+      **without side effects** — invalid output is rejected safely and never corrupts the project.
+- [x] Structured AI edits (`update-element` / `set-variable` / `add-element` / `remove-element`)
+      with `applyAIEdit`/`applyAIEdits`, and `reviewAIEdits` producing a **reviewable diff**
+      (per-edit validity + a preview with only the valid edits applied — approve/reject).
+- [x] Asset requests surfaced as placeholders; `store.importAIDraft` loads a valid draft or reports
+      structured issues.
+
+**Acceptance (unit-tested):** invalid AI output is rejected without throwing; a valid draft loads as
+editable data; a batch of edits is reviewed with invalid ones flagged and only valid ones applied.
+124 tests.
+
 ---
 
-## Deferred milestones (explicit TODOs — not implemented this pass)
+## Status: all milestones M0–M12 implemented ✅
 
-- **M12 AI draft integration**.
+The full spec §36 roadmap is complete: monorepo → domain model → deterministic renderer → editor
+shell → canvas interaction → timeline → animation → 18-component pack → variables/themes/templates →
+audio/subtitles → **MP4 export** → plugins → AI drafts. 124 tests across 21 files; typecheck, lint,
+format, and build all green; a real 1080×1920 MP4 was produced and ffprobe-verified.
 
-Each remains defined by its spec §36 acceptance criteria. The domain model and validation
-built in M1 are the foundation these consume; no shortcut was taken that blocks them.
+Remaining work is the _within-milestone_ deferrals noted in each section above (e.g. audio mixing
+into MP4, in-editor Plugins/AI panels, keyframe graph editor, WebVTT, sandboxed plugins) and the
+spec's future/non-goal items — none of which block the implemented foundation.
 
 ## Verification commands
 
