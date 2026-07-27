@@ -202,9 +202,28 @@ channels + graph editor land alongside richer M6 later); more presets.
 
 ---
 
+## Milestone 7 — Production Components ✅ (this pass)
+
+- [x] Extended the scene-graph IR with a `polyline` primitive (SVG + Pixi) for charts, tails, arrows.
+- [x] 13 production components, each with a Zod props schema, defaults, default transform, and a
+      primitive renderer: **title, caption, image-card, profile-card, character, speech-bubble,
+      topic-circle, youtube-comment, phone-frame, notification, bar-chart, line-chart, table**.
+- [x] All registered in the component registry (18 built-ins total incl. M2 primitives).
+- [x] Tests: every built-in renders on default props and on garbage/unknown props **without
+      crashing**; registry completeness; unknown element types still show placeholders.
+
+**Acceptance:** each component has schema + renderer + defaults + tests; unknown props do not crash
+the editor (verified across all 18). Showcase SVG visually verified. 101 tests pass. The 13
+components were built by a 13-agent workflow against the fixed `ComponentDefinition` contract.
+
+Deferred within M7: per-component inspector control schemas (components currently use the generic
+inspector + data-editable props); richer chart axes/labels.
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M7 Production components**, **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
+- **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
   **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
 
 Each remains defined by its spec §36 acceptance criteria. The domain model and validation

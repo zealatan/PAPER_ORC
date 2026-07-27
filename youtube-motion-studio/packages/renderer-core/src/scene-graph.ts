@@ -90,6 +90,16 @@ export interface ImageNode extends DrawNodeBase {
   fit?: "cover" | "contain" | "fill" | "none";
 }
 
+export interface PolylineNode extends DrawNodeBase {
+  kind: "polyline";
+  /** Points in element-local pixels. */
+  points: Array<[number, number]>;
+  stroke?: Stroke;
+  fill?: Fill;
+  /** Close the path into a polygon (for tails, arrows, area fills). */
+  closed?: boolean;
+}
+
 export interface GroupNode extends DrawNodeBase {
   kind: "group";
   /** Optional local translation applied to children (in addition to element transform). */
@@ -99,7 +109,7 @@ export interface GroupNode extends DrawNodeBase {
 }
 
 export type DrawNode =
-  RectNode | EllipseNode | LineNode | TextNode | ImageNode | GroupNode;
+  RectNode | EllipseNode | LineNode | PolylineNode | TextNode | ImageNode | GroupNode;
 
 /** Convenience: a group wrapping several nodes. */
 export function group(children: DrawNode[], base?: Partial<GroupNode>): GroupNode {

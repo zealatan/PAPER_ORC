@@ -11,6 +11,7 @@ import type {
   Fill,
   ImageNode,
   LineNode,
+  PolylineNode,
   RectNode,
   Stroke,
   TextNode,
@@ -77,6 +78,13 @@ function lineSvg(n: LineNode): string {
   return `<line x1="${fmt(n.x1)}" y1="${fmt(n.y1)}" x2="${fmt(n.x2)}" y2="${fmt(n.y2)}"${strokeAttrs(n.stroke)}${nodeOpacityAttr(n.opacity)}/>`;
 }
 
+function polylineSvg(n: PolylineNode): string {
+  const pts = n.points.map(([x, y]) => `${fmt(x)},${fmt(y)}`).join(" ");
+  const tag = n.closed ? "polygon" : "polyline";
+  const fill = n.closed ? fillAttrs(n.fill) : fillAttrs(n.fill ?? undefined);
+  return `<${tag} points="${pts}" ${fill}${strokeAttrs(n.stroke)}${nodeOpacityAttr(n.opacity)}/>`;
+}
+
 function textSvg(n: TextNode): string {
   const anchor = n.align === "center" ? "middle" : n.align === "right" ? "end" : "start";
   const baseline =
@@ -115,6 +123,8 @@ function nodeToSvg(node: DrawNode): string {
       return ellipseSvg(node);
     case "line":
       return lineSvg(node);
+    case "polyline":
+      return polylineSvg(node);
     case "text":
       return textSvg(node);
     case "image":

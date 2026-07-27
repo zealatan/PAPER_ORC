@@ -179,6 +179,26 @@ export class PixiFrameRenderer implements FrameRenderer {
         container.addChild(g);
         break;
       }
+      case "polyline": {
+        const g = new PIXI.Graphics();
+        const [first, ...rest] = node.points;
+        if (first) {
+          g.moveTo(first[0], first[1]);
+          for (const [x, y] of rest) g.lineTo(x, y);
+          if (node.closed) g.closePath();
+        }
+        if (node.fill) g.fill({ color: node.fill.color, alpha: node.fill.opacity ?? 1 });
+        if (node.stroke) {
+          g.stroke({
+            color: node.stroke.color,
+            width: node.stroke.width,
+            alpha: node.stroke.opacity ?? 1,
+          });
+        }
+        g.alpha = node.opacity ?? 1;
+        container.addChild(g);
+        break;
+      }
       case "text": {
         const text = new PIXI.Text({
           text: node.text,

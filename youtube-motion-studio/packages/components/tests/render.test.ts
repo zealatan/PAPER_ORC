@@ -78,11 +78,19 @@ describe("frame renderer over the fixture", () => {
   });
 });
 
-describe("unknown components on a real sample", () => {
-  it("renders the Ronald Read sample with placeholders (no crash)", () => {
+describe("real sample + unknown types", () => {
+  it("renders the Ronald Read sample without crashing", () => {
+    // profile-card and caption are now real components (M7); the sample renders for real.
     const svg = renderProjectToSvg(ronaldReadProject, 1, registry);
-    // profile-card and caption are not M2 components → visible placeholders.
-    expect(svg).toContain("?profile-card");
-    expect(svg).toContain("?caption");
+    expect(svg.startsWith("<svg")).toBe(true);
+    expect(svg).toContain("<text");
+  });
+
+  it("renders a visible placeholder for a genuinely unknown type", () => {
+    const project = makeProject([
+      makeScene("s", [makeElement("x", "totally-unknown-widget", {})]),
+    ]);
+    const svg = renderProjectToSvg(project, 0, registry);
+    expect(svg).toContain("?totally-unknown-widget");
   });
 });
