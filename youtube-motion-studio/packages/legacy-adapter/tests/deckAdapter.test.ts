@@ -75,3 +75,58 @@ describe("pgDeckAdapter.import", () => {
     expect(report.importedScenes).toBe(2);
   });
 });
+
+describe("chart translation", () => {
+  const chartDeck = JSON.stringify({
+    scenes: [
+      {
+        tpl: "enginechart",
+        sid: 1,
+        dur: 8000,
+        data: {
+          title: "복리",
+          chart: {
+            kind: "line",
+            series: [
+              {
+                pts: [
+                  [2000, 100],
+                  [2001, 140],
+                  [2002, 130],
+                  [2003, 190],
+                ],
+              },
+            ],
+          },
+        },
+      },
+      {
+        tpl: "divbars",
+        sid: 2,
+        dur: 6000,
+        data: {
+          title: "배당",
+          vals: [
+            [1962, 0.02],
+            [1963, 0.03],
+            [1964, 0.04],
+          ],
+        },
+      },
+    ],
+  });
+
+  it("translates chart templates into real chart components", async () => {
+    const { project, report } = await pgDeckAdapter.import(chartDeck);
+    expect(findElementById(project, "scene-1-chart")?.element.type).toBe("line-chart");
+    expect(findElementById(project, "scene-2-chart")?.element.type).toBe("bar-chart");
+    expect(report.unsupported).toHaveLength(0);
+    expect(report.translated.map((t) => t.reason)).toEqual([
+      '"enginechart" → line-chart',
+      '"divbars" → bar-chart',
+    ]);
+
+    const line = findElementById(project, "scene-1-chart")?.element;
+    expect((line?.props.values as number[]).length).toBe(4);
+  });
+});

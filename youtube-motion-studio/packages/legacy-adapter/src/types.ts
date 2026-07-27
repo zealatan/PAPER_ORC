@@ -27,6 +27,8 @@ export interface AssetRequestNote {
 export interface MigrationReport {
   /** Scenes/features that were imported as placeholders. */
   unsupported: MigrationNote[];
+  /** Charts/tables that were translated to real components (informational). */
+  translated: MigrationNote[];
   /** Assets referenced by the legacy deck that must be provided. */
   assetRequests: AssetRequestNote[];
   /** Free-form notes. */

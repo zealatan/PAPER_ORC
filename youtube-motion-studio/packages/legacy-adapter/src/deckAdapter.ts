@@ -13,6 +13,7 @@ import {
   type Scene,
 } from "@motion-studio/core";
 import { normalizeDeckLines, normalizeDeckText } from "./textNormalize";
+import { extractChart } from "./chartExtract";
 import type {
   LegacyImportOptions,
   LegacyTemplateAdapter,
@@ -176,6 +177,7 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
     const height = options.height ?? 1080;
     const now = options.now ?? "2026-01-01T00:00:00.000Z";
     const unsupported: MigrationNote[] = [];
+    const translated: MigrationNote[] = [];
     const assetRequests = new Map<string, string>();
     let elementCount = 0;
 
@@ -251,10 +253,26 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
         );
       }
 
-      if (isChart) {
+      const chart = isChart ? extractChart(tpl, data) : null;
+      if (chart) {
+        translated.push({ sceneId, reason: `"${tpl}" → ${chart.type}` });
+        elements.push(
+          makeElement(
+            `${sceneId}-chart`,
+            chart.type,
+            160,
+            isChart ? 400 : 300,
+            width - 320,
+            height - 560,
+            chart.props,
+            duration,
+            1,
+          ),
+        );
+      } else if (isChart) {
         unsupported.push({
           sceneId,
-          reason: `"${tpl}" chart/table not translated — imported as a placeholder.`,
+          reason: `"${tpl}" chart/table could not be translated — imported as a placeholder.`,
         });
         elements.push(
           makeElement(
@@ -342,6 +360,7 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
 
     const report: MigrationReport = {
       unsupported,
+      translated,
       assetRequests: [...assetRequests.entries()].map(([id, description]) => ({
         id,
         description,
