@@ -15,6 +15,8 @@ export {
   missingAssetIds,
 } from "./frames";
 export type { FontConfig } from "./frames";
+export { renderDeckParallel } from "./parallelExport";
+export type { ParallelExportOptions, ParallelExportResult } from "./parallelExport";
 export type {
   ExportOptions,
   ExportProgress,
