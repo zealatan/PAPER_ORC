@@ -23,6 +23,12 @@ import type {
   MigrationReport,
 } from "./types";
 
+/**
+ * Heavy display face for hero numbers (matches the deck's big "70년" weight). The renderer must be
+ * given a font file registered under this family name (spec §26.3: assets travel with the project).
+ */
+export const DISPLAY_FONT = "Black Han Sans";
+
 interface DeckScene {
   tpl?: string;
   dur?: number;
@@ -230,7 +236,9 @@ export const pgDeckAdapter: LegacyTemplateAdapter = {
               text: text.title,
               fontSize: isChart ? 64 : 88,
               color: "#ffffff",
-              textAlign: "center",
+              align: "center",
+              fontWeight: 900,
+              fontFamily: DISPLAY_FONT,
             },
             duration,
             3,

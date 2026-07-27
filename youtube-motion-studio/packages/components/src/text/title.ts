@@ -14,6 +14,7 @@ export interface TitleProps {
   color: string;
   align: "left" | "center" | "right";
   fontWeight: number;
+  fontFamily?: string;
 }
 
 const propsSchema = z.object({
@@ -22,6 +23,8 @@ const propsSchema = z.object({
   color: z.string().default("#ffffff"),
   align: z.enum(["left", "center", "right"]).default("center"),
   fontWeight: z.number().default(800),
+  /** Optional font family (e.g. a heavy display face for hero numbers). */
+  fontFamily: z.string().optional(),
 });
 
 const defaultProps: TitleProps = {
@@ -53,6 +56,7 @@ export const titleComponent: ComponentDefinition<TitleProps> = {
       text: p.text,
       fontSize: p.fontSize,
       fontWeight: p.fontWeight,
+      ...(p.fontFamily ? { fontFamily: p.fontFamily } : {}),
       fill: { color: p.color },
       align: p.align,
       baseline: "middle",

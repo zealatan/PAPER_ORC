@@ -22,6 +22,7 @@ import {
   projectDuration,
   renderFrameToPng,
   resolveForRender,
+  type FontConfig,
 } from "./frames";
 import { spawnFfmpeg } from "./ffmpeg";
 import { buildBackgroundTrack, hasVideoBackground } from "./backgroundTrack";
@@ -42,6 +43,7 @@ interface PumpConfig {
   fps: number;
   width: number;
   skipBackground: boolean;
+  fonts?: FontConfig;
 }
 
 async function pumpFrames(
@@ -60,6 +62,7 @@ async function pumpFrames(
       registry,
       config.width,
       config.skipBackground,
+      config.fonts,
     );
     if (!stdin.write(png)) {
       await new Promise<void>((resolve) => stdin.once("drain", resolve));
@@ -159,7 +162,7 @@ export async function exportVideo(
           child.stdin as Writable,
           resolved,
           registry,
-          { frameCount, fps, width, skipBackground: true },
+          { frameCount, fps, width, skipBackground: true, fonts: options.fonts },
           onProgress,
           signal,
         );
@@ -191,7 +194,7 @@ export async function exportVideo(
         ffmpeg.child.stdin,
         resolved,
         registry,
-        { frameCount, fps, width, skipBackground: false },
+        { frameCount, fps, width, skipBackground: false, fonts: options.fonts },
         onProgress,
         signal,
       );

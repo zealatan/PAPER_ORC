@@ -6,10 +6,31 @@ import {
   imageComponent,
   rectangleComponent,
   textComponent,
+  titleComponent,
 } from "../src";
 import { makeContext, makeElement, makeProject } from "./helpers";
 
 const ctx = makeContext();
+
+describe("title component", () => {
+  it("emits a heavy weight and a font family when set (hero display face)", () => {
+    const el = makeElement("t", "title", {
+      props: { text: "70년", fontWeight: 900, fontFamily: "Black Han Sans" },
+    });
+    expect(titleComponent.render(el, ctx)).toMatchObject({
+      kind: "text",
+      fontWeight: 900,
+      fontFamily: "Black Han Sans",
+    });
+  });
+
+  it("omits font family when unset so the renderer default applies", () => {
+    const el = makeElement("t", "title", { props: { text: "Hi" } });
+    const node = titleComponent.render(el, ctx);
+    expect(node).toMatchObject({ kind: "text" });
+    expect(node && "fontFamily" in node ? node.fontFamily : undefined).toBeUndefined();
+  });
+});
 
 describe("caption component", () => {
   it("draws a background pill by default", () => {

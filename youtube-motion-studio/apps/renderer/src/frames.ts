@@ -27,6 +27,24 @@ export function resolveForRender(project: MotionProject): MotionProject {
   return applyTheme(applyBindings(project), resolveTheme(project.theme.themeId));
 }
 
+/**
+ * Font loading for the rasterizer. Text weight/family only render correctly if resvg can find the
+ * face: `files` registers specific font files (e.g. a heavy display face bundled with a deck),
+ * `defaultFamily` is used when a text node names no family, and system fonts stay available for
+ * broad language coverage (Korean, etc.).
+ */
+export interface FontConfig {
+  files?: string[];
+  defaultFamily?: string;
+  loadSystemFonts?: boolean;
+}
+
+/** Default fonts: keep system fonts (Korean coverage) and default to a CJK-capable family. */
+const DEFAULT_FONTS: FontConfig = {
+  loadSystemFonts: true,
+  defaultFamily: "Noto Sans CJK KR",
+};
+
 /** Rasterize one frame to a PNG buffer. `skipBackground` yields a transparent frame for compositing. */
 export function renderFrameToPng(
   project: MotionProject,
@@ -34,9 +52,17 @@ export function renderFrameToPng(
   registry: RenderRegistry,
   width: number,
   skipBackground = false,
+  fonts: FontConfig = DEFAULT_FONTS,
 ): Buffer {
   const svg = renderProjectToSvg(project, timeSeconds, registry, { skipBackground });
-  const resvg = new Resvg(svg, { fitTo: { mode: "width", value: width } });
+  const resvg = new Resvg(svg, {
+    fitTo: { mode: "width", value: width },
+    font: {
+      loadSystemFonts: fonts.loadSystemFonts ?? true,
+      fontFiles: fonts.files ?? [],
+      defaultFontFamily: fonts.defaultFamily ?? "Noto Sans CJK KR",
+    },
+  });
   return Buffer.from(resvg.render().asPng());
 }
 

@@ -14,6 +14,7 @@ export {
   renderFrameToPng,
   missingAssetIds,
 } from "./frames";
+export type { FontConfig } from "./frames";
 export type {
   ExportOptions,
   ExportProgress,

@@ -3,6 +3,7 @@
  * the {@link RenderReport} captures everything about the render for reproducibility.
  */
 import type { MotionProject } from "@motion-studio/core";
+import type { FontConfig } from "./frames";
 
 export interface ExportOptions {
   /** Absolute output path for the MP4. */
@@ -16,6 +17,8 @@ export interface ExportOptions {
   height?: number;
   /** ffmpeg executable. Default "ffmpeg". */
   ffmpegPath?: string;
+  /** Font loading for the rasterizer (e.g. a deck's heavy display face). */
+  fonts?: FontConfig;
 }
 
 export interface ExportProgress {
