@@ -103,7 +103,7 @@ json.dump(out, open('rec/narration_lines.json','w',encoding='utf-8'), ensure_asc
 ### 썸네일
 - 롱폼 가로: **덱 bg 영상 프레임을 배경**으로(예 `hourglass_time`=시간/은퇴자금 소진 메타포) 어둡게+그라디언트 스크림 → JNJ 로고 + 큰 헤드라인(흰+노란 하이라이트) + 마스코트. PIL 합성(`assets/thumb_hourglass.png` 참고).
 - 노부부·돈다발 AI합성은 선택(코카콜라 `recordings/recordings/thumb_final.png`). 손그림 일러스트 버전은 `thumb_illust_v1.png`.
-- 쇼츠 세로(9:16): **정식 도구 = `blog/prototypes/thumbs/thumb_editor.html`** (§2). 검은 배경 위 제품컷(흰테두리)+필기체 라벨(Caveat)+로고+큰 문구(dihichi식). 요소 드래그·리사이즈 후 **💾PNG로 1080×1920 저장**. 종목 무관(로고·제품 임포트). 대안: 마지막 카드 페이지 세로 프레임(`assets/shorts/thumb_card.png`). 쇼츠 썸네일 지정은 **YouTube 모바일 앱에서만** 가능.
+- 쇼츠 세로(9:16): **정식 도구 = `blog/prototypes/thumbs/thumb_editor.html`** (§2). **레이아웃·색상 정식 스펙: `blog/prototypes/thumbs/SHORTS_THUMBNAIL_SPEC.md`**(제품 y40·로고 y53·문구 y59/65 · 흰#fff+골드#e8b776, PG·MCD 측정 확정). 검은 배경 위 제품컷(흰테두리)+필기체 라벨(Caveat)+로고+큰 문구(dihichi식). 요소 드래그·리사이즈 후 **💾PNG로 1080×1920 저장**. 종목 무관(로고·제품 임포트). 대안: 마지막 카드 페이지 세로 프레임(`assets/shorts/thumb_card.png`). 쇼츠 썸네일 지정은 **YouTube 모바일 앱에서만** 가능.
 
 ---
 

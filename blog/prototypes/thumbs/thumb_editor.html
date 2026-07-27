@@ -100,8 +100,8 @@ document.getElementById('save').onclick=function(){
 /* 초기화: 저장된 HTML을 다시 연 경우 기존 요소에 핸들러 재부착, 아니면 기본 배치 */
 var _ex=stage.querySelectorAll('.el');
 if(_ex.length){ [].forEach.call(_ex,function(el){el.classList.remove('sel');makeDrag(el);z=Math.max(z,parseInt(el.style.zIndex)||0);}); }
-else { addImg(PRODUCTS,50,44,96);addImg(BADGE,86,7,22);addImg(PGLOGO,50,70,30);
- addText('프록터 앤 갬블',50,80,8,'#ffffff');addText('주식으로 은퇴 3억',50,88,10,'#ffffff'); }
+else { addImg(PRODUCTS,50,40,96);addImg(PGLOGO,50,53,30);
+ addText('프록터 앤 갬블',50,59,7.5,'#ffffff');addText('주식으로 은퇴 3억',50,65,8.5,'#e8b776'); }
 select(null);
 /* 현재 편집 상태를 자립형 HTML로 저장(다시 열면 이어서 편집) */
 document.getElementById('saveHtml').onclick=function(){

@@ -543,14 +543,17 @@
   .hud .edit-only{ display:none; background:#9a938a; }
   body.editing-ui .hud .edit-only{ display:inline-block; }
   body.rec .hud{ display:none; }
-  /* ── 모바일: 컨트롤러 버튼 축소(좁은 폭에서 글자가 세로로 쌓여 과대해 보이던 문제) ── */
+  /* ── 모바일: 세로 스택 — 영상 위 / 컨트롤러 버튼 아래(전체폭 4열) / (자막 패널은 iframe 밖 아래) ── */
   @media (max-width:820px){
-    .hud{ width:min(44vw,188px); gap:.35vmin; padding-right:.2vmin; }
-    .hud button.tb{ font-size:10.5px; padding:.4em .5em .34em; line-height:1.16;
+    body{ flex-direction:column; align-items:center; justify-content:flex-start; gap:1vh; padding:1.4vmin; overflow-y:auto; }
+    .frame{ width:82vw; max-width:none; }
+    .hud{ width:97vw; max-width:none; display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:.7vmin; max-height:none; overflow:visible; padding:0; }
+    .hud .dots{ grid-column:1 / -1; justify-content:center; gap:.6vmin; margin:0; }
+    .hud .lbl{ grid-column:1 / -1; font-size:11px; min-width:0; }
+    .hud button.tb{ font-size:11px; padding:.5em .35em .42em; line-height:1.14;
       box-shadow:0 .2vmin .5vmin rgba(0,0,0,.2); }
-    .hud .lbl{ font-size:10px; min-width:0; }
-    .hud .dots{ gap:.5vmin; margin-right:.4vmin; }
-    .hud .dot{ width:1.1vmin; height:1.1vmin; }
+    .hud .dot{ width:1.3vmin; height:1.3vmin; }
   }
   /* ── 녹화(?rec) 풀블리드: 카드가 화면을 꽉 채움 ── */
   body.rec{ padding:0; gap:0; background:#000; }

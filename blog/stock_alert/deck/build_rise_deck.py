@@ -160,7 +160,7 @@ def risecard_scene(row, rank, market):
     ret = f"▲+{r:.0f}%" if r >= 0 else f"▼{r:.0f}%"
     tail = " 다만 5년으론 아직 마이너스입니다." if r < 0 else ""
     lines = [f"{rank}위, {nm}.", f"이번 주 52주 신고가를 새로 썼습니다.{tail}"]
-    return base_scene("risecard", lines, {
+    sc = base_scene("risecard", lines, {
         "rank": f"#{rank}", "cat": f"{CAT[market]} · {row['ticker']}",
         "title": nm, "highdate": (row.get("high_date", "") or "")[:10],
         "size": fmt_size(row.get("size"), sym),
@@ -168,6 +168,8 @@ def risecard_scene(row, rank, market):
         "chart": draw_chart_rise(row),
         "logo": logo_for(row, market), "issuerlogo": market == "ETF",
     })
+    sc["subHold"] = 5500   # 카드 균일 시간(무음 쇼츠) — 자막길이 편차로 인한 불균등 방지
+    return sc
 
 
 # ── 씬 조립 ──

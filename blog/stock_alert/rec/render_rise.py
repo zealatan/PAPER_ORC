@@ -8,7 +8,7 @@ HTML = os.path.abspath(os.path.join(ROOT, 'deck', 'stock_alert_rise_v1.html'))
 URL = 'file://' + HTML + '?rec'
 _d = json.load(open(os.path.join(ROOT,'deck','stock_alert_rise_deck.json'),encoding='utf-8'))['scenes']
 _PACE = float(re.search(r'var PACE\s*=\s*([\d.]+)', open(os.path.join(ROOT,'deck','stock_alert_final.html'),encoding='utf-8').read()).group(1))
-_tot = sum(s.get('dur',0)*_PACE for s in _d)
+_tot = sum(s.get('subHold', s.get('dur',0)*_PACE) for s in _d)
 DUR_MS = int(_tot + 2500)
 print('scenes', len(_d), 'playback ms', int(_tot), flush=True)
 with sync_playwright() as p:
