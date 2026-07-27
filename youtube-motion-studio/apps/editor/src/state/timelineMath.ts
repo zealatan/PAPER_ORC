@@ -19,6 +19,8 @@ export interface ClipLayout {
   /** Global start time (scene start + element timing.start), in seconds. */
   globalStart: number;
   duration: number;
+  /** Animation start times, relative to the element's local time (for clip markers). */
+  animations: number[];
 }
 
 /** Global start time + duration of each scene, from accumulated durations. */
@@ -61,6 +63,7 @@ export function buildClips(project: MotionProject): ClipLayout[] {
         type: element.type,
         globalStart: span.start + element.timing.start,
         duration: element.timing.duration,
+        animations: element.animations.map((animation) => animation.start),
       });
     }
   }

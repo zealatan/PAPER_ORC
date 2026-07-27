@@ -10,6 +10,7 @@ import {
   updateElementById,
 } from "../project/elementOps";
 import type {
+  AnimationDefinition,
   ElementTiming,
   MotionElement,
   MotionProject,
@@ -106,6 +107,54 @@ export function setElementVisible(elementId: string, visible: boolean): EditorCo
     label: visible ? "Show element" : "Hide element",
     execute: (project) =>
       updateElementById(project, elementId, (element) => ({ ...element, visible })),
+  };
+}
+
+export function addAnimation(
+  elementId: string,
+  animation: AnimationDefinition,
+): EditorCommand {
+  return {
+    label: "Add animation",
+    execute: (project) =>
+      updateElementById(project, elementId, (element) => ({
+        ...element,
+        animations: [...element.animations, animation],
+      })),
+  };
+}
+
+export function updateAnimation(
+  elementId: string,
+  animationId: string,
+  patch: Partial<AnimationDefinition>,
+  mergeKey?: string,
+): EditorCommand {
+  return {
+    label: "Update animation",
+    mergeKey,
+    execute: (project) =>
+      updateElementById(project, elementId, (element) => ({
+        ...element,
+        animations: element.animations.map((animation) =>
+          animation.id === animationId
+            ? ({ ...animation, ...patch } as AnimationDefinition)
+            : animation,
+        ),
+      })),
+  };
+}
+
+export function removeAnimation(elementId: string, animationId: string): EditorCommand {
+  return {
+    label: "Remove animation",
+    execute: (project) =>
+      updateElementById(project, elementId, (element) => ({
+        ...element,
+        animations: element.animations.filter(
+          (animation) => animation.id !== animationId,
+        ),
+      })),
   };
 }
 

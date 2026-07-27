@@ -183,10 +183,28 @@ marquee selection, align/distribute UI, equal-spacing suggestions.
 
 ---
 
+## Milestone 6 — Animation ✅ (this pass)
+
+- [x] Deterministic animation evaluation (from M2) with easing + entrance/exit presets; preset ids
+      exposed via `PRESET_IDS` for the editor.
+- [x] Animation commands in core (`addAnimation` / `updateAnimation` / `removeAnimation`) — undoable.
+- [x] Animation inspector section: list, add (preset picker), edit start/duration, remove — every
+      animation is plain editable `AnimationDefinition` data.
+- [x] Timeline animation indicators: a marker per animation on each element clip.
+- [x] Store actions for animation editing; visual snapshot tests render presets at multiple
+      timestamps (t=0 / 0.25 / 1).
+
+**Acceptance:** animation is deterministic (unit tests); presets are editable data (inspector,
+smoke-verified add 1→2); visual tests cover multiple timestamps. 96 tests pass.
+
+Deferred within M6: a keyframe editor UI (keyframes evaluate deterministically already; per-property
+channels + graph editor land alongside richer M6 later); more presets.
+
+---
+
 ## Deferred milestones (explicit TODOs — not implemented this pass)
 
-- **M6 Animation**,
-  **M7 Production components**, **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
+- **M7 Production components**, **M8 Variables/Themes/Templates**, **M9 Audio/Subtitles**,
   **M10 MP4 export** (`apps/renderer`), **M11 Plugins**, **M12 AI draft integration**.
 
 Each remains defined by its spec §36 acceptance criteria. The domain model and validation

@@ -4,6 +4,7 @@
  * writes back through a store action, owning no local domain state (spec §34.3).
  */
 import { selectSelectedElement, useEditor } from "../state/store";
+import { AnimationSection } from "./AnimationSection";
 
 export function Inspector() {
   const element = useEditor(selectSelectedElement);
@@ -137,6 +138,8 @@ export function Inspector() {
           </div>
         </details>
       ) : null}
+
+      <AnimationSection />
     </div>
   );
 }

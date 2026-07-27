@@ -72,6 +72,9 @@ const PRESETS: Record<string, PresetFn> = {
   "slide-down": (p, params) => slide(p, 0, -num(params.distance, 200)),
 };
 
+/** Ids of the built-in animation presets, for editor preset pickers. */
+export const PRESET_IDS: string[] = Object.keys(PRESETS);
+
 function slide(p: number, fromX: number, fromY: number): TransformDelta {
   const e = ease("ease-out", p);
   return {

@@ -244,6 +244,16 @@ export function Timeline() {
                     }
                   />
                   <span className="timeline__clip-label">{clip.name}</span>
+                  {clip.animations.map((aStart, ai) => (
+                    <span
+                      key={ai}
+                      className="timeline__anim-marker"
+                      style={{
+                        left:
+                          clip.duration > 0 ? `${(aStart / clip.duration) * 100}%` : "0%",
+                      }}
+                    />
+                  ))}
                   <span
                     className="timeline__trim timeline__trim--end"
                     onPointerDown={(e) =>

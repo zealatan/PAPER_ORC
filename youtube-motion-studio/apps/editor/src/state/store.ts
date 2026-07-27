@@ -6,6 +6,7 @@
  */
 import { create } from "zustand";
 import {
+  addAnimation as addAnimationCommand,
   canRedo as coreCanRedo,
   canUndo as coreCanUndo,
   createHistory,
@@ -13,6 +14,8 @@ import {
   exportProject,
   findElementById,
   importProject,
+  removeAnimation as removeAnimationCommand,
+  updateAnimation as updateAnimationCommand,
   redo as coreRedo,
   renameElement as renameElementCommand,
   runCommand as coreRunCommand,
@@ -23,6 +26,7 @@ import {
   updateElementStyle as updateElementStyleCommand,
   updateElementTiming as updateElementTimingCommand,
   updateElementTransform as updateElementTransformCommand,
+  type AnimationDefinition,
   type EditorCommand,
   type ElementTiming,
   type HistoryState,
@@ -80,6 +84,11 @@ export interface EditorState {
   moveSelectedBy(dx: number, dy: number, mergeKey?: string): void;
   deleteSelected(): void;
 
+  // ── animation editing ──
+  addAnimationToSelected(presetId: string): void;
+  updateSelectedAnimation(animationId: string, patch: Partial<AnimationDefinition>): void;
+  removeSelectedAnimation(animationId: string): void;
+
   // ── playback ──
   time: number;
   playing: boolean;
@@ -120,6 +129,8 @@ function transformManyCommand(
       ),
   };
 }
+
+let animSeq = 0;
 
 export const useEditor = create<EditorState>((set, get) => ({
   project: demoProject,
@@ -302,6 +313,36 @@ export const useEditor = create<EditorState>((set, get) => ({
       get().apply(deleteElementCommand(id));
     }
     set({ selectedElementIds: [], selectedElementId: null });
+  },
+
+  addAnimationToSelected(presetId) {
+    const id = get().selectedElementId;
+    if (!id) return;
+    animSeq += 1;
+    const animation: AnimationDefinition = {
+      id: `anim-${animSeq}`,
+      kind: "preset",
+      target: "transform",
+      start: 0,
+      duration: 0.5,
+      presetId,
+    };
+    get().apply(addAnimationCommand(id, animation));
+  },
+
+  updateSelectedAnimation(animationId, patch) {
+    const id = get().selectedElementId;
+    if (!id) return;
+    get().apply(
+      updateAnimationCommand(id, animationId, patch, `anim:${id}:${animationId}`),
+      true,
+    );
+  },
+
+  removeSelectedAnimation(animationId) {
+    const id = get().selectedElementId;
+    if (!id) return;
+    get().apply(removeAnimationCommand(id, animationId));
   },
 
   time: 0,
