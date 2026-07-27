@@ -1,0 +1,137 @@
+/* Editor design tokens (spec §27): dark, high-contrast, neutral gray panels. */
+:root {
+  --bg: #0f1115;
+  --panel: #171a21;
+  --panel-elevated: #1e222b;
+  --border: #2a2f3a;
+  --text: #e6e9ef;
+  --text-secondary: #9aa3b2;
+  --accent: #ffd000;
+  --success: #3fc890;
+  --warning: #f5a623;
+  --error: #ff6a5c;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Noto Sans KR",
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.app__header h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+.app__header p {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 6px 12px;
+}
+
+.kv dt {
+  color: var(--text-secondary);
+}
+
+.kv dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge--ok {
+  background: color-mix(in srgb, var(--success) 20%, transparent);
+  color: var(--success);
+}
+
+.badge--error {
+  background: color-mix(in srgb, var(--error) 20%, transparent);
+  color: var(--error);
+}
+
+.scene-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scene-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--panel-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.scene-list .muted {
+  color: var(--text-secondary);
+}
+
+pre.issues {
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--error);
+  font-size: 13px;
+}
