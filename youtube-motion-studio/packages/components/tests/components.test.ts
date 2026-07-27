@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  captionComponent,
   circleComponent,
   groupComponent,
   imageComponent,
@@ -9,6 +10,20 @@ import {
 import { makeContext, makeElement, makeProject } from "./helpers";
 
 const ctx = makeContext();
+
+describe("caption component", () => {
+  it("draws a background pill by default", () => {
+    const el = makeElement("c", "caption", {
+      props: { text: "Hi", background: "#111111" },
+    });
+    expect(captionComponent.render(el, ctx)?.kind).toBe("group");
+  });
+
+  it("renders bare text (no pill) when background is empty", () => {
+    const el = makeElement("c", "caption", { props: { text: "Hi", background: "" } });
+    expect(captionComponent.render(el, ctx)?.kind).toBe("text");
+  });
+});
 
 describe("rectangle component", () => {
   it("renders a rect using style fill/stroke/radius", () => {

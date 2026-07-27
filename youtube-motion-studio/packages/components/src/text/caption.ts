@@ -44,16 +44,6 @@ export const captionComponent: ComponentDefinition<CaptionProps> = {
     const W = element.transform.width;
     const H = element.transform.height;
 
-    const background: DrawNode = {
-      kind: "rect",
-      x: 0,
-      y: 0,
-      width: W,
-      height: H,
-      radius: p.radius,
-      fill: { color: p.background },
-    };
-
     const textNode: DrawNode = {
       kind: "text",
       x: W / 2,
@@ -65,6 +55,20 @@ export const captionComponent: ComponentDefinition<CaptionProps> = {
       baseline: "middle",
     };
 
+    // No background pill when the background is empty / "none" / "transparent".
+    const hasBackground =
+      p.background !== "" && p.background !== "none" && p.background !== "transparent";
+    if (!hasBackground) return textNode;
+
+    const background: DrawNode = {
+      kind: "rect",
+      x: 0,
+      y: 0,
+      width: W,
+      height: H,
+      radius: p.radius,
+      fill: { color: p.background },
+    };
     return group([background, textNode]);
   },
 };
