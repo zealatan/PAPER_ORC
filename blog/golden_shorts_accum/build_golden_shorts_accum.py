@@ -75,14 +75,14 @@ with sync_playwright() as p:
 # 2) 썸네일 정지 클립
 sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-loop", "1", "-t", str(THUMB_SEC),
    "-i", THUMB, "-vf", "scale=%d:%d,fps=30,format=yuv420p" % (W, H),
-   "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", os.path.join(WORK, "c0.mp4"))
+   "-c:v", "libx264", "-crf", "14", "-pix_fmt", "yuv420p", os.path.join(WORK, "c0.mp4"))
 
 # 3) 그래프 클립 트림(시작 오프셋 보정 후 CLIP_SEC 만큼)
 for i, n in enumerate(range(1, NG + 1), 1):
     webm, off = offs[n]
     sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-ss", "%.2f" % (off + 0.15),
        "-i", webm, "-t", str(CLIP_SEC), "-vf", "scale=%d:%d,fps=30,format=yuv420p" % (W, H),
-       "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", os.path.join(WORK, "c%d.mp4" % i))
+       "-c:v", "libx264", "-crf", "14", "-pix_fmt", "yuv420p", os.path.join(WORK, "c%d.mp4" % i))
 
 # 3.5) 결과 테이블 5초 정지 클립 (마지막 페이지)
 # 3x 캡처 table.png(3240×5760)에 아주 미세한 줌(모션) → 유튜브가 정지화면 취급 안 하고 비트레이트 할당 → 글씨 선명
@@ -92,7 +92,7 @@ sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
    "-i", os.path.join(WORK, "table.png"),
    "-vf", "zoompan=z='min(zoom+0.00022,1.033)':d=%d:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s=%dx%d:fps=30,format=yuv420p" % (_tf, W, H),
    "-frames:v", str(_tf),
-   "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p", os.path.join(WORK, "c%d.mp4" % (NG + 1)))
+   "-c:v", "libx264", "-crf", "14", "-pix_fmt", "yuv420p", os.path.join(WORK, "c%d.mp4" % (NG + 1)))
 
 # 4) concat: c0=썸네일 + c1..cNG=그래프 + c(NG+1)=테이블
 listf = os.path.join(WORK, "list.txt")
@@ -100,6 +100,7 @@ with open(listf, "w") as f:
     for i in range(NG + 2):
         f.write("file '%s'\n" % os.path.join(WORK, "c%d.mp4" % i))
 sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0",
-   "-i", listf, "-c:v", "libx264", "-crf", "18", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", OUT)
+   "-i", listf, "-c:v", "libx264", "-b:v", "18M", "-maxrate", "22M", "-bufsize", "36M",
+   "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", OUT)
 
 print("DONE ->", OUT)
