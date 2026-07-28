@@ -52,3 +52,10 @@ oneshot/**/project.json
 oneshot/**/validation.json
 oneshot/gallery/report.json
 oneshot/gallery/index.html
+impossible/**/preview/
+impossible/**/*.png
+impossible/**/*.mp4
+impossible/**/project.json
+impossible/**/validation.json
+impossible/gallery/report.json
+impossible/gallery/index.html

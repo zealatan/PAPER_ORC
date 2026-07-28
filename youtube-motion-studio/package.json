@@ -59,7 +59,13 @@
     "oneshot:render": "pnpm --filter @motion-studio/oneshot run oneshot:render",
     "oneshot:validate": "pnpm --filter @motion-studio/oneshot run oneshot:validate",
     "oneshot:gallery": "pnpm --filter @motion-studio/oneshot run oneshot:gallery",
-    "oneshot:all": "pnpm --filter @motion-studio/oneshot run oneshot:all"
+    "oneshot:all": "pnpm --filter @motion-studio/oneshot run oneshot:all",
+    "impossible:generate": "pnpm --filter @motion-studio/impossible run impossible:generate",
+    "impossible:preview": "pnpm --filter @motion-studio/impossible run impossible:preview",
+    "impossible:render": "pnpm --filter @motion-studio/impossible run impossible:render",
+    "impossible:validate": "pnpm --filter @motion-studio/impossible run impossible:validate",
+    "impossible:gallery": "pnpm --filter @motion-studio/impossible run impossible:gallery",
+    "impossible:all": "pnpm --filter @motion-studio/impossible run impossible:all"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
