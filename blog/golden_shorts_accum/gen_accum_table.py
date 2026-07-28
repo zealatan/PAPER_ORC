@@ -56,8 +56,8 @@ tr.steady td{{background:rgba(43,108,176,.08)}}
 <tbody>
 {ROWS}</tbody>
 </table>
-<div class="note">2000년~ 매달 {MON} 적립 · 배당 재투자 · 총 투입원금 {INV}</div>
-</div>""".format(FONT=G.FONTSRC, PAPER=G.paper_uri, ROWS=trs, INV=usd(INVESTED), MON=usd(MONTHLY))
+<div class="note">{YR}년~ 매달 {MON} 적립 · 배당 재투자 · 총 투입원금 {INV}</div>
+</div>""".format(FONT=G.FONTSRC, PAPER=G.paper_uri, ROWS=trs, INV=usd(INVESTED), MON=usd(MONTHLY), YR=int(F[0]["payload"].get("x0",2000)))
 
 open(os.path.join(HERE, "golden_shorts_accum_table.html"), "w", encoding="utf-8").write(HTML)
 print("wrote golden_shorts_accum_table.html")

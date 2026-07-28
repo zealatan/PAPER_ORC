@@ -12,14 +12,30 @@ gen_accum.py — 적립(accum) 시나리오 백테스트 → assets/<stock>_accu
 import sys, json, os, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 STOCK = os.environ.get("SHORTS_STOCK", "PG")
-PREF = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng"}[STOCK]
+PREF = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SKH": "skh"}[STOCK]
 sys.path.insert(0, os.path.join(HERE, "..", "PG", "deck", "tools"))
 import ko_smart_vs_steady as E
 
-E.MONTHLY_INCOME = 1000.0   # 월 1,000씩 (미국 $1,000 / 한국 1,000원)
+E.MONTHLY_INCOME = {"SKH": 1000000.0}.get(STOCK, 1000.0)   # 월 적립액(SKH 100만원 / 그 외 $1,000·1,000원)
+KRW = STOCK in ("KTNG", "SKH")
+START_YEAR = {"SKH": 2006}.get(STOCK, 2000)   # 종목별 시작연도(SK하이닉스는 감자·워크아웃 이후 2006~)
 
-DATA = os.path.join(HERE, "..", "PG", "data")
-prices, divs = E.load_csv(os.path.join(DATA, PREF + "_price.csv"), os.path.join(DATA, PREF + "_div.csv"))
+# 데이터: PG=로컬 CSV / 그 외=yfinance
+if STOCK == "PG":
+    DATA = os.path.join(HERE, "..", "PG", "data")
+    prices, divs = E.load_csv(os.path.join(DATA, "pg_price.csv"), os.path.join(DATA, "pg_div.csv"))
+else:
+    import yfinance as yf
+    _TK = {"QQQ": "QQQ", "KTNG": "033780.KS", "SKH": "000660.KS"}[STOCK]
+    _t = yf.Ticker(_TK)
+    _h = _t.history(start="%d-01-01" % START_YEAR, end="2026-07-31", auto_adjust=False); _h.index = _h.index.tz_localize(None)
+    prices = [(d.date(), float(c)) for d, c in _h["Close"].items() if c == c]   # NaN 종가 제거(NaN!=NaN)
+    _dv = _t.dividends; _dv.index = _dv.index.tz_localize(None)
+    divs = [(d.date(), float(v)) for d, v in _dv.items() if v == v]
+    print("[%s] yfinance 가격 %d행 · 배당 %d건" % (_TK, len(prices), len(divs)))
+# 시작연도 필터(2000 초과 시)
+prices = [(d, c) for d, c in prices if d.year >= START_YEAR]
+divs = [(d, v) for d, v in divs if d.year >= START_YEAR]
 me_idx = E.month_end_indices(prices)
 TOTAL_IN = round(E.MONTHLY_INCOME * len(me_idx))   # 총 투입원금
 
@@ -31,12 +47,12 @@ def to_year(d):
     from datetime import date
     y0 = date(d.year, 1, 1); y1 = date(d.year + 1, 1, 1)
     return round(d.year + (d - y0).days / (y1 - y0).days, 3)
-def sub(series, step=3):
+def sub(series, step=1):   # 월별 전량 샘플(급등·폭락 등 단기 변동 반영)
     pts = [[to_year(d), round(v)] for d, v in series]
     out = pts[::step]
     if out[-1] != pts[-1]: out.append(pts[-1])
     return out
-def usd(v): return "$" + format(int(round(v)), ",")   # 정규화($1/월)라 정밀값
+def usd(v): return ((("%.1f억" % (v/1e8)) if v >= 1e8 else ("%s만" % format(int(round(v/1e4)), ","))) if KRW else ("$" + format(int(round(v)), ",")))
 def nice_ceil(x):
     e = 10 ** math.floor(math.log10(x)); f = x / e
     for n in (1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10):
@@ -89,7 +105,7 @@ for thr in THRESH:
     mx = max(max(p[1] for p in steady_pts), max(p[1] for p in smart_pts))
     payload = {
         "ymax": nice_ceil(mx * 1.05),
-        "tip": "compact", "yleft": True,
+        "tip": "compact", "yleft": True, "x0": START_YEAR, "krw": KRW,
         "lines": [
             # 원금 점선(각각) — 뒤에 깔림, 끝점 라벨 없음
             {"c": C_STEADY, "surv": True, "dash": True, "nolabel": True, "pts": steady_inv_pts},
@@ -101,7 +117,7 @@ for thr in THRESH:
         "legend": [{"c": C_STEADY, "label": "매달 적립식"}, {"c": C_SMART, "label": "%d%% 하락매수" % thr}],
     }
     fires.append({"thr": thr, "hook": "적립식 vs %d%% 하락매수" % thr, "payload": payload,
-                  "invested": TOTAL_IN, "monthly": E.MONTHLY_INCOME, "krw": STOCK == "KTNG",
+                  "invested": TOTAL_IN, "monthly": E.MONTHLY_INCOME, "krw": KRW, "x0": START_YEAR,
                   "steady": {"final": round(steady["final"]), "xirr": round(s_xirr, 4), "cagr": round(s_cagr, 4)},
                   "smart":  {"final": round(smart["final"]),  "xirr": round(m_xirr, 4), "cagr": round(m_cagr, 4),
                              "trig_n": len(trig)}})

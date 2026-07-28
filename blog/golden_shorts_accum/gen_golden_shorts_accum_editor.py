@@ -9,7 +9,7 @@ golden_shorts_accum.py 의 NEWRA(x축 이동 reelAnim)·CMAP·fire_payload·CSS 
 의존: golden_shorts_accum.py(같은 폴더, import), assets/assets.json, assets/paper_b64.txt, blog/fonts, pg_deck.json, pg_final.html
 실행: python3 gen_pg_editor.py
 """
-import json, os
+import json, os, base64
 import golden_shorts_accum as G   # NEWRA, CMAP, logo, rc_css, FONTSRC, paper_uri, sc, fire_payload, FIRE_SPECS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -42,7 +42,7 @@ elif STOCK == "KTNG":
     FIRES = [{"hook": "%d. 은퇴원금 <b>%s</b>" % (i + 1, f["hook"]), "payload": f["payload"]}
              for i, f in enumerate(_kf)]
     # PG 기준 썸네일 구조: 제품클러스터(y37·사람이 KT&G 사진)→로고(y54)→마젠타문구(y60)→흰문구(y66)
-    THUMB_INIT = ("addText('( KT&G 제품 사진은 사람이 추가 )',50,37,4.2,'#5a6472',0);"
+    THUMB_INIT = (""
                   "addText('KT&amp;G',50,54,5,'#e60012',0);"
                   "addText('6억으로 은퇴',50,60,7,'#d12e77',0);"
                   "addText('적정 생활비는?',50,66,7,'#ffffff',0);")
@@ -52,18 +52,31 @@ elif STOCK == "QQQ":
     LOGO    = ('<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" '
                'font-weight="900" font-size="58" fill="#1b3660">QQQ</text>')
     COMPANY = "나스닥100 (QQQ)"
-    LEGOUT  = ('<span class="lg"><span class="sw" style="background:#2b6cb0"></span>월 $1천 인출</span>'
-               '<span class="lg"><span class="sw" style="background:#d98f2b"></span>월 $2천 인출</span>'
-               '<span class="lg"><span class="sw" style="background:#c2255c"></span>월 $3천 인출</span>')
-    _qf = json.load(open(os.path.join(HERE, "assets", "qqq_fires.json")))
-    FIRES = [{"hook": "%d. 은퇴원금 <b>%s</b>" % (i + 1, f["hook"]), "payload": f["payload"]}
-             for i, f in enumerate(_qf)]
-    THUMB_INIT = ("addText('( 나스닥/종목 이미지는 사람이 추가 )',50,37,4,'#5a6472',0);"
+    LEGOUT  = ('<span class="lg"><span class="sw" style="background:#2b6cb0"></span>매달 적립식</span>'
+               '<span class="lg"><span class="sw" style="background:#c2255c"></span>폭락 시 매수</span>')
+    FIRES = [{"hook": "%d. 적립식 vs <b>%d%% 하락매수</b>" % (i + 1, f["thr"]), "payload": f["payload"]}
+             for i, f in enumerate(G.FIRES)]
+    THUMB_INIT = (""
                   "addText('QQQ',50,54,6,'#1b3660',0);"
-                  "addText('5억으로 은퇴',50,60,7,'#d12e77',0);"
-                  "addText('적정 생활비는?',50,66,7,'#ffffff',0);")
+                  "addText('매달 적립 vs 폭락매수',50,61,6,'#ffffff',0);")
+elif STOCK == "SKH":
+    OUT     = os.path.join(HERE, "golden_shorts_accum_SKH.html")
+    TITLE   = "golden_shorts_accum_SKH — SK하이닉스 적립 쇼츠 에디터"
+    _skhlogo = "data:image/png;base64," + base64.b64encode(open(os.path.join(HERE, "assets", "skh_logo.png"), "rb").read()).decode()
+    LOGO    = '<image href="%s" x="0" y="0" width="1280" height="677"/>' % _skhlogo   # 공식 SK하이닉스 로고
+    COMPANY = "SK하이닉스 (000660)"
+    LEGOUT  = ('<span class="lg"><span class="sw" style="background:#2b6cb0"></span>매달 적립식</span>'
+               '<span class="lg"><span class="sw" style="background:#c2255c"></span>폭락 시 매수</span>')
+    FIRES = [{"hook": "%d. 적립식 vs <b>%d%% 하락매수</b>" % (i + 1, f["thr"]), "payload": f["payload"]}
+             for i, f in enumerate(G.FIRES)]
+    _skhthumb = "data:image/png;base64," + base64.b64encode(open(os.path.join(HERE, "assets", "skh_thumb.png"), "rb").read()).decode()
+    THUMB_INIT = "addImg('%s',50,50,100,0);" % _skhthumb   # 완성 썸네일 전체 이미지(1080×1920 풀프레임)
 else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
+
+# 부제 연도는 데이터 시작연도(x0)에서 자동 유도
+SUB = "%d년~ 매달 적립 · 배당 재투자" % int(G.FIRES[0]["payload"].get("x0", 2000))
+LOGOVB = "0 0 1280 677" if STOCK == "SKH" else "0 0 200 87.021"
 
 DATA_JS = ("var PRODUCTS=%s,BADGE=%s,PGLOGO=%s,MCDLOGO=%s,JNJLOGO=%s;\n"
            "var FIRES=%s;\nvar PACE=1.0;\n") % (
@@ -169,8 +182,8 @@ body.render #guide{display:none!important}
     <div class="graphbox"><div class="zoom tpl-reel">
       <div class="rc-title"></div>
       <div class="rc-card">
-        <div class="rc-chd"><svg class="rc-logo" viewBox="0 0 200 87.021">__LOGO__</svg>
-          <div class="rc-txt"><div class="rc-tk">__COMPANY__</div><div class="rc-per">2000년~ 매달 적립 · 배당 재투자</div></div></div>
+        <div class="rc-chd"><svg class="rc-logo" viewBox="__LOGOVB__">__LOGO__</svg>
+          <div class="rc-txt"><div class="rc-tk">__COMPANY__</div><div class="rc-per">__SUB__</div></div></div>
         <svg class="rc-chart" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" data-rc="">
           <g class="rc-yaxis"></g><g class="rc-xaxis"></g>
           <line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text>
@@ -185,7 +198,7 @@ body.render #guide{display:none!important}
       <thead><tr><th class="nm">전략</th><th>최종 평가액</th><th>CAGR</th><th class="xr">XIRR</th></tr></thead>
       <tbody>__TABLE_ROWS__</tbody>
       </table>
-      <div class="tbl-note">2000년~ 매달 __MON__ 적립 · 배당 재투자 · 총 투입원금 __INV__</div>
+      <div class="tbl-note">__STARTYR__년~ 매달 __MON__ 적립 · 배당 재투자 · 총 투입원금 __INV__</div>
     </div>
   </div>
   <div id="guide"><div class="grid"></div><div class="cx"></div><div class="cy"></div></div>
@@ -305,7 +318,7 @@ select(null);
 # ── 결과 테이블(5p) 데이터: G.FIRES(pg_accum.json)의 steady/smart XIRR·CAGR·최종액 ──
 _Fd = G.FIRES
 _krw = _Fd[0].get("krw"); _mon = _Fd[0].get("monthly", 1000); _inv = _Fd[0].get("invested", 0)
-def _money(v): return (format(int(round(v)), ",") + "원") if _krw else ("$" + format(int(round(v)), ","))
+def _money(v): return ((("%.1f억" % (v/1e8)) if v >= 1e8 else ("%s만" % format(int(round(v/1e4)), ","))) if _krw else ("$" + format(int(round(v)), ",")))
 def _pct(x): return "%.1f%%" % (x * 100)
 if _Fd and "steady" in _Fd[0]:
     _s = _Fd[0]["steady"]
@@ -322,7 +335,8 @@ out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGO__', LOGO)
            .replace('__DATA__', DATA_JS).replace('__REELANIM__', G.NEWRA)
            .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri)
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
-           .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT)
-           .replace('__TABLE_ROWS__', _rows).replace('__MON__', _money(_mon)).replace('__INV__', _money(_inv)))
+           .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT).replace('__SUB__', SUB).replace('__LOGOVB__', LOGOVB)
+           .replace('__TABLE_ROWS__', _rows).replace('__MON__', _money(_mon)).replace('__INV__', _money(_inv))
+           .replace('__STARTYR__', str(int(_Fd[0]['payload'].get('x0',2000)))))
 open(OUT, "w", encoding="utf-8").write(out)
 print("wrote", OUT, "(STOCK=%s)" % STOCK, round(len(out) / 1024), "KB")

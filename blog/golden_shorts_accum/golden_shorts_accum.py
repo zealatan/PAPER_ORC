@@ -13,13 +13,13 @@ function reelAnim(root){
   var svg=root.querySelector('.rc-chart'); if(!svg) return;
   var cfg; try{ cfg=JSON.parse(svg.getAttribute('data-rc')); }catch(e){ return; }
   var _vb=(svg.getAttribute('viewBox')||'0 0 960 540').split(/\s+/).map(Number),W=_vb[2],H=_vb[3];
-  var ML=64,MR=cfg.yleft?176:150,MT=150,MB=66,x0=2000,x1=2026.6,YMAX=cfg.ymax,TIP=cfg.tip,YLX=cfg.yleft;
+  var ML=64,MR=cfg.yleft?176:150,MT=150,MB=66,x0=(cfg.x0||2000),x1=2026.6,YMAX=cfg.ymax,TIP=cfg.tip,YLX=cfg.yleft;
   var INIT=0.3;                              /* 시작 시 보이는 초기 창(년) — 2000년부터 시작 */
   function PADf(prog){return 1.4*(1-prog)+0.05;} /* 오른쪽 여유(년): 초반 넓게→끝에서 0 (마지막 프레임=기존 정적축과 동일) */
   function Xr(y,R,prog){return ML+(y-x0)/((R+PADf(prog))-x0)*(W-ML-MR);}
   function Y(v){return (H-MB)-v/YMAX*(H-MB-MT);}
   function nstep(r){var e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;var n=f<=1?1:f<=2?2:f<=5?5:10;return n*e;}
-  function fmt(v){if(cfg.krw){return Math.round(v).toLocaleString()+'원';}return '$'+Math.round(v).toLocaleString();}
+  function fmt(v){if(cfg.krw){return v>=1e8?(v/1e8).toFixed(1)+'억':Math.round(v/1e4).toLocaleString()+'만';}return '$'+Math.round(v).toLocaleString();}
   var NS='http://www.w3.org/2000/svg';
   function mk(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
   var ya=svg.querySelector('.rc-yaxis'),xa=svg.querySelector('.rc-xaxis'),lg=svg.querySelector('.rc-lines');
@@ -129,8 +129,8 @@ CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') for
 
 TMPL="""<!doctype html><meta charset=utf-8><style>%s</style>
 <div class="graphbox"><div class="zoom tpl-reel"><div class="rc-title"></div>
-<div class="rc-card"><div class="rc-chd"><svg class="rc-logo" viewBox="0 0 200 87.021">%s</svg>
-<div class="rc-txt"><div class="rc-tk">프록터 앤 갬블 (PG)</div><div class="rc-per">2000년~ 매달 적립 · 배당 재투자</div></div></div>
+<div class="rc-card"><div class="rc-chd"><svg class="rc-logo" viewBox="__LOGOVB__">__LOGO__</svg>
+<div class="rc-txt"><div class="rc-tk">__COMPANY__</div><div class="rc-per">__SUB__</div></div></div>
 <svg class="rc-chart" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" data-rc='%s'>
 <g class="rc-yaxis"></g><g class="rc-xaxis"></g><line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text><g class="rc-lines"></g></svg>
 </div></div></div>
@@ -145,13 +145,26 @@ paper_uri="data:image/jpeg;base64,"+paper_b64 if not paper_b64.startswith("data:
 CSS_F=CSS%(FONTSRC,rc_css,paper_uri)
 CMAP={"#1f6fe0":"#2b6cb0","#e0821c":"#d98f2b","#e01e37":"#c2255c"}
 
-# PG 파이어 데이터(원금 5종) — 엔진 산출(gen_fires.py SHORTS_STOCK=PG). 편집기 생성기도 G.FIRES 재사용.
-FIRES=json.load(open(HERE+"/assets/pg_accum.json"))   # [{thr, hook, payload{2선: 적립식 vs 폭락매수}}]
+# 적립 데이터 — 엔진 산출(gen_accum.py). 편집기 생성기도 G.FIRES 재사용.
+_STOCK=os.environ.get("SHORTS_STOCK","PG")
+_PREF={"PG":"pg","QQQ":"qqq","KTNG":"ktng","SKH":"skh"}.get(_STOCK,"pg")
+FIRES=json.load(open(HERE+"/assets/%s_accum.json"%_PREF))   # [{thr, hook, payload{4선: 적립vs폭락}}]
+
+# 종목별 헤더(로고·회사·부제) — 편집기 브랜치와 동일 값
+SUB="%d년~ 매달 적립 · 배당 재투자"%int(FIRES[0]["payload"].get("x0",2000))
+if _STOCK=="SKH":
+    _lg="data:image/png;base64,"+base64.b64encode(open(HERE+"/assets/skh_logo.png","rb").read()).decode()
+    LOGO='<image href="%s" x="0" y="0" width="1280" height="677"/>'%_lg; LOGOVB="0 0 1280 677"; COMPANY="SK하이닉스 (000660)"
+elif _STOCK=="QQQ":
+    LOGO='<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" font-weight="900" font-size="58" fill="#1b3660">QQQ</text>'; LOGOVB="0 0 200 87.021"; COMPANY="나스닥100 (QQQ)"
+else:
+    LOGO=logo; LOGOVB="0 0 200 87.021"; COMPANY="프록터 앤 갬블 (PG)"
 
 if __name__=="__main__":   # 직접 실행 시에만 쇼츠 HTML 생성(모듈 import 시 부작용 없음)
+    _hdr=TMPL.replace("__LOGOVB__",LOGOVB).replace("__LOGO__",LOGO).replace("__COMPANY__",COMPANY).replace("__SUB__",SUB)
     for n,f in enumerate(FIRES,1):
         payload=json.dumps(f["payload"],ensure_ascii=False)
         hook="%d. 적립식 vs <b>%d%% 하락매수</b>"%(n,f["thr"])   # 단일 % (인자로 삽입되므로 재포맷 없음)
-        html=TMPL%(CSS_F,logo,payload.replace("'","&#39;"),hook,NEWRA)
+        html=_hdr%(CSS_F,payload.replace("'","&#39;"),hook,NEWRA)
         open("%s/golden_shorts_accum_%d.html"%(SP,n),"w").write(html)
         print("wrote golden_shorts_accum_%d.html (%s)"%(n,f["hook"]))

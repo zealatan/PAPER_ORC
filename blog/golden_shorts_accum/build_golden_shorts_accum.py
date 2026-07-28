@@ -25,8 +25,9 @@ import os, time, json, subprocess
 from playwright.sync_api import sync_playwright
 
 HERE   = os.path.dirname(os.path.abspath(__file__))
-THUMB  = os.path.join(HERE, "assets", "thumb_mag.png")
-OUT    = os.path.join(HERE, "golden_shorts_accum.mp4")
+_STK   = os.environ.get("SHORTS_STOCK", "PG")   # 종목별 썸네일·출력
+THUMB  = os.path.join(HERE, "assets", {"SKH": "skh_thumb.png"}.get(_STK, "thumb_mag.png"))
+OUT    = os.path.join(HERE, "golden_shorts_accum.mp4" if _STK == "PG" else "golden_shorts_accum_%s.mp4" % _STK)
 WORK   = os.path.join(HERE, "_build")           # 중간 산출물(클립/webm)
 THUMB_SEC  = 1.25
 CLIP_SEC   = 10.7
