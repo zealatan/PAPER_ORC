@@ -31,3 +31,10 @@ ultimate/**/project.json
 ultimate/**/validation.json
 ultimate/gallery/report.json
 ultimate/gallery/index.html
+journey/**/preview/
+journey/**/*.png
+journey/**/*.mp4
+journey/**/project.json
+journey/**/validation.json
+journey/gallery/report.json
+journey/gallery/index.html

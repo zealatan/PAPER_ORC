@@ -1,0 +1,26 @@
+{
+  "name": "@motion-studio/journey",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "High-end cinematic directors challenge film (720x1280/15fps) built on the existing engine.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "journey:generate": "tsx src/cli.ts generate",
+    "journey:preview": "tsx src/cli.ts preview",
+    "journey:render": "tsx src/cli.ts render",
+    "journey:validate": "tsx src/cli.ts validate",
+    "journey:gallery": "tsx src/cli.ts gallery",
+    "journey:all": "tsx src/cli.ts all"
+  },
+  "dependencies": {
+    "@motion-studio/components": "workspace:*",
+    "@motion-studio/core": "workspace:*",
+    "@motion-studio/renderer": "workspace:*",
+    "@motion-studio/renderer-core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.1"
+  }
+}
