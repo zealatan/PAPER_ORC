@@ -111,6 +111,25 @@ importers:
         specifier: ^4.19.1
         version: 4.23.1
 
+  hero:
+    dependencies:
+      '@motion-studio/components':
+        specifier: workspace:*
+        version: link:../packages/components
+      '@motion-studio/core':
+        specifier: workspace:*
+        version: link:../packages/core
+      '@motion-studio/renderer':
+        specifier: workspace:*
+        version: link:../apps/renderer
+      '@motion-studio/renderer-core':
+        specifier: workspace:*
+        version: link:../packages/renderer-core
+    devDependencies:
+      tsx:
+        specifier: ^4.19.1
+        version: 4.23.1
+
   journey:
     dependencies:
       '@motion-studio/components':

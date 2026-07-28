@@ -38,3 +38,10 @@ journey/**/project.json
 journey/**/validation.json
 journey/gallery/report.json
 journey/gallery/index.html
+hero/**/preview/
+hero/**/*.png
+hero/**/*.mp4
+hero/**/project.json
+hero/**/validation.json
+hero/gallery/report.json
+hero/gallery/index.html
