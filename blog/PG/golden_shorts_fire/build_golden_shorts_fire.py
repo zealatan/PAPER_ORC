@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+"""
+golden_shorts_fire — 렌더/합치기 파이프라인 (은퇴 시나리오 쇼츠 · GOLDEN REFERENCE)
+
+실행:  python3 build_golden_shorts_fire.py
+결과:  golden_shorts_fire.mp4  (1080x1920, 30fps, 총 ~33.2초)
+
+전제:  golden_shorts_fire.py 를 먼저 실행해 3개 그래프 HTML 을 생성한다(본 스크립트가 자동 실행).
+의존:  playwright(chromium), ffmpeg. 폰트/데이터/썸네일은 저장소 내에서 로드.
+
+구성(슬라이드 순서):
+  0) 썸네일 assets/thumb_mag.png  ........ 1.25초 정지
+  1) golden_shorts_fire_1.html ($200,000) 10.7초 (애니 10.08초 + 정지)
+  2) golden_shorts_fire_2.html ($400,000) 10.7초
+  3) golden_shorts_fire_3.html ($600,000) 10.7초
+
+타이밍 상수(=GOLDEN 값, 함부로 바꾸지 말 것):
+  DUR(애니)          = 10.08초  ← golden_shorts_fire.py NEWRA 안에 있음(여기선 대기시간만 맞춤)
+  THUMB_SEC          = 1.25초
+  CLIP_SEC(그래프)   = 10.7초
+  REC_WAIT_MS        = 11000ms (애니 끝나고 정지 프레임까지 녹화)
+  START_TRIM         = off+0.15초 (playwright 페이지로드 오프셋 보정)
+"""
+import os, time, json, subprocess
+from playwright.sync_api import sync_playwright
+
+HERE   = os.path.dirname(os.path.abspath(__file__))
+THUMB  = os.path.join(HERE, "assets", "thumb_mag.png")
+OUT    = os.path.join(HERE, "golden_shorts_fire.mp4")
+WORK   = os.path.join(HERE, "_build")           # 중간 산출물(클립/webm)
+THUMB_SEC  = 1.25
+CLIP_SEC   = 10.7
+REC_WAIT_MS= 11000
+W, H = 1080, 1920
+
+def sh(*a): subprocess.run(a, check=True)
+
+# 0) 그래프 HTML 생성(최신 golden_shorts_fire.py 반영)
+sh("python3", os.path.join(HERE, "golden_shorts_fire.py"))
+
+os.makedirs(WORK, exist_ok=True)
+for f in os.listdir(WORK):
+    os.remove(os.path.join(WORK, f))
+
+# 1) 3개 그래프를 각각 새 컨텍스트로 녹화(폰트 로드 대기 → reelAnim 수동 트리거 → 정지까지 대기)
+offs = {}
+with sync_playwright() as p:
+    b = p.chromium.launch()
+    for n in (1, 2, 3):
+        ctx = b.new_context(viewport={'width': W, 'height': H}, device_scale_factor=1,
+                            record_video_dir=WORK, record_video_size={'width': W, 'height': H})
+        pg = ctx.new_page(); t0 = time.monotonic()
+        pg.goto('file://%s/golden_shorts_fire_%d.html' % (HERE, n))
+        pg.wait_for_function("()=>document.fonts.check('900 100px Pretendard')", timeout=8000)
+        off = time.monotonic() - t0
+        pg.evaluate("()=>reelAnim(document.querySelector('.graphbox'))")
+        pg.wait_for_timeout(REC_WAIT_MS)
+        offs[n] = (pg.video.path(), off)
+        ctx.close()
+    b.close()
+
+# 2) 썸네일 정지 클립
+sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-loop", "1", "-t", str(THUMB_SEC),
+   "-i", THUMB, "-vf", "scale=%d:%d,fps=30,format=yuv420p" % (W, H),
+   "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", os.path.join(WORK, "c0.mp4"))
+
+# 3) 그래프 클립 트림(시작 오프셋 보정 후 CLIP_SEC 만큼)
+for i, n in enumerate((1, 2, 3), 1):
+    webm, off = offs[n]
+    sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-ss", "%.2f" % (off + 0.15),
+       "-i", webm, "-t", str(CLIP_SEC), "-vf", "scale=%d:%d,fps=30,format=yuv420p" % (W, H),
+       "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", os.path.join(WORK, "c%d.mp4" % i))
+
+# 4) concat
+listf = os.path.join(WORK, "list.txt")
+with open(listf, "w") as f:
+    for name in ("c0.mp4", "c1.mp4", "c2.mp4", "c3.mp4"):
+        f.write("file '%s'\n" % os.path.join(WORK, name))
+sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0",
+   "-i", listf, "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", "-movflags", "+faststart", OUT)
+
+print("DONE ->", OUT)
