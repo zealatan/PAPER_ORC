@@ -29,7 +29,13 @@
     "showcase:render": "pnpm --filter @motion-studio/showcase run showcase:render",
     "showcase:validate": "pnpm --filter @motion-studio/showcase run showcase:validate",
     "showcase:gallery": "pnpm --filter @motion-studio/showcase run showcase:gallery",
-    "showcase:all": "pnpm --filter @motion-studio/showcase run showcase:all"
+    "showcase:all": "pnpm --filter @motion-studio/showcase run showcase:all",
+    "scenarios:generate": "pnpm --filter @motion-studio/scenarios run scenarios:generate",
+    "scenarios:preview": "pnpm --filter @motion-studio/scenarios run scenarios:preview",
+    "scenarios:render": "pnpm --filter @motion-studio/scenarios run scenarios:render",
+    "scenarios:validate": "pnpm --filter @motion-studio/scenarios run scenarios:validate",
+    "scenarios:gallery": "pnpm --filter @motion-studio/scenarios run scenarios:gallery",
+    "scenarios:all": "pnpm --filter @motion-studio/scenarios run scenarios:all"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

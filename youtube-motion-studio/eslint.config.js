@@ -14,6 +14,8 @@ export default tseslint.config(
       "examples/gallery/**",
       "showcase/[0-9]*/**",
       "showcase/gallery/**",
+      "scenarios/[0-9]*/**",
+      "scenarios/gallery/**",
     ],
   },
   js.configs.recommended,

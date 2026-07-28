@@ -17,3 +17,10 @@ showcase/**/project.json
 showcase/**/validation.json
 showcase/gallery/report.json
 showcase/gallery/index.html
+scenarios/**/preview/
+scenarios/**/*.png
+scenarios/**/*.mp4
+scenarios/**/project.json
+scenarios/**/validation.json
+scenarios/gallery/report.json
+scenarios/gallery/index.html
