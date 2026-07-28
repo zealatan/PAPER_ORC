@@ -45,3 +45,10 @@ hero/**/project.json
 hero/**/validation.json
 hero/gallery/report.json
 hero/gallery/index.html
+oneshot/**/preview/
+oneshot/**/*.png
+oneshot/**/*.mp4
+oneshot/**/project.json
+oneshot/**/validation.json
+oneshot/gallery/report.json
+oneshot/gallery/index.html

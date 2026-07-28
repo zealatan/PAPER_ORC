@@ -53,7 +53,13 @@
     "hero:render": "pnpm --filter @motion-studio/hero run hero:render",
     "hero:validate": "pnpm --filter @motion-studio/hero run hero:validate",
     "hero:gallery": "pnpm --filter @motion-studio/hero run hero:gallery",
-    "hero:all": "pnpm --filter @motion-studio/hero run hero:all"
+    "hero:all": "pnpm --filter @motion-studio/hero run hero:all",
+    "oneshot:generate": "pnpm --filter @motion-studio/oneshot run oneshot:generate",
+    "oneshot:preview": "pnpm --filter @motion-studio/oneshot run oneshot:preview",
+    "oneshot:render": "pnpm --filter @motion-studio/oneshot run oneshot:render",
+    "oneshot:validate": "pnpm --filter @motion-studio/oneshot run oneshot:validate",
+    "oneshot:gallery": "pnpm --filter @motion-studio/oneshot run oneshot:gallery",
+    "oneshot:all": "pnpm --filter @motion-studio/oneshot run oneshot:all"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
