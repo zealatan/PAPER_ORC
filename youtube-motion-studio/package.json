@@ -35,7 +35,13 @@
     "scenarios:render": "pnpm --filter @motion-studio/scenarios run scenarios:render",
     "scenarios:validate": "pnpm --filter @motion-studio/scenarios run scenarios:validate",
     "scenarios:gallery": "pnpm --filter @motion-studio/scenarios run scenarios:gallery",
-    "scenarios:all": "pnpm --filter @motion-studio/scenarios run scenarios:all"
+    "scenarios:all": "pnpm --filter @motion-studio/scenarios run scenarios:all",
+    "ultimate:generate": "pnpm --filter @motion-studio/ultimate run ultimate:generate",
+    "ultimate:preview": "pnpm --filter @motion-studio/ultimate run ultimate:preview",
+    "ultimate:render": "pnpm --filter @motion-studio/ultimate run ultimate:render",
+    "ultimate:validate": "pnpm --filter @motion-studio/ultimate run ultimate:validate",
+    "ultimate:gallery": "pnpm --filter @motion-studio/ultimate run ultimate:gallery",
+    "ultimate:all": "pnpm --filter @motion-studio/ultimate run ultimate:all"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

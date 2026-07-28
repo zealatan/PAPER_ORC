@@ -24,3 +24,10 @@ scenarios/**/project.json
 scenarios/**/validation.json
 scenarios/gallery/report.json
 scenarios/gallery/index.html
+ultimate/**/preview/
+ultimate/**/*.png
+ultimate/**/*.mp4
+ultimate/**/project.json
+ultimate/**/validation.json
+ultimate/gallery/report.json
+ultimate/gallery/index.html
