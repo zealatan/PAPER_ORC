@@ -38,15 +38,18 @@ def sh(*a): subprocess.run(a, check=True)
 # 0) 그래프 HTML 생성(최신 golden_shorts_fire.py 반영)
 sh("python3", os.path.join(HERE, "golden_shorts_fire.py"))
 
+import glob
+NG = len(glob.glob(os.path.join(HERE, "golden_shorts_fire_[0-9].html")))   # 그래프 장수(원금 종수, 현재 5)
+
 os.makedirs(WORK, exist_ok=True)
 for f in os.listdir(WORK):
     os.remove(os.path.join(WORK, f))
 
-# 1) 3개 그래프를 각각 새 컨텍스트로 녹화(폰트 로드 대기 → reelAnim 수동 트리거 → 정지까지 대기)
+# 1) 각 그래프를 새 컨텍스트로 녹화(폰트 로드 대기 → reelAnim 수동 트리거 → 정지까지 대기)
 offs = {}
 with sync_playwright() as p:
     b = p.chromium.launch()
-    for n in (1, 2, 3):
+    for n in range(1, NG + 1):
         ctx = b.new_context(viewport={'width': W, 'height': H}, device_scale_factor=1,
                             record_video_dir=WORK, record_video_size={'width': W, 'height': H})
         pg = ctx.new_page(); t0 = time.monotonic()
@@ -65,7 +68,7 @@ sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-loop", "1", "-t", str
    "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", os.path.join(WORK, "c0.mp4"))
 
 # 3) 그래프 클립 트림(시작 오프셋 보정 후 CLIP_SEC 만큼)
-for i, n in enumerate((1, 2, 3), 1):
+for i, n in enumerate(range(1, NG + 1), 1):
     webm, off = offs[n]
     sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-ss", "%.2f" % (off + 0.15),
        "-i", webm, "-t", str(CLIP_SEC), "-vf", "scale=%d:%d,fps=30,format=yuv420p" % (W, H),
@@ -74,8 +77,8 @@ for i, n in enumerate((1, 2, 3), 1):
 # 4) concat
 listf = os.path.join(WORK, "list.txt")
 with open(listf, "w") as f:
-    for name in ("c0.mp4", "c1.mp4", "c2.mp4", "c3.mp4"):
-        f.write("file '%s'\n" % os.path.join(WORK, name))
+    for i in range(NG + 1):   # c0=썸네일 + c1..cNG=그래프
+        f.write("file '%s'\n" % os.path.join(WORK, "c%d.mp4" % i))
 sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0",
    "-i", listf, "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", "-movflags", "+faststart", OUT)
 

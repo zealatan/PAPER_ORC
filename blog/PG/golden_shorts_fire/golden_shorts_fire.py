@@ -3,7 +3,6 @@ HERE=os.path.dirname(os.path.abspath(__file__))   # blog/PG/golden_shorts_fire
 BLOG=os.path.abspath(os.path.join(HERE,"..",".."))  # blog
 FONTSRC="data:font/woff2;base64,"+base64.b64encode(open(BLOG+"/fonts/PretendardVariable.woff2","rb").read()).decode()
 SP=HERE   # 출력 HTML은 이 디렉터리에 생성
-sc=json.load(open(BLOG+"/PG/deck/pg_deck.json"))["scenes"]
 pf=open(BLOG+"/PG/deck/pg_final.html",encoding="utf-8").read()
 logo=re.search(r'<svg class="rc-logo"[^>]*>(<path d="[^"]+"[^>]*/?>)</svg>',pf).group(1)
 rc_css="\n".join(pf.splitlines()[1611:1634])
@@ -20,13 +19,13 @@ function reelAnim(root){
   function Xr(y,R,prog){return ML+(y-x0)/((R+PADf(prog))-x0)*(W-ML-MR);}
   function Y(v){return (H-MB)-v/YMAX*(H-MB-MT);}
   function nstep(r){var e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;var n=f<=1?1:f<=2?2:f<=5?5:10;return n*e;}
-  function fmt(v){return '$'+(Math.round(v/10000)*10000).toLocaleString();}
+  function fmt(v){if(cfg.krw){return v>=1e8?(v/1e8).toFixed(1)+'억':Math.round(v/1e4).toLocaleString()+'만';}return '$'+(Math.round(v/10000)*10000).toLocaleString();}
   var NS='http://www.w3.org/2000/svg';
   function mk(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
   var ya=svg.querySelector('.rc-yaxis'),xa=svg.querySelector('.rc-xaxis'),lg=svg.querySelector('.rc-lines');
   ya.innerHTML='';xa.innerHTML='';lg.innerHTML='';
   var step=nstep(YMAX/4);
-  for(var v=step;v<=YMAX+1;v+=step){if(cfg.hline&&Math.abs(v-cfg.hline.v)<step*0.25)continue;if(cfg.ylabelmin&&v<cfg.ylabelmin)continue;var y=Y(v);ya.appendChild(mk('line',{x1:ML,y1:y,x2:W-MR,y2:y,'class':'ytick'}));var t=mk('text',{x:ML+2,y:y-7,'class':'rc-ax rc-al'});t.setAttribute('text-anchor','start');t.setAttribute('font-size','18');t.textContent='$'+v.toLocaleString();ya.appendChild(t);}
+  for(var v=step;v<=YMAX+1;v+=step){if(cfg.hline&&Math.abs(v-cfg.hline.v)<step*0.25)continue;if(cfg.ylabelmin&&v<cfg.ylabelmin)continue;var y=Y(v);ya.appendChild(mk('line',{x1:ML,y1:y,x2:W-MR,y2:y,'class':'ytick'}));var t=mk('text',{x:ML+2,y:y-7,'class':'rc-ax rc-al'});t.setAttribute('text-anchor','start');t.setAttribute('font-size','18');t.textContent=cfg.krw?(v>=1e8?Math.round(v/1e8)+'억':Math.round(v/1e4).toLocaleString()+'만'):('$'+v.toLocaleString());ya.appendChild(t);}
   var _bs=svg.querySelector('.rc-base');if(_bs){_bs.setAttribute('y1',H-MB);_bs.setAttribute('y2',H-MB);_bs.setAttribute('x1',ML);_bs.setAttribute('x2',W-MR);}
   var hl=svg.querySelector('.rc-hline'),hlb=svg.querySelector('.rc-hlab');
   if(cfg.hline){var hy=Y(cfg.hline.v);hl.style.display='';hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.textContent=cfg.hline.label;}else{hl.style.display='none';}
@@ -119,7 +118,7 @@ TMPL="""<!doctype html><meta charset=utf-8><style>%s</style>
 <svg class="rc-chart" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" data-rc='%s'>
 <g class="rc-yaxis"></g><g class="rc-xaxis"></g><line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text><g class="rc-lines"></g></svg>
 </div></div></div>
-<div class="hook">%s 은퇴원금 <b>$%s</b></div>
+<div class="hook">%s 은퇴원금 <b>%s</b></div>
 <div class="legout"><span class="lg"><span class="sw" style="background:#2b6cb0"></span>월 $1천 인출</span><span class="lg"><span class="sw" style="background:#d98f2b"></span>월 $2천 인출</span><span class="lg"><span class="sw" style="background:#c2255c"></span>월 $3천 인출</span></div>
 <script>var PACE=1;%s;(document.fonts?document.fonts.ready:Promise.resolve()).then(function(){reelAnim(document.querySelector('.graphbox'));});</script>"""
 
@@ -129,13 +128,13 @@ paper_uri="data:image/jpeg;base64,"+paper_b64 if not paper_b64.startswith("data:
 
 CSS_F=CSS%(FONTSRC,rc_css,paper_uri)
 CMAP={"#1f6fe0":"#2b6cb0","#e0821c":"#d98f2b","#e01e37":"#c2255c"}
-for n,(idx,amt) in enumerate([(6,200000),(7,400000),(8,600000)],1):
-    d=sc[idx]["data"]
-    lines=[{**l,"c":CMAP.get(l["c"],l["c"])} for l in d["lines"]]
-    hl={"v":d["hline"]["v"],"label":"은퇴 원금 $%s"%format(amt,',')}
-    pd={"ymax":d["ymax"],"hline":hl,"tip":"compact","yleft":True,"lines":lines}
-    if amt==200000: pd["ylabelmin"]=160000   # $200,000 그래프만: $50,000·$100,000·$150,000 제거(기준선만)
-    payload=json.dumps(pd,ensure_ascii=False)
-    html=TMPL%(CSS_F,logo,payload.replace("'","&#39;"),"%d."%n,format(amt,','),NEWRA)
-    open("%s/golden_shorts_fire_%d.html"%(SP,n),"w").write(html)
-    print("wrote golden_shorts_fire_%d.html ($%s)"%(n,format(amt,',')))
+
+# PG 파이어 데이터(원금 5종) — 엔진 산출(gen_fires.py SHORTS_STOCK=PG). 편집기 생성기도 G.FIRES 재사용.
+FIRES=json.load(open(HERE+"/assets/pg_fires.json"))   # [{amt, hook(순수 금액), payload}]
+
+if __name__=="__main__":   # 직접 실행 시에만 쇼츠 HTML 생성(모듈 import 시 부작용 없음)
+    for n,f in enumerate(FIRES,1):
+        payload=json.dumps(f["payload"],ensure_ascii=False)
+        html=TMPL%(CSS_F,logo,payload.replace("'","&#39;"),"%d."%n,f["hook"],NEWRA)
+        open("%s/golden_shorts_fire_%d.html"%(SP,n),"w").write(html)
+        print("wrote golden_shorts_fire_%d.html (%s)"%(n,f["hook"]))
