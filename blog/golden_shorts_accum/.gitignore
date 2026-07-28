@@ -1,0 +1,5 @@
+_build/
+golden_shorts_accum_[0-9].html
+golden_shorts_accum_table.html
+golden_shorts_accum_[A-Z]*.html
+__pycache__/
