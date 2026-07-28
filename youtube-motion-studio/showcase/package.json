@@ -1,0 +1,26 @@
+{
+  "name": "@motion-studio/showcase",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "High-end cinematic showcase Shorts (720x1280/15fps) built on the existing engine.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "showcase:generate": "tsx src/cli.ts generate",
+    "showcase:preview": "tsx src/cli.ts preview",
+    "showcase:render": "tsx src/cli.ts render",
+    "showcase:validate": "tsx src/cli.ts validate",
+    "showcase:gallery": "tsx src/cli.ts gallery",
+    "showcase:all": "tsx src/cli.ts all"
+  },
+  "dependencies": {
+    "@motion-studio/components": "workspace:*",
+    "@motion-studio/core": "workspace:*",
+    "@motion-studio/renderer": "workspace:*",
+    "@motion-studio/renderer-core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.1"
+  }
+}

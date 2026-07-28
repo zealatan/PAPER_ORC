@@ -23,7 +23,13 @@
     "examples:render": "pnpm --filter @motion-studio/examples run examples:render",
     "examples:validate": "pnpm --filter @motion-studio/examples run examples:validate",
     "examples:gallery": "pnpm --filter @motion-studio/examples run examples:gallery",
-    "examples:all": "pnpm --filter @motion-studio/examples run examples:all"
+    "examples:all": "pnpm --filter @motion-studio/examples run examples:all",
+    "showcase:generate": "pnpm --filter @motion-studio/showcase run showcase:generate",
+    "showcase:preview": "pnpm --filter @motion-studio/showcase run showcase:preview",
+    "showcase:render": "pnpm --filter @motion-studio/showcase run showcase:render",
+    "showcase:validate": "pnpm --filter @motion-studio/showcase run showcase:validate",
+    "showcase:gallery": "pnpm --filter @motion-studio/showcase run showcase:gallery",
+    "showcase:all": "pnpm --filter @motion-studio/showcase run showcase:all"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

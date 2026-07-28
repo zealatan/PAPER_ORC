@@ -12,6 +12,8 @@ export default tseslint.config(
       "**/*.d.ts",
       "examples/[0-9]*/**",
       "examples/gallery/**",
+      "showcase/[0-9]*/**",
+      "showcase/gallery/**",
     ],
   },
   js.configs.recommended,

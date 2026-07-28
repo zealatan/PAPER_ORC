@@ -10,3 +10,10 @@ examples/**/project.json
 examples/**/validation.json
 examples/gallery/report.json
 examples/gallery/index.html
+showcase/**/preview/
+showcase/**/*.png
+showcase/**/*.mp4
+showcase/**/project.json
+showcase/**/validation.json
+showcase/gallery/report.json
+showcase/gallery/index.html
