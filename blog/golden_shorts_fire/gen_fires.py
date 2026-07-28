@@ -14,7 +14,7 @@ from datetime import date
 import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.abspath(os.path.join(HERE, "..", "..", "..", "global_cup_suite")))
+sys.path.insert(0, os.path.abspath(os.path.join(HERE, "..", "..", "global_cup_suite")))
 from global_cup.fire_engine import run_fire_backtest
 
 STOCK = os.environ.get("SHORTS_STOCK", "PG")
@@ -22,7 +22,7 @@ CMAP_USD = {1000: "#2b6cb0", 2000: "#d98f2b", 3000: "#c2255c"}
 CMAP_KRW = {1_000_000: "#2b6cb0", 2_000_000: "#d98f2b", 3_000_000: "#c2255c"}
 
 def us_cpi():
-    df = pd.read_csv(os.path.join(HERE, "..", "ref", "fred_CPIAUCSL.csv"), parse_dates=["date"])
+    df = pd.read_csv(os.path.join(HERE, "..", "PG", "ref", "fred_CPIAUCSL.csv"), parse_dates=["date"])
     return pd.Series(pd.to_numeric(df["val"], errors="coerce").values, index=df["date"]).dropna()
 def kr_cpi():
     raw = urllib.request.urlopen("https://fred.stlouisfed.org/graph/fredgraph.csv?id=KORCPIALLMINMEI", timeout=60).read().decode()
@@ -36,7 +36,7 @@ def yf_series(ticker):
     dv = t.dividends; dv.index = pd.to_datetime(dv.index.tz_localize(None))
     return close, dv
 def csv_series(prefix):
-    d = os.path.join(HERE, "..", "data")
+    d = os.path.join(HERE, "..", "PG", "data")
     close = pd.read_csv(os.path.join(d, prefix + "_price.csv"), parse_dates=["date"]).set_index("date")["close"]
     div = pd.read_csv(os.path.join(d, prefix + "_div.csv"), parse_dates=["date"]).set_index("date")["div"]
     close.index = pd.to_datetime(close.index).tz_localize(None); div.index = pd.to_datetime(div.index).tz_localize(None)

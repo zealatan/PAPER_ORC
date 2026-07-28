@@ -1,6 +1,6 @@
 import json,re,base64,os
-HERE=os.path.dirname(os.path.abspath(__file__))   # blog/PG/golden_shorts_fire
-BLOG=os.path.abspath(os.path.join(HERE,"..",".."))  # blog
+HERE=os.path.dirname(os.path.abspath(__file__))   # blog/golden_shorts_fire
+BLOG=os.path.abspath(os.path.join(HERE,".."))  # blog
 FONTSRC="data:font/woff2;base64,"+base64.b64encode(open(BLOG+"/fonts/PretendardVariable.woff2","rb").read()).decode()
 SP=HERE   # 출력 HTML은 이 디렉터리에 생성
 pf=open(BLOG+"/PG/deck/pg_final.html",encoding="utf-8").read()

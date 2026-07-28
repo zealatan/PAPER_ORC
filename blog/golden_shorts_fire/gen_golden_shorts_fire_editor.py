@@ -4,7 +4,7 @@ gen_pg_editor.py — PG 통합 쇼츠 에디터(pg_editor.html) 생성 · GOLDEN
 
 golden_shorts_fire.py 의 NEWRA(x축 이동 reelAnim)·CMAP·fire_payload·CSS 를 재사용해
 4슬라이드(1=썸네일 편집가능 / 2·3·4=golden 그래프)를 조립한다.
-출력: blog/PG/golden_shorts_fire/golden_shorts_fire_editor.html
+출력: blog/golden_shorts_fire/golden_shorts_fire_editor.html
 
 의존: golden_shorts_fire.py(같은 폴더, import), assets/assets.json, assets/paper_b64.txt, blog/fonts, pg_deck.json, pg_final.html
 실행: python3 gen_pg_editor.py

@@ -13,7 +13,7 @@
 ## 0. 파일 구성 · 재현 방법
 
 ```
-blog/PG/golden_shorts_fire/
+blog/golden_shorts_fire/
 ├── golden_shorts_fire.py            # ★영상 생성기: 5개 그래프 HTML 생성(pg_fires.json 기반). import 가능(NEWRA/CMAP/FIRES 노출)
 ├── build_golden_shorts_fire.py      # 렌더(playwright)+합치기(ffmpeg) → mp4
 ├── gen_fires.py                     # ★백테스트 엔진 실행(SHORTS_STOCK=PG|QQQ|KTNG) → assets/<stock>_fires.json(원금 5종)
@@ -39,7 +39,7 @@ blog/PG/golden_shorts_fire/
 
 **재현:**
 ```bash
-cd blog/PG/golden_shorts_fire
+cd blog/golden_shorts_fire
 python3 build_golden_shorts_fire.py     # 그래프 생성→녹화→합성까지 한 번에 → golden_shorts_fire.mp4
 # (HTML만 다시 뽑으려면) python3 golden_shorts_fire.py
 ```
@@ -275,7 +275,7 @@ golden_shorts_fire_{1..5}.html
 📐가이드 · 👁렌더모드(편집UI 숨김) · ⬇⬆JSON(레이아웃 저장/불러오기 `pg_editor_layout.json`) · 💾PNG(요소만, 썸네일용).
 그래프 애니 타이밍 golden(DUR 10080·THUMB_HOLD 1250). 재생 ▶로 6슬라이드 자동재생.
 
-**재생성:** `cd blog/PG/golden_shorts_fire && python3 gen_golden_shorts_fire_editor.py` (assets.json + golden import 필요).
+**재생성:** `cd blog/golden_shorts_fire && python3 gen_golden_shorts_fire_editor.py` (assets.json + golden import 필요).
 그래프 디자인/데이터는 golden_shorts_fire.py 를 고치면 편집기에도 자동 반영(단일 소스).
 > golden 그래프 CSS 는 gen_golden_shorts_fire_editor.py 안에도 복제돼 있음(주석 표기) — golden_shorts_fire.py 와 **동일하게 유지**.
 > 이 편집기가 구 `blog/prototypes/pg_editor.html`(옛 디자인)을 대체.

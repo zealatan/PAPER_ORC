@@ -4,7 +4,7 @@
 > **먼저 `blog/PRODUCTION_MANUAL.md` 정독** — 코카콜라·JNJ·MCD로 검증된 전 파이프라인·함정·명령어.
 > **완성 기준 구현체 = `blog/MCD/`** (직전 완결작, 유튜브 업로드 완료). 막히면 MCD의 해당 파일·`MCD/HANDOVER.md`와 대조.
 
-> ❄️ **은퇴 시나리오 쇼츠 = 확정(FROZEN)**, 2026-07-28. 정본: **`blog/PG/golden_shorts_fire/`**
+> ❄️ **은퇴 시나리오 쇼츠 = 확정(FROZEN)**, 2026-07-28. 정본: **`blog/golden_shorts_fire/`**
 > (생성기 `golden_shorts_fire.py` + 빌드 `build_golden_shorts_fire.py` + 상세스펙 `golden_shorts_fire.md` + 에셋).
 > x축 이동 애니·팔레트A·18px 통일. 재현 `python3 build_golden_shorts_fire.py`. **이 종류 쇼츠는 이 스펙 기준.**
 
