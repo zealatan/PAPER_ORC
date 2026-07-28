@@ -14,7 +14,8 @@ INVESTED = F[0]["invested"]
 KRW = F[0].get("krw")
 MONTHLY = F[0].get("monthly", 1)
 def usd(v):
-    return ("%s원" % format(int(round(v)), ",")) if KRW else ("$" + format(int(round(v)), ","))
+    if KRW: return ("%.1f억" % (v / 1e8)) if v >= 1e8 else ("%s만" % format(int(round(v / 1e4)), ","))
+    return "$" + format(int(round(v)), ",")
 def pct(x): return "%.1f%%" % (x * 100)
 
 # 행: 매달 적립식(파랑) + 각 임계값 하락매수(라즈베리)
