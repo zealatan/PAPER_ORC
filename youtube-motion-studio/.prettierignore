@@ -59,3 +59,10 @@ impossible/**/project.json
 impossible/**/validation.json
 impossible/gallery/report.json
 impossible/gallery/index.html
+legend/**/preview/
+legend/**/*.png
+legend/**/*.mp4
+legend/**/project.json
+legend/**/validation.json
+legend/gallery/report.json
+legend/gallery/index.html

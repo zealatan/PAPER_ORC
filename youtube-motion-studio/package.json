@@ -65,7 +65,13 @@
     "impossible:render": "pnpm --filter @motion-studio/impossible run impossible:render",
     "impossible:validate": "pnpm --filter @motion-studio/impossible run impossible:validate",
     "impossible:gallery": "pnpm --filter @motion-studio/impossible run impossible:gallery",
-    "impossible:all": "pnpm --filter @motion-studio/impossible run impossible:all"
+    "impossible:all": "pnpm --filter @motion-studio/impossible run impossible:all",
+    "legend:generate": "pnpm --filter @motion-studio/legend run legend:generate",
+    "legend:preview": "pnpm --filter @motion-studio/legend run legend:preview",
+    "legend:render": "pnpm --filter @motion-studio/legend run legend:render",
+    "legend:validate": "pnpm --filter @motion-studio/legend run legend:validate",
+    "legend:gallery": "pnpm --filter @motion-studio/legend run legend:gallery",
+    "legend:all": "pnpm --filter @motion-studio/legend run legend:all"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
