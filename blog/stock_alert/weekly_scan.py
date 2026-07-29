@@ -124,6 +124,16 @@ def _enrich(row: dict, n: int = 80) -> dict:
         def _near(dt):
             return min(range(len(s_dates)), key=lambda k: abs((s_dates[k] - dt).days))
 
+        # 전고점 마커 보정: 80점 샘플링이 놓친 직전 전고점을 pts에 주입 →
+        # 그래프가 수치(전고점 대비 낙폭)만큼 실제로 빠져 보이게. (샘플값보다 높을 때만)
+        try:
+            _hd = pd.Timestamp(row["high_date"]); _hp = float(row["high_price"])
+            _hi = _near(_hd)
+            if _hp > pts[_hi][1]:
+                pts[_hi][1] = round(_hp, 2)
+        except Exception:
+            pass
+
         def crash_dates(th):
             t = th / 100.0
             roll = float(c.iloc[0]); armed = True; out = []

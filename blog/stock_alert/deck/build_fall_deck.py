@@ -17,9 +17,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DECK = ROOT / "deck"
 DATA = ROOT / "data"
 
-weeks = sorted(DATA.glob("week*.json"))
+weeks = sorted(DATA.glob("fall_week*.json"))
 if not weeks:
-    raise SystemExit("data/weekN.json 없음 — 먼저 weekly_scan.py 실행")
+    raise SystemExit("data/fall_weekN.json 없음 — 먼저 fall_scan.py 실행")
 WEEK = json.loads(weeks[-1].read_text(encoding="utf-8"))
 
 RED, INK = "var(--red)", "var(--ink-soft)"

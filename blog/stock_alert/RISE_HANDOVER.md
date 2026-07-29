@@ -83,6 +83,26 @@ rec/build_short_fall.sh 5 assets/shorts/hook_US.png shorts/short_US_fall.mp4
 - 아웃트로·배투실텍스트·`build_short_fall.sh`(엔진은 build_short_rise.sh 공유) 전부 상승과 동일.
 - 더빙 롱폼용 4시장 덱은 `deck/build_deck.py`(그대로) — 쇼츠 덱과 별개.
 
+## 차트 마커 보정 (수치 ≠ 그래프 방지) — 중요
+80점 샘플링이 **직전 전고점(spike)을 건너뛰면** 그래프 선이 전고점에 못 미쳐, 예: 삼성전자
+`전고점 362,500 → 현재 208,500(−42.5%)`인데 샘플 선은 220,000까지만 올라가 "−5%만 빠진 듯"
+보였다. → **전고점을 pts에 주입**해 선이 실제 전고점에 닿게 함(그래야 낙폭%만큼 급락 표시).
+- **상승(rise_scan / build_rise_deck)**: `pts[highidx] = high_price` (신고가 마커 보정, 코오롱/네슬레류).
+- **낙폭(weekly_scan._enrich)**: high_date 최근접 pts에 `high_price` 주입 (샘플값보다 높을 때만).
+  → **fall_scan·롱폼(build_deck) 모두 자동 적용.** 현재점은 pts 마지막=실제 종가라 정확.
+- 검증: `선최고 == 전고점`, `현재/선최고−1 ≈ drawdown_pct` 이면 OK.
+
+## 낙폭 종목 선정 = **시총순** (fall_scan.py) — 상승과 대칭
+낙폭 쇼츠는 **시총순 대형주**로 뽑는다(초기 weekly_scan 은 '낙폭 깊이순'이라 코오롱티슈진·산일전기
+같은 소형 크래시가 상위 — 유명 대형주 원하면 이걸 씀).
+```
+python3 fall_scan.py --market 한국 --week 31 --top 10 --min-drop 20 --min-size 10e12
+```
+- 트리거: 전고점 대비 **하락 ≥ min-drop%**(기본 20). 선정: **시총 내림차순 TOP**.
+- **min-size**(시총 하한, 시장 통화) 이상 우선 → top 미달 시 중소형 backfill. 한국=10조(₩), 미국은 native($)로.
+- → `data/fall_weekN.json` (build_fall_deck 이 읽음). 훅은 `gen_hook_fall.py --market KR --top 10`.
+- (weekly_scan 의 낙폭깊이순 weekN.json 은 롱폼/구 방식용으로 유지.)
+
 ## 주의(gotcha)
 - **통화**: tickers_eu.csv는 EU 전 종목을 EUR로 잘못 기재. 실제 통화는 asset_size.csv `source_currency`. rise_scan이 이걸로 환산. GBp(런던): 시총=파운드(×GBP), 가격=펜스(÷100×GBP).
 - **타이밍**: 덱은 자막길이로 씬전환 → 종목명 편차로 불균등. risecard `subHold=5500` 으로 균일화함. 바꾸면 `build_short_rise.sh` 의 `CARD` 도 같이.
