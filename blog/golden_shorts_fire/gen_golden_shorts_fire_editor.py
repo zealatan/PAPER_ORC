@@ -69,6 +69,7 @@ else:
 
 # 로고 viewBox(이미지 로고는 원본 비율) — 편집기 헤더 svg
 LOGOVB = "0 0 1280 1089" if STOCK == "QQQ" else "0 0 200 87.021"
+HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지"}.get(STOCK, "PG 프록터앤갬블")
 
 DATA_JS = ("var PRODUCTS=%s,BADGE=%s,PGLOGO=%s,MCDLOGO=%s,JNJLOGO=%s;\n"
            "var FIRES=%s;\nvar ACCUM=%s;\nvar PACE=1.0;\n") % (
@@ -113,7 +114,9 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 /* --- 차트 배경(그래프 슬라이드) --- */
 .reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
 .graphbox{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:1/1;container-type:size}
-.reelbg .toplogo{position:absolute;top:14%;left:50%;transform:translateX(-50%);height:12cqw;width:auto;filter:brightness(0) invert(1);z-index:6}
+.reelbg .tophdr{position:absolute;top:14%;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2.4cqw;z-index:6}
+.reelbg .toplogo{height:9.6cqw;width:auto;filter:brightness(0) invert(1)}
+.reelbg .toptitle{color:#fff;font-weight:900;font-size:5.2cqw;letter-spacing:-.02em;white-space:nowrap}
 __RCCSS__
 /* ===== GOLDEN 그래프 스펙 (golden_shorts_fire.py 와 동일 유지) ===== */
 .tpl-reel{border-radius:0;background:transparent}.tpl-reel .rc-alL{text-anchor:end}
@@ -174,7 +177,7 @@ body.render #guide{display:none!important}
 <div id="hint">탭=선택·드래그=이동 · 숫자박스=정밀 X/Y/크기/색 · 텍스트더블탭=수정 · 👁렌더=편집UI 숨김 · 슬라이드마다 요소 따로</div>
 <div class="stagewrap"><div class="stage" id="stage">
   <div class="reelbg">
-    <svg class="toplogo" viewBox="__LOGOVB__">__LOGO__</svg>
+    <div class="tophdr"><svg class="toplogo" viewBox="__LOGOVB__">__LOGO__</svg><span class="toptitle">__HDRTITLE__</span></div>
     <div class="graphbox"><div class="zoom tpl-reel">
       <div class="rc-title"></div>
       <div class="rc-card">
@@ -310,7 +313,7 @@ out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGOVB__', LOGOVB).replace
            .replace('__DATA__', DATA_JS).replace('__REELANIM__', G.ACCUM)
            .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri)
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
-           .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT)
+           .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT).replace('__HDRTITLE__', HDRTITLE)
            .replace('__M0__', T.MOS[0]).replace('__M1__', T.MOS[1]).replace('__M2__', T.MOS[2])
            .replace('__TROWS__', T.ROWS).replace('__TNOTE__', T.NOTE))
 open(OUT, "w", encoding="utf-8").write(out)

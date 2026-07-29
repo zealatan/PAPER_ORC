@@ -90,8 +90,7 @@ function accumAnim(root){
     if(!allDead[i]&&stampSurv._exp)stampSurv._exp.textContent='생활비 '+(P[i].survmo||'');
     if(!intro&&lt>DUR[i]){var sp=Math.max(0,Math.min(1,(lt-DUR[i])/450));var e3=1-Math.pow(1-sp,3);stampG.style.display='';stampG.style.opacity=Math.min(1,sp*1.8).toFixed(3);stampG.style.transform='rotate(-12deg) scale('+(1.55-0.55*e3).toFixed(3)+')';}
     else{stampG.style.display='none';}
-    if(intro){var hsp=Math.min(1,t/300),he=1-Math.pow(1-hsp,3);stampHook.style.display='';stampHook.style.opacity=Math.min(1,hsp*1.6).toFixed(3);stampHook.style.transform='rotate(-9deg) scale('+(1.4-0.4*he).toFixed(3)+')';}
-    else{stampHook.style.display='none';}
+    stampHook.style.display='none';   /* 후킹 스탬프 미사용 */
     if(hookEl)hookEl.innerHTML=intro?'30년 뒤, <b>살아남는 원금</b>은?':P[i].hook;
   }
   var t0=null;function run(ts){if(!svg.isConnected)return;if(t0===null)t0=ts;var t=ts-t0;if(t>TOTAL)t=TOTAL;draw(t);if(t<TOTAL)requestAnimationFrame(run);}
@@ -102,7 +101,9 @@ function accumAnim(root){
 CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') format('woff2')}
 *{margin:0;box-sizing:border-box}body{width:1080px;height:1920px;background:#000;font-family:'Pretendard',sans-serif;position:relative;overflow:hidden}
 .graphbox{position:absolute;left:0;right:0;top:50%%;transform:translateY(-50%%);aspect-ratio:1/1;container-type:size}
-.toplogo{position:absolute;top:14%%;left:50%%;transform:translateX(-50%%);height:132px;width:auto;filter:brightness(0) invert(1)}   /* 상단 Invesco 로고(흰색) */
+.tophdr{position:absolute;top:14%%;left:50%%;transform:translateX(-50%%);display:flex;align-items:center;gap:26px}
+.toplogo{height:104px;width:auto;filter:brightness(0) invert(1)}
+.toptitle{color:#fff;font-weight:900;font-size:5.2cqw;letter-spacing:-.02em;white-space:nowrap}
 %s
 .tpl-reel{background:transparent}
 .tpl-reel .rc-card{left:0;right:0;top:0;bottom:0;border-radius:0;background:#fff url('%s') center/cover}
@@ -122,7 +123,7 @@ CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') for
 
 # 누적 그래프 1장(연속). hook은 accumAnim이 원금별로 갱신. data-rc=ACCUM_DATA.
 TMPL="""<!doctype html><meta charset=utf-8><style>%s</style>
-<svg class="toplogo" viewBox="__LOGOVB__">__LOGO__</svg>
+<div class="tophdr"><svg class="toplogo" viewBox="__LOGOVB__">__LOGO__</svg><span class="toptitle">__TITLE__</span></div>
 <div class="graphbox"><div class="zoom tpl-reel"><div class="rc-title"></div>
 <div class="rc-card">
 <svg class="rc-chart" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet" data-rc='%s'>
@@ -148,11 +149,11 @@ _KRW=bool(FIRES[0]["payload"].get("krw"))
 SUB="2000년 은퇴 · 물가반영 · 월 인출액별"
 if _STOCK=="QQQ":
     _qlg="data:image/png;base64,"+base64.b64encode(open(HERE+"/assets/qqq_logo.png","rb").read()).decode()
-    LOGO='<image href="%s" x="0" y="0" width="1280" height="1089"/>'%_qlg; LOGOVB="0 0 1280 1089"; COMPANY="나스닥100 (QQQ) · 운용 Invesco"
+    LOGO='<image href="%s" x="0" y="0" width="1280" height="1089"/>'%_qlg; LOGOVB="0 0 1280 1089"; COMPANY="나스닥100 (QQQ) · 운용 Invesco"; TITLE="QQQ 나스닥 100"
 elif _STOCK=="KTNG":
-    LOGO=logo; LOGOVB="0 0 200 87.021"; COMPANY="KT&G (033780)"
+    LOGO=logo; LOGOVB="0 0 200 87.021"; COMPANY="KT&G (033780)"; TITLE="KT&amp;G 케이티앤지"
 else:
-    LOGO=logo; LOGOVB="0 0 200 87.021"; COMPANY="프록터 앤 갬블 (PG)"
+    LOGO=logo; LOGOVB="0 0 200 87.021"; COMPANY="프록터 앤 갬블 (PG)"; TITLE="PG 프록터앤갬블"
 
 # 범례(월 인출 3종) — 통화별
 if _KRW:
@@ -186,7 +187,7 @@ ACCUM_DATA={"krw":_KRW,"principals":build_principals(),
 ACCUM_TOTAL_MS=ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])   # build 녹화 길이 참조
 
 if __name__=="__main__":   # 직접 실행 시에만 쇼츠 HTML 생성(모듈 import 시 부작용 없음)
-    _hdr=(TMPL.replace("__LOGOVB__",LOGOVB).replace("__LOGO__",LOGO)
+    _hdr=(TMPL.replace("__LOGOVB__",LOGOVB).replace("__LOGO__",LOGO).replace("__TITLE__",TITLE)
               .replace("__COMPANY__",COMPANY).replace("__SUB__",SUB).replace("__LEGEND__",LEGEND))
     data=json.dumps(ACCUM_DATA,ensure_ascii=False).replace("'","&#39;")
     html=_hdr%(CSS_F,data,ACCUM)
