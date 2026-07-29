@@ -182,7 +182,7 @@ def build_principals():
 
 ACCUM_DATA={"krw":_KRW,"principals":build_principals(),
             "dur":[4500,5500,8000,7000,9000],"hold":[1100,1100,700,700,2200],
-            "intro":1000}   # 썸네일 직후: 전체 라인 컬러 훅(1초) → 이후 누적으로 전개
+            "intro":3000}   # 썸네일 직후: 전체 라인 회색 훅(3초·생존 or 파산 스탬프) → 이후 누적으로 전개
 ACCUM_TOTAL_MS=ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])   # build 녹화 길이 참조
 
 if __name__=="__main__":   # 직접 실행 시에만 쇼츠 HTML 생성(모듈 import 시 부작용 없음)
