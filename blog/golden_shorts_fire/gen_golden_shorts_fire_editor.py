@@ -47,6 +47,21 @@ elif STOCK == "KTNG":
                   "addText('KT&amp;G',50,54,5,'#e60012',0);"
                   "addText('6억으로 은퇴',50,60,7,'#d12e77',0);"
                   "addText('적정 생활비는?',50,66,7,'#ffffff',0);")
+elif STOCK == "SEC":
+    OUT     = os.path.join(HERE, "golden_shorts_fire_SEC.html")
+    TITLE   = "golden_shorts_fire_SEC — 삼성전자 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
+    LOGO    = ('<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" '
+               'font-weight="900" font-size="48" fill="#1b3660">005930</text>')
+    COMPANY = "\uc0bc\uc131\uc804\uc790 (005930)"
+    LEGOUT  = ('<span class="lg"><span class="sw" style="background:#2b6cb0"></span>\uc6d4 100\ub9cc \uc778\ucd9c</span>'
+               '<span class="lg"><span class="sw" style="background:#d98f2b"></span>\uc6d4 200\ub9cc \uc778\ucd9c</span>'
+               '<span class="lg"><span class="sw" style="background:#c2255c"></span>\uc6d4 300\ub9cc \uc778\ucd9c</span>')
+    _ef = json.load(open(os.path.join(HERE, "assets", "sec_fires.json")))
+    FIRES = [{"hook": "%d. \uc740\ud1f4\uc6d0\uae08 <b>%s</b>" % (i + 1, f["hook"]), "payload": f["payload"]}
+             for i, f in enumerate(_ef)]
+    THUMB_INIT = ("addText('\uc0bc\uc131\uc804\uc790',50,54,6,'#1b3660',0);"
+                  "addText('\uc0bc\uc131\uc804\uc790\ub85c \uc740\ud1f4',50,61,6.4,'#d12e77',0);"
+                  "addText('\uc5bc\ub9c8 \uc788\uc5b4\uc57c \ud560\uae4c?',50,67,6.4,'#ffffff',0);")
 elif STOCK == "MO":
     OUT     = os.path.join(HERE, "golden_shorts_fire_MO.html")
     TITLE   = "golden_shorts_fire_MO — 알트리아 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
@@ -115,7 +130,7 @@ else:
 
 # 로고 viewBox(이미지 로고는 원본 비율) — 편집기 헤더 svg
 LOGOVB = "0 0 1280 1089" if STOCK == "QQQ" else "0 0 200 87.021"
-HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지", "SCHD": "미국배당 다우존스100", "SPY": "S&P 500 지수", "MO": "알트리아"}.get(STOCK, "PG 프록터앤갬블")
+HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지", "SCHD": "미국배당 다우존스100", "SPY": "S&P 500 지수", "MO": "알트리아", "SEC": "삼성전자"}.get(STOCK, "PG 프록터앤갬블")
 
 DATA_JS = ("var PRODUCTS=%s,BADGE=%s,PGLOGO=%s,MCDLOGO=%s,JNJLOGO=%s;\n"
            "var FIRES=%s;\nvar ACCUM=%s;\nvar PACE=1.0;\n") % (
