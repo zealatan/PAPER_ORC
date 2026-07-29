@@ -18,7 +18,7 @@ STOCK = os.environ.get("SHORTS_STOCK", "PG")   # PG(기본) | KTNG — 파이프
 
 if STOCK == "PG":
     OUT     = os.path.join(HERE, "golden_shorts_fire_editor.html")
-    TITLE   = "golden_shorts_fire_editor — PG 통합 쇼츠 에디터 (썸네일+파이어 3)"
+    TITLE   = "golden_shorts_fire_editor — PG 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
     LOGO    = G.logo
     COMPANY = "프록터 앤 갬블 (PG)"
     LEGOUT  = ('<span class="lg"><span class="sw" style="background:#2b6cb0"></span>월 $1천 인출</span>'
@@ -32,7 +32,7 @@ if STOCK == "PG":
                   "addText('적정 생활비는?',50,66,7,'#ffffff',0);")
 elif STOCK == "KTNG":
     OUT     = os.path.join(HERE, "golden_shorts_fire_KTNG.html")
-    TITLE   = "golden_shorts_fire_KTNG — KT&G 통합 쇼츠 에디터 (썸네일+파이어 3)"
+    TITLE   = "golden_shorts_fire_KTNG — KT&G 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
     LOGO    = ('<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" '
                'font-weight="900" font-size="58" fill="#e60012">KT&amp;G</text>')
     COMPANY = "케이티앤지 (KT&G)"
@@ -49,7 +49,7 @@ elif STOCK == "KTNG":
                   "addText('적정 생활비는?',50,66,7,'#ffffff',0);")
 elif STOCK == "QQQ":
     OUT     = os.path.join(HERE, "golden_shorts_fire_QQQ.html")
-    TITLE   = "golden_shorts_fire_QQQ — 나스닥100 QQQ 통합 쇼츠 에디터 (썸네일+파이어 3)"
+    TITLE   = "golden_shorts_fire_QQQ — 나스닥100 QQQ 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
     # QQQ는 ETF라 회사 로고가 없음 → 운용사 Invesco 공식 로고로 대체(비디오 헤더와 동일)
     _qlogo  = "data:image/png;base64," + base64.b64encode(open(os.path.join(HERE, "assets", "qqq_logo.png"), "rb").read()).decode()
     LOGO    = '<image href="%s" x="0" y="0" width="1280" height="1089"/>' % _qlogo
@@ -71,9 +71,10 @@ else:
 LOGOVB = "0 0 1280 1089" if STOCK == "QQQ" else "0 0 200 87.021"
 
 DATA_JS = ("var PRODUCTS=%s,BADGE=%s,PGLOGO=%s,MCDLOGO=%s,JNJLOGO=%s;\n"
-           "var FIRES=%s;\nvar PACE=1.0;\n") % (
+           "var FIRES=%s;\nvar ACCUM=%s;\nvar PACE=1.0;\n") % (
     json.dumps(assets["PRODUCTS"]), json.dumps(assets["BADGE"]), json.dumps(assets["PGLOGO"]),
-    json.dumps(assets["MCDLOGO"]), json.dumps(assets["JNJLOGO"]), json.dumps(FIRES, ensure_ascii=False))
+    json.dumps(assets["MCDLOGO"]), json.dumps(assets["JNJLOGO"]), json.dumps(FIRES, ensure_ascii=False),
+    json.dumps(G.ACCUM_DATA, ensure_ascii=False))
 
 HTML = r'''<!doctype html><html lang=ko><head><meta charset=utf-8>
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
@@ -110,14 +111,15 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 #guide .cx{position:absolute;left:50%;top:0;bottom:0;width:0;border-left:1px dashed rgba(0,229,255,.75)}
 #guide .cy{position:absolute;top:50%;left:0;right:0;height:0;border-top:1px dashed rgba(0,229,255,.75)}
 /* --- 차트 배경(그래프 슬라이드) --- */
-.reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none}
+.reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
 .graphbox{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:1.78/1;container-type:size}
 __RCCSS__
 /* ===== GOLDEN 그래프 스펙 (golden_shorts_fire.py 와 동일 유지) ===== */
 .tpl-reel{border-radius:0;background:transparent}.tpl-reel .rc-alL{text-anchor:end}
 .tpl-reel .rc-card{left:0;right:0;top:0;bottom:0;border-radius:0;background:#fff url('__PAPER__') center/cover}
 .tpl-reel .rc-card::before{display:none}
-.tpl-reel .rc-chd{left:6.67cqw}   /* 로고+문구 y축 정렬(업로드 잘림 방지) */
+.tpl-reel .rc-chd{left:6.67cqw;top:3cqw;gap:2.4cqw}   /* 로고+문구 y축 정렬(업로드 잘림 방지) */
+.tpl-reel .rc-logo{height:6.8cqw}   /* 헤더 2배 */
 .tpl-reel .rc-ln{stroke-width:3.4}
 .tpl-reel .rc-ax{font-size:18px;font-weight:400;fill:#000}
 .tpl-reel .ytick{stroke:rgba(0,0,0,.22)}
@@ -125,12 +127,27 @@ __RCCSS__
 .tpl-reel .rc-hline{stroke-width:2.8;stroke:#555}
 .tpl-reel .rc-labv{font-size:18px;font-weight:600}
 .tpl-reel .rc-base{stroke:#000}
-.tpl-reel .rc-tk{font-weight:600;color:#111}.tpl-reel .rc-per{font-weight:400;color:#111}
+.tpl-reel .rc-tk{font-weight:600;color:#111;font-size:4cqw}.tpl-reel .rc-per{font-weight:400;color:#111;font-size:2.6cqw}   /* 헤더 2배 */
 .tpl-reel,.tpl-reel *,.rc-chart text{font-family:'Pretendard','Noto Sans KR',sans-serif!important}
+/* 훅(누적 애니가 원금별 갱신) */
+.reelbg .hook{position:absolute;left:0;right:0;top:20%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em;z-index:6}.reelbg .hook b{color:#d12e77}
 /* 범례: 그래프 밖(카드 위) */
 .legout{position:absolute;left:0;right:0;top:28%;display:flex;justify-content:center;gap:4.5cqw;z-index:5}
 .legout .lg{display:flex;align-items:center;gap:1.1cqw;color:#e8e6e0;font-weight:500;font-size:3cqw}
 .legout .sw{width:2.8cqw;height:2.8cqw;border-radius:.4cqw}
+/* --- 테이블 배경(3페이지) --- */
+.tablebg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
+.tablebg .ttl{position:absolute;left:0;right:0;top:15%;text-align:center;color:#fff;font-weight:900;font-size:4.3cqw;letter-spacing:-.02em}.tablebg .ttl b{color:#d12e77}
+.tablebg .card{position:absolute;left:5%;right:5%;top:26%;padding:2.8cqw 2.4cqw 2.2cqw;border-radius:2.2cqw;background:#fff url('__PAPER__') center/cover;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.tablebg table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tablebg th,.tablebg td{text-align:center;padding:1.5cqw .6cqw;font-size:2.5cqw;color:#1a1a1a}
+.tablebg th{font-size:1.76cqw;font-weight:800;color:#8a857c;border-bottom:.2cqw solid rgba(0,0,0,.25)}
+.tablebg td.pr,.tablebg th.pr{text-align:left;font-weight:900;font-size:2.4cqw;color:#111}
+.tablebg th.pr{color:#8a857c;font-weight:800;font-size:1.76cqw}
+.tablebg tr+tr td{border-top:.1cqw solid rgba(0,0,0,.12)}
+.tablebg td.ok{color:#2b8a3e;font-weight:900}
+.tablebg td.ko{color:#c2255c;font-weight:800}
+.tablebg .note{margin-top:1.7cqw;text-align:center;font-size:1.57cqw;font-weight:500;color:#6b6560}
 /* --- clean 렌더 모드: 편집 UI 전부 숨김 --- */
 body.render .bar,body.render #hint{display:none}
 body.render .el.sel{outline:none}
@@ -166,8 +183,14 @@ body.render #guide{display:none!important}
           <line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text>
           <g class="rc-lines"></g></svg>
       </div></div></div>
+    <div class="hook"></div>
     <div class="legout">__LEGOUT__</div>
   </div>
+  <div class="tablebg"><div class="ttl">원금 × 월 인출 <b>결과</b></div>
+    <div class="card"><table>
+      <thead><tr><th class="pr">은퇴원금</th><th>__M0__</th><th>__M1__</th><th>__M2__</th></tr></thead>
+      <tbody>__TROWS__</tbody></table>
+      <div class="note">__TNOTE__</div></div></div>
   <div id="guide"><div class="grid"></div><div class="cx"></div><div class="cy"></div></div>
 </div></div>
 <script>
@@ -176,7 +199,7 @@ __REELANIM__
 /* ============ 통합 에디터 엔진 ============ */
 var stage=document.getElementById('stage'), reelbg=stage.querySelector('.reelbg');
 var svg=stage.querySelector('.rc-chart');
-var sel=null, z=10, cur=0, NSLIDE=FIRES.length+1;
+var sel=null, z=10, cur=0, NSLIDE=3;   /* 0=썸네일 · 1=누적그래프 · 2=테이블 */
 function gid(id){return document.getElementById(id);}
 function rgb2hex(c){var m=c.match(/\d+/g);if(!m)return '#ffffff';return '#'+m.slice(0,3).map(function(x){return ('0'+parseInt(x).toString(16)).slice(-2);}).join('');}
 function isTb(el){return el&&el.classList.contains('tb');}
@@ -242,16 +265,20 @@ gid('save').onclick=function(){
   if(was)was.classList.add('sel');
   var a=document.createElement('a');a.download='pg_slide'+cur+'.png';a.href=cv.toDataURL('image/png');a.click();};
 /* ============ 슬라이드 / 시퀀스 (GOLDEN 타이밍) ============ */
-var auto=false,timer=null,DUR=10080*PACE,HOLD=700,THUMB_HOLD=1250;
+var auto=false,timer=null,THUMB_HOLD=1250,TABLE_HOLD=5000;
+var ACCUM_TOTAL=ACCUM.dur.reduce(function(a,b){return a+b;},0)+ACCUM.hold.reduce(function(a,b){return a+b;},0);
 (function(){var pd=document.querySelector('.pdots');for(var i=0;i<NSLIDE;i++){var d=document.createElement('span');d.className='pdot';(function(k){d.onclick=function(){auto=false;setPlayBtn();showSlide(k);};})(i);pd.appendChild(d);}})();
 function dots(){document.querySelectorAll('.pdot').forEach(function(d,k){d.classList.toggle('act',k===cur);});}
+var tablebg=stage.querySelector('.tablebg');
 function showSlide(i){cur=(i+NSLIDE)%NSLIDE;
   stage.querySelectorAll('.el').forEach(function(e){e.style.display=(+e.dataset.s===cur)?'':'none';});
   select(null);dots();if(timer)clearTimeout(timer);
-  if(cur===0){reelbg.style.display='none';if(auto)timer=setTimeout(function(){showSlide(1);},THUMB_HOLD);return;}
-  reelbg.style.display='block';var f=FIRES[cur-1];f.payload.yleft=true;
-  svg.setAttribute('data-rc',JSON.stringify(f.payload));reelAnim(reelbg);
-  if(auto)timer=setTimeout(function(){showSlide(cur+1);},DUR+HOLD);}
+  reelbg.style.display='none';tablebg.style.display='none';
+  if(cur===0){if(auto)timer=setTimeout(function(){showSlide(1);},THUMB_HOLD);return;}   /* 썸네일 */
+  if(cur===1){reelbg.style.display='block';svg.setAttribute('data-rc',JSON.stringify(ACCUM));accumAnim(reelbg);
+    if(auto)timer=setTimeout(function(){showSlide(2);},ACCUM_TOTAL+400);return;}          /* 누적 그래프 */
+  tablebg.style.display='block';                                                          /* 결과 테이블 */
+  if(auto)timer=setTimeout(function(){showSlide(0);},TABLE_HOLD);}
 function setPlayBtn(){gid('play').textContent=auto?'⏸ 재생':'▶ 재생';}
 gid('prev').onclick=function(){auto=false;setPlayBtn();showSlide(cur-1);};
 gid('next').onclick=function(){auto=false;setPlayBtn();showSlide(cur+1);};
@@ -274,16 +301,18 @@ gid('jsonf').onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)
 /* ============ 초기 배치 (GOLDEN) ============ */
 /* 슬라이드0 = 썸네일(편집가능·종목별 내용) */
 __THUMB_INIT__
-/* 슬라이드1~3 = golden 번호 훅(상단·금액 마젠타) */
-FIRES.forEach(function(f,i){addText(f.hook,50,20,7,'#ffffff',i+1);});
+/* 슬라이드1 훅은 accumAnim이 원금별로 자동 갱신(편집 요소 아님) */
 select(null);
 (document.fonts?document.fonts.ready:Promise.resolve()).then(function(){showSlide(0);});
 </script></body></html>'''
 
+import gen_fire_table as T   # ROWS/MOS/NOTE 재사용(3페이지 테이블)
 out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGOVB__', LOGOVB).replace('__LOGO__', LOGO)
-           .replace('__DATA__', DATA_JS).replace('__REELANIM__', G.NEWRA)
+           .replace('__DATA__', DATA_JS).replace('__REELANIM__', G.ACCUM)
            .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri)
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
-           .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT))
+           .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT)
+           .replace('__M0__', T.MOS[0]).replace('__M1__', T.MOS[1]).replace('__M2__', T.MOS[2])
+           .replace('__TROWS__', T.ROWS).replace('__TNOTE__', T.NOTE))
 open(OUT, "w", encoding="utf-8").write(out)
 print("wrote", OUT, "(STOCK=%s)" % STOCK, round(len(out) / 1024), "KB")

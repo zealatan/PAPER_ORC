@@ -5,3 +5,7 @@ golden_shorts_fire_[A-Z]*.mp4
 _preview_*.mp4
 _*.png
 __pycache__/
+golden_shorts_fire_table.html
+_accum_proto.*
+_apwork/
+_apoff.txt
