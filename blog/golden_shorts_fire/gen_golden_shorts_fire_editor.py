@@ -112,7 +112,8 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 #guide .cy{position:absolute;top:50%;left:0;right:0;height:0;border-top:1px dashed rgba(0,229,255,.75)}
 /* --- 차트 배경(그래프 슬라이드) --- */
 .reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
-.graphbox{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:1.78/1;container-type:size}
+.graphbox{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:1/1;container-type:size}
+.reelbg .toplogo{position:absolute;top:14%;left:50%;transform:translateX(-50%);height:12cqw;width:auto;filter:brightness(0) invert(1);z-index:6}
 __RCCSS__
 /* ===== GOLDEN 그래프 스펙 (golden_shorts_fire.py 와 동일 유지) ===== */
 .tpl-reel{border-radius:0;background:transparent}.tpl-reel .rc-alL{text-anchor:end}
@@ -121,19 +122,19 @@ __RCCSS__
 .tpl-reel .rc-chd{left:6.67cqw;top:3cqw;gap:2.4cqw}   /* 로고+문구 y축 정렬(업로드 잘림 방지) */
 .tpl-reel .rc-logo{height:6.8cqw}   /* 헤더 2배 */
 .tpl-reel .rc-ln{stroke-width:3.4}
-.tpl-reel .rc-ax{font-size:18px;font-weight:400;fill:#000}
+.tpl-reel .rc-ax{font-size:27px;font-weight:400;fill:#000}
 .tpl-reel .ytick{stroke:rgba(0,0,0,.22)}
-.tpl-reel .rc-hlab{font-size:18px;font-weight:700;fill:#333;text-anchor:start}
+.tpl-reel .rc-hlab{font-size:27px;font-weight:700;fill:#333;text-anchor:start}
 .tpl-reel .rc-hline{stroke-width:2.8;stroke:#555}
-.tpl-reel .rc-labv{font-size:18px;font-weight:600}
+.tpl-reel .rc-labv{font-size:27px;font-weight:600}
 .tpl-reel .rc-base{stroke:#000}
 .tpl-reel .rc-tk{font-weight:600;color:#111;font-size:4cqw}.tpl-reel .rc-per{font-weight:400;color:#111;font-size:2.6cqw}   /* 헤더 2배 */
 .tpl-reel,.tpl-reel *,.rc-chart text{font-family:'Pretendard','Noto Sans KR',sans-serif!important}
 /* 훅(누적 애니가 원금별 갱신) */
-.reelbg .hook{position:absolute;left:0;right:0;top:67%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em;z-index:6}.reelbg .hook b{color:#d12e77}   /* 그래프 카드 바로 아래 */
+.reelbg .hook{position:absolute;left:0;right:0;top:80%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em;z-index:6}.reelbg .hook b{color:#d12e77}   /* 그래프 카드 바로 아래 */
 /* 범례: 그래프 밖(카드 위) */
-.legout{position:absolute;left:0;right:0;top:28%;display:flex;justify-content:center;gap:4.5cqw;z-index:5}
-.legout .lg{display:flex;align-items:center;gap:1.1cqw;color:#e8e6e0;font-weight:500;font-size:3cqw}
+.legout{position:absolute;left:0;right:0;top:24.5%;display:flex;justify-content:center;gap:4.5cqw;z-index:5}
+.legout .lg{display:flex;align-items:center;gap:1.1cqw;color:#333;font-weight:700;font-size:3cqw}
 .legout .sw{width:2.8cqw;height:2.8cqw;border-radius:.4cqw}
 /* --- 테이블 배경(3페이지) --- */
 .tablebg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
@@ -173,12 +174,11 @@ body.render #guide{display:none!important}
 <div id="hint">탭=선택·드래그=이동 · 숫자박스=정밀 X/Y/크기/색 · 텍스트더블탭=수정 · 👁렌더=편집UI 숨김 · 슬라이드마다 요소 따로</div>
 <div class="stagewrap"><div class="stage" id="stage">
   <div class="reelbg">
+    <svg class="toplogo" viewBox="__LOGOVB__">__LOGO__</svg>
     <div class="graphbox"><div class="zoom tpl-reel">
       <div class="rc-title"></div>
       <div class="rc-card">
-        <div class="rc-chd"><svg class="rc-logo" viewBox="__LOGOVB__">__LOGO__</svg>
-          <div class="rc-txt"><div class="rc-tk">__COMPANY__</div><div class="rc-per">2000년 은퇴 · 물가반영 · 월 인출액별</div></div></div>
-        <svg class="rc-chart" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" data-rc="">
+        <svg class="rc-chart" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet" data-rc="">
           <g class="rc-yaxis"></g><g class="rc-xaxis"></g>
           <line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text>
           <g class="rc-lines"></g></svg>

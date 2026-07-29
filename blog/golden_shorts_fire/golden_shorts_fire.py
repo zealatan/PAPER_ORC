@@ -14,7 +14,7 @@ ACCUM=r"""
 function accumAnim(root){
   var svg=root.querySelector('.rc-chart'); if(!svg) return;
   var cfg=JSON.parse(svg.getAttribute('data-rc'));
-  var W=960,H=540,ML=64,MR=176,MT=150,MB=66,x0=2000,KRW=cfg.krw,P=cfg.principals,DUR=cfg.dur,HOLD=cfg.hold;
+  var W=960,H=960,ML=64,MR=176,MT=132,MB=74,x0=2000,KRW=cfg.krw,P=cfg.principals,DUR=cfg.dur,HOLD=cfg.hold;
   var start=[],acc=0; for(var i=0;i<P.length;i++){start[i]=acc;acc+=DUR[i]+HOLD[i];} var INTRO=cfg.intro||0; var TOTAL=INTRO+acc;
   var endX=P.map(function(p){return p.lines.reduce(function(m,l){var e=l.pts[l.pts.length-1][0];return e>m?e:m;},x0+1);});
   var prevExt=[],mx=0; for(var i=0;i<P.length;i++){prevExt[i]=mx; if(endX[i]>mx)mx=endX[i];}
@@ -38,10 +38,10 @@ function accumAnim(root){
     var ii=mk('rect',{x:cx-w/2+13,y:cy-h/2+13,width:w-26,height:h-26,rx:13});ii.style.fill='none';ii.style.stroke=col;ii.style.strokeWidth='3';
     var tx=mk('text',{x:cx,y:cy});tx.setAttribute('text-anchor','middle');tx.setAttribute('dominant-baseline','central');tx.setAttribute('font-size','80');tx.setAttribute('font-weight','900');tx.setAttribute('letter-spacing','14');tx.style.fill=col;tx.textContent=txt;
     g.appendChild(o);g.appendChild(ii);g.appendChild(tx);svg.appendChild(g);return g;}
-  var stampBust=makeStamp(520,290,'파산','#c2255c');   // 전멸 페이지
+  var stampBust=makeStamp(520,520,'파산','#c2255c');   // 전멸 페이지
   // 생존 스탬프(녹색·2줄: 생활비 $X / 생존) — 생활비는 원금별로 갱신
   var stampSurv=mk('g',{'class':'rc-stamp'});stampSurv.style.transformBox='fill-box';stampSurv.style.transformOrigin='center';stampSurv.style.display='none';stampSurv.style.pointerEvents='none';
-  (function(){var cx=460,cy=245,w=360,h=176,col='#2b8a3e';
+  (function(){var cx=460,cy=500,w=360,h=176,col='#2b8a3e';
     var o=mk('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:22});o.style.fill='none';o.style.stroke=col;o.style.strokeWidth='6.5';
     var ii=mk('rect',{x:cx-w/2+13,y:cy-h/2+13,width:w-26,height:h-26,rx:14});ii.style.fill='none';ii.style.stroke=col;ii.style.strokeWidth='3';
     var e=mk('text',{x:cx,y:cy-40});e.setAttribute('text-anchor','middle');e.setAttribute('dominant-baseline','central');e.setAttribute('font-size','34');e.setAttribute('font-weight','800');e.style.fill=col;e.textContent='생활비';
@@ -50,7 +50,7 @@ function accumAnim(root){
   svg.appendChild(stampSurv);
   // 훅 스탬프: "생존 or 파산"(생존 녹색·or 회색·파산 빨강) — 인트로 전용
   var stampHook=mk('g',{'class':'rc-stamp'});stampHook.style.transformBox='fill-box';stampHook.style.transformOrigin='center';stampHook.style.display='none';stampHook.style.pointerEvents='none';
-  (function(){var cx=480,cy=235,w=474,h=150;
+  (function(){var cx=480,cy=500,w=474,h=150;
     function tsp(tx,fl){var s=mk('tspan',{});s.style.fill=fl;s.textContent=tx;return s;}
     var o=mk('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:20});o.style.fill='none';o.style.stroke='#3a4150';o.style.strokeWidth='6.5';
     var ii=mk('rect',{x:cx-w/2+13,y:cy-h/2+13,width:w-26,height:h-26,rx:13});ii.style.fill='none';ii.style.stroke='#3a4150';ii.style.strokeWidth='3';
@@ -70,19 +70,19 @@ function accumAnim(root){
     YMAX=Math.max(vmax*1.15,1);
     lg.innerHTML='';ya.innerHTML='';xa.innerHTML='';
     var step=nstep(YMAX/4);
-    for(var v=step;v<=YMAX+1;v+=step){if(P[i].hline&&Math.abs(v-P[i].hline.v)<step*0.25)continue;var yy=Y(v);ya.appendChild(mk('line',{x1:ML,y1:yy,x2:W-MR,y2:yy,'class':'ytick'}));var tx=mk('text',{x:ML+2,y:yy-7,'class':'rc-ax rc-al'});tx.setAttribute('font-size','18');tx.setAttribute('text-anchor','start');tx.textContent=fmtY(v);ya.appendChild(tx);}
+    for(var v=step;v<=YMAX+1;v+=step){if(P[i].hline&&Math.abs(v-P[i].hline.v)<step*0.25)continue;var yy=Y(v);ya.appendChild(mk('line',{x1:ML,y1:yy,x2:W-MR,y2:yy,'class':'ytick'}));var tx=mk('text',{x:ML+2,y:yy-7,'class':'rc-ax rc-al'});tx.setAttribute('font-size','27');tx.setAttribute('text-anchor','start');tx.textContent=fmtY(v);ya.appendChild(tx);}
     var span=Rx-x0,st=yearStep(span),first=Math.ceil(x0/st)*st;
     for(var yr=first;yr<=Rx+0.01;yr+=st){var t2=mk('text',{x:X(yr),y:H-MB+22,'class':'rc-ax rc-axx'});t2.textContent=String(yr);xa.appendChild(t2);}
     ghosts.forEach(function(l){var d='M'+l.pts.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke='#bdb8b0';p.style.strokeWidth='3';p.style.opacity=intro?'0.55':'0.7';lg.appendChild(p);
-      if(l.surv&&!intro){var gp=l.pts[l.pts.length-1],gx=X(gp[0]),gy=Y(gp[1]);var gt=mk('text',{x:Math.min(gx+9,W-MR+2),y:gy+6,'class':'rc-lab'});gt.setAttribute('font-size','15');gt.setAttribute('text-anchor','start');gt.style.fill='#8a857c';gt.textContent=l.plab;lg.appendChild(gt);}});
+      if(l.surv&&!intro){var gp=l.pts[l.pts.length-1],gx=X(gp[0]),gy=Y(gp[1]);var gt=mk('text',{x:Math.min(gx+9,W-MR+2),y:gy+6,'class':'rc-lab'});gt.setAttribute('font-size','23');gt.setAttribute('text-anchor','start');gt.style.fill='#8a857c';gt.textContent=l.plab;lg.appendChild(gt);}});
     var _lab=[];
     active.forEach(function(o){var d='M'+o.arr.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke=intro?'#bdb8b0':o.l.c;p.style.strokeWidth=intro?'3':'4';if(intro)p.style.opacity='0.55';lg.appendChild(p);
       if(intro)return;   /* 훅: 점·라벨 없음(회색 미스터리) */
       var lp=o.arr[o.arr.length-1],ex=X(lp[0]),ey=Y(lp[1]);var dot=mk('circle',{cx:ex,cy:ey,r:4.5});dot.style.fill=o.l.c;lg.appendChild(dot);
       var ended=lp[0]>=o.l.pts[o.l.pts.length-1][0]-1e-6;
       var val=o.l.surv?fmtY(lp[1]):(ended?(KRW?'₩0':'$0'):fmtY(lp[1]));   /* 생존선=현재 가격 / 파산선=$0 */
-      var tv=mk('text',{x:Math.min(ex+9,W-MR+2),y:ey+6,'class':'rc-lab rc-labv'});tv.setAttribute('font-size','15');tv.setAttribute('text-anchor','start');tv.style.fill=o.l.c;tv.textContent=val;lg.appendChild(tv);_lab.push({tv:tv,x:ex+9,y0:ey+6});});
-    _lab.sort(function(a,b){return a.x-b.x;});var pxr=-1e9,row=0;for(var k=0;k<_lab.length;k++){var b=_lab[k];row=(b.x-pxr<72)?row+1:0;b.tv.setAttribute('y',b.y0-row*20);pxr=b.x;}
+      var tv=mk('text',{x:Math.min(ex+9,W-MR+2),y:ey+6,'class':'rc-lab rc-labv'});tv.setAttribute('font-size','23');tv.setAttribute('text-anchor','start');tv.style.fill=o.l.c;tv.textContent=val;lg.appendChild(tv);_lab.push({tv:tv,x:ex+9,y0:ey+6});});
+    _lab.sort(function(a,b){return a.x-b.x;});var pxr=-1e9,row=0;for(var k=0;k<_lab.length;k++){var b=_lab[k];row=(b.x-pxr<92)?row+1:0;b.tv.setAttribute('y',b.y0-row*30);pxr=b.x;}
     if(intro){hl.style.display='none';hlb.style.opacity='0';}
     else{var hy=Y(P[i].hline.v);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent=P[i].hline.label;}
     var stampG=allDead[i]?stampBust:stampSurv, stampOff=allDead[i]?stampSurv:stampBust;
@@ -101,30 +101,31 @@ function accumAnim(root){
 
 CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') format('woff2')}
 *{margin:0;box-sizing:border-box}body{width:1080px;height:1920px;background:#000;font-family:'Pretendard',sans-serif;position:relative;overflow:hidden}
-.graphbox{position:absolute;left:0;right:0;top:50%%;transform:translateY(-50%%);aspect-ratio:1.78/1;container-type:size}
+.graphbox{position:absolute;left:0;right:0;top:50%%;transform:translateY(-50%%);aspect-ratio:1/1;container-type:size}
+.toplogo{position:absolute;top:14%%;left:50%%;transform:translateX(-50%%);height:132px;width:auto;filter:brightness(0) invert(1)}   /* 상단 Invesco 로고(흰색) */
 %s
 .tpl-reel{background:transparent}
 .tpl-reel .rc-card{left:0;right:0;top:0;bottom:0;border-radius:0;background:#fff url('%s') center/cover}
 .tpl-reel .rc-card::before{display:none}.tpl-reel .rc-alL{text-anchor:end}
 .tpl-reel .rc-chd{left:6.67cqw;top:3cqw;gap:2.4cqw}   /* 로고+문구를 그래프 y축(ML=64→6.67cqw)에 정렬, 업로드 잘림 방지 */
 .tpl-reel .rc-logo{height:6.8cqw}   /* 헤더 2배(3.4→6.8cqw) */
-.tpl-reel .rc-ln{stroke-width:3.4}.tpl-reel .rc-ax{font-size:18px;font-weight:400;fill:#000}
+.tpl-reel .rc-ln{stroke-width:3.4}.tpl-reel .rc-ax{font-size:27px;font-weight:400;fill:#000}
 .tpl-reel .ytick{stroke:rgba(0,0,0,.22)}
-.tpl-reel .rc-hlab{font-size:18px;font-weight:700;fill:#333;text-anchor:start}.tpl-reel .rc-hline{stroke-width:2.8;stroke:#555}
-.tpl-reel .rc-labv{font-size:18px;font-weight:600}.tpl-reel .rc-base{stroke:#000}
+.tpl-reel .rc-hlab{font-size:27px;font-weight:700;fill:#333;text-anchor:start}.tpl-reel .rc-hline{stroke-width:2.8;stroke:#555}
+.tpl-reel .rc-labv{font-size:27px;font-weight:600}.tpl-reel .rc-base{stroke:#000}
 .tpl-reel .rc-tk{font-weight:600;color:#111;font-size:4cqw}.tpl-reel .rc-per{font-weight:400;color:#111;font-size:2.6cqw}   /* 헤더 2배 */
 .tpl-reel,.tpl-reel *,.rc-chart text,.legout,.legout *{font-family:'Pretendard',sans-serif!important}
-.hook{position:absolute;left:0;right:0;top:67%%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em}.hook b{color:#d12e77}   /* 그래프 카드 바로 아래 */
-.legout{position:absolute;left:0;right:0;top:28%%;display:flex;justify-content:center;gap:4.5cqw;z-index:5}
-.legout .lg{display:flex;align-items:center;gap:1.1cqw;color:#e8e6e0;font-weight:500;font-size:3cqw}
+.hook{position:absolute;left:0;right:0;top:80%%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em}.hook b{color:#d12e77}   /* 그래프 카드 바로 아래 */
+.legout{position:absolute;left:0;right:0;top:24.5%%;display:flex;justify-content:center;gap:4.5cqw;z-index:5}
+.legout .lg{display:flex;align-items:center;gap:1.1cqw;color:#333;font-weight:700;font-size:3cqw}
 .legout .sw{width:2.8cqw;height:2.8cqw;border-radius:.4cqw}"""
 
 # 누적 그래프 1장(연속). hook은 accumAnim이 원금별로 갱신. data-rc=ACCUM_DATA.
 TMPL="""<!doctype html><meta charset=utf-8><style>%s</style>
+<svg class="toplogo" viewBox="__LOGOVB__">__LOGO__</svg>
 <div class="graphbox"><div class="zoom tpl-reel"><div class="rc-title"></div>
-<div class="rc-card"><div class="rc-chd"><svg class="rc-logo" viewBox="__LOGOVB__">__LOGO__</svg>
-<div class="rc-txt"><div class="rc-tk">__COMPANY__</div><div class="rc-per">__SUB__</div></div></div>
-<svg class="rc-chart" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" data-rc='%s'>
+<div class="rc-card">
+<svg class="rc-chart" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet" data-rc='%s'>
 <g class="rc-yaxis"></g><g class="rc-xaxis"></g><line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text><g class="rc-lines"></g></svg>
 </div></div></div>
 <div class="hook"></div>
