@@ -15,7 +15,7 @@ function accumAnim(root){
   var svg=root.querySelector('.rc-chart'); if(!svg) return;
   var cfg=JSON.parse(svg.getAttribute('data-rc'));
   var W=960,H=540,ML=64,MR=176,MT=150,MB=66,x0=2000,KRW=cfg.krw,P=cfg.principals,DUR=cfg.dur,HOLD=cfg.hold;
-  var start=[],acc=0; for(var i=0;i<P.length;i++){start[i]=acc;acc+=DUR[i]+HOLD[i];} var TOTAL=acc;
+  var start=[],acc=0; for(var i=0;i<P.length;i++){start[i]=acc;acc+=DUR[i]+HOLD[i];} var INTRO=cfg.intro||0; var TOTAL=INTRO+acc;
   var endX=P.map(function(p){return p.lines.reduce(function(m,l){var e=l.pts[l.pts.length-1][0];return e>m?e:m;},x0+1);});
   var prevExt=[],mx=0; for(var i=0;i<P.length;i++){prevExt[i]=mx; if(endX[i]>mx)mx=endX[i];}
   var allDead=P.map(function(p){return p.lines.every(function(l){return !l.surv;});});
@@ -48,9 +48,20 @@ function accumAnim(root){
     var t=mk('text',{x:cx,y:cy+33});t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','central');t.setAttribute('font-size','64');t.setAttribute('font-weight','900');t.setAttribute('letter-spacing','10');t.style.fill=col;t.textContent='생존';
     stampSurv.appendChild(o);stampSurv.appendChild(ii);stampSurv.appendChild(e);stampSurv.appendChild(t);stampSurv._exp=e;})();
   svg.appendChild(stampSurv);
+  // 훅 스탬프: "생존 or 파산"(생존 녹색·or 회색·파산 빨강) — 인트로 전용
+  var stampHook=mk('g',{'class':'rc-stamp'});stampHook.style.transformBox='fill-box';stampHook.style.transformOrigin='center';stampHook.style.display='none';stampHook.style.pointerEvents='none';
+  (function(){var cx=480,cy=235,w=474,h=150;
+    function tsp(tx,fl){var s=mk('tspan',{});s.style.fill=fl;s.textContent=tx;return s;}
+    var o=mk('rect',{x:cx-w/2,y:cy-h/2,width:w,height:h,rx:20});o.style.fill='none';o.style.stroke='#3a4150';o.style.strokeWidth='6.5';
+    var ii=mk('rect',{x:cx-w/2+13,y:cy-h/2+13,width:w-26,height:h-26,rx:13});ii.style.fill='none';ii.style.stroke='#3a4150';ii.style.strokeWidth='3';
+    var t=mk('text',{x:cx,y:cy});t.setAttribute('text-anchor','middle');t.setAttribute('dominant-baseline','central');t.setAttribute('font-size','58');t.setAttribute('font-weight','900');t.setAttribute('letter-spacing','3');
+    t.appendChild(tsp('생존','#2b8a3e'));t.appendChild(tsp(' or ','#8a929e'));t.appendChild(tsp('파산','#c2255c'));
+    stampHook.appendChild(o);stampHook.appendChild(ii);stampHook.appendChild(t);})();
+  svg.appendChild(stampHook);
   function draw(t){
-    var i=0; while(i<P.length-1 && t>=start[i+1]) i++;
-    var lt=t-start[i], pr=lt<=DUR[i]?lt/DUR[i]:1;
+    var intro=t<INTRO, i, lt, pr;
+    if(intro){i=P.length-1;lt=DUR[i];pr=1;}   /* 훅: 마지막 원금 기준 전체 라인 표시 */
+    else{var tt=t-INTRO;i=0;while(i<P.length-1&&tt>=start[i+1])i++;lt=tt-start[i];pr=lt<=DUR[i]?lt/DUR[i]:1;}
     var R=(x0+0.3)+pr*(endX[i]-(x0+0.3));
     Rx=Math.max(R,prevExt[i]);
     var vmax=P[i].hline?P[i].hline.v:0, ghosts=[], active=[];
@@ -62,22 +73,26 @@ function accumAnim(root){
     for(var v=step;v<=YMAX+1;v+=step){if(P[i].hline&&Math.abs(v-P[i].hline.v)<step*0.25)continue;var yy=Y(v);ya.appendChild(mk('line',{x1:ML,y1:yy,x2:W-MR,y2:yy,'class':'ytick'}));var tx=mk('text',{x:ML+2,y:yy-7,'class':'rc-ax rc-al'});tx.setAttribute('font-size','18');tx.setAttribute('text-anchor','start');tx.textContent=fmtY(v);ya.appendChild(tx);}
     var span=Rx-x0,st=yearStep(span),first=Math.ceil(x0/st)*st;
     for(var yr=first;yr<=Rx+0.01;yr+=st){var t2=mk('text',{x:X(yr),y:H-MB+22,'class':'rc-ax rc-axx'});t2.textContent=String(yr);xa.appendChild(t2);}
-    ghosts.forEach(function(l){var d='M'+l.pts.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke='#bdb8b0';p.style.strokeWidth='3';p.style.opacity='0.7';lg.appendChild(p);
-      if(l.surv){var gp=l.pts[l.pts.length-1],gx=X(gp[0]),gy=Y(gp[1]);var gt=mk('text',{x:Math.min(gx+9,W-MR+2),y:gy+6,'class':'rc-lab'});gt.setAttribute('font-size','15');gt.setAttribute('text-anchor','start');gt.style.fill='#8a857c';gt.textContent=l.plab;lg.appendChild(gt);}});
+    ghosts.forEach(function(l){var d='M'+l.pts.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke='#bdb8b0';p.style.strokeWidth='3';p.style.opacity=intro?'0.55':'0.7';lg.appendChild(p);
+      if(l.surv&&!intro){var gp=l.pts[l.pts.length-1],gx=X(gp[0]),gy=Y(gp[1]);var gt=mk('text',{x:Math.min(gx+9,W-MR+2),y:gy+6,'class':'rc-lab'});gt.setAttribute('font-size','15');gt.setAttribute('text-anchor','start');gt.style.fill='#8a857c';gt.textContent=l.plab;lg.appendChild(gt);}});
     var _lab=[];
-    active.forEach(function(o){var d='M'+o.arr.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke=o.l.c;p.style.strokeWidth='4';lg.appendChild(p);
+    active.forEach(function(o){var d='M'+o.arr.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke=intro?'#bdb8b0':o.l.c;p.style.strokeWidth=intro?'3':'4';if(intro)p.style.opacity='0.55';lg.appendChild(p);
+      if(intro)return;   /* 훅: 점·라벨 없음(회색 미스터리) */
       var lp=o.arr[o.arr.length-1],ex=X(lp[0]),ey=Y(lp[1]);var dot=mk('circle',{cx:ex,cy:ey,r:4.5});dot.style.fill=o.l.c;lg.appendChild(dot);
       var ended=lp[0]>=o.l.pts[o.l.pts.length-1][0]-1e-6;
       var val=o.l.surv?fmtY(lp[1]):(ended?(KRW?'₩0':'$0'):fmtY(lp[1]));   /* 생존선=현재 가격 / 파산선=$0 */
       var tv=mk('text',{x:Math.min(ex+9,W-MR+2),y:ey+6,'class':'rc-lab rc-labv'});tv.setAttribute('font-size','15');tv.setAttribute('text-anchor','start');tv.style.fill=o.l.c;tv.textContent=val;lg.appendChild(tv);_lab.push({tv:tv,x:ex+9,y0:ey+6});});
     _lab.sort(function(a,b){return a.x-b.x;});var pxr=-1e9,row=0;for(var k=0;k<_lab.length;k++){var b=_lab[k];row=(b.x-pxr<72)?row+1:0;b.tv.setAttribute('y',b.y0-row*20);pxr=b.x;}
-    var hy=Y(P[i].hline.v);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent=P[i].hline.label;
+    if(intro){hl.style.display='none';hlb.style.opacity='0';}
+    else{var hy=Y(P[i].hline.v);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent=P[i].hline.label;}
     var stampG=allDead[i]?stampBust:stampSurv, stampOff=allDead[i]?stampSurv:stampBust;
     stampOff.style.display='none';
     if(!allDead[i]&&stampSurv._exp)stampSurv._exp.textContent='생활비 '+(P[i].survmo||'');
-    if(lt>DUR[i]){var sp=Math.max(0,Math.min(1,(lt-DUR[i])/450));var e3=1-Math.pow(1-sp,3);stampG.style.display='';stampG.style.opacity=Math.min(1,sp*1.8).toFixed(3);stampG.style.transform='rotate(-12deg) scale('+(1.55-0.55*e3).toFixed(3)+')';}
+    if(!intro&&lt>DUR[i]){var sp=Math.max(0,Math.min(1,(lt-DUR[i])/450));var e3=1-Math.pow(1-sp,3);stampG.style.display='';stampG.style.opacity=Math.min(1,sp*1.8).toFixed(3);stampG.style.transform='rotate(-12deg) scale('+(1.55-0.55*e3).toFixed(3)+')';}
     else{stampG.style.display='none';}
-    if(hookEl)hookEl.innerHTML=P[i].hook;
+    if(intro){var hsp=Math.min(1,t/300),he=1-Math.pow(1-hsp,3);stampHook.style.display='';stampHook.style.opacity=Math.min(1,hsp*1.6).toFixed(3);stampHook.style.transform='rotate(-9deg) scale('+(1.4-0.4*he).toFixed(3)+')';}
+    else{stampHook.style.display='none';}
+    if(hookEl)hookEl.innerHTML=intro?'30년 뒤, <b>살아남는 원금</b>은?':P[i].hook;
   }
   var t0=null;function run(ts){if(!svg.isConnected)return;if(t0===null)t0=ts;var t=ts-t0;if(t>TOTAL)t=TOTAL;draw(t);if(t<TOTAL)requestAnimationFrame(run);}
   draw(0);requestAnimationFrame(run);
@@ -166,8 +181,9 @@ def build_principals():
     return ps
 
 ACCUM_DATA={"krw":_KRW,"principals":build_principals(),
-            "dur":[4500,5500,8000,7000,9000],"hold":[1100,1100,700,700,2200]}
-ACCUM_TOTAL_MS=sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])   # build 녹화 길이 참조
+            "dur":[4500,5500,8000,7000,9000],"hold":[1100,1100,700,700,2200],
+            "intro":1000}   # 썸네일 직후: 전체 라인 컬러 훅(1초) → 이후 누적으로 전개
+ACCUM_TOTAL_MS=ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])   # build 녹화 길이 참조
 
 if __name__=="__main__":   # 직접 실행 시에만 쇼츠 HTML 생성(모듈 import 시 부작용 없음)
     _hdr=(TMPL.replace("__LOGOVB__",LOGOVB).replace("__LOGO__",LOGO)
