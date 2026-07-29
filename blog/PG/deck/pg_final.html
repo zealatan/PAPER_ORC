@@ -75,6 +75,11 @@
   #papertex{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0; transition:opacity .3s; background-repeat:repeat; }
   .frame.has-bg #papertex{ opacity:0 !important; }   /* 배경 영상 슬라이드에선 숨김 */
   .frame:has(.tpl-enginechart) #papertex, .frame:has(.tpl-divbars) #papertex, .frame:has(.tpl-hbars) #papertex{ opacity:0 !important; }   /* 차트 슬라이드: 종이질감 제거 → 매끈한 단색 표면 */
+  /* ══ 씬별 솔리드 배경색(bgcol): 테마 종이색 대신 지정 단색을 매끈하게 ══ */
+  .frame.solidbg{ background:var(--bgcol,#000) !important; }
+  .frame.solidbg::before{ opacity:0 !important; }          /* 종이 질감/그리드 텍스처 제거 */
+  .frame.solidbg #papertex{ opacity:0 !important; }
+  .frame.solidbg #chapscrim{ opacity:0 !important; }
   body[data-paper=grain] #papertex{ opacity:.55;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/></svg>"); }
   body[data-paper=laid] #papertex{ opacity:.7;
@@ -1857,6 +1862,7 @@
   <button class="tb edit-only" id="bsdel" type="button">✕ 씬 삭제</button>
   <button class="tb edit-only" id="bsreset" type="button">↩ 씬 초기화</button>
   <button class="tb edit-only" id="bbg" type="button">🎬 배경영상</button>
+  <button class="tb edit-only" id="bbgcol" type="button">🖤 배경색</button>
   <button class="tb edit-only" id="bblur" type="button">🌫 배경흐림</button>
 </div>
 
@@ -2354,7 +2360,7 @@ const TPL = {
   },
   reelchart(d){
     const legs=(d.legend&&d.legend.length)?`<div class="rc-leg">${d.legend.map(l=>`<span class="rc-lg"><span class="rc-sw" style="background:${l.c}"></span>${esc(l.label)}</span>`).join('')}</div>`:'';
-    const payload=esc(JSON.stringify({ymax:d.ymax,hline:d.hline||null,tip:d.tip||'compact',lines:d.lines||[]}));
+    const payload=esc(JSON.stringify({ymax:d.ymax,hline:d.hline||null,tip:d.tip||'compact',seq:d.seq||false,yleft:d.yleft||false,lines:d.lines||[]}));
     return `<div class="zoom tpl-reel">
       <div class="rc-title">${d.title1||''}<br>${d.title2||''}</div>
       <div class="rc-card">
@@ -4239,7 +4245,7 @@ function countUps(root){
 function reelAnim(root){
   var svg=root.querySelector('.rc-chart'); if(!svg) return;
   var cfg; try{ cfg=JSON.parse(svg.getAttribute('data-rc')); }catch(e){ return; }
-  var W=960,H=540,ML=64,MR=150,MT=150,MB=66,x0=2000,x1=2026.6,YMAX=cfg.ymax,TIP=cfg.tip;
+  var W=960,H=540,ML=64,MR=cfg.yleft?176:150,MT=150,MB=66,x0=2000,x1=2026.6,YMAX=cfg.ymax,TIP=cfg.tip,SEQ=cfg.seq,YLX=cfg.yleft;
   function X(y){return ML+(y-x0)/(x1-x0)*(W-ML-MR);}
   function Y(v){return (H-MB)-v/YMAX*(H-MB-MT);}
   function nstep(r){var e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;var n=f<=1?1:f<=2?2:f<=5?5:10;return n*e;}
@@ -4249,7 +4255,7 @@ function reelAnim(root){
   var ya=svg.querySelector('.rc-yaxis'),xa=svg.querySelector('.rc-xaxis'),lg=svg.querySelector('.rc-lines');
   ya.innerHTML='';xa.innerHTML='';lg.innerHTML='';
   var step=nstep(YMAX/4);
-  for(var v=step;v<=YMAX+1;v+=step){var y=Y(v);ya.appendChild(mk('line',{x1:ML,y1:y,x2:W-MR,y2:y,'class':'ytick'}));var t=mk('text',{x:W-MR+8,y:y+4,'class':'rc-ax rc-al'});t.textContent=(v/10000)+'만';ya.appendChild(t);}
+  for(var v=step;v<=YMAX+1;v+=step){var y=Y(v);ya.appendChild(mk('line',{x1:ML,y1:y,x2:W-MR,y2:y,'class':'ytick'}));var t=mk('text',{x:YLX?ML-8:W-MR+8,y:y+4,'class':'rc-ax rc-al'});if(YLX)t.setAttribute('text-anchor','end');t.textContent=(v/10000)+'만';ya.appendChild(t);}
   [2000,2005,2010,2015,2020,2025].forEach(function(yr){var t=mk('text',{x:X(yr),y:H-MB+22,'class':'rc-ax rc-axx'});t.textContent=(yr==2000?'2000':'’'+String(yr).slice(2));xa.appendChild(t);});
   var hl=svg.querySelector('.rc-hline'),hlb=svg.querySelector('.rc-hlab');
   if(cfg.hline){var hy=Y(cfg.hline.v);hl.style.display='';hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('y',hy-7);hlb.textContent=cfg.hline.label;}else{hl.style.display='none';}
@@ -4261,7 +4267,18 @@ function reelAnim(root){
     lg.appendChild(p);lg.appendChild(dot);lg.appendChild(tt);lg.appendChild(tv);
     return {p:p,dot:dot,tt:tt,tv:tv,l:l};});
   function partial(pts,prog){var n=pts.length,f=prog*(n-1),i=Math.floor(f),fr=f-i;if(i>=n-1){i=n-1;fr=0;}var cx=pts[i][0],cy=pts[i][1];if(i<n-1){cx=pts[i][0]+(pts[i+1][0]-pts[i][0])*fr;cy=pts[i][1]+(pts[i+1][1]-pts[i][1])*fr;}return {arr:pts.slice(0,i+1),ex:cx,ey:cy};}
-  function draw(prog){ELS.forEach(function(e){var r=partial(e.l.pts,prog);var d='M'+r.arr.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var ex=X(r.ex),ey=Y(r.ey);e.p.setAttribute('d',d+' L'+ex.toFixed(1)+' '+ey.toFixed(1));e.dot.setAttribute('cx',ex);e.dot.setAttribute('cy',ey);var val=(prog>=1&&!e.l.surv)?e.l.end:fmt(r.ey);if(TIP==='full'){e.tt.setAttribute('x',ex+10);e.tt.setAttribute('y',ey-6);e.tt.textContent=e.l.name;e.tv.setAttribute('x',ex+10);e.tv.setAttribute('y',ey+13);e.tv.textContent=val+' 달러';}else{e.tt.textContent='';e.tv.setAttribute('x',Math.min(ex+8,W-MR+2));e.tv.setAttribute('y',ey+4);e.tv.setAttribute('font-size','15');e.tv.textContent=val;}});}
+  var SEG={0:[0,0.46],1:[0.54,1]};   /* seq(순차): phase 0 폭락 → phase 1 적립 */
+  function draw(prog){ELS.forEach(function(e){
+    var lp=prog; if(SEQ&&e.l.phase!=null){var sg=SEG[e.l.phase]||[0,1];lp=(prog-sg[0])/(sg[1]-sg[0]);if(lp<0)lp=0;if(lp>1)lp=1;}
+    var vis=!(SEQ&&e.l.phase!=null)||lp>0.0006; var op=vis?'1':'0';
+    e.p.style.opacity=op;e.dot.style.opacity=op;e.tt.style.opacity=op;e.tv.style.opacity=op; if(!vis)return;
+    var r=partial(e.l.pts,lp);var d='M'+r.arr.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var ex=X(r.ex),ey=Y(r.ey);
+    e.p.setAttribute('d',d+' L'+ex.toFixed(1)+' '+ey.toFixed(1));e.dot.setAttribute('cx',ex);e.dot.setAttribute('cy',ey);
+    var val=(lp>=1&&!e.l.surv)?e.l.end:fmt(r.ey);
+    if(e.l.lab){e.tt.textContent='';e.tv.setAttribute('x',ex+10);e.tv.setAttribute('y',ey+(e.l.lab==='value'?6:4));e.tv.setAttribute('font-size',e.l.lab==='value'?'21':'13');e.tv.setAttribute('font-weight',e.l.lab==='value'?'900':'800');e.tv.textContent=(e.l.lab==='value')?val:(e.l.name+' ('+val+')');}
+    else if(TIP==='full'){e.tt.setAttribute('x',ex+10);e.tt.setAttribute('y',ey-6);e.tt.textContent=e.l.name;e.tv.setAttribute('x',ex+10);e.tv.setAttribute('y',ey+13);e.tv.textContent=val+' 달러';}
+    else{e.tt.textContent='';e.tv.setAttribute('x',Math.min(ex+8,W-MR+2));e.tv.setAttribute('y',ey+4);e.tv.setAttribute('font-size','15');e.tv.textContent=val;}
+  });}
   var DUR=4200*(typeof PACE!=='undefined'?PACE:1),start=null;
   function run(ts){if(!svg.isConnected)return;if(!start)start=ts;var p=Math.min(1,(ts-start)/DUR);draw(p);if(p<1)requestAnimationFrame(run);}
   draw(0);requestAnimationFrame(run);
@@ -4384,6 +4401,9 @@ function show(i){
     frame.classList.remove('has-bg');
   }
   frame.classList.toggle('bg-blur', !!(sc.bgid && sc.bgBlur));
+  /* 씬별 솔리드 배경색: bgcol 있으면 테마 종이색 대신 단색 표면 */
+  if(sc.bgcol){ frame.style.setProperty('--bgcol', sc.bgcol); frame.classList.add('solidbg'); }
+  else { frame.classList.remove('solidbg'); frame.style.removeProperty('--bgcol'); }
   const old = frame.querySelector('.scene:not(.exit)');
   if(old){ old.classList.add('exit'); setTimeout(()=>old.remove(), 550); }
   const el = document.createElement('div');
@@ -4549,6 +4569,15 @@ $('bbg').addEventListener('click', ()=>{
   sc.bgid=keys[idx]||null;
   save(); const c=cur; cur=-1; show(c);
   const lb=$('lbl'); if(lb) lb.textContent='배경: '+(sc.bgid||'없음(종이)');
+});
+/* 씬 배경색: 없음(테마) → 검정 → 다크 → 남색 → 없음 순환 (편집 모드). 💾저장(영구) 시 deck_edited_scenes에 담겨 재빌드 유지 */
+if($('bbgcol')) $('bbgcol').addEventListener('click', ()=>{
+  const sc=SCENES[cur]; if(!sc) return; snapshot();
+  const cols=[null,'#000000','#101012','#0e1726'];
+  let idx=cols.indexOf(sc.bgcol||null); idx=(idx+1)%cols.length;
+  if(cols[idx]) sc.bgcol=cols[idx]; else delete sc.bgcol;
+  save(); const c=cur; cur=-1; show(c);
+  const lb=$('lbl'); if(lb) lb.textContent='배경색: '+(sc.bgcol||'없음(테마)');
 });
 /* 배경 영상 흐림 토글 (편집 모드) */
 $('bblur').addEventListener('click', ()=>{

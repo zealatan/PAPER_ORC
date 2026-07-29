@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""stock_alert_rise_v1.html(?rec)을 playwright로 녹화 → 무음 webm. 블랙 마커로 트림."""
-import os, glob, json, re
+"""stock_alert_<slug>_v1.html(?rec)을 playwright로 녹화 → 무음 webm. 블랙 마커로 트림.
+   사용: python3 rec/render_rise.py [rise|fall]   (기본 rise). 출력=recordings/rise_raw/."""
+import os, glob, json, re, sys
 from playwright.sync_api import sync_playwright
+SLUG = sys.argv[1] if len(sys.argv) > 1 else 'rise'    # rise(상승) | fall(낙폭)
 ROOT = os.path.join(os.path.dirname(__file__), '..')
 OUTDIR = os.path.join(ROOT, 'recordings', 'rise_raw'); os.makedirs(OUTDIR, exist_ok=True)
-HTML = os.path.abspath(os.path.join(ROOT, 'deck', 'stock_alert_rise_v1.html'))
+for _f in glob.glob(OUTDIR + '/*.webm'): os.remove(_f)   # 이전 webm 정리(최신 1개만 남게)
+HTML = os.path.abspath(os.path.join(ROOT, 'deck', f'stock_alert_{SLUG}_v1.html'))
 URL = 'file://' + HTML + '?rec'
-_d = json.load(open(os.path.join(ROOT,'deck','stock_alert_rise_deck.json'),encoding='utf-8'))['scenes']
+_d = json.load(open(os.path.join(ROOT,'deck',f'stock_alert_{SLUG}_deck.json'),encoding='utf-8'))['scenes']
 _PACE = float(re.search(r'var PACE\s*=\s*([\d.]+)', open(os.path.join(ROOT,'deck','stock_alert_final.html'),encoding='utf-8').read()).group(1))
 _tot = sum(s.get('subHold', s.get('dur',0)*_PACE) for s in _d)
 DUR_MS = int(_tot + 2500)

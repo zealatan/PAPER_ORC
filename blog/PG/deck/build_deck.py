@@ -127,6 +127,26 @@ def reel_crash():
             "lines": [{"c": "#e01e37", "name": "평가금액", "surv": True, "end": "", "pts": tot},
                       {"c": "#8a93a2", "name": "투입원금", "surv": True, "end": "", "pts": invs, "dash": True}]}
 
+def reel_compare():
+    """폭락 타이밍 vs 매달 적립 — 4선 병합(순차 드로잉). page15·16을 한 차트로.
+       색=전략(폭락 주황 #e0821c / 적립 파랑 #1f6fe0), 실선=평가금액·점선=원금.
+       엔진 옵트인 플래그: seq(순차 드로잉)·yleft(y축 라벨 왼쪽)·라인별 phase/lab."""
+    tot = SCOMP["smart"]["total_series"]; invs = SCOMP["smart"]["invested_series"]
+    so = SCOMP["steady"]["series_on"]; t0 = so[0][0]
+    prin = SCOMP["premise"]["principal"]; mi = SCOMP["premise"]["monthly_income"]
+    inv = [[x, min(prin, round((x - t0) * 12 * mi))] for x, _ in so]
+    peak = max(max(p[1] for p in tot), max(p[1] for p in so))
+    return {"title1": "폭락 타이밍 <b>vs</b> 매달 적립", "title2": "26년, 한 화면에서",
+            "sub": "−30% 폭락 매수 vs 매달 $1,000 · 배당 재투자 · ’00.3~’26.7",
+            "ymax": _nice_ceil(peak * 1.08), "seq": True, "yleft": True, "hline": None,
+            "legend": [{"c": "#e0821c", "label": "30% 하락매입"},
+                       {"c": "#1f6fe0", "label": "매월매입"}],
+            "lines": [
+                {"c": "#e0821c", "name": "폭락 평가", "lab": "value", "phase": 0, "surv": True, "end": "", "pts": tot},
+                {"c": "#e0821c", "name": "폭락원금", "lab": "named", "phase": 0, "surv": True, "end": "", "pts": invs, "dash": True},
+                {"c": "#1f6fe0", "name": "적립 평가", "lab": "value", "phase": 1, "surv": True, "end": "", "pts": so},
+                {"c": "#1f6fe0", "name": "적립원금", "lab": "named", "phase": 1, "surv": True, "end": "", "pts": inv, "dash": True}]}
+
 
 def price_trigger_chart():
     """씬24: PG 주가 + -30% 폭락 매수 신호(★)."""
@@ -436,9 +456,9 @@ for n in NARR:
             d.update({"sub": "", "title": "PG 주가와 [−30% 폭락] 매수 신호",
                       "annoMain": f"25년간 −30% 폭락은 {'·'.join(str(y) for y in TRIG_Y)}년, 세 시기뿐",
                       "chart": price_trigger_chart()})
-        elif chart_id == "smart_result":    # 씬25: 폭락 매수 결과 → 릴스 스타일
-            sc["tpl"] = "reelchart"; d.clear(); d.update(reel_crash())
-        elif chart_id == "steady_result":   # 씬26: 적립 결과 → 릴스 스타일
+        elif chart_id == "smart_result":    # 씬25: 폭락 vs 적립 4선 병합(page16=적립은 deck_plan에서 드롭)
+            sc["tpl"] = "reelchart"; d.clear(); d.update(reel_compare())
+        elif chart_id == "steady_result":   # 씬26: (병합됨) — deck_plan.json에서 이 페이지 드롭. 폴백용 개별 차트 유지
             sc["tpl"] = "reelchart"; d.clear(); d.update(reel_steady())
     elif tpl == "hbars2":
         sm, sd = SCOMP["smart"], SCOMP["steady"]
@@ -544,6 +564,18 @@ if _esf.exists():
             if _ov:
                 _s["subLines"] = _ov; _n += 1
         print(f"자막 스냅샷 적용(deck_edited_scenes): {_n}씬 · 패널최신 제외 {len(_nf_sids)}")
+        # 씬별 솔리드 배경색(bgcol): GUI에서 지정·💾저장한 배경색을 재빌드에도 유지(자막과 무관하게 항상 적용)
+        _bg_by_sid = {s.get("sid"): s.get("bgcol") for s in _es
+                      if s.get("sid") is not None and s.get("bgcol")}
+        _nb = 0
+        for _i, _s in enumerate(scenes):
+            _bc = _bg_by_sid.get(_s.get("sid"))
+            if _bc is None and _i < len(_es):
+                _bc = _es[_i].get("bgcol")
+            if _bc:
+                _s["bgcol"] = _bc; _nb += 1
+        if _nb:
+            print(f"씬 배경색 적용(bgcol): {_nb}씬")
     except Exception as _e:
         print("자막 스냅샷 적용 실패(무시):", _e)
 

@@ -10,18 +10,18 @@
 
 ## 1. 생성된 예제 10개 · 길이 · 렌더 시간 · 검증 기능
 
-| #   | 예제                    |  길이 | 프레임 |              병렬 렌더 | 컴포넌트                        | 검증한 기능                                          |
-| --- | ----------------------- | ----: | -----: | ---------------------: | ------------------------------- | ---------------------------------------------------- |
-| 01  | Number Hook             |   12s |    360 |                   6.7s | title, caption                  | 헤비폰트, 숫자 교체, pop/fade, 중앙정렬              |
-| 02  | A/B Comparison          |   13s |    390 |                  33.7s | +rectangle                      | 2열 카드, 색대비, 레이어, slide                      |
-| 03  | Multi-Series Line Chart |   14s |    420 |                  51.5s | +line-chart                     | series, yTicks, legend, 공유스케일                   |
-| 04  | Dividend Bar Chart      |   13s |    390 |                  31.0s | +bar-chart                      | bar labels, 기준선, 라벨간격                         |
-| 05  | Person Story            |   13s |    390 |                  27.4s | +character, profile-card        | 캐릭터, 프로필카드, 타임라인, **아바타 placeholder** |
-| 06  | Company Analysis        |   15s |    450 |                  16.5s | +table, topic-circle            | 복합 레이아웃, 표 셀정렬, 차트+카드                  |
-| 07  | Top Five Ranking        | 11.5s |    345 |                  17.0s | title, caption, rectangle       | 반복 컴포넌트, **stagger**, 순위정렬                 |
-| 08  | Compound Growth         |   15s |    450 |                  44.8s | line-chart                      | 숫자교체, 차트+타임라인, 마커, area/easing           |
-| 09  | Question & Answer       |   14s |    420 |                  19.1s | character, speech-bubble        | 말풍선, 캐릭터 배치, Q/A 구분, 강조                  |
-| 10  | Full Showcase           |   20s |    600 | **10.1s** (직렬 28.9s) | title·subtitle·line/bar-chart   | 전 컴포넌트, 자막, 병렬 렌더                         |
+| #   | 예제                    |  길이 | 프레임 |              병렬 렌더 | 컴포넌트                      | 검증한 기능                                          |
+| --- | ----------------------- | ----: | -----: | ---------------------: | ----------------------------- | ---------------------------------------------------- |
+| 01  | Number Hook             |   12s |    360 |                   6.7s | title, caption                | 헤비폰트, 숫자 교체, pop/fade, 중앙정렬              |
+| 02  | A/B Comparison          |   13s |    390 |                  33.7s | +rectangle                    | 2열 카드, 색대비, 레이어, slide                      |
+| 03  | Multi-Series Line Chart |   14s |    420 |                  51.5s | +line-chart                   | series, yTicks, legend, 공유스케일                   |
+| 04  | Dividend Bar Chart      |   13s |    390 |                  31.0s | +bar-chart                    | bar labels, 기준선, 라벨간격                         |
+| 05  | Person Story            |   13s |    390 |                  27.4s | +character, profile-card      | 캐릭터, 프로필카드, 타임라인, **아바타 placeholder** |
+| 06  | Company Analysis        |   15s |    450 |                  16.5s | +table, topic-circle          | 복합 레이아웃, 표 셀정렬, 차트+카드                  |
+| 07  | Top Five Ranking        | 11.5s |    345 |                  17.0s | title, caption, rectangle     | 반복 컴포넌트, **stagger**, 순위정렬                 |
+| 08  | Compound Growth         |   15s |    450 |                  44.8s | line-chart                    | 숫자교체, 차트+타임라인, 마커, area/easing           |
+| 09  | Question & Answer       |   14s |    420 |                  19.1s | character, speech-bubble      | 말풍선, 캐릭터 배치, Q/A 구분, 강조                  |
+| 10  | Full Showcase           |   20s |    600 | **10.1s** (직렬 28.9s) | title·subtitle·line/bar-chart | 전 컴포넌트, 자막, 병렬 렌더                         |
 
 - **렌더 성공 10/10**, 전부 `1080×1920 / 30fps / H.264 / yuv420p`, moov atom 정상, 경고 0.
 - 총 병렬 렌더 시간 ~258s, 총 출력 1.6MB.
