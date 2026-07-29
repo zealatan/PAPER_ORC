@@ -124,7 +124,7 @@ __RCCSS__
 .tpl-reel .rc-ln{stroke-width:3.4}
 .tpl-reel .rc-ax{font-size:27px;font-weight:400;fill:#000}
 .tpl-reel .ytick{stroke:rgba(0,0,0,.22)}
-.tpl-reel .rc-hlab{font-size:27px;font-weight:700;fill:#333;text-anchor:start}
+.tpl-reel .rc-hlab{font-size:40px;font-weight:700;fill:#333;text-anchor:start}
 .tpl-reel .rc-hline{stroke-width:2.8;stroke:#555}
 .tpl-reel .rc-labv{font-size:27px;font-weight:600}
 .tpl-reel .rc-base{stroke:#000}
@@ -183,7 +183,6 @@ body.render #guide{display:none!important}
           <line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text>
           <g class="rc-lines"></g></svg>
       </div></div></div>
-    <div class="hook"></div>
     <div class="legout">__LEGOUT__</div>
   </div>
   <div class="tablebg"><div class="ttl">원금 × 월 인출 <b>결과</b></div>

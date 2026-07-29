@@ -111,7 +111,7 @@ CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') for
 .tpl-reel .rc-logo{height:6.8cqw}   /* 헤더 2배(3.4→6.8cqw) */
 .tpl-reel .rc-ln{stroke-width:3.4}.tpl-reel .rc-ax{font-size:27px;font-weight:400;fill:#000}
 .tpl-reel .ytick{stroke:rgba(0,0,0,.22)}
-.tpl-reel .rc-hlab{font-size:27px;font-weight:700;fill:#333;text-anchor:start}.tpl-reel .rc-hline{stroke-width:2.8;stroke:#555}
+.tpl-reel .rc-hlab{font-size:40px;font-weight:700;fill:#333;text-anchor:start}.tpl-reel .rc-hline{stroke-width:2.8;stroke:#555}
 .tpl-reel .rc-labv{font-size:27px;font-weight:600}.tpl-reel .rc-base{stroke:#000}
 .tpl-reel .rc-tk{font-weight:600;color:#111;font-size:4cqw}.tpl-reel .rc-per{font-weight:400;color:#111;font-size:2.6cqw}   /* 헤더 2배 */
 .tpl-reel,.tpl-reel *,.rc-chart text,.legout,.legout *{font-family:'Pretendard',sans-serif!important}
@@ -128,7 +128,6 @@ TMPL="""<!doctype html><meta charset=utf-8><style>%s</style>
 <svg class="rc-chart" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet" data-rc='%s'>
 <g class="rc-yaxis"></g><g class="rc-xaxis"></g><line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text><g class="rc-lines"></g></svg>
 </div></div></div>
-<div class="hook"></div>
 <div class="legout">__LEGEND__</div>
 <script>%s</script>"""
 
