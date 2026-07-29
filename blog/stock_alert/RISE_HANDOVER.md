@@ -69,6 +69,20 @@ rec/build_short_rise.sh 5 assets/shorts/hook_EU_rise.png shorts/short_EU_rise.mp
 - `rec/gen_outro.py` → `assets/shorts/outro_card.png` (이모지 구독 엔드카드)
 - `assets/shorts/batusil_text.png` (하단 작은 배투실 글자)
 
+## 낙폭(하락) 쇼츠 — 동일 파이프라인 (상승과 대칭)
+낙폭 쇼츠도 상승과 **동급으로 템플릿화**됨(로고·이모지 아웃트로·배투실 텍스트·균일타이밍). 데이터는
+낙폭 스캔 `weekly_scan.py`(→ `data/weekN.json`), 덱은 drawcard(전고점·낙폭·−30% 별표).
+```
+python3 weekly_scan.py --week 31                       # 낙폭 4시장 스캔 → data/week{N}.json
+# 시장별로:
+python3 deck/build_fall_deck.py 미국                    # 단일시장 낙폭 덱(drawcard subHold=5500)
+python3 rec/render_rise.py fall                         # → recordings/rise_raw/*.webm  (slug=fall)
+rec/build_short_fall.sh 5 assets/shorts/hook_US.png shorts/short_US_fall.mp4
+```
+- 훅: `assets/shorts/hook_{ETF,US,KR,EU}.png`(하락📉, `gen_hook.py`계열 · 상승은 `_rise` 접미사).
+- 아웃트로·배투실텍스트·`build_short_fall.sh`(엔진은 build_short_rise.sh 공유) 전부 상승과 동일.
+- 더빙 롱폼용 4시장 덱은 `deck/build_deck.py`(그대로) — 쇼츠 덱과 별개.
+
 ## 주의(gotcha)
 - **통화**: tickers_eu.csv는 EU 전 종목을 EUR로 잘못 기재. 실제 통화는 asset_size.csv `source_currency`. rise_scan이 이걸로 환산. GBp(런던): 시총=파운드(×GBP), 가격=펜스(÷100×GBP).
 - **타이밍**: 덱은 자막길이로 씬전환 → 종목명 편차로 불균등. risecard `subHold=5500` 으로 균일화함. 바꾸면 `build_short_rise.sh` 의 `CARD` 도 같이.
