@@ -14,11 +14,14 @@ ACCUM=r"""
 function accumAnim(root){
   var svg=root.querySelector('.rc-chart'); if(!svg) return;
   var cfg=JSON.parse(svg.getAttribute('data-rc'));
-  var W=960,H=960,ML=64,MR=176,MT=132,MB=74,x0=2000,KRW=cfg.krw,P=cfg.principals,DUR=cfg.dur,HOLD=cfg.hold;
-  var start=[],acc=0; for(var i=0;i<P.length;i++){start[i]=acc;acc+=DUR[i]+HOLD[i];} var INTRO=cfg.intro||0; var TOTAL=INTRO+acc;
+  var W=960,H=960,ML=50,MR=140,MT=132,MB=74,x0=2000,KRW=cfg.krw,P=cfg.principals,DUR=cfg.dur,HOLD=cfg.hold;   /* 카드 aspect1.125→차트 960px(양옆 종이60px). 내부여백 ML/MR(끝점라벨 프레임 안) */
+  var TRANS=cfg.trans||0;   /* 원금 전환(카운트업) 시간 */
+  var start=[],acc=0; for(var i=0;i<P.length;i++){start[i]=acc;acc+=DUR[i]+HOLD[i]+(i<P.length-1?TRANS:0);} var INTRO=cfg.intro||0; var TOTAL=INTRO+acc;
   var endX=P.map(function(p){return p.lines.reduce(function(m,l){var e=l.pts[l.pts.length-1][0];return e>m?e:m;},x0+1);});
   var prevExt=[],mx=0; for(var i=0;i<P.length;i++){prevExt[i]=mx; if(endX[i]>mx)mx=endX[i];}
   var allDead=P.map(function(p){return p.lines.every(function(l){return !l.surv;});});
+  var vmaxUpTo=[]; (function(){var m=0;for(var _u=0;_u<P.length;_u++){P[_u].lines.forEach(function(l){for(var k=0;k<l.pts.length;k++){if(l.pts[k][1]>m)m=l.pts[k][1];}});vmaxUpTo[_u]=m;}})();   /* 원금 0..i 누적 최대값 */
+  var extentUpTo=[]; for(var _u=0;_u<P.length;_u++){extentUpTo[_u]=Math.max(prevExt[_u],endX[_u]);}   /* 원금 0..i 최대 x범위 */
   var NS='http://www.w3.org/2000/svg';
   function mk(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
   var ya=svg.querySelector('.rc-yaxis'),xa=svg.querySelector('.rc-xaxis'),lg=svg.querySelector('.rc-lines');
@@ -58,10 +61,22 @@ function accumAnim(root){
     t.appendChild(tsp('생존','#2b8a3e'));t.appendChild(tsp(' or ','#8a929e'));t.appendChild(tsp('파산','#c2255c'));
     stampHook.appendChild(o);stampHook.appendChild(ii);stampHook.appendChild(t);})();
   svg.appendChild(stampHook);
+  function drawTrans(i,tp){   /* 원금 i→i+1 전환: y축 재스케일 + 은퇴원금 숫자 카운트업(라인은 회색으로 하강) */
+    var hv=P[i].hline.v+tp*(P[i+1].hline.v-P[i].hline.v);
+    Rx=extentUpTo[i]; YMAX=Math.max(vmaxUpTo[i],hv)*1.15;
+    lg.innerHTML='';ya.innerHTML='';xa.innerHTML='';
+    var step=nstep(YMAX/4);
+    for(var v=step;v<=YMAX+1;v+=step){if(Math.abs(v-hv)<step*0.25)continue;var yy=Y(v);ya.appendChild(mk('line',{x1:ML,y1:yy,x2:W-MR,y2:yy,'class':'ytick'}));var tx=mk('text',{x:ML+2,y:yy-7,'class':'rc-ax rc-al'});tx.setAttribute('font-size','27');tx.setAttribute('text-anchor','start');tx.textContent=fmtY(v);ya.appendChild(tx);}
+    var span=Rx-x0,st=yearStep(span),first=Math.ceil(x0/st)*st;
+    for(var yr=first;yr<=Rx+0.01;yr+=st){var t2=mk('text',{x:X(yr),y:H-MB+22,'class':'rc-ax rc-axx'});t2.textContent=String(yr);xa.appendChild(t2);}
+    for(var g=0;g<=i;g++){P[g].lines.forEach(function(l){var d='M'+l.pts.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke='#bdb8b0';p.style.strokeWidth='3';p.style.opacity='0.7';lg.appendChild(p);});}
+    var hy=Y(hv);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent='은퇴 원금 '+fmtY(hv);
+    stampBust.style.display='none';stampSurv.style.display='none';stampHook.style.display='none';
+  }
   function draw(t){
     var intro=t<INTRO, i, lt, pr;
     if(intro){i=P.length-1;lt=DUR[i];pr=1;}   /* 훅: 마지막 원금 기준 전체 라인 표시 */
-    else{var tt=t-INTRO;i=0;while(i<P.length-1&&tt>=start[i+1])i++;lt=tt-start[i];pr=lt<=DUR[i]?lt/DUR[i]:1;}
+    else{var tt=t-INTRO;i=0;while(i<P.length-1&&tt>=start[i+1])i++;lt=tt-start[i];var _he=DUR[i]+HOLD[i];if(i<P.length-1&&lt>_he){drawTrans(i,Math.min(1,(lt-_he)/TRANS));return;}pr=lt<=DUR[i]?lt/DUR[i]:1;}
     var R=(x0+0.3)+pr*(endX[i]-(x0+0.3));
     Rx=Math.max(R,prevExt[i]);
     var vmax=P[i].hline?P[i].hline.v:0, ghosts=[], active=[];
@@ -100,7 +115,7 @@ function accumAnim(root){
 
 CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') format('woff2')}
 *{margin:0;box-sizing:border-box}body{width:1080px;height:1920px;background:#000;font-family:'Pretendard',sans-serif;position:relative;overflow:hidden}
-.graphbox{position:absolute;left:0;right:0;top:50%%;transform:translateY(-50%%);aspect-ratio:1/1;container-type:size}
+.graphbox{position:absolute;left:0;right:0;top:22%%;aspect-ratio:1.125/1;container-type:size}
 .tophdr{position:absolute;top:14%%;left:50%%;transform:translateX(-50%%);display:flex;align-items:center;gap:26px}
 .toplogo{height:104px;width:auto;filter:brightness(0) invert(1)}
 .toptitle{color:#fff;font-weight:900;font-size:5.2cqw;letter-spacing:-.02em;white-space:nowrap}
@@ -183,8 +198,10 @@ def build_principals():
 
 ACCUM_DATA={"krw":_KRW,"principals":build_principals(),
             "dur":[4500,5500,8000,7000,9000],"hold":[1100,1100,700,700,2200],
-            "intro":3000}   # 썸네일 직후: 전체 라인 회색 훅(3초·생존 or 파산 스탬프) → 이후 누적으로 전개
-ACCUM_TOTAL_MS=ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])   # build 녹화 길이 참조
+            "intro":3000,   # 썸네일 직후: 전체 라인 회색 훅(3초) → 이후 누적으로 전개
+            "trans":700}    # 원금 전환: 은퇴원금 숫자 카운트업 + y축 재스케일
+ACCUM_TOTAL_MS=(ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])
+                +max(0,len(ACCUM_DATA["dur"])-1)*ACCUM_DATA.get("trans",0))   # build 녹화 길이 참조
 
 if __name__=="__main__":   # 직접 실행 시에만 쇼츠 HTML 생성(모듈 import 시 부작용 없음)
     _hdr=(TMPL.replace("__LOGOVB__",LOGOVB).replace("__LOGO__",LOGO).replace("__TITLE__",TITLE)

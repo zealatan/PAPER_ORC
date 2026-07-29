@@ -113,7 +113,7 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 #guide .cy{position:absolute;top:50%;left:0;right:0;height:0;border-top:1px dashed rgba(0,229,255,.75)}
 /* --- 차트 배경(그래프 슬라이드) --- */
 .reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
-.graphbox{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:1/1;container-type:size}
+.graphbox{position:absolute;left:0;right:0;top:22%;aspect-ratio:1.125/1;container-type:size}
 .reelbg .tophdr{position:absolute;top:14%;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2.4cqw;z-index:6}
 .reelbg .toplogo{height:9.6cqw;width:auto;filter:brightness(0) invert(1)}
 .reelbg .toptitle{color:#fff;font-weight:900;font-size:5.2cqw;letter-spacing:-.02em;white-space:nowrap}
