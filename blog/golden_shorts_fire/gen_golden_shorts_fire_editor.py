@@ -115,6 +115,7 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 .reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
 .graphbox{position:absolute;left:0;right:0;top:22%;aspect-ratio:1.125/1;container-type:size}
 .reelbg .tophdr{position:absolute;top:14%;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2.4cqw;z-index:6}
+.reelbg .btsmark{position:absolute;top:28.5%;right:8%;width:6.5%;opacity:.85;z-index:7}
 .reelbg .toplogo{height:9.6cqw;width:auto;filter:brightness(0) invert(1)}
 .reelbg .toptitle{color:#fff;font-weight:900;font-size:5.2cqw;letter-spacing:-.02em;white-space:nowrap}
 __RCCSS__
@@ -187,6 +188,7 @@ body.render #guide{display:none!important}
           <g class="rc-lines"></g></svg>
       </div></div></div>
     <div class="legout">__LEGOUT__</div>
+    <img class="btsmark" src="__BADGE__" alt="">
   </div>
   <div class="tablebg"><div class="ttl">원금 × 월 인출 <b>결과</b></div>
     <div class="card"><table>
@@ -315,6 +317,7 @@ out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGOVB__', LOGOVB).replace
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
            .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT).replace('__HDRTITLE__', HDRTITLE)
            .replace('__M0__', T.MOS[0]).replace('__M1__', T.MOS[1]).replace('__M2__', T.MOS[2])
-           .replace('__TROWS__', T.ROWS).replace('__TNOTE__', T.NOTE))
+           .replace('__TROWS__', T.ROWS).replace('__TNOTE__', T.NOTE)
+           .replace('__BADGE__', assets['BADGE']))
 open(OUT, "w", encoding="utf-8").write(out)
 print("wrote", OUT, "(STOCK=%s)" % STOCK, round(len(out) / 1024), "KB")

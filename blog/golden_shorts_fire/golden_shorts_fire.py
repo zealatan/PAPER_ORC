@@ -27,6 +27,9 @@ function accumAnim(root){
   var ya=svg.querySelector('.rc-yaxis'),xa=svg.querySelector('.rc-xaxis'),lg=svg.querySelector('.rc-lines');
   var hl=svg.querySelector('.rc-hline'),hlb=svg.querySelector('.rc-hlab'),_bs=svg.querySelector('.rc-base');
   if(_bs){_bs.setAttribute('x1',ML);_bs.setAttribute('x2',W-MR);_bs.setAttribute('y1',H-MB);_bs.setAttribute('y2',H-MB);}
+  /* 은퇴원금 라벨 형광펜(노란 밴드, 텍스트 뒤) */
+  var hlmark=mk('rect',{rx:6});hlmark.style.fill='#ffe14d';hlmark.style.opacity='0.62';hlmark.style.pointerEvents='none';if(hlb&&hlb.parentNode)hlb.parentNode.insertBefore(hlmark,hlb);
+  function markHl(show){if(!show){hlmark.style.display='none';return;}var bb;try{bb=hlb.getBBox();}catch(e){hlmark.style.display='none';return;}if(!bb||!bb.width){hlmark.style.display='none';return;}hlmark.style.display='';hlmark.setAttribute('x',(bb.x-9).toFixed(1));hlmark.setAttribute('y',(bb.y+bb.height*0.16).toFixed(1));hlmark.setAttribute('width',(bb.width+18).toFixed(1));hlmark.setAttribute('height',(bb.height*0.78).toFixed(1));}
   var hookEl=root.parentNode.querySelector('.hook')||document.querySelector('.hook');
   var YMAX=1,Rx=x0+1;
   function X(y){return ML+(y-x0)/(Rx-x0)*(W-ML-MR);}
@@ -70,7 +73,7 @@ function accumAnim(root){
     var span=Rx-x0,st=yearStep(span),first=Math.ceil(x0/st)*st;
     for(var yr=first;yr<=Rx+0.01;yr+=st){var t2=mk('text',{x:X(yr),y:H-MB+22,'class':'rc-ax rc-axx'});t2.textContent=String(yr);xa.appendChild(t2);}
     for(var g=0;g<=i;g++){P[g].lines.forEach(function(l){var d='M'+l.pts.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke='#bdb8b0';p.style.strokeWidth='3';p.style.opacity='0.7';lg.appendChild(p);});}
-    var hy=Y(hv);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent='은퇴 원금 '+fmtY(hv);
+    var hy=Y(hv);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent='은퇴 원금 '+fmtY(hv);markHl(true);
     stampBust.style.display='none';stampSurv.style.display='none';stampHook.style.display='none';
   }
   function draw(t){
@@ -98,8 +101,8 @@ function accumAnim(root){
       var val=o.l.surv?fmtY(lp[1]):(ended?(KRW?'₩0':'$0'):fmtY(lp[1]));   /* 생존선=현재 가격 / 파산선=$0 */
       var tv=mk('text',{x:Math.min(ex+9,W-MR+2),y:ey+6,'class':'rc-lab rc-labv'});tv.setAttribute('font-size','23');tv.setAttribute('text-anchor','start');tv.style.fill=o.l.c;tv.textContent=val;lg.appendChild(tv);_lab.push({tv:tv,x:ex+9,y0:ey+6});});
     _lab.sort(function(a,b){return a.x-b.x;});var pxr=-1e9,row=0;for(var k=0;k<_lab.length;k++){var b=_lab[k];row=(b.x-pxr<92)?row+1:0;b.tv.setAttribute('y',b.y0-row*30);pxr=b.x;}
-    if(intro){hl.style.display='none';hlb.style.opacity='0';}
-    else{var hy=Y(P[i].hline.v);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent=P[i].hline.label;}
+    if(intro){hl.style.display='none';hlb.style.opacity='0';markHl(false);}
+    else{var hy=Y(P[i].hline.v);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent=P[i].hline.label;markHl(true);}
     var stampG=allDead[i]?stampBust:stampSurv, stampOff=allDead[i]?stampSurv:stampBust;
     stampOff.style.display='none';
     if(!allDead[i]&&stampSurv._exp)stampSurv._exp.textContent='생활비 '+(P[i].survmo||'');
@@ -117,6 +120,7 @@ CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') for
 *{margin:0;box-sizing:border-box}body{width:1080px;height:1920px;background:#000;font-family:'Pretendard',sans-serif;position:relative;overflow:hidden}
 .graphbox{position:absolute;left:0;right:0;top:22%%;aspect-ratio:1.125/1;container-type:size}
 .tophdr{position:absolute;top:14%%;left:50%%;transform:translateX(-50%%);display:flex;align-items:center;gap:26px}
+.btsmark{position:absolute;top:28.5%%;right:8%%;width:6.5%%;opacity:.85;z-index:7}   /* 배투실 마크(그래프 우상단·범례 아래·오른쪽 여백) */
 .toplogo{height:104px;width:auto;filter:brightness(0) invert(1)}
 .toptitle{color:#fff;font-weight:900;font-size:5.2cqw;letter-spacing:-.02em;white-space:nowrap}
 %s
@@ -144,12 +148,14 @@ TMPL="""<!doctype html><meta charset=utf-8><style>%s</style>
 <svg class="rc-chart" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet" data-rc='%s'>
 <g class="rc-yaxis"></g><g class="rc-xaxis"></g><line class="rc-base"/><line class="rc-hline" x1="70" x2="780" style="display:none"/><text class="rc-hlab" x="780"></text><g class="rc-lines"></g></svg>
 </div></div></div>
+<img class="btsmark" src="__BADGE__" alt="">
 <div class="legout">__LEGEND__</div>
 <script>%s</script>"""
 
 # paper texture base64 (재사용)
 paper_b64=open(HERE+"/assets/paper_b64.txt").read().strip()
 paper_uri="data:image/jpeg;base64,"+paper_b64 if not paper_b64.startswith("data:") else paper_b64
+BADGE=json.load(open(HERE+"/assets/assets.json")).get("BADGE","")   # 배투실 마크(우상단 워터마크)
 
 CSS_F=CSS%(FONTSRC,rc_css,paper_uri)
 CMAP={"#1f6fe0":"#2b6cb0","#e0821c":"#d98f2b","#e01e37":"#c2255c"}
@@ -204,7 +210,7 @@ ACCUM_TOTAL_MS=(ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA[
                 +max(0,len(ACCUM_DATA["dur"])-1)*ACCUM_DATA.get("trans",0))   # build 녹화 길이 참조
 
 if __name__=="__main__":   # 직접 실행 시에만 쇼츠 HTML 생성(모듈 import 시 부작용 없음)
-    _hdr=(TMPL.replace("__LOGOVB__",LOGOVB).replace("__LOGO__",LOGO).replace("__TITLE__",TITLE)
+    _hdr=(TMPL.replace("__LOGOVB__",LOGOVB).replace("__LOGO__",LOGO).replace("__TITLE__",TITLE).replace("__BADGE__",BADGE)
               .replace("__COMPANY__",COMPANY).replace("__SUB__",SUB).replace("__LEGEND__",LEGEND))
     data=json.dumps(ACCUM_DATA,ensure_ascii=False).replace("'","&#39;")
     html=_hdr%(CSS_F,data,ACCUM)
