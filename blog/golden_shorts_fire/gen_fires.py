@@ -42,15 +42,23 @@ def csv_series(prefix):
     close.index = pd.to_datetime(close.index).tz_localize(None); div.index = pd.to_datetime(div.index).tz_localize(None)
     return close, div
 
+START_YEAR = {"SCHD": 2015}.get(STOCK, 2000)   # 종목별 은퇴 시작연도(기본 2000)
+
 # ── 종목 설정 ──
 if STOCK == "PG":
     close, div = csv_series("pg"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "QQQ":
     close, div = yf_series("QQQ"); cpi = us_cpi(); KRW = False; TAX = 15.0
+elif STOCK == "SCHD":
+    close, div = yf_series("SCHD"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "KTNG":
     close, div = yf_series("033780.KS"); cpi = kr_cpi(); KRW = True; TAX = 15.4
 else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
+
+# 시작연도 필터(2000 초과 시)
+_sy = pd.Timestamp(START_YEAR, 1, 1)
+close = close[close.index >= _sy]; div = div[div.index >= _sy]
 
 if KRW:
     PRIN = [2, 4, 6, 8, 10]; PRIN = [p * 100_000_000 for p in PRIN]; MOS = [1_000_000, 2_000_000, 3_000_000]; CMAP = CMAP_KRW
@@ -67,7 +75,7 @@ def to_year(d):
 def scen(init, mo):
     r = run_fire_backtest(close, div, init, annual_withdrawal=mo * 12, strategy="fixed_real",
         frequency="monthly", tax_rate_pct=TAX, reinvest_dividends=False, reinvest_surplus=True,
-        cpi=cpi, start_date=date(2000, 1, 1))
+        cpi=cpi, start_date=date(START_YEAR, 1, 1))
     s = r.summary; tl = r.timeline_df.copy(); tl["Date"] = pd.to_datetime(tl["Date"]); tl["ym"] = tl["Date"].dt.to_period("M")
     m = tl.groupby("ym").last().reset_index(drop=True)
     pts = [[to_year(x["Date"]), round(x["Portfolio Value"])] for _, x in m.iloc[::3].iterrows()]
@@ -95,13 +103,13 @@ for init in PRIN:
         row.append(("생존 " + money(fin)) if surv else ("파산 " + str(dep)))
     ymax = nice_ceil(mx * 1.05)
     pd_ = {"ymax": ymax, "hline": {"v": init, "label": "은퇴 원금 " + hnum(init)},
-           "tip": "compact", "yleft": True, "lines": lines}
+           "tip": "compact", "yleft": True, "x0": START_YEAR, "lines": lines}
     if KRW: pd_["krw"] = True
     if init == PRIN[0]: pd_["ylabelmin"] = ymax   # 최소원금: y숫자 숨김(기준선만)
     fires.append({"amt": init, "hook": hnum(init), "payload": pd_})   # hook=순수 금액(예 $200,000 / 2억)
     print("  %-10s %s" % (hnum(init), " · ".join(row)))
 
-pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng"}[STOCK]
+pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd"}[STOCK]
 out = os.path.join(HERE, "assets", pref + "_fires.json")
 json.dump(fires, open(out, "w"), ensure_ascii=False)
 print("→", out, "(원금", len(fires), "종)")

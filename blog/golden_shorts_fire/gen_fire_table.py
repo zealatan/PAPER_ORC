@@ -29,7 +29,8 @@ for f in F:
     tds = "".join(cell(l) for l in f["payload"]["lines"])
     ROWS += '<tr><td class="pr">%s</td>%s</tr>\n' % (hnum(f["amt"]), tds)
 
-NOTE = "2000년 은퇴 · 물가반영 인출 · 세금 15% · ✅=30년 생존 최종액 / 파산=고갈 연도"
+_yr = int(F[0]["payload"].get("x0", 2000))
+NOTE = "%d년 은퇴 · 물가반영 인출 · 세금 15%% · ✅=생존 최종액 / 파산=고갈 연도" % _yr
 
 def table_html():   # 독립 페이지(1080×1920, px)
     return """<!doctype html><meta charset=utf-8><style>

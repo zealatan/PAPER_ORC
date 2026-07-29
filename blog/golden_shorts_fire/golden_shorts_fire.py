@@ -14,7 +14,7 @@ ACCUM=r"""
 function accumAnim(root){
   var svg=root.querySelector('.rc-chart'); if(!svg) return;
   var cfg=JSON.parse(svg.getAttribute('data-rc'));
-  var W=960,H=960,ML=50,MR=140,MT=132,MB=74,x0=2000,KRW=cfg.krw,P=cfg.principals,DUR=cfg.dur,HOLD=cfg.hold;   /* 카드 aspect1.125→차트 960px(양옆 종이60px). 내부여백 ML/MR(끝점라벨 프레임 안) */
+  var W=960,H=960,ML=50,MR=140,MT=132,MB=74,x0=(cfg.x0||2000),KRW=cfg.krw,P=cfg.principals,DUR=cfg.dur,HOLD=cfg.hold;   /* 카드 aspect1.125→차트 960px. x0=종목별 시작연도 */
   var TRANS=cfg.trans||0;   /* 원금 전환(카운트업) 시간 */
   var start=[],acc=0; for(var i=0;i<P.length;i++){start[i]=acc;acc+=DUR[i]+HOLD[i]+(i<P.length-1?TRANS:0);} var INTRO=cfg.intro||0; var TOTAL=INTRO+acc;
   var endX=P.map(function(p){return p.lines.reduce(function(m,l){var e=l.pts[l.pts.length-1][0];return e>m?e:m;},x0+1);});
@@ -22,6 +22,7 @@ function accumAnim(root){
   var allDead=P.map(function(p){return p.lines.every(function(l){return !l.surv;});});
   var vmaxUpTo=[]; (function(){var m=0;for(var _u=0;_u<P.length;_u++){P[_u].lines.forEach(function(l){for(var k=0;k<l.pts.length;k++){if(l.pts[k][1]>m)m=l.pts[k][1];}});vmaxUpTo[_u]=m;}})();   /* 원금 0..i 누적 최대값 */
   var extentUpTo=[]; for(var _u=0;_u<P.length;_u++){extentUpTo[_u]=Math.max(prevExt[_u],endX[_u]);}   /* 원금 0..i 최대 x범위 */
+  var _years=Math.max(1,Math.round(Math.max.apply(null,endX)-x0));   /* 은퇴 기간(년) — 인트로 훅 문구용 */
   var NS='http://www.w3.org/2000/svg';
   function mk(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
   var ya=svg.querySelector('.rc-yaxis'),xa=svg.querySelector('.rc-xaxis'),lg=svg.querySelector('.rc-lines');
@@ -92,7 +93,7 @@ function accumAnim(root){
     var span=Rx-x0,st=yearStep(span),first=Math.ceil(x0/st)*st;
     for(var yr=first;yr<=Rx+0.01;yr+=st){var t2=mk('text',{x:X(yr),y:H-MB+22,'class':'rc-ax rc-axx'});t2.textContent=String(yr);xa.appendChild(t2);}
     ghosts.forEach(function(l){var d='M'+l.pts.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke='#bdb8b0';p.style.strokeWidth='3';p.style.opacity=intro?'0.55':'0.7';lg.appendChild(p);
-      if(l.surv&&!intro){var gp=l.pts[l.pts.length-1],gx=X(gp[0]),gy=Y(gp[1]);var gt=mk('text',{x:Math.min(gx+9,W-MR+2),y:gy+6,'class':'rc-lab'});gt.setAttribute('font-size','23');gt.setAttribute('text-anchor','start');gt.style.fill='#8a857c';gt.textContent=l.plab;lg.appendChild(gt);}});
+      if(l.plab&&!intro){var gp=l.pts[l.pts.length-1],gx=X(gp[0]),gy=Y(gp[1]);var gt=mk('text',{x:Math.min(gx+9,W-MR+2),y:gy+6,'class':'rc-lab'});gt.setAttribute('font-size','23');gt.setAttribute('text-anchor','start');gt.style.fill='#8a857c';gt.textContent=l.plab;lg.appendChild(gt);}});
     var _lab=[];
     active.forEach(function(o){var d='M'+o.arr.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var p=mk('path',{d:d,'class':'rc-ln'});p.style.stroke=intro?'#bdb8b0':o.l.c;p.style.strokeWidth=intro?'3':'4';if(intro)p.style.opacity='0.55';lg.appendChild(p);
       if(intro)return;   /* 훅: 점·라벨 없음(회색 미스터리) */
@@ -109,7 +110,7 @@ function accumAnim(root){
     if(!intro&&lt>DUR[i]){var sp=Math.max(0,Math.min(1,(lt-DUR[i])/450));var e3=1-Math.pow(1-sp,3);stampG.style.display='';stampG.style.opacity=Math.min(1,sp*1.8).toFixed(3);stampG.style.transform='rotate(-12deg) scale('+(1.55-0.55*e3).toFixed(3)+')';}
     else{stampG.style.display='none';}
     stampHook.style.display='none';   /* 후킹 스탬프 미사용 */
-    if(hookEl)hookEl.innerHTML=intro?'30년 뒤, <b>살아남는 원금</b>은?':P[i].hook;
+    if(hookEl)hookEl.innerHTML=intro?(_years+'년 뒤, <b>살아남는 원금</b>은?'):P[i].hook;
   }
   var t0=null;function run(ts){if(!svg.isConnected)return;if(t0===null)t0=ts;var t=ts-t0;if(t>TOTAL)t=TOTAL;draw(t);if(t<TOTAL)requestAnimationFrame(run);}
   draw(0);requestAnimationFrame(run);
@@ -162,7 +163,7 @@ CMAP={"#1f6fe0":"#2b6cb0","#e0821c":"#d98f2b","#e01e37":"#c2255c"}
 
 # 파이어 데이터(원금 5종) — 엔진 산출(gen_fires.py). 편집기·테이블 생성기도 재사용.
 _STOCK=os.environ.get("SHORTS_STOCK","PG")
-_PREF={"PG":"pg","QQQ":"qqq","KTNG":"ktng"}.get(_STOCK,"pg")
+_PREF={"PG":"pg","QQQ":"qqq","KTNG":"ktng","SCHD":"schd"}.get(_STOCK,"pg")
 FIRES=json.load(open(HERE+"/assets/%s_fires.json"%_PREF))   # [{amt, hook(순수 금액), payload}]
 _KRW=bool(FIRES[0]["payload"].get("krw"))
 
@@ -171,6 +172,8 @@ SUB="2000년 은퇴 · 물가반영 · 월 인출액별"
 if _STOCK=="QQQ":
     _qlg="data:image/png;base64,"+base64.b64encode(open(HERE+"/assets/qqq_logo.png","rb").read()).decode()
     LOGO='<image href="%s" x="0" y="0" width="1280" height="1089"/>'%_qlg; LOGOVB="0 0 1280 1089"; COMPANY="나스닥100 (QQQ) · 운용 Invesco"; TITLE="QQQ 나스닥 100"
+elif _STOCK=="SCHD":
+    LOGO='<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" font-weight="900" font-size="52" fill="#1b3660">SCHD</text>'; LOGOVB="0 0 200 87.021"; COMPANY="SCHD · 슈왑 미국배당"; TITLE="미국배당 다우존스100"
 elif _STOCK=="KTNG":
     LOGO=logo; LOGOVB="0 0 200 87.021"; COMPANY="KT&G (033780)"; TITLE="KT&amp;G 케이티앤지"
 else:
@@ -194,9 +197,10 @@ def build_principals():
     for idx,f in enumerate(FIRES):
         lines=f["payload"]["lines"]                                # 순서: 월1천·2천·3천(오름차순)
         survs=[j for j,l in enumerate(lines) if l.get("surv")]
-        # 모든 인출선 전부 그림(생존선+높은인출 파산선). 생존선만 고스트에 원금 라벨(plab).
-        out=[{"c":l["c"],"surv":l.get("surv",False),"pts":l["pts"],
-              "plab":(_plab(f["amt"]) if l.get("surv") else "")} for l in lines]
+        # 모든 인출선 전부 그림(생존선+높은인출 파산선). 고스트 원금 라벨(plab)은 원금당 최상위 생존선 1개만(라벨 범벅 방지).
+        _topj = max(survs, key=lambda j: lines[j]["pts"][-1][1]) if survs else -1
+        out=[{"c":lines[j]["c"],"surv":lines[j].get("surv",False),"pts":lines[j]["pts"],
+              "plab":(_plab(f["amt"]) if j==_topj else "")} for j in range(len(lines))]
         ps.append({"hook":"%d. 은퇴원금 <b>%s</b>"%(idx+1,f["hook"]),
                    "hline":f["payload"]["hline"],"lines":out,
                    "survmo":(MOAMT[max(survs)] if survs else "")})   # 생존 스탬프 생활비=최대 생존 인출
@@ -204,6 +208,7 @@ def build_principals():
 
 ACCUM_DATA={"krw":_KRW,"principals":build_principals(),
             "dur":[4500,5500,8000,7000,9000],"hold":[1100,1100,700,700,2200],
+            "x0":int(FIRES[0]["payload"].get("x0",2000)),   # 종목별 은퇴 시작연도
             "intro":3000,   # 썸네일 직후: 전체 라인 회색 훅(3초) → 이후 누적으로 전개
             "trans":700}    # 원금 전환: 은퇴원금 숫자 카운트업 + y축 재스케일
 ACCUM_TOTAL_MS=(ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])
