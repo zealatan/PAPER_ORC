@@ -164,7 +164,7 @@ CMAP={"#1f6fe0":"#2b6cb0","#e0821c":"#d98f2b","#e01e37":"#c2255c"}
 
 # 파이어 데이터(원금 5종) — 엔진 산출(gen_fires.py). 편집기·테이블 생성기도 재사용.
 _STOCK=os.environ.get("SHORTS_STOCK","PG")
-_PREF={"PG":"pg","QQQ":"qqq","KTNG":"ktng","SCHD":"schd","SPY":"spy"}.get(_STOCK,"pg")
+_PREF={"PG":"pg","QQQ":"qqq","KTNG":"ktng","SCHD":"schd","SPY":"spy","MO":"mo"}.get(_STOCK,"pg")
 FIRES=json.load(open(HERE+"/assets/%s_fires.json"%_PREF))   # [{amt, hook(순수 금액), payload}]
 _KRW=bool(FIRES[0]["payload"].get("krw"))
 
@@ -173,6 +173,8 @@ SUB="2000년 은퇴 · 물가반영 · 월 인출액별"
 if _STOCK=="QQQ":
     _qlg="data:image/png;base64,"+base64.b64encode(open(HERE+"/assets/qqq_logo.png","rb").read()).decode()
     LOGO='<image href="%s" x="0" y="0" width="1280" height="1089"/>'%_qlg; LOGOVB="0 0 1280 1089"; COMPANY="나스닥100 (QQQ) · 운용 Invesco"; TITLE="QQQ 나스닥 100"
+elif _STOCK=="MO":
+    LOGO='<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" font-weight="900" font-size="52" fill="#1b3660">MO</text>'; LOGOVB="0 0 200 87.021"; COMPANY="알트리아 (MO)"; TITLE="알트리아"
 elif _STOCK=="SPY":
     LOGO='<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" font-weight="900" font-size="52" fill="#1b3660">SPY</text>'; LOGOVB="0 0 200 87.021"; COMPANY="S&P 500 · SPDR"; TITLE="S&P 500 지수"
 elif _STOCK=="SCHD":

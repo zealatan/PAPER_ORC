@@ -51,6 +51,8 @@ elif STOCK == "QQQ":
     close, div = yf_series("QQQ"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "SPY":
     close, div = yf_series("SPY"); cpi = us_cpi(); KRW = False; TAX = 15.0
+elif STOCK == "MO":
+    close, div = yf_series("MO"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "SCHD":
     close, div = yf_series("SCHD"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "KTNG":
@@ -111,7 +113,7 @@ for init in PRIN:
     fires.append({"amt": init, "hook": hnum(init), "payload": pd_})   # hook=순수 금액(예 $200,000 / 2억)
     print("  %-10s %s" % (hnum(init), " · ".join(row)))
 
-pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy"}[STOCK]
+pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy", "MO": "mo"}[STOCK]
 out = os.path.join(HERE, "assets", pref + "_fires.json")
 json.dump(fires, open(out, "w"), ensure_ascii=False)
 print("→", out, "(원금", len(fires), "종)")
