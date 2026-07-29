@@ -130,7 +130,7 @@ __RCCSS__
 .tpl-reel .rc-tk{font-weight:600;color:#111;font-size:4cqw}.tpl-reel .rc-per{font-weight:400;color:#111;font-size:2.6cqw}   /* 헤더 2배 */
 .tpl-reel,.tpl-reel *,.rc-chart text{font-family:'Pretendard','Noto Sans KR',sans-serif!important}
 /* 훅(누적 애니가 원금별 갱신) */
-.reelbg .hook{position:absolute;left:0;right:0;top:20%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em;z-index:6}.reelbg .hook b{color:#d12e77}
+.reelbg .hook{position:absolute;left:0;right:0;top:67%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em;z-index:6}.reelbg .hook b{color:#d12e77}   /* 그래프 카드 바로 아래 */
 /* 범례: 그래프 밖(카드 위) */
 .legout{position:absolute;left:0;right:0;top:28%;display:flex;justify-content:center;gap:4.5cqw;z-index:5}
 .legout .lg{display:flex;align-items:center;gap:1.1cqw;color:#e8e6e0;font-weight:500;font-size:3cqw}

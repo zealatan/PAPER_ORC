@@ -114,7 +114,7 @@ CSS="""@font-face{font-family:'Pretendard';font-weight:100 900;src:url('%s') for
 .tpl-reel .rc-labv{font-size:18px;font-weight:600}.tpl-reel .rc-base{stroke:#000}
 .tpl-reel .rc-tk{font-weight:600;color:#111;font-size:4cqw}.tpl-reel .rc-per{font-weight:400;color:#111;font-size:2.6cqw}   /* 헤더 2배 */
 .tpl-reel,.tpl-reel *,.rc-chart text,.legout,.legout *{font-family:'Pretendard',sans-serif!important}
-.hook{position:absolute;left:0;right:0;top:20%%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em}.hook b{color:#d12e77}
+.hook{position:absolute;left:0;right:0;top:67%%;text-align:center;color:#fff;font-weight:900;font-size:7cqw;letter-spacing:-.02em}.hook b{color:#d12e77}   /* 그래프 카드 바로 아래 */
 .legout{position:absolute;left:0;right:0;top:28%%;display:flex;justify-content:center;gap:4.5cqw;z-index:5}
 .legout .lg{display:flex;align-items:center;gap:1.1cqw;color:#e8e6e0;font-weight:500;font-size:3cqw}
 .legout .sw{width:2.8cqw;height:2.8cqw;border-radius:.4cqw}"""
