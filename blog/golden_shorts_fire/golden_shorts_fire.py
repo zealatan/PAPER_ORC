@@ -29,7 +29,8 @@ function accumAnim(root){
   var hl=svg.querySelector('.rc-hline'),hlb=svg.querySelector('.rc-hlab'),_bs=svg.querySelector('.rc-base');
   if(_bs){_bs.setAttribute('x1',ML);_bs.setAttribute('x2',W-MR);_bs.setAttribute('y1',H-MB);_bs.setAttribute('y2',H-MB);}
   /* 은퇴원금 라벨 형광펜(노란 밴드, 텍스트 뒤) */
-  var hlmark=mk('rect',{rx:6});hlmark.style.fill='#ffe14d';hlmark.style.opacity='0.62';hlmark.style.pointerEvents='none';if(hlb&&hlb.parentNode)hlb.parentNode.insertBefore(hlmark,hlb);
+  var hlmark=mk('rect',{rx:6});hlmark.style.fill='#ffe14d';hlmark.style.pointerEvents='none';   /* 불투명(형광펜) */
+  if(hl)svg.appendChild(hl);svg.appendChild(hlmark);if(hlb)svg.appendChild(hlb);   /* 은퇴원금 라인·형광·글씨를 데이터 선들 위(최상위)로 */
   function markHl(show){if(!show){hlmark.style.display='none';return;}var bb;try{bb=hlb.getBBox();}catch(e){hlmark.style.display='none';return;}if(!bb||!bb.width){hlmark.style.display='none';return;}hlmark.style.display='';hlmark.setAttribute('x',(bb.x-9).toFixed(1));hlmark.setAttribute('y',(bb.y+bb.height*0.16).toFixed(1));hlmark.setAttribute('width',(bb.width+18).toFixed(1));hlmark.setAttribute('height',(bb.height*0.78).toFixed(1));}
   var hookEl=root.parentNode.querySelector('.hook')||document.querySelector('.hook');
   var YMAX=1,Rx=x0+1;
