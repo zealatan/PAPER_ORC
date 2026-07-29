@@ -25,8 +25,9 @@ import os, time, json, subprocess
 from playwright.sync_api import sync_playwright
 
 HERE   = os.path.dirname(os.path.abspath(__file__))
-THUMB  = os.path.join(HERE, "assets", "thumb_mag.png")
-OUT    = os.path.join(HERE, "golden_shorts_fire.mp4")
+_STK   = os.environ.get("SHORTS_STOCK", "PG")   # 종목별 썸네일·출력
+THUMB  = os.path.join(HERE, "assets", {"SKH": "skh_thumb.png", "QQQ": "qqq_thumb.png"}.get(_STK, "thumb_mag.png"))
+OUT    = os.path.join(HERE, "golden_shorts_fire.mp4" if _STK == "PG" else "golden_shorts_fire_%s.mp4" % _STK)
 WORK   = os.path.join(HERE, "_build")           # 중간 산출물(클립/webm)
 THUMB_SEC  = 1.25
 CLIP_SEC   = 10.7
@@ -65,14 +66,14 @@ with sync_playwright() as p:
 # 2) 썸네일 정지 클립
 sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-loop", "1", "-t", str(THUMB_SEC),
    "-i", THUMB, "-vf", "scale=%d:%d,fps=30,format=yuv420p" % (W, H),
-   "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", os.path.join(WORK, "c0.mp4"))
+   "-c:v", "libx264", "-crf", "14", "-pix_fmt", "yuv420p", os.path.join(WORK, "c0.mp4"))
 
 # 3) 그래프 클립 트림(시작 오프셋 보정 후 CLIP_SEC 만큼)
 for i, n in enumerate(range(1, NG + 1), 1):
     webm, off = offs[n]
     sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-ss", "%.2f" % (off + 0.15),
        "-i", webm, "-t", str(CLIP_SEC), "-vf", "scale=%d:%d,fps=30,format=yuv420p" % (W, H),
-       "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", os.path.join(WORK, "c%d.mp4" % i))
+       "-c:v", "libx264", "-crf", "14", "-pix_fmt", "yuv420p", os.path.join(WORK, "c%d.mp4" % i))
 
 # 4) concat
 listf = os.path.join(WORK, "list.txt")
@@ -80,6 +81,7 @@ with open(listf, "w") as f:
     for i in range(NG + 1):   # c0=썸네일 + c1..cNG=그래프
         f.write("file '%s'\n" % os.path.join(WORK, "c%d.mp4" % i))
 sh("ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0",
-   "-i", listf, "-c:v", "libx264", "-crf", "20", "-pix_fmt", "yuv420p", "-movflags", "+faststart", OUT)
+   "-i", listf, "-c:v", "libx264", "-b:v", "18M", "-maxrate", "22M", "-bufsize", "36M",
+   "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", OUT)
 
 print("DONE ->", OUT)

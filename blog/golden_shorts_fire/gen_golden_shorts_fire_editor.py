@@ -9,7 +9,7 @@ golden_shorts_fire.py 의 NEWRA(x축 이동 reelAnim)·CMAP·fire_payload·CSS �
 의존: golden_shorts_fire.py(같은 폴더, import), assets/assets.json, assets/paper_b64.txt, blog/fonts, pg_deck.json, pg_final.html
 실행: python3 gen_pg_editor.py
 """
-import json, os
+import json, os, base64
 import golden_shorts_fire as G   # NEWRA, CMAP, logo, rc_css, FONTSRC, paper_uri, sc, fire_payload, FIRE_SPECS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -50,21 +50,25 @@ elif STOCK == "KTNG":
 elif STOCK == "QQQ":
     OUT     = os.path.join(HERE, "golden_shorts_fire_QQQ.html")
     TITLE   = "golden_shorts_fire_QQQ — 나스닥100 QQQ 통합 쇼츠 에디터 (썸네일+파이어 3)"
-    LOGO    = ('<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" '
-               'font-weight="900" font-size="58" fill="#1b3660">QQQ</text>')
-    COMPANY = "나스닥100 (QQQ)"
+    # QQQ는 ETF라 회사 로고가 없음 → 운용사 Invesco 공식 로고로 대체(비디오 헤더와 동일)
+    _qlogo  = "data:image/png;base64," + base64.b64encode(open(os.path.join(HERE, "assets", "qqq_logo.png"), "rb").read()).decode()
+    LOGO    = '<image href="%s" x="0" y="0" width="1280" height="1089"/>' % _qlogo
+    COMPANY = "나스닥100 (QQQ) · 운용 Invesco"
     LEGOUT  = ('<span class="lg"><span class="sw" style="background:#2b6cb0"></span>월 $1천 인출</span>'
                '<span class="lg"><span class="sw" style="background:#d98f2b"></span>월 $2천 인출</span>'
                '<span class="lg"><span class="sw" style="background:#c2255c"></span>월 $3천 인출</span>')
     _qf = json.load(open(os.path.join(HERE, "assets", "qqq_fires.json")))
     FIRES = [{"hook": "%d. 은퇴원금 <b>%s</b>" % (i + 1, f["hook"]), "payload": f["payload"]}
              for i, f in enumerate(_qf)]
-    THUMB_INIT = ("addText('( 나스닥/종목 이미지는 사람이 추가 )',50,37,4,'#5a6472',0);"
-                  "addText('QQQ',50,54,6,'#1b3660',0);"
-                  "addText('5억으로 은퇴',50,60,7,'#d12e77',0);"
-                  "addText('적정 생활비는?',50,66,7,'#ffffff',0);")
+    # 썸네일: 상단(제품/차트 이미지)은 사람이 import로 추가 · Invesco 로고 + 문구
+    THUMB_INIT = ("var QLOGO=%s;addImg(QLOGO,50,52,16,0);"
+                  "addText('나스닥 QQQ로 은퇴',50,61,6.4,'#d12e77',0);"
+                  "addText('얼마 있어야 할까?',50,67,6.4,'#ffffff',0);") % json.dumps(_qlogo)
 else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
+
+# 로고 viewBox(이미지 로고는 원본 비율) — 편집기 헤더 svg
+LOGOVB = "0 0 1280 1089" if STOCK == "QQQ" else "0 0 200 87.021"
 
 DATA_JS = ("var PRODUCTS=%s,BADGE=%s,PGLOGO=%s,MCDLOGO=%s,JNJLOGO=%s;\n"
            "var FIRES=%s;\nvar PACE=1.0;\n") % (
@@ -155,7 +159,7 @@ body.render #guide{display:none!important}
     <div class="graphbox"><div class="zoom tpl-reel">
       <div class="rc-title"></div>
       <div class="rc-card">
-        <div class="rc-chd"><svg class="rc-logo" viewBox="0 0 200 87.021">__LOGO__</svg>
+        <div class="rc-chd"><svg class="rc-logo" viewBox="__LOGOVB__">__LOGO__</svg>
           <div class="rc-txt"><div class="rc-tk">__COMPANY__</div><div class="rc-per">2000년 은퇴 · 물가반영 · 월 인출액별</div></div></div>
         <svg class="rc-chart" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" data-rc="">
           <g class="rc-yaxis"></g><g class="rc-xaxis"></g>
@@ -276,7 +280,7 @@ select(null);
 (document.fonts?document.fonts.ready:Promise.resolve()).then(function(){showSlide(0);});
 </script></body></html>'''
 
-out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGO__', LOGO)
+out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGOVB__', LOGOVB).replace('__LOGO__', LOGO)
            .replace('__DATA__', DATA_JS).replace('__REELANIM__', G.NEWRA)
            .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri)
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
