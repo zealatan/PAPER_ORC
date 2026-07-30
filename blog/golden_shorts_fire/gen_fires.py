@@ -42,7 +42,7 @@ def csv_series(prefix):
     close.index = pd.to_datetime(close.index).tz_localize(None); div.index = pd.to_datetime(div.index).tz_localize(None)
     return close, div
 
-START_YEAR = {"SCHD": 2015, "SEC": 2010}.get(STOCK, 2000)   # 종목별 은퇴 시작연도(기본 2000)
+START_YEAR = {"SCHD": 2015, "SEC": 2010, "AAPL": 2016}.get(STOCK, 2000)   # 종목별 은퇴 시작연도(기본 2000)
 
 # ── 종목 설정 ──
 if STOCK == "PG":
@@ -53,6 +53,8 @@ elif STOCK == "SPY":
     close, div = yf_series("SPY"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "MO":
     close, div = yf_series("MO"); cpi = us_cpi(); KRW = False; TAX = 15.0
+elif STOCK == "AAPL":
+    close, div = yf_series("AAPL"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "SCHD":
     close, div = yf_series("SCHD"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "KTNG":
@@ -115,7 +117,7 @@ for init in PRIN:
     fires.append({"amt": init, "hook": hnum(init), "payload": pd_})   # hook=순수 금액(예 $200,000 / 2억)
     print("  %-10s %s" % (hnum(init), " · ".join(row)))
 
-pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy", "MO": "mo", "SEC": "sec"}[STOCK]
+pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy", "MO": "mo", "SEC": "sec", "AAPL": "aapl"}[STOCK]
 out = os.path.join(HERE, "assets", pref + "_fires.json")
 json.dump(fires, open(out, "w"), ensure_ascii=False)
 print("→", out, "(원금", len(fires), "종)")

@@ -77,6 +77,20 @@ elif STOCK == "MO":
     THUMB_INIT = ("addText('MO',50,54,6,'#1b3660',0);"
                   "addText('\uc54c\ud2b8\ub9ac\uc544\ub85c \uc740\ud1f4',50,61,6.4,'#d12e77',0);"
                   "addText('\uc5bc\ub9c8 \uc788\uc5b4\uc57c \ud560\uae4c?',50,67,6.4,'#ffffff',0);")
+elif STOCK == "AAPL":
+    OUT     = os.path.join(HERE, "golden_shorts_fire_AAPL.html")
+    TITLE   = "golden_shorts_fire_AAPL — 애플 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
+    LOGO    = ('<path fill="#000" d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.2z"/>')
+    COMPANY = "애플 (AAPL)"
+    LEGOUT  = ('<span class="lg"><span class="sw" style="background:#2b6cb0"></span>월 $1천 인출</span>'
+               '<span class="lg"><span class="sw" style="background:#d98f2b"></span>월 $2천 인출</span>'
+               '<span class="lg"><span class="sw" style="background:#c2255c"></span>월 $3천 인출</span>')
+    _af = json.load(open(os.path.join(HERE, "assets", "aapl_fires.json")))
+    FIRES = [{"hook": "%d. 은퇴원금 <b>%s</b>" % (i + 1, f["hook"]), "payload": f["payload"]}
+             for i, f in enumerate(_af)]
+    THUMB_INIT = ("addText('AAPL',50,54,6,'#1b3660',0);"
+                  "addText('애플로 은퇴',50,61,6.4,'#d12e77',0);"
+                  "addText('얼마 있어야 할까?',50,67,6.4,'#ffffff',0);")
 elif STOCK == "SPY":
     OUT     = os.path.join(HERE, "golden_shorts_fire_SPY.html")
     TITLE   = "golden_shorts_fire_SPY — S&P 500 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
@@ -129,8 +143,8 @@ else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
 
 # 로고 viewBox(이미지 로고는 원본 비율) — 편집기 헤더 svg
-LOGOVB = "0 0 1280 1089" if STOCK == "QQQ" else "0 0 200 87.021"
-HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지", "SCHD": "미국배당 다우존스100", "SPY": "S&P 500 지수", "MO": "알트리아", "SEC": "삼성전자"}.get(STOCK, "PG 프록터앤갬블")
+LOGOVB = {"QQQ": "0 0 1280 1089", "AAPL": "0 0 814 1000"}.get(STOCK, "0 0 200 87.021")
+HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지", "SCHD": "미국배당 다우존스100", "SPY": "S&P 500 지수", "MO": "알트리아", "SEC": "삼성전자", "AAPL": "애플"}.get(STOCK, "PG 프록터앤갬블")
 
 DATA_JS = ("var PRODUCTS=%s,BADGE=%s,PGLOGO=%s,MCDLOGO=%s,JNJLOGO=%s;\n"
            "var FIRES=%s;\nvar ACCUM=%s;\nvar PACE=1.0;\n") % (
@@ -207,13 +221,14 @@ __RCCSS__
 .tablebg .card{position:absolute;left:5%;right:5%;top:26%;padding:2.8cqw 2.4cqw 2.2cqw;border-radius:2.2cqw;background:#fff url('__PAPER__') center/cover;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .tablebg table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 .tablebg th,.tablebg td{text-align:center;padding:1.5cqw .6cqw;font-size:2.5cqw;color:#1a1a1a}
-.tablebg th{font-size:1.76cqw;font-weight:800;color:#8a857c;border-bottom:.2cqw solid rgba(0,0,0,.25)}
+.tablebg th{font-size:2.5cqw;font-weight:800;color:#8a857c;border-bottom:.2cqw solid rgba(0,0,0,.25)}
 .tablebg td.pr,.tablebg th.pr{text-align:left;font-weight:900;font-size:2.4cqw;color:#111}
-.tablebg th.pr{color:#8a857c;font-weight:800;font-size:1.76cqw}
+.tablebg th.pr{color:#8a857c;font-weight:800;font-size:2.4cqw}
 .tablebg tr+tr td{border-top:.1cqw solid rgba(0,0,0,.12)}
 .tablebg td.ok{color:#2b8a3e;font-weight:900}
 .tablebg td.ko{color:#c2255c;font-weight:800}
 .tablebg .note{margin-top:1.7cqw;text-align:center;font-size:1.57cqw;font-weight:500;color:#6b6560}
+.tablebg .disc{margin-top:1cqw;padding-top:1cqw;border-top:.1cqw solid rgba(0,0,0,.1);text-align:center;font-size:1.4cqw;font-weight:600;color:#a3453a;line-height:1.4}
 /* --- clean 렌더 모드: 편집 UI 전부 숨김 --- */
 body.render .bar,body.render #hint{display:none}
 body.render .el.sel{outline:none}
@@ -255,7 +270,8 @@ body.render #guide{display:none!important}
     <div class="card"><table>
       <thead><tr><th class="pr">은퇴원금</th><th>__M0__</th><th>__M1__</th><th>__M2__</th></tr></thead>
       <tbody>__TROWS__</tbody></table>
-      <div class="note">__TNOTE__</div></div></div>
+      <div class="note">__TNOTE__</div>
+      <div class="disc">__TDISC__</div></div></div>
   <div id="guide"><div class="grid"></div><div class="cx"></div><div class="cy"></div></div>
 </div></div>
 <script>
@@ -331,7 +347,7 @@ gid('save').onclick=function(){
   var a=document.createElement('a');a.download='pg_slide'+cur+'.png';a.href=cv.toDataURL('image/png');a.click();};
 /* ============ 슬라이드 / 시퀀스 (GOLDEN 타이밍) ============ */
 var auto=false,timer=null,THUMB_HOLD=1250,TABLE_HOLD=5000;
-var ACCUM_TOTAL=ACCUM.dur.reduce(function(a,b){return a+b;},0)+ACCUM.hold.reduce(function(a,b){return a+b;},0);
+var ACCUM_TOTAL=(ACCUM.intro||0)+ACCUM.dur.reduce(function(a,b){return a+b;},0)+ACCUM.hold.reduce(function(a,b){return a+b;},0)+Math.max(0,ACCUM.dur.length-1)*(ACCUM.trans||0);
 (function(){var pd=document.querySelector('.pdots');for(var i=0;i<NSLIDE;i++){var d=document.createElement('span');d.className='pdot';(function(k){d.onclick=function(){auto=false;setPlayBtn();showSlide(k);};})(i);pd.appendChild(d);}})();
 function dots(){document.querySelectorAll('.pdot').forEach(function(d,k){d.classList.toggle('act',k===cur);});}
 var tablebg=stage.querySelector('.tablebg');
@@ -378,7 +394,7 @@ out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGOVB__', LOGOVB).replace
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
            .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT).replace('__HDRTITLE__', HDRTITLE)
            .replace('__M0__', T.MOS[0]).replace('__M1__', T.MOS[1]).replace('__M2__', T.MOS[2])
-           .replace('__TROWS__', T.ROWS).replace('__TNOTE__', T.NOTE)
+           .replace('__TROWS__', T.ROWS).replace('__TNOTE__', T.NOTE).replace('__TDISC__', T.DISC)
            .replace('__BADGE__', assets['BADGE']))
 open(OUT, "w", encoding="utf-8").write(out)
 print("wrote", OUT, "(STOCK=%s)" % STOCK, round(len(out) / 1024), "KB")

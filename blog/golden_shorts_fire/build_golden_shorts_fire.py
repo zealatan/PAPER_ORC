@@ -19,7 +19,7 @@ import golden_shorts_fire as G   # ACCUM_TOTAL_MS
 
 HERE  = os.path.dirname(os.path.abspath(__file__))
 _STK  = os.environ.get("SHORTS_STOCK", "PG")
-THUMB = os.path.join(HERE, "assets", {"SKH": "skh_thumb.png", "QQQ": "qqq_thumb.png"}.get(_STK, "thumb_mag.png"))
+THUMB = os.path.join(HERE, "assets", {"QQQ": "qqq_thumb.png"}.get(_STK, "thumb_mag.png"))
 OUT   = os.path.join(HERE, "golden_shorts_fire.mp4" if _STK == "PG" else "golden_shorts_fire_%s.mp4" % _STK)
 WORK  = os.path.join(HERE, "_build")
 THUMB_SEC = 1.25

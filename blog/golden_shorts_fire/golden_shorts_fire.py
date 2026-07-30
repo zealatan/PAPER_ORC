@@ -38,6 +38,7 @@ function accumAnim(root){
   function Y(v){return (H-MB)-v/YMAX*(H-MB-MT);}
   function nstep(r){var e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;var n=f<=1?1:f<=2?2:f<=5?5:10;return n*e;}
   function fmtY(v){return KRW?(v>=1e8?(v/1e8).toFixed(1).replace('.0','')+'억':Math.round(v/1e4).toLocaleString()+'만'):('$'+(Math.round(v/10000)*10000).toLocaleString());}
+  function fmtV(v){return (!KRW&&v>=1e7)?('$'+(v/1e6).toFixed(1).replace('.0','')+'M'):fmtY(v);}   /* 활성 라벨: $10M↑ 축약(잘림 방지) */
   function yearStep(s){return s<=7?1:s<=16?2:s<=35?5:10;}
   function clip(pts,R){var out=[];for(var i=0;i<pts.length;i++){if(pts[i][0]<=R){out.push(pts[i]);}else{if(out.length){var a=pts[i-1],b=pts[i],fr=(R-a[0])/(b[0]-a[0]);out.push([R,a[1]+(b[1]-a[1])*fr]);}break;}}if(!out.length)out=[pts[0]];return out;}
   // 스탬프(이중테두리) — 파산(라즈베리)·생존(녹색)
@@ -100,9 +101,9 @@ function accumAnim(root){
       if(intro)return;   /* 훅: 점·라벨 없음(회색 미스터리) */
       var lp=o.arr[o.arr.length-1],ex=X(lp[0]),ey=Y(lp[1]);var dot=mk('circle',{cx:ex,cy:ey,r:4.5});dot.style.fill=o.l.c;lg.appendChild(dot);
       var ended=lp[0]>=o.l.pts[o.l.pts.length-1][0]-1e-6;
-      var val=o.l.surv?fmtY(lp[1]):(ended?(KRW?'₩0':'$0'):fmtY(lp[1]));   /* 생존선=현재 가격 / 파산선=$0 */
+      var val=o.l.surv?fmtV(lp[1]):(ended?(KRW?'₩0':'$0'):fmtV(lp[1]));   /* 생존선=현재 가격 / 파산선=$0 */
       var tv=mk('text',{x:Math.min(ex+9,W-MR+2),y:ey+6,'class':'rc-lab rc-labv'});tv.setAttribute('font-size','23');tv.setAttribute('text-anchor','start');tv.style.fill=o.l.c;tv.textContent=val;lg.appendChild(tv);_lab.push({tv:tv,x:ex+9,y0:ey+6});});
-    _lab.sort(function(a,b){return a.x-b.x;});var pxr=-1e9,row=0;for(var k=0;k<_lab.length;k++){var b=_lab[k];row=(b.x-pxr<92)?row+1:0;b.tv.setAttribute('y',b.y0-row*30);pxr=b.x;}
+    _lab.sort(function(a,b){return a.y0-b.y0;});for(var k=0;k<_lab.length;k++){var b=_lab[k];var y=b.y0;for(var j=0;j<k;j++){var pj=_lab[j];if(pj._y!==undefined&&Math.abs(b.x-pj.x)<92&&y-pj._y<30&&y-pj._y>-30)y=pj._y+30;}b._y=y;b.tv.setAttribute('y',y);}   /* 위→아래 정렬, x가 겹치고(92px내) 세로로 붙을 때만 아래로 밀어 30px 확보(자연 간격·타 시점 라벨은 유지) */
     if(intro){hl.style.display='none';hlb.style.opacity='0';markHl(false);}
     else{var hy=Y(P[i].hline.v);hl.style.display='';hl.setAttribute('x1',ML);hl.setAttribute('x2',W-MR);hl.setAttribute('y1',hy);hl.setAttribute('y2',hy);hlb.setAttribute('x',ML+4);hlb.setAttribute('y',hy-9);hlb.style.opacity='1';hlb.textContent=P[i].hline.label;markHl(true);}
     var stampG=allDead[i]?stampBust:stampSurv, stampOff=allDead[i]?stampSurv:stampBust;
@@ -164,7 +165,7 @@ CMAP={"#1f6fe0":"#2b6cb0","#e0821c":"#d98f2b","#e01e37":"#c2255c"}
 
 # 파이어 데이터(원금 5종) — 엔진 산출(gen_fires.py). 편집기·테이블 생성기도 재사용.
 _STOCK=os.environ.get("SHORTS_STOCK","PG")
-_PREF={"PG":"pg","QQQ":"qqq","KTNG":"ktng","SCHD":"schd","SPY":"spy","MO":"mo","SEC":"sec"}.get(_STOCK,"pg")
+_PREF={"PG":"pg","QQQ":"qqq","KTNG":"ktng","SCHD":"schd","SPY":"spy","MO":"mo","SEC":"sec","AAPL":"aapl"}.get(_STOCK,"pg")
 FIRES=json.load(open(HERE+"/assets/%s_fires.json"%_PREF))   # [{amt, hook(순수 금액), payload}]
 _KRW=bool(FIRES[0]["payload"].get("krw"))
 
@@ -177,6 +178,8 @@ elif _STOCK=="SEC":
     LOGO='<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" font-weight="900" font-size="48" fill="#1b3660">005930</text>'; LOGOVB="0 0 200 87.021"; COMPANY="삼성전자 (005930)"; TITLE="삼성전자"
 elif _STOCK=="MO":
     LOGO='<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" font-weight="900" font-size="52" fill="#1b3660">MO</text>'; LOGOVB="0 0 200 87.021"; COMPANY="알트리아 (MO)"; TITLE="알트리아"
+elif _STOCK=="AAPL":
+    LOGO='<path fill="#000" d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.2z"/>'; LOGOVB="0 0 814 1000"; COMPANY="애플 (AAPL)"; TITLE="애플"
 elif _STOCK=="SPY":
     LOGO='<text x="100" y="62" text-anchor="middle" font-family="Pretendard,sans-serif" font-weight="900" font-size="52" fill="#1b3660">SPY</text>'; LOGOVB="0 0 200 87.021"; COMPANY="S&P 500 · SPDR"; TITLE="S&P 500 지수"
 elif _STOCK=="SCHD":
