@@ -100,8 +100,8 @@ TEXT_HTML = """<!doctype html><meta charset=utf-8><style>
 @font-face{{font-family:'Pretendard';font-weight:100 900;src:url('{FONT}') format('woff2')}}
 html,body{{margin:0;background:transparent}}
 .t{{text-align:center;padding:10px 30px}}
-.a{{color:#fff;font:900 80px Pretendard;letter-spacing:-.02em;line-height:1}}.a .m{{color:#d12e77}}
-.b{{color:#abe0d3;font:900 80px Pretendard;letter-spacing:-.02em;line-height:1;margin-top:18px}}  /* 2줄=QQQ 옅은 청록 */
+.a{{color:#fff;font:900 62px Pretendard;letter-spacing:-.02em;line-height:1}}.a .m{{color:#d12e77}}
+.b{{color:#abe0d3;font:900 62px Pretendard;letter-spacing:-.02em;line-height:1;margin-top:24px}}  /* QQQ 크기(62px)·2줄=옅은 청록 */
 </style><div class="t"><div class="a"><span class="m">{LEAD}</span> {TAIL}</div><div class="b">얼마 있어야 할까?</div></div>""".format(
     FONT=G.FONTSRC, LEAD=cfg["lead"], TAIL=cfg["tail"])
 
