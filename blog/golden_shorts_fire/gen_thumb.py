@@ -8,7 +8,7 @@
 
 사용:  SHORTS_STOCK=SPY python3 gen_thumb.py
 종목 추가 = CFG에 lead/tail(+brand png) 한 줄. 브랜드 로고 없으면 티커 텍스트로 대체.
-규격: SCALE=0.70 · CENTER=815 · GAP=44 (문구와 카드 간격).
+규격: SCALE=0.70 · TEXT_CY=1138(QQQ 문구 위치) · GAP=44 (카드-문구 간격).
 """
 import os, json, base64
 from PIL import Image
@@ -23,7 +23,7 @@ _mx   = F[-1]
 LINES = _mx["payload"]["lines"]
 X0    = int(_mx["payload"].get("x0", 2000))
 YEARS = int(max(p[0] for l in LINES for p in l["pts"]) - X0)   # floor(경과 연수)
-SCALE, CENTER, GAP = 0.70, 815, 44          # 카드 축소율 · 그룹 세로중심 · 카드-문구 간격
+SCALE, TEXT_CY, GAP = 0.70, 1138, 44        # 카드 축소율 · 문구 세로중심(QQQ 기준 위치) · 카드-문구 간격
 _PAD = 66.0 / 720.0                          # 카드 캡처의 그림자 여백 비율
 
 def _b64(f):
@@ -59,10 +59,12 @@ for i, l in enumerate(LINES):
     pts = l["pts"]; d = "M" + " L".join("%.1f,%.1f" % (X(p[0]), Y(p[1])) for p in pts)
     paths += '<path d="%s" fill="none" stroke="%s" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>' % (d, COL[i])
     ex, ey = X(pts[-1][0]), Y(pts[-1][1])
-    lab = l.get("end", "").strip() if (not l.get("surv") and l.get("end", "").strip() in ("₩0", "$0")) else fmtc(pts[-1][1])
+    lab = fmtc(pts[-1][1]) if l.get("surv") else ""   # 파산선($0)은 라벨 생략(x축 연도와 겹침 방지)
     ends.append([ey, ex, COL[i], lab]); paths += '<circle cx="%.1f" cy="%.1f" r="7" fill="%s"/>' % (ex, ey, COL[i])
 ends.sort(); _py = -99
 for ey, ex, c, lab in ends:
+    if not lab:
+        continue
     yy = ey if ey - _py >= 34 else _py + 34; _py = yy
     paths += '<text x="%.1f" y="%.1f" font-size="33" font-weight="800" fill="%s">%s</text>' % (ex + 13, yy + 11, c, lab)
 xax = '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#d8d3ca" stroke-width="2"/>' % (ML, Y(0), W - MR, Y(0))
@@ -124,9 +126,8 @@ if __name__ == "__main__":
     card = Image.open(ch_png).convert("RGBA"); txt = Image.open(tx_png).convert("RGBA")
     tw, th = txt.width // 2, txt.height // 2; txt_r = txt.resize((tw, th), Image.LANCZOS)
     cw = int(910 * SCALE); chh = int(card.height * cw / card.width); card_r = card.resize((cw, chh), Image.LANCZOS)
-    vtop, vbot = chh * _PAD, chh * (1 - _PAD)
-    grp = (vbot - vtop) + GAP + th
-    cy = int(CENTER - grp / 2 - vtop); ty = int(cy + vbot + GAP)
+    ty = int(TEXT_CY - th / 2)                      # 문구 세로중심 = QQQ 문구 위치(1138)에 일치
+    cy = int(ty - GAP - chh * (1 - _PAD))           # 카드는 문구 바로 위(QQQ 로고 위치에 최대한 근접)
     canvas = Image.new("RGBA", (Wpx, Hpx), (11, 12, 15, 255))
     canvas.alpha_composite(card_r, ((Wpx - cw) // 2, cy)); canvas.alpha_composite(txt_r, ((Wpx - tw) // 2, ty))
     out = os.path.join(HERE, "assets", "%s_thumb.png" % {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd",
