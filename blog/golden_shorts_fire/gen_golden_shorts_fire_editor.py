@@ -244,7 +244,7 @@ body.render #guide{display:none!important}
   <button id="play">⏸ 재생</button>
   <span class="sep"></span>
   <button id="addText">➕텍스트</button><button id="addBadge">🐻배투실</button><button id="addPG">🅿️P&amp;G</button>
-  <button id="addProd">📦제품</button><button id="importBtn">🖼임포트</button><input type="file" id="fileIn" accept="image/*" style="display:none">
+  <button id="addProd">📦제품</button><button id="importBtn">🖼임포트</button><input type="file" id="fileIn" accept="image/*,.svg,image/svg+xml" style="display:none">
   <span class="sep"></span>
   <label id="colWrap" class="dim">색<input type="color" id="col" value="#ffffff"></label>
   <button id="outline" class="dim">🔲외곽선</button><button id="minus" class="dim">−</button><button id="plus" class="dim">＋</button>
@@ -326,7 +326,11 @@ gid('addBadge').onclick=function(){select(addImg(BADGE,86,7,22));};
 gid('addPG').onclick=function(){select(addImg(PGLOGO,50,70,30));};
 gid('addProd').onclick=function(){select(addImg(PRODUCTS,50,45,96));};
 gid('importBtn').onclick=function(){gid('fileIn').click();};
-gid('fileIn').onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){select(addImg(r.result,50,45,70));};r.readAsDataURL(f);this.value='';};
+gid('fileIn').onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var isSvg=/svg/i.test(f.type)||/\.svg$/i.test(f.name);var r=new FileReader();r.onload=function(){
+  if(!isSvg){select(addImg(r.result,50,45,70));return;}
+  var im=new Image();im.onload=function(){var iw=im.naturalWidth||im.width||300,ih=im.naturalHeight||im.height||300,W=1200,H=Math.max(1,Math.round(W*(ih/iw)));var c=document.createElement('canvas');c.width=W;c.height=H;try{c.getContext('2d').drawImage(im,0,0,W,H);select(addImg(c.toDataURL('image/png'),50,45,70));}catch(err){select(addImg(r.result,50,45,70));}};   /* SVG→PNG 래스터화(표시·PNG내보내기 안전) */
+  im.onerror=function(){select(addImg(r.result,50,45,70));};im.src=r.result;
+};r.readAsDataURL(f);this.value='';};
 gid('del').onclick=function(){if(sel){sel.remove();select(null);}};
 gid('front').onclick=function(){if(sel)sel.style.zIndex=++z;};
 gid('col').oninput=function(){if(isTb(sel)){sel.style.color=this.value;gid('nc').value=this.value;}};
