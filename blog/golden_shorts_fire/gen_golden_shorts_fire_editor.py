@@ -228,7 +228,7 @@ __RCCSS__
 .tablebg td.ok{color:#2b8a3e;font-weight:900}
 .tablebg td.ko{color:#c2255c;font-weight:800}
 .tablebg .note{margin-top:1.7cqw;text-align:center;font-size:1.57cqw;font-weight:500;color:#6b6560}
-.tablebg .disc{margin-top:1cqw;padding-top:1cqw;border-top:.1cqw solid rgba(0,0,0,.1);text-align:center;font-size:1.4cqw;font-weight:600;color:#a3453a;line-height:1.4}
+.tablebg .disc{position:absolute;left:6%;right:6%;top:55.5%;text-align:center;font-size:1.5cqw;font-weight:600;color:#c68a7f;line-height:1.45}
 /* --- clean 렌더 모드: 편집 UI 전부 숨김 --- */
 body.render .bar,body.render #hint{display:none}
 body.render .el.sel{outline:none}
@@ -270,8 +270,8 @@ body.render #guide{display:none!important}
     <div class="card"><table>
       <thead><tr><th class="pr">은퇴원금</th><th>__M0__</th><th>__M1__</th><th>__M2__</th></tr></thead>
       <tbody>__TROWS__</tbody></table>
-      <div class="note">__TNOTE__</div>
-      <div class="disc">__TDISC__</div></div></div>
+      <div class="note">__TNOTE__</div></div>
+      <div class="disc">__TDISC__</div></div>
   <div id="guide"><div class="grid"></div><div class="cx"></div><div class="cy"></div></div>
 </div></div>
 <script>

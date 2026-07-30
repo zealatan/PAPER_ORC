@@ -51,7 +51,7 @@ tr+tr td{{border-top:1px solid rgba(0,0,0,.12)}}
 td.ok{{color:#2b8a3e;font-weight:900}}
 td.ko{{color:#c2255c;font-weight:800}}
 .note{{margin-top:18px;text-align:center;font-size:17px;font-weight:500;color:#6b6560}}
-.disc{{margin-top:11px;padding-top:11px;border-top:1px solid rgba(0,0,0,.1);text-align:center;font-size:15px;font-weight:600;color:#a3453a;line-height:1.4}}
+.disc{{position:absolute;left:6%;right:6%;top:55.5%;text-align:center;font-size:16px;font-weight:600;color:#c68a7f;line-height:1.45}}
 </style>
 <div class="ttl">원금 × 월 인출 <b>결과</b></div>
 <div class="card">
@@ -61,8 +61,8 @@ td.ko{{color:#c2255c;font-weight:800}}
 {ROWS}</tbody>
 </table>
 <div class="note">{NOTE}</div>
-<div class="disc">{DISC}</div>
-</div>""".format(FONT=G.FONTSRC, PAPER=G.paper_uri, ROWS=ROWS, M0=MOS[0], M1=MOS[1], M2=MOS[2], NOTE=NOTE, DISC=DISC)
+</div>
+<div class="disc">{DISC}</div>""".format(FONT=G.FONTSRC, PAPER=G.paper_uri, ROWS=ROWS, M0=MOS[0], M1=MOS[1], M2=MOS[2], NOTE=NOTE, DISC=DISC)
 
 if __name__ == "__main__":
     open(os.path.join(HERE, "golden_shorts_fire_table.html"), "w", encoding="utf-8").write(table_html())
