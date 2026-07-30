@@ -84,7 +84,8 @@ def main():
     rows = run(a.market, a.top, a.min_drop, a.pool, a.min_size)
     out = PROJ / "data" / f"fall_week{a.week}.json"
     d = json.loads(out.read_text(encoding="utf-8")) if out.exists() else \
-        {"week": a.week, "date": date.today().strftime("%Y-%m-%d"), "mode": "fall", "markets": {}}
+        {"week": a.week, "mode": "fall", "markets": {}}
+    d["date"] = date.today().strftime("%Y-%m-%d")     # 스캔일 항상 갱신
     d.setdefault("markets", {})[a.market] = rows
     out.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"저장 → {out.name} (시장={list(d['markets'])})")

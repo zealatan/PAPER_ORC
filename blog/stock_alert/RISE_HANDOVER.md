@@ -35,13 +35,16 @@ python3 rec/render_rise.py                 # → recordings/rise_raw/*.webm  (~2
 ```
 ※ 렌더는 stock_alert_rise_v1.html + rise_raw/webm 을 덮어쓰므로 **시장마다 빌드→렌더→쇼츠**를 순차로.
 
-## 4. 쇼츠 합성
+## 4. 쇼츠 합성 — ★골든 구성: 카드 → 요약표 5s → 심플 아웃트로 3.5s
 ```
-rec/build_short_rise.sh <n_cards> assets/shorts/hook_미국_rise.png shorts/short_US_rise.mp4
+python3 rec/gen_table.py --market 미국 --week 31 --dir rise      # 요약 테이블 → assets/shorts/table_US.png
+rec/build_short_rise.sh <n_cards> assets/shorts/hook_US_rise.png shorts/short_US_rise.mp4 assets/shorts/table_US.png
 ```
-- `<n_cards>` = 그 시장 카드 수(미국·유럽 5, 한국 3).
-- 훅이 없으면 `rec/gen_hook_rise.py` 로 생성(시장·개수 문구 편집).
-- 결과: 표준 템플릿 + 아웃트로. 카드 균일 5.5초라 **#1까지 안 잘림**.
+- `<n_cards>` = 그 시장 카드 수. 4번째 인자 = 요약표 PNG(주면 카드 뒤 5초 삽입, 생략 가능).
+- **요약 테이블**(`gen_table.py`, 낙폭=▼빨강·상승=▲초록, 한글명 KR_NAME 맵): 10행 순위·종목·수치.
+- **심플 아웃트로**(`gen_outro.py`): 배투실 마스코트 + "구독하기🔔"만(태그라인 없음).
+- 훅 없으면 `gen_hook_rise.py`(상승)·`gen_hook_fall.py`(낙폭)로 생성.
+- 카드 균일 5.5초라 **#1까지 안 잘림**. 총길이 ≈ n×5.5 + 5(표) + 3.5(아웃트로).
 
 전 시장 반복:
 ```
@@ -74,10 +77,13 @@ rec/build_short_rise.sh 5 assets/shorts/hook_EU_rise.png shorts/short_EU_rise.mp
 낙폭 스캔 `weekly_scan.py`(→ `data/weekN.json`), 덱은 drawcard(전고점·낙폭·−30% 별표).
 ```
 python3 weekly_scan.py --week 31                       # 낙폭 4시장 스캔 → data/week{N}.json
-# 시장별로:
-python3 deck/build_fall_deck.py 미국                    # 단일시장 낙폭 덱(drawcard subHold=5500)
+# 시장별로 (골든: 카드 → 요약표 5s → 심플 아웃트로):
+python3 fall_scan.py --market 한국 --week 31 --min-size 10e12   # 시총순 대형주 → data/fall_week31.json
+python3 deck/build_fall_deck.py 한국                    # 단일시장 낙폭 덱(drawcard subHold=5500)
 python3 rec/render_rise.py fall                         # → recordings/rise_raw/*.webm  (slug=fall)
-rec/build_short_fall.sh 5 assets/shorts/hook_US.png shorts/short_US_fall.mp4
+python3 rec/gen_hook_fall.py --market KR --top 10 --week 31     # 하락 훅 → hook_KR.png
+python3 rec/gen_table.py --market 한국 --week 31 --dir fall     # 요약표 → table_KR.png
+rec/build_short_fall.sh 10 assets/shorts/hook_KR.png shorts/short_KR_fall.mp4 assets/shorts/table_KR.png
 ```
 - 훅: `assets/shorts/hook_{ETF,US,KR,EU}.png`(하락📉, `gen_hook.py`계열 · 상승은 `_rise` 접미사).
 - 아웃트로·배투실텍스트·`build_short_fall.sh`(엔진은 build_short_rise.sh 공유) 전부 상승과 동일.
