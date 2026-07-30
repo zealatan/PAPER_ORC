@@ -90,7 +90,7 @@ elif STOCK == "AAPL":
              for i, f in enumerate(_af)]
     THUMB_INIT = ("addText('AAPL',50,54,6,'#1b3660',0);"
                   "addText('애플로 은퇴',50,61,6.4,'#d12e77',0);"
-                  "addText('얼마 있어야 할까?',50,67,6.4,'#ffffff',0);")
+                  "addText('얼마 있어야 할까?',50,67,6.4,'#1b3660',0);")   # 종이 배경 → 어두운 글씨
 elif STOCK == "SPY":
     OUT     = os.path.join(HERE, "golden_shorts_fire_SPY.html")
     TITLE   = "golden_shorts_fire_SPY — S&P 500 통합 쇼츠 에디터 (썸네일+누적그래프+테이블)"
@@ -143,6 +143,7 @@ else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
 
 # 로고 viewBox(이미지 로고는 원본 비율) — 편집기 헤더 svg
+THUMBBG = ("#fff url('%s') center/cover" % G.paper_uri) if STOCK == "AAPL" else "#000"   # 썸네일 배경(AAPL=종이 텍스처)
 LOGOVB = {"QQQ": "0 0 1280 1089", "AAPL": "0 0 814 1000"}.get(STOCK, "0 0 200 87.021")
 HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지", "SCHD": "미국배당 다우존스100", "SPY": "S&P 500 지수", "MO": "알트리아", "SEC": "삼성전자", "AAPL": "애플"}.get(STOCK, "PG 프록터앤갬블")
 
@@ -188,6 +189,7 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 #guide .cy{position:absolute;top:50%;left:0;right:0;height:0;border-top:1px dashed rgba(0,229,255,.75)}
 /* --- 차트 배경(그래프 슬라이드) --- */
 .reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
+.thumbbg{position:absolute;inset:0;background:__THUMBBG__;z-index:0;display:none}   /* 썸네일 슬라이드 배경(종목별: AAPL=종이/그외=검정) */
 .graphbox{position:absolute;left:0;right:0;top:22%;aspect-ratio:1.125/1;container-type:size}
 .reelbg .tophdr{position:absolute;top:14%;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2.4cqw;z-index:6}
 .reelbg .btsmark{position:absolute;top:28.5%;right:8%;width:6.5%;opacity:.85;z-index:7}
@@ -253,6 +255,7 @@ body.render #guide{display:none!important}
 </div>
 <div id="hint">탭=선택·드래그=이동 · 숫자박스=정밀 X/Y/크기/색 · 텍스트더블탭=수정 · 👁렌더=편집UI 숨김 · 슬라이드마다 요소 따로</div>
 <div class="stagewrap"><div class="stage" id="stage">
+  <div class="thumbbg"></div>
   <div class="reelbg">
     <div class="tophdr"><svg class="toplogo" viewBox="__LOGOVB__">__LOGO__</svg><span class="toptitle">__HDRTITLE__</span></div>
     <div class="graphbox"><div class="zoom tpl-reel">
@@ -350,11 +353,11 @@ var auto=false,timer=null,THUMB_HOLD=1250,TABLE_HOLD=5000;
 var ACCUM_TOTAL=(ACCUM.intro||0)+ACCUM.dur.reduce(function(a,b){return a+b;},0)+ACCUM.hold.reduce(function(a,b){return a+b;},0)+Math.max(0,ACCUM.dur.length-1)*(ACCUM.trans||0);
 (function(){var pd=document.querySelector('.pdots');for(var i=0;i<NSLIDE;i++){var d=document.createElement('span');d.className='pdot';(function(k){d.onclick=function(){auto=false;setPlayBtn();showSlide(k);};})(i);pd.appendChild(d);}})();
 function dots(){document.querySelectorAll('.pdot').forEach(function(d,k){d.classList.toggle('act',k===cur);});}
-var tablebg=stage.querySelector('.tablebg');
+var tablebg=stage.querySelector('.tablebg'), thumbbg=stage.querySelector('.thumbbg');
 function showSlide(i){cur=(i+NSLIDE)%NSLIDE;
   stage.querySelectorAll('.el').forEach(function(e){e.style.display=(+e.dataset.s===cur)?'':'none';});
   select(null);dots();if(timer)clearTimeout(timer);
-  reelbg.style.display='none';tablebg.style.display='none';
+  reelbg.style.display='none';tablebg.style.display='none';thumbbg.style.display=(cur===0)?'block':'none';
   if(cur===0){if(auto)timer=setTimeout(function(){showSlide(1);},THUMB_HOLD);return;}   /* 썸네일 */
   if(cur===1){reelbg.style.display='block';svg.setAttribute('data-rc',JSON.stringify(ACCUM));accumAnim(reelbg);
     if(auto)timer=setTimeout(function(){showSlide(2);},ACCUM_TOTAL+400);return;}          /* 누적 그래프 */
@@ -390,7 +393,7 @@ select(null);
 import gen_fire_table as T   # ROWS/MOS/NOTE 재사용(3페이지 테이블)
 out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGOVB__', LOGOVB).replace('__LOGO__', LOGO)
            .replace('__DATA__', DATA_JS).replace('__REELANIM__', G.ACCUM)
-           .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri)
+           .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri).replace('__THUMBBG__', THUMBBG)
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
            .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT).replace('__HDRTITLE__', HDRTITLE)
            .replace('__M0__', T.MOS[0]).replace('__M1__', T.MOS[1]).replace('__M2__', T.MOS[2])
