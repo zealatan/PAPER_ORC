@@ -228,7 +228,7 @@ __RCCSS__
 .tablebg td.ok{color:#2b8a3e;font-weight:900}
 .tablebg td.ko{color:#c2255c;font-weight:800}
 .tablebg .note{margin-top:1.7cqw;text-align:center;font-size:1.57cqw;font-weight:500;color:#6b6560}
-.tablebg .disc{position:absolute;left:6%;right:6%;top:55.5%;text-align:center;font-size:1.5cqw;font-weight:600;color:#c68a7f;line-height:1.45}
+.tablebg .disc{position:absolute;left:6%;right:6%;top:55.5%;text-align:center;font-size:3cqw;font-weight:700;color:#c68a7f;line-height:1.4}
 /* --- clean 렌더 모드: 편집 UI 전부 숨김 --- */
 body.render .bar,body.render #hint{display:none}
 body.render .el.sel{outline:none}
