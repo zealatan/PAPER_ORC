@@ -219,7 +219,7 @@ def build_principals():
 ACCUM_DATA={"krw":_KRW,"principals":build_principals(),
             "dur":[4500,5500,8000,7000,9000],"hold":[1100,1100,700,700,2200],
             "x0":int(FIRES[0]["payload"].get("x0",2000)),   # 종목별 은퇴 시작연도
-            "intro":3000,   # 썸네일 직후: 전체 라인 회색 훅(3초) → 이후 누적으로 전개
+            "intro":0,   # 인트로 훅 페이지 제거(0) — 썸네일 직후 바로 $20만부터 전개
             "trans":700}    # 원금 전환: 은퇴원금 숫자 카운트업 + y축 재스케일
 ACCUM_TOTAL_MS=(ACCUM_DATA.get("intro",0)+sum(ACCUM_DATA["dur"])+sum(ACCUM_DATA["hold"])
                 +max(0,len(ACCUM_DATA["dur"])-1)*ACCUM_DATA.get("trans",0))   # build 녹화 길이 참조
