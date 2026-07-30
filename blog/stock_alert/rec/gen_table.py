@@ -58,32 +58,36 @@ def main():
     arrow = '▼' if a.dir == 'fall' else '▲'
 
     img = Image.new('RGB', (W, H), (24, 22, 19)); dr = ImageDraw.Draw(img)
-    f_t1 = ImageFont.truetype(FONT, 72); f_t2 = ImageFont.truetype(FONT, 50)
-    # 제목 (시장 + 하락/신고가(색) + TOPn + 이모지)
+    # 그래프와 같은 중앙 세이프밴드(top≈560~1400)에 배치 — 풀스크린이면 Shorts UI에 가려짐.
+    BAND_TOP, BAND_BOT = 560, 1400
+    LX, RX = 120, W - 120                       # 좌우도 살짝 안쪽(우측 액션버튼 회피)
+    f_t1 = ImageFont.truetype(FONT, 64); f_t2 = ImageFont.truetype(FONT, 44)
+    # 제목 (밴드 상단)
     seg = [(f'{mklabel} ', WHITE), (kw, accent), (f' TOP{n}', WHITE)]
     ws = [dr.textlength(t, font=f_t1) for t, _ in seg]
-    em = emoji(emo, 60); tot = sum(ws) + 14 + em.width; x = (W - tot) // 2; yt = 150
+    em = emoji(emo, 54); tot = sum(ws) + 14 + em.width; x = (W - tot) // 2; yt = BAND_TOP
     for (t, c), w in zip(seg, ws):
-        dr.text((x, yt), t, font=f_t1, fill=c, stroke_width=7, stroke_fill=STK, anchor='lm'); x += w
+        dr.text((x, yt), t, font=f_t1, fill=c, stroke_width=6, stroke_fill=STK, anchor='lm'); x += w
     img.paste(em, (int(x + 14), int(yt - em.height // 2)), em)
-    dr.text((W // 2, yt + 80), f'2026년 week {a.week}', font=f_t2, fill=YELLOW, stroke_width=5, stroke_fill=STK, anchor='mm')
+    dr.text((W // 2, yt + 68), f'2026년 week {a.week}', font=f_t2, fill=YELLOW, stroke_width=4, stroke_fill=STK, anchor='mm')
 
-    # 테이블 (세로 중앙, 행높이 적응)
-    avail = 1520; y0 = 300
-    rowh = min(150, avail // n)
-    tbl_h = rowh * n; y0 = 320 + (avail - tbl_h) // 2
-    f_rk = ImageFont.truetype(FONT, 46); f_nm = ImageFont.truetype(FONT, 50); f_dd = ImageFont.truetype(FONT, 50)
+    # 테이블 (제목 아래 ~ 밴드 하단, 행높이 적응)
+    top = yt + 130; avail = BAND_BOT - top
+    rowh = min(96, avail // n)
+    tbl_h = rowh * n; y0 = top + (avail - tbl_h) // 2
+    fs = 44 if n > 6 else 50
+    f_rk = ImageFont.truetype(FONT, fs); f_nm = ImageFont.truetype(FONT, fs); f_dd = ImageFont.truetype(FONT, fs)
     for i, r in enumerate(rows):
         y = y0 + i * rowh
         if i % 2 == 0:
-            dr.rectangle([50, y, W - 50, y + rowh - 12], fill=(34, 31, 27))
-        cy = y + (rowh - 12) // 2
-        dr.text((100, cy), f'{i+1}', font=f_rk, fill=YELLOW, anchor='lm')
-        dr.text((210, cy), name_of(r), font=f_nm, fill=WHITE, anchor='lm')
+            dr.rectangle([LX - 20, y, RX + 20, y + rowh - 8], fill=(34, 31, 27))
+        cy = y + (rowh - 8) // 2
+        dr.text((LX, cy), f'{i+1}', font=f_rk, fill=YELLOW, anchor='lm')
+        dr.text((LX + 100, cy), name_of(r), font=f_nm, fill=WHITE, anchor='lm')
         v = r.get('drawdown_pct') if a.dir == 'fall' else r.get('return_pct')
         val = abs(v) if a.dir == 'fall' else v
         sign = '' if a.dir == 'fall' else ('+' if v >= 0 else '')
-        dr.text((W - 100, cy), f'{arrow}{sign}{val:.1f}%', font=f_dd, fill=accent, anchor='rm')
+        dr.text((RX, cy), f'{arrow}{sign}{val:.1f}%', font=f_dd, fill=accent, anchor='rm')
 
     out = a.out or os.path.join(OUT, f'table_{code}.png')
     img.save(out); print(out, img.size)

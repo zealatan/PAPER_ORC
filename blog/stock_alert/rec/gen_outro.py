@@ -23,13 +23,17 @@ def emoji(ch, px):
 
 img = Image.new('RGB', (W, H), (24, 22, 19))
 dr = ImageDraw.Draw(img)
-# 배투실 마스코트(중앙)
-bt = Image.open(BATU).convert('RGBA'); bw = 460
+# 그래프와 같은 중앙 세이프밴드(≈560~1400)에 배치 — 풀스크린이면 Shorts UI에 가려짐.
+BAND_TOP, BAND_BOT = 560, 1400
+bt = Image.open(BATU).convert('RGBA'); bw = 400
 bt = bt.resize((bw, int(bt.height * bw / bt.width)), Image.LANCZOS)
-img.paste(bt, ((W - bw) // 2, 620), bt)
-by = 620 + bt.height
+btn_w, btn_h = 520, 150; GAP = 110
+block_h = bt.height + GAP + btn_h
+top = BAND_TOP + (BAND_BOT - BAND_TOP - block_h) // 2      # 밴드 내 세로 중앙
+img.paste(bt, ((W - bw) // 2, top), bt)
+by = top + bt.height
 # 빨간 구독 버튼 + 벨
-btn_w, btn_h = 520, 150; bx0 = (W - btn_w) // 2; by0 = by + 130
+bx0 = (W - btn_w) // 2; by0 = by + GAP
 dr.rounded_rectangle([bx0, by0, bx0 + btn_w, by0 + btn_h], radius=42, fill=RED)
 bell = emoji('🔔', 66); f_cta = ImageFont.truetype(FONT, 72)
 lbl = '구독하기'; tw = dr.textlength(lbl, font=f_cta); gap = 20; tot = tw + gap + bell.width
