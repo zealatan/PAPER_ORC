@@ -4,26 +4,27 @@
 # 전제(순서대로):
 #   1) python3 deck/build_rise_deck.py <시장>      # 단일시장 덱 (risecard subHold=5500 균일)
 #   2) python3 rec/render_rise.py                  # → recordings/rise_raw/*.webm (최신 사용)
-#   3) rec/build_short_rise.sh <n_cards> <hook.png> <out.mp4> [table.png]
+#   3) rec/build_short_rise.sh <n_cards> <hook.png> <out.mp4> [table.png] [intro.png]
 #
-# 균일 타이밍 덕에 카드 구간이 결정적: 카드시작 = t0 + INTRO, 길이 = n_cards × CARD.
-# 골든 구성: 카드 n장 → [요약 테이블 5s(table.png 주면)] → 심플 아웃트로 3.5s.
+# 균일 타이밍 덕에 카드 구간이 결정적: 카드시작 = t0 + DINTRO, 길이 = n_cards × CARD.
+# 골든 구성: [인트로/썸네일 2.5s] → 카드 n장 → [요약 테이블 5s] → 심플 아웃트로 3.5s.
 # 표준 템플릿: 그래프 top696 · 하단 "배투실" 텍스트워터마크 · 상단 훅.
 set -e
 cd "$(dirname "$0")/.."
-NCARDS="$1"; HOOK="$2"; OUT="$3"; TABLE="$4"   # TABLE(선택): gen_table.py 산출 요약표 PNG
-[ -z "$OUT" ] && { echo "사용: build_short_rise.sh <n_cards> <hook.png> <out.mp4> [table.png]"; exit 1; }
+NCARDS="$1"; HOOK="$2"; OUT="$3"; TABLE="$4"; INTROPNG="$5"   # 4=요약표 PNG(선택), 5=인트로/썸네일 PNG(선택)
+[ -z "$OUT" ] && { echo "사용: build_short_rise.sh <n_cards> <hook.png> <out.mp4> [table.png] [intro.png]"; exit 1; }
 WEBM=$(ls -t recordings/rise_raw/*.webm | head -1)
 TEXT="assets/shorts/batusil_text.png"     # 하단 워터마크(작은 배투실 글자)
 OUTRO="assets/shorts/outro_card.png"      # 심플 구독 엔드카드
-INTRO=17.56       # 인트로(notice+hook+sectnum) 길이(초). subHold 균일화 후 고정값.
+DINTRO=17.56      # 덱 인트로(notice+hook+sectnum) 길이(초). subHold 균일화 후 고정값.
 CARD=5.5          # risecard subHold(초) — build_rise_deck.py 와 동기 (바꾸면 여기도)
 TABLE_SEC=5.0     # 요약 테이블 노출 시간
+INTRO_SEC=2.5     # 인트로/썸네일 노출 시간
 mkdir -p "$(dirname "$OUT")"; TMP=$(mktemp -d)
 
 BE=$(ffmpeg -hide_banner -i "$WEBM" -vf "blackdetect=d=0.2:pix_th=0.10" -an -f null - 2>&1 \
      | grep -oP 'black_end:\K[0-9.]+' | head -1)
-ST=$(python3 -c "print(round(${BE:-3.24}+$INTRO,2))")
+ST=$(python3 -c "print(round(${BE:-3.24}+$DINTRO,2))")
 DU=$(python3 -c "print(round($NCARDS*$CARD,2))")
 echo "t0=${BE:-3.24} 카드시작=$ST 길이=$DU (${NCARDS}장)"
 
@@ -34,24 +35,20 @@ ffmpeg -hide_banner -loglevel error -y -ss "$ST" -t "$DU" -i "$WEBM" -i "$TEXT" 
 [v2][2:v]overlay=(W-w)/2:250,format=yuv420p[v]" \
  -map "[v]" -an -c:v libx264 -crf 19 -preset medium -pix_fmt yuv420p -r 30 "$TMP/cards.mp4"
 
-# 심플 아웃트로 3.5s
-ffmpeg -hide_banner -loglevel error -y -loop 1 -t 3.5 -i "$OUTRO" \
- -vf "scale=1080:1920,fps=30,format=yuv420p,setsar=1" -c:v libx264 -crf 19 -preset medium "$TMP/outro.mp4"
+# PNG → 정지클립 헬퍼
+still(){ ffmpeg -hide_banner -loglevel error -y -loop 1 -t "$2" -i "$1" \
+ -vf "scale=1080:1920,fps=30,format=yuv420p,setsar=1" -c:v libx264 -crf 19 -preset medium "$3"; }
+still "$OUTRO" 3.5 "$TMP/outro.mp4"
 
-# (선택) 요약 테이블 5s
-PARTS="[0:v]"; NIN=1
-INPUTS=(-i "$TMP/cards.mp4")
-if [ -n "$TABLE" ] && [ -f "$TABLE" ]; then
-  ffmpeg -hide_banner -loglevel error -y -loop 1 -t "$TABLE_SEC" -i "$TABLE" \
-   -vf "scale=1080:1920,fps=30,format=yuv420p,setsar=1" -c:v libx264 -crf 19 -preset medium "$TMP/table.mp4"
-  INPUTS+=(-i "$TMP/table.mp4"); PARTS="$PARTS[1:v]"; NIN=2
-fi
-INPUTS+=(-i "$TMP/outro.mp4"); PARTS="$PARTS[${NIN}:v]"; NIN=$((NIN+1))
+# 순서 조립: [인트로] → 카드 → [요약표] → 아웃트로
+CLIPS=()
+if [ -n "$INTROPNG" ] && [ -f "$INTROPNG" ]; then still "$INTROPNG" "$INTRO_SEC" "$TMP/intro.mp4"; CLIPS+=("$TMP/intro.mp4"); fi
+CLIPS+=("$TMP/cards.mp4")
+if [ -n "$TABLE" ] && [ -f "$TABLE" ]; then still "$TABLE" "$TABLE_SEC" "$TMP/table.mp4"; CLIPS+=("$TMP/table.mp4"); fi
+CLIPS+=("$TMP/outro.mp4")
 
-# 카드 (+테이블) + 아웃트로 concat (SAR 통일)
-FC=""; i=0
-for ((k=0;k<NIN;k++)); do FC="$FC[$k:v]setsar=1[s$k];"; done
-CAT=""; for ((k=0;k<NIN;k++)); do CAT="$CAT[s$k]"; done
+NIN=${#CLIPS[@]}; INPUTS=(); FC=""; CAT=""
+for ((k=0;k<NIN;k++)); do INPUTS+=(-i "${CLIPS[$k]}"); FC="$FC[$k:v]setsar=1[s$k];"; CAT="$CAT[s$k]"; done
 ffmpeg -hide_banner -loglevel error -y "${INPUTS[@]}" \
  -filter_complex "${FC}${CAT}concat=n=${NIN}:v=1[v]" -map "[v]" -an \
  -c:v libx264 -crf 19 -preset medium -pix_fmt yuv420p -movflags +faststart "$OUT"
