@@ -143,10 +143,9 @@ else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
 
 # 로고 viewBox(이미지 로고는 원본 비율) — 편집기 헤더 svg
-THUMBBG = "#000"   # 썸네일 배경(기본 검정)
-if STOCK == "AAPL":   # 애플=종이 텍스처(사용자 업로드본 assets/thumb_paper_bg.png)
-    _thumb_paper = "data:image/png;base64," + base64.b64encode(open(os.path.join(HERE, "assets", "thumb_paper_bg.png"), "rb").read()).decode()
-    THUMBBG = "#fff url('%s') center/cover" % _thumb_paper
+THUMB_BG_SRC = ""   # 썸네일 배경 이미지 data-uri(빈값=검정). 에디터에서 '배경' 임포트로 교체 가능
+if STOCK == "AAPL":   # 애플 기본=종이 텍스처(사용자 업로드본 assets/thumb_paper_bg.png)
+    THUMB_BG_SRC = "data:image/png;base64," + base64.b64encode(open(os.path.join(HERE, "assets", "thumb_paper_bg.png"), "rb").read()).decode()
 LOGOVB = {"QQQ": "0 0 1280 1089", "AAPL": "0 0 814 1000"}.get(STOCK, "0 0 200 87.021")
 HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지", "SCHD": "미국배당 다우존스100", "SPY": "S&P 500 지수", "MO": "알트리아", "SEC": "삼성전자", "AAPL": "애플"}.get(STOCK, "PG 프록터앤갬블")
 
@@ -192,7 +191,7 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 #guide .cy{position:absolute;top:50%;left:0;right:0;height:0;border-top:1px dashed rgba(0,229,255,.75)}
 /* --- 차트 배경(그래프 슬라이드) --- */
 .reelbg{position:absolute;inset:0;background:#000;z-index:1;display:none;container-type:size}
-.thumbbg{position:absolute;inset:0;background:__THUMBBG__;z-index:0;display:none}   /* 썸네일 슬라이드 배경(종목별: AAPL=종이/그외=검정) */
+.thumbbg{position:absolute;inset:0;background:#000;z-index:0;display:none}   /* 썸네일 슬라이드 배경(JS setThumbBg로 설정·임포트 교체 가능) */
 .graphbox{position:absolute;left:0;right:0;top:22%;aspect-ratio:1.125/1;container-type:size}
 .reelbg .tophdr{position:absolute;top:14%;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2.4cqw;z-index:6}
 .reelbg .btsmark{position:absolute;top:28.5%;right:8%;width:6.5%;opacity:.85;z-index:7}
@@ -244,7 +243,7 @@ body.render #guide{display:none!important}
   <button id="play">⏸ 재생</button>
   <span class="sep"></span>
   <button id="addText">➕텍스트</button><button id="addBadge">🐻배투실</button><button id="addPG">🅿️P&amp;G</button>
-  <button id="addProd">📦제품</button><button id="importBtn">🖼임포트</button><input type="file" id="fileIn" accept="image/*,.svg,image/svg+xml" style="display:none">
+  <button id="addProd">📦제품</button><button id="importBtn">🖼임포트</button><button id="bgBtn">🏞배경</button><input type="file" id="fileIn" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,.png,.jpg,.jpeg,.webp,.gif,.svg" style="display:none"><input type="file" id="bgIn" accept="image/png,image/jpeg,image/webp,image/svg+xml,.png,.jpg,.jpeg,.webp,.svg" style="display:none">
   <span class="sep"></span>
   <label id="colWrap" class="dim">색<input type="color" id="col" value="#ffffff"></label>
   <button id="outline" class="dim">🔲외곽선</button><button id="minus" class="dim">−</button><button id="plus" class="dim">＋</button>
@@ -326,11 +325,15 @@ gid('addBadge').onclick=function(){select(addImg(BADGE,86,7,22));};
 gid('addPG').onclick=function(){select(addImg(PGLOGO,50,70,30));};
 gid('addProd').onclick=function(){select(addImg(PRODUCTS,50,45,96));};
 gid('importBtn').onclick=function(){gid('fileIn').click();};
-gid('fileIn').onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var isSvg=/svg/i.test(f.type)||/\.svg$/i.test(f.name);var r=new FileReader();r.onload=function(){
-  if(!isSvg){select(addImg(r.result,50,45,70));return;}
-  var im=new Image();im.onload=function(){var iw=im.naturalWidth||im.width||300,ih=im.naturalHeight||im.height||300,W=1200,H=Math.max(1,Math.round(W*(ih/iw)));var c=document.createElement('canvas');c.width=W;c.height=H;try{c.getContext('2d').drawImage(im,0,0,W,H);select(addImg(c.toDataURL('image/png'),50,45,70));}catch(err){select(addImg(r.result,50,45,70));}};   /* SVG→PNG 래스터화(표시·PNG내보내기 안전) */
-  im.onerror=function(){select(addImg(r.result,50,45,70));};im.src=r.result;
-};r.readAsDataURL(f);this.value='';};
+function importImage(f,cb){var isSvg=/svg/i.test(f.type)||/\.svg$/i.test(f.name);var r=new FileReader();
+  r.onerror=function(){alert('파일을 읽을 수 없습니다.');};
+  r.onload=function(){
+    if(isSvg){var im=new Image();im.onload=function(){var iw=im.naturalWidth||im.width||300,ih=im.naturalHeight||im.height||300,W=1200,H=Math.max(1,Math.round(W*(ih/iw)));var c=document.createElement('canvas');c.width=W;c.height=H;try{c.getContext('2d').drawImage(im,0,0,W,H);cb(c.toDataURL('image/png'));}catch(err){cb(r.result);}};im.onerror=function(){alert('SVG를 열 수 없습니다. 파일을 확인해 주세요.');};im.src=r.result;return;}
+    var t=new Image();t.onload=function(){cb(r.result);};t.onerror=function(){alert('이 형식은 브라우저에서 열 수 없어요(예: 아이폰 HEIC). PNG·JPG·WEBP·SVG로 변환해 주세요.');};t.src=r.result;   /* 지원 안되는 형식이면 명확히 안내 */
+  };r.readAsDataURL(f);}
+gid('fileIn').onchange=function(e){var f=e.target.files&&e.target.files[0];if(f)importImage(f,function(src){select(addImg(src,50,45,70));});this.value='';};
+gid('bgBtn').onclick=function(){gid('bgIn').click();};
+gid('bgIn').onchange=function(e){var f=e.target.files&&e.target.files[0];if(f)importImage(f,function(src){setThumbBg(src);showSlide(0);});this.value='';};   /* 배경 임포트 → 썸네일 슬라이드 배경 교체 */
 gid('del').onclick=function(){if(sel){sel.remove();select(null);}};
 gid('front').onclick=function(){if(sel)sel.style.zIndex=++z;};
 gid('col').oninput=function(){if(isTb(sel)){sel.style.color=this.value;gid('nc').value=this.value;}};
@@ -346,7 +349,8 @@ gid('nc').oninput=function(){if(isTb(sel)){sel.style.color=this.value;gid('col')
 /* PNG (요소만 · 썸네일용) */
 gid('save').onclick=function(){
   var W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;var ctx=cv.getContext('2d');
-  ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+  if(cur===0&&thumbBgImg&&thumbBgImg.complete&&thumbBgImg.naturalWidth){ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);var iw=thumbBgImg.naturalWidth,ih=thumbBgImg.naturalHeight,sc=Math.max(W/iw,H/ih),dw=iw*sc,dh=ih*sc;try{ctx.drawImage(thumbBgImg,(W-dw)/2,(H-dh)/2,dw,dh);}catch(e){}}   /* 썸네일 배경 이미지 반영(cover) */
+  else{ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);}
   var els=[].slice.call(stage.querySelectorAll('.el')).filter(function(e){return +e.dataset.s===cur;});
   els.sort(function(a,b){return (parseInt(a.style.zIndex)||0)-(parseInt(b.style.zIndex)||0);});
   var was=sel;if(sel)sel.classList.remove('sel');
@@ -361,6 +365,9 @@ var ACCUM_TOTAL=(ACCUM.intro||0)+ACCUM.dur.reduce(function(a,b){return a+b;},0)+
 (function(){var pd=document.querySelector('.pdots');for(var i=0;i<NSLIDE;i++){var d=document.createElement('span');d.className='pdot';(function(k){d.onclick=function(){auto=false;setPlayBtn();showSlide(k);};})(i);pd.appendChild(d);}})();
 function dots(){document.querySelectorAll('.pdot').forEach(function(d,k){d.classList.toggle('act',k===cur);});}
 var tablebg=stage.querySelector('.tablebg'), thumbbg=stage.querySelector('.thumbbg');
+var thumbBg='__THUMB_BG_SRC__',thumbBgImg=null;   /* 썸네일 배경 이미지(빈값=검정) */
+function setThumbBg(s){thumbBg=s||'';if(thumbBg){thumbbg.style.background="#fff url('"+thumbBg+"') center/cover";thumbBgImg=new Image();thumbBgImg.src=thumbBg;}else{thumbbg.style.background='#000';thumbBgImg=null;}}
+setThumbBg(thumbBg);
 function showSlide(i){cur=(i+NSLIDE)%NSLIDE;
   stage.querySelectorAll('.el').forEach(function(e){e.style.display=(+e.dataset.s===cur)?'':'none';});
   select(null);dots();if(timer)clearTimeout(timer);
@@ -381,11 +388,11 @@ function serEl(el){return {s:+el.dataset.s,tb:isTb(el),x:el.style.left,y:el.styl
   html:isTb(el)?el.innerHTML:'',src:isTb(el)?'':el.querySelector('img').src,color:isTb(el)?el.style.color:'',outlined:el.classList.contains('outlined')};}
 gid('saveJson').onclick=function(){
   var els=[].slice.call(stage.querySelectorAll('.el')).map(serEl);
-  var data={v:2,cur:cur,z:z,els:els};
+  var data={v:2,cur:cur,z:z,els:els,thumbBg:thumbBg};
   var a=document.createElement('a');a.download='pg_editor_layout.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));document.body.appendChild(a);a.click();a.remove();};
 gid('loadJson').onclick=function(){gid('jsonf').click();};
 gid('jsonf').onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var d=JSON.parse(r.result);
-  stage.querySelectorAll('.el').forEach(function(el){el.remove();});z=d.z||10;
+  stage.querySelectorAll('.el').forEach(function(el){el.remove();});z=d.z||10;if('thumbBg' in d)setThumbBg(d.thumbBg||'');
   (d.els||[]).forEach(function(o){var el;if(o.tb){el=addText(o.html,parseFloat(o.x),parseFloat(o.y),parseFloat(o.size),o.color,o.s);if(o.outlined)el.classList.add('outlined');}else{el=addImg(o.src,parseFloat(o.x),parseFloat(o.y),parseFloat(o.size),o.s);}el.style.zIndex=o.z;});
   auto=false;setPlayBtn();showSlide(typeof d.cur==='number'?d.cur:0);
   }catch(err){alert('불러오기 실패: '+err.message);}};r.readAsText(f);this.value='';};
@@ -400,7 +407,7 @@ select(null);
 import gen_fire_table as T   # ROWS/MOS/NOTE 재사용(3페이지 테이블)
 out = (HTML.replace('__RCCSS__', G.rc_css).replace('__LOGOVB__', LOGOVB).replace('__LOGO__', LOGO)
            .replace('__DATA__', DATA_JS).replace('__REELANIM__', G.ACCUM)
-           .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri).replace('__THUMBBG__', THUMBBG)
+           .replace('__FONTSRC__', G.FONTSRC).replace('__PAPER__', G.paper_uri).replace('__THUMB_BG_SRC__', THUMB_BG_SRC)
            .replace('__TITLE__', TITLE).replace('__COMPANY__', COMPANY)
            .replace('__LEGOUT__', LEGOUT).replace('__THUMB_INIT__', THUMB_INIT).replace('__HDRTITLE__', HDRTITLE)
            .replace('__M0__', T.MOS[0]).replace('__M1__', T.MOS[1]).replace('__M2__', T.MOS[2])
