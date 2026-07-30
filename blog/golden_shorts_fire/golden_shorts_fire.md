@@ -1,7 +1,7 @@
 # golden_shorts_fire — 은퇴(FIRE) 시나리오 쇼츠 GOLDEN TEMPLATE ❄️FROZEN
 
 > **상태: 동결 템플릿(FROZEN) · 2026-07-30.** 이 문서 + `golden_shorts_fire.py` + `gen_fires.py` + `gen_fire_table.py` +
-> `gen_golden_shorts_fire_editor.py` + `build_golden_shorts_fire.py` + `assets/` = **정본**.
+> `gen_thumb.py`(신용카드 썸네일) + `gen_golden_shorts_fire_editor.py` + `build_golden_shorts_fire.py` + `assets/` = **정본**.
 > 앞으로 "은퇴 인출 시나리오 쇼츠"는 이 템플릿이 기준. 값·레이아웃을 바꾸면 이 문서도 같이 갱신.
 > 레퍼런스 빌드: **QQQ**(닷컴 꼭지 2000년 은퇴). 산출물 `golden_shorts_fire_<STOCK>.mp4`(1080×1920, 30fps, **3페이지·약 52초**).
 
@@ -18,6 +18,7 @@ blog/golden_shorts_fire/
 ├── golden_shorts_fire.py          # ★영상 그래프 생성기(누적 그래프 1장). ACCUM/ACCUM_DATA/ACCUM_TOTAL_MS/FIRES/CSS_F 노출
 ├── gen_fires.py                   # ★백테스트 엔진 실행(SHORTS_STOCK) → assets/<stock>_fires.json (원금5종×인출3종)
 ├── gen_fire_table.py              # ★3페이지 결과 테이블. ROWS/MOS/NOTE 노출(에디터 재사용)
+├── gen_thumb.py                   # ★썸네일(신용카드 스타일) 생성기 → assets/<stock>_thumb.png
 ├── gen_golden_shorts_fire_editor.py  # ★편집기 생성기 → 3슬라이드(썸네일+누적그래프+테이블)
 ├── build_golden_shorts_fire.py    # 렌더(playwright)+합치기(ffmpeg) → golden_shorts_fire[_<STOCK>].mp4
 ├── golden_shorts_fire.md          # ★이 문서(정본 스펙)
@@ -84,6 +85,16 @@ mp4·에디터 html·`golden_shorts_fire_1.html`·`_table.html`은 재생성물 
 
 ---
 
+## 4.5 썸네일 = 신용카드 스타일 (gen_thumb.py)
+
+`SHORTS_STOCK=<S> python3 gen_thumb.py` → `assets/<stock>_thumb.png` 자동 생성(build가 소비). **검정 배경 + 흰 카드(70%) + 헤드라인** 중앙 그룹.
+- **카드**(신용카드 컨셉): [브랜드 로고+티커] 좌상단 · **"N년 결과"** 우상단 · 최대원금(예 $100만) **결과 미니그래프**(3선 끝값 $5.3M/$3M/$744K). 라운드 40px·소프트 그림자. (IC칩 실험했다가 제거.)
+- **헤드라인**: `<종목> 으로 은퇴 / 얼마 있어야 할까?` — **종목명만 마젠타(`#e8347f`)**, 나머지 흰색.
+- 규격: 카드 `SCALE=0.70` · 그룹 세로중심 `CENTER=815` · 카드-문구 간격 `GAP=44`. 미니그래프 `fmtc`($10M↑ 축약·통화별)·`YEARS=floor(경과연수)`.
+- **종목별 입력**: `CFG[STOCK]`에 `lead/tail`(헤드라인) + `brand`(카드용 로고 png, 없으면 티커 텍스트). 브랜드 로고 예: `spy_logo.png`(State Street+SPY), `qqq_logo.png`(Invesco).
+
+---
+
 ## 5. 데이터 원천 (수정 금지)
 
 모든 pts/생존/파산 수치 = **`global_cup_suite/global_cup/fire_engine.py::run_fire_backtest`**(공유 엔진).
@@ -111,6 +122,7 @@ mp4·에디터 html·`golden_shorts_fire_1.html`·`_table.html`은 재생성물 
 - 2026-07-29(마감): 원금 **전환 카운트업**·그래프 **960px 세이프존**(종이 full-width·양옆 여백)·**은퇴원금 형광펜**·**배투실 워터마크**.
 - 2026-07-29(멀티에이전트 리뷰 반영): 테이블 **헤더 글씨=본문 크기**·끝점 **$10M↑ 축약(fmtV)**·NOTE **세금 통화별**·편집기 **ACCUM_TOTAL 인트로/전환 포함**·THUMB 유령키 제거.
 - 2026-07-30(SPY 제작): **인트로 훅 페이지 제거**(`intro=0`, 3s 단축)·편집기 **썸네일 배경 임포트/내보내기 반영·SVG 임포트·배경 임포트**. SPY 영상 완성(썸네일에 결과 미니그래프 삽입).
-- 2026-07-30: **애플(AAPL)** 종목 추가(START_YEAR 2016·애플 로고 실루엣). 끝점 라벨 **겹침 회피 재작성**(위→아래·x근접시만 30px, 프로즌 참조 픽셀 동일). 테이블 **경고 문구(DISC)** 추가 → 카드 밖 하단·**2배 확대(32px)·간결화**. **현재 정본(freeze).**
+- 2026-07-30: **애플(AAPL)** 종목 추가(START_YEAR 2016·애플 로고 실루엣). 끝점 라벨 **겹침 회피 재작성**(위→아래·x근접시만 30px, 프로즌 참조 픽셀 동일). 테이블 **경고 문구(DISC)** 추가 → 카드 밖 하단·**2배 확대(32px)·간결화**.
+- 2026-07-30(썸네일 규격화): **신용카드 스타일 썸네일 생성기 `gen_thumb.py`** 추가(검정+흰카드70%+헤드라인·종목명만 마젠타·결과 미니그래프). SPY 영상 완성(썸네일 이 규격). **현재 정본(freeze).**
 
 관련 메모리: [[pg-golden-shorts-fire]] · 자매편 적립: [[pg-golden-shorts-accum]]
