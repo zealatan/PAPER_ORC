@@ -143,7 +143,10 @@ else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
 
 # 로고 viewBox(이미지 로고는 원본 비율) — 편집기 헤더 svg
-THUMBBG = ("#fff url('%s') center/cover" % G.paper_uri) if STOCK == "AAPL" else "#000"   # 썸네일 배경(AAPL=종이 텍스처)
+THUMBBG = "#000"   # 썸네일 배경(기본 검정)
+if STOCK == "AAPL":   # 애플=종이 텍스처(사용자 업로드본 assets/thumb_paper_bg.png)
+    _thumb_paper = "data:image/png;base64," + base64.b64encode(open(os.path.join(HERE, "assets", "thumb_paper_bg.png"), "rb").read()).decode()
+    THUMBBG = "#fff url('%s') center/cover" % _thumb_paper
 LOGOVB = {"QQQ": "0 0 1280 1089", "AAPL": "0 0 814 1000"}.get(STOCK, "0 0 200 87.021")
 HDRTITLE = {"QQQ": "QQQ 나스닥 100", "KTNG": "KT&amp;G 케이티앤지", "SCHD": "미국배당 다우존스100", "SPY": "S&P 500 지수", "MO": "알트리아", "SEC": "삼성전자", "AAPL": "애플"}.get(STOCK, "PG 프록터앤갬블")
 
@@ -178,7 +181,7 @@ body{background:#0b0e13;font-family:'Pretendard','Noto Sans KR',sans-serif;displ
 /* --- thumb_editor 요소 --- */
 .el{position:absolute;transform:translate(-50%,-50%);cursor:grab;touch-action:none;z-index:10}
 .el.sel{outline:2px dashed #49c6ff;outline-offset:3px}
-.el.tb{color:#fff;font-weight:900;line-height:1.12;letter-spacing:-.02em;white-space:pre;text-align:center;text-shadow:0 3px 14px rgba(0,0,0,.6);padding:2px 6px}
+.el.tb{color:#fff;font-weight:900;line-height:1.12;letter-spacing:-.02em;white-space:pre;text-align:center;padding:2px 6px}
 .el.tb.outlined{-webkit-text-stroke:0.5cqw #000;paint-order:stroke fill;text-shadow:none}
 .el.tb.editing{cursor:text;outline:2px solid #49c6ff}
 .el.img img{display:block;width:100%;height:auto;pointer-events:none}
