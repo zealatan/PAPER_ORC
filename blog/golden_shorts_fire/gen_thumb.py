@@ -37,6 +37,7 @@ CFG = {
     "MO":   {"ticker": "MO",       "lead": "알트리아",  "tail": "로 은퇴"},
     "SCHD": {"ticker": "SCHD",     "lead": "미국배당",  "tail": "으로 은퇴"},
     "AAPL": {"ticker": "AAPL",     "lead": "애플",      "tail": "로 은퇴"},
+    "QYLD": {"ticker": "QYLD",     "lead": "월배당 QYLD", "tail": "로 은퇴"},
     "SEC":  {"ticker": "삼성전자",  "lead": "삼성전자",  "tail": "로 은퇴"},
     "KTNG": {"ticker": "KT&amp;G", "lead": "KT&amp;G",  "tail": "로 은퇴"},
 }
