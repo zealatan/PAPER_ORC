@@ -106,7 +106,7 @@ def block(bid, x, y, w, inner):
 def fire_block(bid, x, y, src, w=1080, h=1920):
     """파이어 그래프(그대로) iframe 블록. 카메라 도착 시 src 로드→accumAnim 자동 재생.
     src=out/ 기준 상대경로(예 'qyld_fire.html'). 블록 크기=1080×1920(풀프레임)."""
-    inner = '<iframe data-src="%s" style="width:%dpx;height:%dpx;border:0;display:block;background:#000" scrolling="no"></iframe>' % (src, w, h)
+    inner = '<iframe data-src="%s" allowtransparency="true" style="width:%dpx;height:%dpx;border:0;display:block;background:transparent" scrolling="no"></iframe>' % (src, w, h)
     return '<div class="block" id="%s" style="left:%dpx;top:%dpx;width:%dpx;height:%dpx">%s</div>' % (bid, x, y, w, h, inner)
 
 

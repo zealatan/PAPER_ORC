@@ -21,8 +21,18 @@ shutil.copy(src, dst)
 
 s = open(dst, encoding="utf-8").read()
 if "__AUTORUN__" not in s:
-    s += ('\n<!--__AUTORUN__--><script>document.fonts.ready.then(function(){'
+    # ① 배경 투명(종이 캔버스가 비쳐 요소만 보이게) + 헤더/범례 어두운 글씨(종이 위 가독)
+    # ② autorun: 폰트 로드 후 accumAnim (file:// 교차출처로 부모 호출 불가)
+    s += ('\n<!--__AUTORUN__--><style>'
+          'body{background:transparent!important}'
+          '.tpl-reel .rc-card{background:transparent!important;box-shadow:none!important;border:0!important}'
+          '.tpl-reel .rc-card::before{display:none!important}'
+          '.graphbox{box-shadow:none!important}'
+          '.toptitle{color:#1a1a1a!important}'
+          '.toplogo{filter:none!important}'
+          '.legout .lg{color:#333!important}'
+          '</style><script>document.fonts.ready.then(function(){'
           'requestAnimationFrame(function(){requestAnimationFrame(function(){'
           'accumAnim(document.querySelector(".graphbox"));});});});</script>')
     open(dst, "w", encoding="utf-8").write(s)
-print("wrote %s (%s 파이어 그래프 + autorun)" % (dst, STOCK))
+print("wrote %s (%s 파이어 그래프 · 배경투명+어두운헤더+autorun)" % (dst, STOCK))
