@@ -59,6 +59,15 @@ body{{width:1080px;height:1920px;background:#000;overflow:hidden;font-family:'Pr
 .block h1 b,.hl{{color:#2b6cb0}}
 .block p{{font-size:46px;color:#7a746a;font-weight:700;margin-top:26px}}
 .big{{font-size:150px;font-weight:900;color:#2b6cb0;letter-spacing:-.02em}}
+.ftbl{{border-collapse:collapse;font-variant-numeric:tabular-nums;width:100%;margin-top:14px}}
+.ftbl th,.ftbl td{{text-align:center;padding:22px 12px;font-size:42px;color:#1a1a1a}}
+.ftbl th{{font-weight:800;color:#8a857c;border-bottom:3px solid rgba(0,0,0,.25)}}
+.ftbl td.pr,.ftbl th.pr{{text-align:left;font-weight:900;font-size:40px;color:#111}}
+.ftbl th.pr{{color:#8a857c}}
+.ftbl tr+tr td{{border-top:2px solid rgba(0,0,0,.12)}}
+.ftbl td.ok{{color:#2b8a3e;font-weight:900}}
+.ftbl td.ko{{color:#c2255c;font-weight:800}}
+.fnote{{font-size:27px;color:#8a857c;margin-top:18px;font-weight:500}}
 </style>
 <div id="world">
 {BLOCKS}
@@ -103,6 +112,24 @@ def block(bid, x, y, w, inner):
     return '<div class="block" id="%s" style="left:%dpx;top:%dpx;width:%dpx">%s</div>' % (bid, x, y, w, inner)
 
 
+def fire_table_html(stock):
+    """파이어 마지막 페이지 요약 테이블(원금×월인출 매트릭스) HTML. gen_fire_table(<stock>) 재사용.
+    → <table class=ftbl>(생존 초록/파산 빨강) + note. 종이 위 표시용(어두운 글씨)."""
+    import importlib.util, sys
+    fire_dir = os.path.join(BLOG, "golden_shorts_fire")
+    os.environ["SHORTS_STOCK"] = stock
+    if fire_dir not in sys.path:
+        sys.path.insert(0, fire_dir)
+    for m in ("gen_fire_table", "golden_shorts_fire"):
+        sys.modules.pop(m, None)
+    spec = importlib.util.spec_from_file_location("gen_fire_table", os.path.join(fire_dir, "gen_fire_table.py"))
+    T = importlib.util.module_from_spec(spec); sys.modules["gen_fire_table"] = T
+    spec.loader.exec_module(T)
+    heads = "".join("<th>%s</th>" % m for m in T.MOS)
+    return ('<table class="ftbl"><thead><tr><th class="pr">은퇴원금</th>%s</tr></thead>'
+            '<tbody>%s</tbody></table><div class="fnote">%s</div>' % (heads, T.ROWS, T.NOTE))
+
+
 def fire_block(bid, x, y, src, w=1080, h=1920):
     """파이어 그래프(그대로) iframe 블록. 카메라 도착 시 src 로드→accumAnim 자동 재생.
     src=out/ 기준 상대경로(예 'qyld_fire.html'). 블록 크기=1080×1920(풀프레임)."""
@@ -136,13 +163,16 @@ def scene_qfire():
     전제: out/qyld_fire.html (golden_shorts_fire 로 생성해 복사). 파이어 그래프 ~42.6s."""
     qq = json.load(open(os.path.join(HERE, "data", "qq_cmp.json")))
     g1 = linechart(1560, 940, [qq["A"], qq["B"]], ["#d98f2b", "#2b6cb0"], ends=["$1.69M", "$2.66M"], dashed=qq["init"])
+    tbl = fire_table_html("QYLD")
     blocks = "\n".join([
         block("intro", 300, 260, 1600, "<h1>QYLD로 은퇴하면<br><b>얼마 있어야 할까?</b></h1><p>은퇴자금별로 돌려봤다</p>"),
-        fire_block("fire", 220, 1080, "qyld_fire.html"),
-        block("insight", 2060, 900, 1560, '<h2>남는 배당, <span class="hl">QQQ</span>에 재투자하면?</h2><div class="s">QYLD $100만 · 월$2천 · 11년</div>' + g1),
+        fire_block("fire", 200, 1000, "qyld_fire.html"),
+        block("table", 1560, 1250, 1500, '<h2>원금 × 월 인출 <span class="hl">결과</span></h2><div class="s">✅ 생존 최종액 / 파산 = 고갈 연도</div>' + tbl),
+        block("insight", 1560, 2500, 1560, '<h2>남는 배당, <span class="hl">QQQ</span>에 재투자하면?</h2><div class="s">QYLD $100만 · 월$2천 · 11년</div>' + g1),
     ])
-    seq = [{"t": "intro", "hold": 1800}, {"t": "fire", "hold": 43500}, {"t": "insight", "hold": 2700}, {"t": "ALL", "hold": 1800}]
-    return 4000, 3200, blocks, seq
+    seq = [{"t": "intro", "hold": 1800}, {"t": "fire", "hold": 43500}, {"t": "table", "hold": 3200},
+           {"t": "insight", "hold": 2700}, {"t": "ALL", "hold": 1800}]
+    return 3400, 3600, blocks, seq
 
 
 SCENES = {"qyld": scene_qyld, "qfire": scene_qfire}
