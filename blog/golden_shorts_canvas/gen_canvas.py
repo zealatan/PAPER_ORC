@@ -27,14 +27,28 @@ FONTSRC = "data:font/woff2;base64," + base64.b64encode(open(os.path.join(BLOG, "
 SW, SH = 1080, 1920   # 세로 쇼츠 뷰포트
 
 
-def linechart(w, h, series, cols, ends=None, ml=90, mr=160, mt=30, mb=60, dashed=None):
+def linechart(w, h, series, cols, ends=None, ml=110, mr=160, mt=30, mb=84, dashed=None, ystep=1e6):
     """series=[[[x,y],...],...], cols=[색,...], ends=[끝라벨,...] → 종이 위 선차트 SVG.
-    dashed=값 이면 그 y에 점선(원금선 등)."""
+    y축=ystep 단위 $M 그리드+라벨, x축=연도 라벨. dashed=값 이면 그 y에 점선(원금선)."""
     xs = [p[0] for S in series for p in S]; ys = [p[1] for S in series for p in S]
     x0, x1, y1 = min(xs), max(xs), max(ys) * 1.08
     def X(x): return ml + (w - ml - mr) * (x - x0) / (x1 - x0)
     def Y(y): return mt + (h - mt - mb) * (1 - y / y1)
-    s = '<line class="ax" x1="%d" x2="%d" y1="%.1f" y2="%.1f" stroke="#c9c2b6" stroke-width="2"/>' % (ml, w - mr, Y(0), Y(0))
+    def fmtM(v): return ("$%.1fM" % (v / 1e6)).replace(".0", "") if v >= 1e6 else "$" + format(int(round(v / 1000) * 1000), ",")
+    s = ""
+    # y축 그리드 + 라벨
+    t = ystep
+    while t < y1:
+        yy = Y(t)
+        s += '<line x1="%.1f" x2="%.1f" y1="%.1f" y2="%.1f" stroke="rgba(0,0,0,.09)" stroke-width="2"/>' % (ml, w - mr, yy, yy)
+        s += '<text x="%d" y="%.1f" font-size="30" fill="#9a938c" text-anchor="end" font-weight="600">%s</text>' % (ml - 16, yy + 10, fmtM(t))
+        t += ystep
+    # x축 연도 라벨
+    y0i = int(x0) + (1 if x0 > int(x0) else 0)
+    xstep = 2 if (int(x1) - y0i) <= 12 else 3
+    for yr in range(y0i, int(x1) + 1, xstep):
+        s += '<text x="%.1f" y="%d" font-size="30" fill="#9a938c" text-anchor="middle" font-weight="600">%d</text>' % (X(yr), h - mb + 48, yr)
+    s += '<line class="ax" x1="%d" x2="%d" y1="%.1f" y2="%.1f" stroke="#c9c2b6" stroke-width="2"/>' % (ml, w - mr, Y(0), Y(0))
     if dashed is not None:
         s += '<line class="ax" x1="%d" x2="%d" y1="%.1f" y2="%.1f" stroke="#b8b1a8" stroke-width="2.5" stroke-dasharray="8 6"/>' % (ml, w - mr, Y(dashed), Y(dashed))
     for i, S in enumerate(series):
@@ -68,6 +82,8 @@ body{{width:1080px;height:1920px;background:#000;overflow:hidden;font-family:'Pr
 .ftbl td.ok{{color:#2b8a3e;font-weight:900}}
 .ftbl td.ko{{color:#c2255c;font-weight:800}}
 .fnote{{font-size:27px;color:#8a857c;margin-top:18px;font-weight:500}}
+.panel{{background:rgba(120,124,134,.10);border-radius:40px;padding:22px 40px}}   /* 회색 반투명 패널(투명도 90%=알파.1)·여백 최소 */
+.firepanel{{background:rgba(120,124,134,.10);border-radius:40px;overflow:hidden;position:relative}}
 </style>
 <div id="world">
 {BLOCKS}
@@ -108,8 +124,9 @@ def total_seconds(seq, move_ms=1450):
     return (sum(s["hold"] for s in seq) + move_ms * (len(seq) - 1)) / 1000.0
 
 
-def block(bid, x, y, w, inner):
-    return '<div class="block" id="%s" style="left:%dpx;top:%dpx;width:%dpx">%s</div>' % (bid, x, y, w, inner)
+def block(bid, x, y, w, inner, panel=False):
+    cls = "block panel" if panel else "block"
+    return '<div class="%s" id="%s" style="left:%dpx;top:%dpx;width:%dpx">%s</div>' % (cls, bid, x, y, w, inner)
 
 
 def fire_table_html(stock):
@@ -130,11 +147,13 @@ def fire_table_html(stock):
             '<tbody>%s</tbody></table><div class="fnote">%s</div>' % (heads, T.ROWS, T.NOTE))
 
 
-def fire_block(bid, x, y, src, w=1080, h=1920):
+def fire_block(bid, x, y, src, w=1080, crop_h=1360, off_y=-210):
     """파이어 그래프(그대로) iframe 블록. 카메라 도착 시 src 로드→accumAnim 자동 재생.
-    src=out/ 기준 상대경로(예 'qyld_fire.html'). 블록 크기=1080×1920(풀프레임)."""
-    inner = '<iframe data-src="%s" allowtransparency="true" style="width:%dpx;height:%dpx;border:0;display:block;background:transparent" scrolling="no"></iframe>' % (src, w, h)
-    return '<div class="block" id="%s" style="left:%dpx;top:%dpx;width:%dpx;height:%dpx">%s</div>' % (bid, x, y, w, h, inner)
+    파이어 프레임(1080×1920)의 콘텐츠는 상단부에 몰려 있어 빈 상하 여백을 잘라낸다:
+    iframe을 off_y 만큼 위로 밀고 블록 높이를 crop_h로(overflow hidden) → 패널이 콘텐츠에 밀착.
+    src=out/ 기준 상대경로(예 'qyld_fire.html')."""
+    inner = '<iframe data-src="%s" allowtransparency="true" style="position:absolute;left:0;top:%dpx;width:%dpx;height:1920px;border:0;background:transparent" scrolling="no"></iframe>' % (src, off_y, w)
+    return '<div class="block firepanel" id="%s" style="left:%dpx;top:%dpx;width:%dpx;height:%dpx">%s</div>' % (bid, x, y, w, crop_h, inner)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -162,17 +181,20 @@ def scene_qfire():
     """인트로 → 파이어 누적 그래프(QYLD, 그대로 iframe) → QQQ 재투자 인사이트 → 전체.
     전제: out/qyld_fire.html (golden_shorts_fire 로 생성해 복사). 파이어 그래프 ~42.6s."""
     qq = json.load(open(os.path.join(HERE, "data", "qq_cmp.json")))
-    g1 = linechart(1560, 940, [qq["A"], qq["B"]], ["#d98f2b", "#2b6cb0"], ends=["$1.69M", "$2.66M"], dashed=qq["init"])
+    g1 = linechart(1680, 1080, [qq["CASH"], qq["QYLD"], qq["SCHD"], qq["SPY"], qq["QQQ"]],
+                   ["#8a857c", "#d98f2b", "#2b8a3e", "#6b4f9e", "#2b6cb0"],
+                   ends=["현금 $1.36M", "QYLD $1.69M", "SCHD $2.07M", "SPY $2.27M", "QQQ $2.75M"],
+                   dashed=qq["init"], mr=330)
     tbl = fire_table_html("QYLD")
     blocks = "\n".join([
         block("intro", 300, 260, 1600, "<h1>QYLD로 은퇴하면<br><b>얼마 있어야 할까?</b></h1><p>은퇴자금별로 돌려봤다</p>"),
         fire_block("fire", 200, 1000, "qyld_fire.html"),
-        block("table", 1560, 1250, 1500, '<h2>원금 × 월 인출 <span class="hl">결과</span></h2><div class="s">✅ 생존 최종액 / 파산 = 고갈 연도</div>' + tbl),
-        block("insight", 1560, 2500, 1560, '<h2>남는 배당, <span class="hl">QQQ</span>에 재투자하면?</h2><div class="s">QYLD $100만 · 월$2천 · 11년</div>' + g1),
+        block("table", 1560, 1250, 1500, '<h2>원금 × 월 인출 <span class="hl">결과</span></h2><div class="s">✅ 생존 최종액 / 파산 = 고갈 연도</div>' + tbl, panel=True),
+        block("insight", 1560, 2500, 1680, '<h2>남는 배당, <span class="hl">어디에</span> 둘까?</h2><div class="s">QYLD $100만 · 월$2천 · 11년 · 현금 / QYLD / SCHD / SPY / QQQ</div>' + g1, panel=True),
     ])
     seq = [{"t": "intro", "hold": 1800}, {"t": "fire", "hold": 43500}, {"t": "table", "hold": 3200},
            {"t": "insight", "hold": 2700}, {"t": "ALL", "hold": 1800}]
-    return 3400, 3600, blocks, seq
+    return 3400, 3900, blocks, seq
 
 
 SCENES = {"qyld": scene_qyld, "qfire": scene_qfire}
