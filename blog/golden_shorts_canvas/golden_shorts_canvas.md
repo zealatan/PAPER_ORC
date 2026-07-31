@@ -16,6 +16,7 @@ golden_shorts_canvas/
 ├── gen_canvas.py        # ★엔진: 블록 배치 + 카메라 시퀀스 + 드로우 애니 → out/canvas.html
 │                        #   linechart(), build(), block(), scene_<name>() 저작 함수 노출
 ├── build_canvas.py      # playwright 녹화 → out/canvas_<scene>.mp4 (+ _preview). 길이 자동 계산
+├── prep_fire.py         # 파이어 누적그래프(그대로)를 iframe용 out/<stock>_fire.html 로 준비(+autorun)
 ├── golden_shorts_canvas.md  # ★이 문서
 ├── assets/
 │   └── paper_b64.txt    # 종이 텍스처(파이어 폴더에서 복사). 폰트는 ../fonts/PretendardVariable.woff2 참조
@@ -52,7 +53,17 @@ SHORTS_SCENE=qyld python3 build_canvas.py   # 녹화 → out/canvas_qyld.mp4 (+ 
   - 순서대로 팬·줌. `"ALL"`=월드 전체(줌아웃). 각 도착 시 그 블록 `reveal()`(불투명+선 드로우).
   - 이동 시간 `MOVE`(기본 1450ms). 카메라는 대상 bbox+여백(80px)을 1080×1920에 fit.
 
-새 종목/주제 = `scene_<name>()` 추가 + `__main__`/`build_canvas`의 씬 맵에 등록.
+새 종목/주제 = `scene_<name>()` 추가 + `SCENES` 맵에 등록.
+
+### 2.1 파이어 누적 그래프(그대로) 넣기 — `fire_block`
+
+파이어 골든의 은퇴자금별 누적 애니(`golden_shorts_fire`의 accumAnim)를 **손 안 대고 그대로** 한 블록으로 삽입.
+1. `SHORTS_STOCK=QYLD python3 prep_fire.py` → `out/qyld_fire.html` 생성(파이어 그래프 + autorun 스크립트).
+2. 씬에서 `fire_block("fire", x, y, "qyld_fire.html")` — 1080×1920 **iframe** 블록. 카메라 도착 시 `reveal()`이 `src`를 세팅 → 로드 → **iframe이 스스로** accumAnim 실행(폰트 로드 후).
+3. `seq`의 그 블록 `hold`를 파이어 길이(≈`G.ACCUM_TOTAL_MS`, 예 QYLD 42.6s)+여유로. 카메라는 1080×1920 블록을 뷰포트에 1:1 fit → 파이어 영상과 동일하게 보임.
+
+⚠️ **왜 iframe autorun?** `file://` iframe은 교차출처라 부모(canvas)에서 `f.contentWindow.accumAnim(...)` 호출이 막힌다(에러). 그래서 파이어 그래프가 **자기 안에서** 폰트 로드 후 accumAnim을 돌리게 `prep_fire.py`가 autorun을 붙인다.
+※ 파이어 그래프 본체 배경은 **검정**(그대로)이라 캔버스(종이) 위에 검정 프레임으로 뜬다. 종이와 블렌딩하려면 별도 작업 필요(옵션).
 
 ---
 

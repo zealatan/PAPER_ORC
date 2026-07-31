@@ -14,7 +14,7 @@ spec = importlib.util.spec_from_file_location("gen_canvas", os.path.join(HERE, "
 GC = importlib.util.module_from_spec(spec); spec.loader.exec_module(GC)
 
 subprocess.run(["python3", os.path.join(HERE, "gen_canvas.py")], check=True, env={**os.environ, "SHORTS_SCENE": SCENE})
-ww, wh, blocks, seq = {"qyld": GC.scene_qyld}[SCENE]()
+ww, wh, blocks, seq = GC.SCENES[SCENE]()
 DUR = GC.total_seconds(seq) + 1.2   # 여유
 
 WORK = os.path.join(HERE, "out")

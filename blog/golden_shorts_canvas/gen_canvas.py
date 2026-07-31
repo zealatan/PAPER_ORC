@@ -72,7 +72,8 @@ document.querySelectorAll('.block').forEach(function(bl){{
 }});
 function reveal(id){{var bl=document.getElementById(id);if(!bl||bl.dataset.r)return;bl.dataset.r=1;bl.style.opacity=1;
  bl.querySelectorAll('.ln').forEach(function(p){{p.style.strokeDashoffset=0;}});
- bl.querySelectorAll('.dot,.lab').forEach(function(e){{e.style.opacity=1;}});}}
+ bl.querySelectorAll('.dot,.lab').forEach(function(e){{e.style.opacity=1;}});
+ bl.querySelectorAll('iframe[data-src]').forEach(function(f){{if(!f.getAttribute('src'))f.setAttribute('src',f.dataset.src);}});}}  /* 파이어 그래프: 도착→로드. 애니는 iframe 자체 autorun(교차출처로 부모 호출 불가) */
 function lookAt(x,y,w,h,pad){{pad=pad||70;w+=pad*2;h+=pad*2;x-=pad;y-=pad;var s=Math.min(SW/w,SH/h);return {{s:s,tx:SW/2-s*(x+w/2),ty:SH/2-s*(y+h/2)}};}}
 function target(k){{if(k==='ALL')return lookAt(0,0,WW,WH,140);var e=document.getElementById(k);return lookAt(e.offsetLeft,e.offsetTop,e.offsetWidth,e.offsetHeight,80);}}
 function apply(v){{world.style.transform='translate('+v.tx+'px,'+v.ty+'px) scale('+v.s+')';}}
@@ -102,6 +103,13 @@ def block(bid, x, y, w, inner):
     return '<div class="block" id="%s" style="left:%dpx;top:%dpx;width:%dpx">%s</div>' % (bid, x, y, w, inner)
 
 
+def fire_block(bid, x, y, src, w=1080, h=1920):
+    """파이어 그래프(그대로) iframe 블록. 카메라 도착 시 src 로드→accumAnim 자동 재생.
+    src=out/ 기준 상대경로(예 'qyld_fire.html'). 블록 크기=1080×1920(풀프레임)."""
+    inner = '<iframe data-src="%s" style="width:%dpx;height:%dpx;border:0;display:block;background:#000" scrolling="no"></iframe>' % (src, w, h)
+    return '<div class="block" id="%s" style="left:%dpx;top:%dpx;width:%dpx;height:%dpx">%s</div>' % (bid, x, y, w, h, inner)
+
+
 # ─────────────────────────────────────────────────────────────
 # 예제 씬: QYLD 커버드콜 데모 (SHORTS_SCENE=qyld python3 gen_canvas.py)
 # ─────────────────────────────────────────────────────────────
@@ -123,9 +131,25 @@ def scene_qyld():
     return 4400, 3000, blocks, seq
 
 
+def scene_qfire():
+    """인트로 → 파이어 누적 그래프(QYLD, 그대로 iframe) → QQQ 재투자 인사이트 → 전체.
+    전제: out/qyld_fire.html (golden_shorts_fire 로 생성해 복사). 파이어 그래프 ~42.6s."""
+    qq = json.load(open(os.path.join(HERE, "data", "qq_cmp.json")))
+    g1 = linechart(1560, 940, [qq["A"], qq["B"]], ["#d98f2b", "#2b6cb0"], ends=["$1.69M", "$2.66M"], dashed=qq["init"])
+    blocks = "\n".join([
+        block("intro", 300, 260, 1600, "<h1>QYLD로 은퇴하면<br><b>얼마 있어야 할까?</b></h1><p>은퇴자금별로 돌려봤다</p>"),
+        fire_block("fire", 220, 1080, "qyld_fire.html"),
+        block("insight", 2060, 900, 1560, '<h2>남는 배당, <span class="hl">QQQ</span>에 재투자하면?</h2><div class="s">QYLD $100만 · 월$2천 · 11년</div>' + g1),
+    ])
+    seq = [{"t": "intro", "hold": 1800}, {"t": "fire", "hold": 43500}, {"t": "insight", "hold": 2700}, {"t": "ALL", "hold": 1800}]
+    return 4000, 3200, blocks, seq
+
+
+SCENES = {"qyld": scene_qyld, "qfire": scene_qfire}
+
 if __name__ == "__main__":
     scene = os.environ.get("SHORTS_SCENE", "qyld")
-    ww, wh, blocks, seq = {"qyld": scene_qyld}[scene]()
+    ww, wh, blocks, seq = SCENES[scene]()
     html = build(ww, wh, blocks, seq)
     out = os.path.join(HERE, "out", "canvas.html")
     open(out, "w", encoding="utf-8").write(html)
