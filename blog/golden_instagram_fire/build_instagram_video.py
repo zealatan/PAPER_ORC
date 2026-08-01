@@ -144,21 +144,27 @@ def principal_label(v):
 
 
 def header(d, logo_size=(0, 0)):
-    # 짧은 흰색 타이틀 "{종목}로 은퇴", 로고를 제목 왼쪽에 인라인(있으면). 그룹 가로 정중앙.
+    # 흰색 2줄 타이틀 "{종목}로 은퇴했다면 / 얼마나 버텼을까?".
+    # 로고는 제목 블록 왼쪽에 세로 중앙(있으면). [로고|제목] 그룹 가로 정중앙.
     # 반환: 로고 붙일 (x, y). 로고 없으면 (0,0).
     cx = W // 2
     lw, lh = logo_size
     gap = 28 if lw else 0
-    title = f"{NAME}로 은퇴"
+    line1, line2 = f"{NAME}로 은퇴했다면", "얼마나 버텼을까?"
     size = 82
-    while size > 48 and (lw + gap + font(size, True).getlength(title)) > 1000:
+    while size > 46 and (lw + gap + max(font(size, True).getlength(line1),
+                                        font(size, True).getlength(line2))) > 1000:
         size -= 2
     tf = font(size, True)
-    tw = tf.getlength(title)
-    gx = cx - (lw + gap + tw) / 2
-    ty = 220
-    d.text((gx + lw + gap, ty), title, fill="#f5f5f5", font=tf, anchor="la")
-    d.text((cx, 370), PERIOD, fill="#999999", font=font(34), anchor="ma")
+    asc, desc = tf.getmetrics()
+    line_h = asc + desc
+    block_w = max(tf.getlength(line1), tf.getlength(line2))
+    gx = cx - (lw + gap + block_w) / 2
+    tx = gx + lw + gap
+    ty = 205
+    d.text((tx, ty), line1, fill="#f5f5f5", font=tf, anchor="la")
+    d.text((tx, ty + line_h + 5), line2, fill="#f5f5f5", font=tf, anchor="la")
+    d.text((cx, 445), PERIOD, fill="#999999", font=font(34), anchor="ma")
     lf = font(30)
     sw, gp, item_gap = 38, 14, 48
     items = list(zip(COLORS, MOS))
@@ -166,11 +172,11 @@ def header(d, logo_size=(0, 0)):
     total = sum(widths) + item_gap * (len(items) - 1)
     lx0 = cx - total / 2
     for (color, label), w in zip(items, widths):
-        d.rounded_rectangle((lx0, 465, lx0 + sw, 475), 5, fill=color)
-        d.text((lx0 + sw + gp, 447), label, fill="#bbbbbb", font=lf)
+        d.rounded_rectangle((lx0, 535, lx0 + sw, 545), 5, fill=color)
+        d.text((lx0 + sw + gp, 517), label, fill="#bbbbbb", font=lf)
         lx0 += w + item_gap
-    asc, _ = tf.getmetrics()
-    return int(gx), int(ty + (asc - lh) / 2)
+    block_h = 2 * line_h + 5
+    return int(gx), int(ty + (block_h - lh) / 2)
 
 
 def graph_state(t):
