@@ -138,13 +138,7 @@ def render(t):
             g_end = max(line["pts"][-1][0] for line in g["payload"]["lines"])
             y_top = max(y_top, y_ceiling(g, 0, g_end))
 
-    # 그래프+원금 박스: 회색 반투명 패널(불투명도 20%).
-    panel = Image.new("RGBA", (W, REEL_H), (0, 0, 0, 0))
-    ImageDraw.Draw(panel).rounded_rectangle(
-        (28, 625, 1052, 1649), 24, fill=(150, 150, 150, 51),   # 정사각형 1024×1024
-        outline=(90, 90, 90, 255), width=3)
-    image = Image.alpha_composite(image.convert("RGBA"), panel).convert("RGB")
-    draw = ImageDraw.Draw(image)
+    # 패널 없이 검정 배경에 바로 그린다.
     draw.text((72, 664), f"은퇴 원금  {principal_label(principal)}", fill="#ffe14d",
               font=font(61, True))
     draw.text((1010, 687), f"진행 {clip_end:.1f}", anchor="ra",
