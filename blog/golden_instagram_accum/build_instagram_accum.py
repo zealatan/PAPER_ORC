@@ -17,9 +17,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 STOCK = os.environ.get("SHORTS_STOCK", "QQQ").upper()
 THR = int(os.environ.get("ACCUM_THR", "30"))
-PREFIX = {"QQQ": "qqq", "PG": "pg", "SKH": "skh", "SEC": "sec"}.get(STOCK, STOCK.lower())
+PREFIX = {"QQQ": "qqq", "PG": "pg", "SKH": "skh", "SEC": "sec", "KT": "kt"}.get(STOCK, STOCK.lower())
 NAME = {"QQQ": "나스닥 100 (QQQ)", "SKH": "SK하이닉스", "SEC": "삼성전자",
-        "PG": "P&G"}.get(STOCK, STOCK)
+        "PG": "P&G", "KT": "KT"}.get(STOCK, STOCK)
 
 ROOT = Path(__file__).resolve().parent
 EXPORTS = ROOT / "exports"

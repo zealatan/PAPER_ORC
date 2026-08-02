@@ -12,12 +12,12 @@ gen_accum.py — 적립(accum) 시나리오 백테스트 → assets/<stock>_accu
 import sys, json, os, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 STOCK = os.environ.get("SHORTS_STOCK", "PG")
-PREF = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SKH": "skh", "SEC": "sec"}[STOCK]
+PREF = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SKH": "skh", "SEC": "sec", "KT": "kt"}[STOCK]
 sys.path.insert(0, os.path.join(HERE, "..", "PG", "deck", "tools"))
 import ko_smart_vs_steady as E
 
-E.MONTHLY_INCOME = {"SKH": 1000000.0, "SEC": 1000000.0}.get(STOCK, 1000.0)   # 월 적립액(SKH·삼성 100만원 / 그 외 $1,000·1,000원)
-KRW = STOCK in ("KTNG", "SKH", "SEC")
+E.MONTHLY_INCOME = {"SKH": 1000000.0, "SEC": 1000000.0, "KT": 1000000.0}.get(STOCK, 1000.0)   # 월 적립액(SKH·삼성 100만원 / 그 외 $1,000·1,000원)
+KRW = STOCK in ("KTNG", "SKH", "SEC", "KT")
 START_YEAR = {"SKH": 2006, "SEC": 2016}.get(STOCK, 2000)   # 종목별 시작연도(SK하이닉스 2006~, 삼성전자 2016~)
 
 # 데이터: PG=로컬 CSV / 그 외=yfinance
@@ -26,7 +26,7 @@ if STOCK == "PG":
     prices, divs = E.load_csv(os.path.join(DATA, "pg_price.csv"), os.path.join(DATA, "pg_div.csv"))
 else:
     import yfinance as yf
-    _TK = {"QQQ": "QQQ", "KTNG": "033780.KS", "SKH": "000660.KS", "SEC": "005930.KS"}[STOCK]
+    _TK = {"QQQ": "QQQ", "KTNG": "033780.KS", "SKH": "000660.KS", "SEC": "005930.KS", "KT": "030200.KS"}[STOCK]
     _t = yf.Ticker(_TK)
     _h = _t.history(start="%d-01-01" % START_YEAR, end="2026-07-31", auto_adjust=False); _h.index = _h.index.tz_localize(None)
     prices = [(d.date(), float(c)) for d, c in _h["Close"].items() if c == c]   # NaN 종가 제거(NaN!=NaN)
