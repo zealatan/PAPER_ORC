@@ -1,0 +1,48 @@
+# golden_instagram_accum ❄️ FROZEN (golden reference)
+
+**적립 vs 폭락매수** 인스타 릴(1080×1920) 파이프라인. "매달 꾸준히 적립 vs 폭락 때만 매수 — 뭐가 이겼을까?"를 실제 과거 데이터로 비교한다. `golden_instagram_fire`(은퇴 인출)의 자매편이며 렌더 인프라를 이식·개조했다.
+
+> 골든 레퍼런스. 새 실험은 복제 후 진행하고 여기 소스는 합의 없이 바꾸지 말 것.
+
+## 완성 릴 스펙(동결본)
+
+- 캔버스 1080×1920, 30fps, 총 40초(2초 후킹 + 30초 리빌 + 홀드). x축이 시간따라 확장(y는 활성 리빌 최댓값에 맞춰 성장).
+- 대표 **30% 하락매수** 1종만 표시(`ACCUM_THR`로 20/50 전환 가능).
+- **4선**: 적립 평가액(스카이블루 `#38bdf8`)·폭락매수 평가액(앰버 `#f59e0b`) 뚜렷 + 각 누적투자원금 **점선 2개**(은은). 끝점=원형 링 마커.
+- 헤더: 흰색 2줄 "매달 적립 vs 폭락매수 / {종목}, 뭐가 이겼을까?".
+- 날짜(테스트 기간)는 그래프 **왼쪽 상단 위**.
+- 결과 수치는 **하단 범례 옆**(스와치+전략명+평가액, 리빌 중 라이브 업데이트): "매달 $1,000 적립 · 30% 하락 시 매수".
+- 축/그리드 라인은 은은한 `#242424`(굵은 축선 없음), 글자는 `#b3b3b3`로 구분(레퍼런스 감성).
+- 하단 기준 표기 + 좌우60/상하50 프레이밍.
+
+## 재현
+
+```bash
+cd blog/golden_instagram_accum
+# 1) 데이터(엔진 ko_smart_vs_steady) → assets/data/<pref>_accum.json
+SHORTS_STOCK=QQQ python3 gen_accum.py
+# 2) 릴 렌더(대표 30%)
+SHORTS_STOCK=QQQ [ACCUM_THR=30] python3 build_instagram_accum.py
+# 3) 프레이밍
+ffmpeg -y -i exports/qqq_accum_reel.mp4 \
+  -vf "scale=960:1820:flags=lanczos,pad=1080:1920:60:50:black" \
+  -c:v libx264 -preset slow -crf 16 -pix_fmt yuv420p -movflags +faststart \
+  exports/qqq_accum_reel_up50.mp4
+```
+
+종목: QQQ·PG(로컬CSV)·SKH(SK하이닉스 000660·2006~)·SEC(삼성전자 005930·2016~). 통화 자동(억/만원 vs $K/$M).
+
+## 데이터 구조
+
+`assets/data/<pref>_accum.json` = 임계값 3종(20/30/50) 리스트. 각 항목의 `payload.lines` 4선(적립원금 점선·매수원금 점선·적립평가·매수평가), `steady`/`smart`{final,xirr,cagr}, `invested`/`monthly`. 엔진: `blog/PG/deck/tools/ko_smart_vs_steady.py`(수정 금지).
+
+## 스크립트
+
+- `gen_accum.py` — 백테스트 → 데이터 JSON.
+- `build_instagram_accum.py` — 릴 렌더(자체 완결, PIL 직접 렌더 + 점선 헬퍼 + 끝점 링 + 동적 라벨).
+
+## TODO
+
+- 2페이지 결과표(전략·최종평가액·CAGR·XIRR) — 미구현(현재 릴 하단에 "1/2" 표기).
+
+`exports/`(mp4/png)·`__pycache__/`는 `.gitignore` 제외.

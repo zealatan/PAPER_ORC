@@ -1,0 +1,5 @@
+exports/*
+!exports/.gitkeep
+__pycache__/
+slides/*
+!slides/.gitkeep
