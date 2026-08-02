@@ -85,6 +85,10 @@ def clipd(pts, lim):
         break
     return out
 yaA = nc(max(annO[f] for f in fys) * 1.1); yaB = nc(cO * 1.08)
+# YOC(투자원가 대비 배당율, 세후 연배당÷원금) — 2페이지 표용. 5년 마일스톤 + 마지막.
+MS = [y for y in range(START, LAST_FY + 1) if (y - START) % 5 == 0 and y > START]
+if LAST_FY not in MS: MS.append(LAST_FY)
+YOC = [(y, annX[y] / AMT, annO[y] / AMT) for y in MS]
 GREEN, GOLD, TXT, LINE, EDGE = "#4ade80", "#fbbf24", "#b3b3b3", "#242424", "#3a3a3a"
 W, H, FPS = 1080, 1920, 30
 HOOK, REVEAL, GSEC = 2.0, 16.0, 20.0
@@ -145,7 +149,33 @@ def render(tt):
         d.text((bx1, yy), f"연배당금 {unit(ann)} · 누적배당금 {unit(cum)}", anchor="rm", fill=col, font=font(28, True))
     d.text((72, 1712), f"{START}년 {amt_lbl(AMT)}({AMT/p0:,.0f}주) 매수 · {FYNOTE} · 배당세 {TAX*100:.1f}%",
            fill="#666666", font=font(24))
-    d.text((984, 1710), "번외", anchor="ra", fill="#777777", font=font(28))
+    d.text((984, 1710), "번외 · 1/2", anchor="ra", fill="#777777", font=font(28))
+    return im
+
+
+def render_table():
+    im = Image.new("RGB", (W, H), "#000000"); d = ImageDraw.Draw(im)
+    d.multiline_text((W // 2, 240), "투자원가 대비 배당율\n(내 원금 대비, 매년 받는 배당)",
+                     fill="#f5f5f5", font=font(58, True), spacing=8, anchor="ma", align="center")
+    d.text((W // 2, 470), f"{NAME} {amt_lbl(AMT)} · {START}년 매수 · 세후 기준",
+           fill="#9a9a9a", font=font(32), anchor="ma")
+    cx1, cx2, cx3 = 330, 650, 900; ty = 640
+    d.text((cx1, ty), "시점", anchor="mm", fill="#b3b3b3", font=font(34, True))
+    d.text((cx2, ty), "재투자 X", anchor="mm", fill=GOLD, font=font(34, True))
+    d.text((cx3, ty), "재투자 O", anchor="mm", fill=GREEN, font=font(34, True))
+    d.line((150, ty + 44, 930, ty + 44), fill=EDGE, width=2)
+    for i, (y, xv, ov) in enumerate(YOC):
+        ry = ty + 108 + i * 104; last = (y == LAST_FY)
+        if last: d.rounded_rectangle((150, ry - 44, 930, ry + 44), 12, fill="#141414")
+        d.text((cx1, ry), f"{y}", anchor="mm", fill="#dddddd", font=font(36, last))
+        d.text((cx2, ry), f"{xv*100:.0f}%", anchor="mm", fill=GOLD, font=font(40, True))
+        d.text((cx3, ry), f"{ov*100:.0f}%", anchor="mm", fill=GREEN, font=font(40, True))
+    py = ty + 108 + len(YOC) * 104 + 80
+    d.multiline_text((W // 2, py), f"{LAST_FY}년, 원금 대비 배당율\n재투자 O {YOC[-1][2]*100:.0f}% · 안 하면 {YOC[-1][1]*100:.0f}%",
+                     fill="#f5f5f5", font=font(42, True), spacing=12, anchor="ma", align="center")
+    d.text((72, 1712), f"{START}년 {amt_lbl(AMT)} 매수·보유 · 세후 연배당 ÷ 투자원금 · 배당세 {TAX*100:.0f}%",
+           fill="#666666", font=font(24))
+    d.text((984, 1710), "번외 · 2/2", anchor="ra", fill="#777777", font=font(28))
     return im
 
 
@@ -158,8 +188,12 @@ def main():
            "-i", "-", "-an", "-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p",
            "-movflags", "+faststart", str(base)]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
-    for fr in range(round(GSEC * FPS)):
-        mv = memoryview(render(fr / FPS).tobytes())
+    table = render_table(); gframes = round(GSEC * FPS); fade = round(0.5 * FPS); hold = round(4.0 * FPS)
+    for fr in range(gframes + fade + hold):
+        if fr < gframes:              img = render(fr / FPS)
+        elif fr < gframes + fade:     img = Image.blend(render(GSEC), table, (fr - gframes) / fade)
+        else:                         img = table
+        mv = memoryview(img.tobytes())
         while mv: mv = mv[p.stdin.write(mv):]
     p.stdin.close()
     if p.wait() != 0: raise SystemExit("ffmpeg failed")
