@@ -12,10 +12,12 @@ from pathlib import Path
 
 STOCK = os.environ.get("SHORTS_STOCK", "QQQ")
 PREFIX = {"QQQ": "qqq", "SPY": "spy", "MO": "mo", "AAPL": "aapl",
-          "QYLD": "qyld", "SCHD": "schd", "PG": "pg", "JEPI": "jepi"}.get(STOCK, STOCK.lower())
+          "QYLD": "qyld", "SCHD": "schd", "PG": "pg", "JEPI": "jepi",
+          "HYNIX": "hynix", "SEC": "sec", "KTNG": "ktng"}.get(STOCK, STOCK.lower())
 TICKER = STOCK
 # 타이틀 표시명(티커 대신 풀네임). 길면 header에서 폰트 자동 축소.
-NAME = {"QQQ": "나스닥 100 (QQQ)", "HYNIX": "SK하이닉스"}.get(STOCK, STOCK)
+NAME = {"QQQ": "나스닥 100 (QQQ)", "HYNIX": "SK하이닉스", "SEC": "삼성전자",
+        "KTNG": "KT&G"}.get(STOCK, STOCK)
 SUFFIX = "" if STOCK == "QQQ" else f"_{STOCK}"
 
 from PIL import Image, ImageDraw, ImageFont
@@ -41,6 +43,8 @@ PERIOD = {
     "QYLD": "2015년 은퇴 · 11년 경과 · 물가연동 인출",
     "JEPI": "2020년 은퇴 · 6년 경과 · 물가연동 인출",
     "HYNIX": "2010년 은퇴 · 15년 경과 · 물가연동 인출",
+    "SEC": "2010년 은퇴 · 15년 경과 · 물가연동 인출",
+    "KTNG": "2005년 은퇴 · 21년 경과 · 물가연동 인출",
 }.get(STOCK, f"{X0}년 은퇴 · 물가연동 인출")
 
 W, H, REEL_H, FPS = 1080, 1350, 1920, 30
@@ -144,39 +148,24 @@ def principal_label(v):
 
 
 def header(d, logo_size=(0, 0)):
-    # 흰색 2줄 타이틀 "{종목}로 은퇴했다면 / 얼마나 버텼을까?".
-    # 로고는 제목 블록 왼쪽에 세로 중앙(있으면). [로고|제목] 그룹 가로 정중앙.
-    # 반환: 로고 붙일 (x, y). 로고 없으면 (0,0).
+    # 2줄 타이틀(가로 중앙). 종목명은 파란 생존선 톤, 나머지 흰색. 로고 없음.
     cx = W // 2
-    lw, lh = logo_size
-    gap = 28 if lw else 0
-    line1, line2 = f"{NAME}로 은퇴했다면", "얼마나 버텼을까?"
+    name, rest, line2 = NAME, "로 은퇴했다면", "얼마나 버텼을까?"
+    line1 = name + rest
     size = 82
-    while size > 46 and (lw + gap + max(font(size, True).getlength(line1),
-                                        font(size, True).getlength(line2))) > 1000:
+    while size > 46 and max(font(size, True).getlength(line1),
+                            font(size, True).getlength(line2)) > 1000:
         size -= 2
     tf = font(size, True)
     asc, desc = tf.getmetrics()
     line_h = asc + desc
-    block_w = max(tf.getlength(line1), tf.getlength(line2))
-    gx = cx - (lw + gap + block_w) / 2
-    tx = gx + lw + gap
-    ty = 205
-    d.text((tx, ty), line1, fill="#f5f5f5", font=tf, anchor="la")
-    d.text((tx, ty + line_h + 5), line2, fill="#f5f5f5", font=tf, anchor="la")
-    d.text((cx, 445), PERIOD, fill="#999999", font=font(34), anchor="ma")
-    lf = font(30)
-    sw, gp, item_gap = 38, 14, 48
-    items = list(zip(COLORS, MOS))
-    widths = [sw + gp + lf.getlength(label) for _, label in items]
-    total = sum(widths) + item_gap * (len(items) - 1)
-    lx0 = cx - total / 2
-    for (color, label), w in zip(items, widths):
-        d.rounded_rectangle((lx0, 535, lx0 + sw, 545), 5, fill=color)
-        d.text((lx0 + sw + gp, 517), label, fill="#bbbbbb", font=lf)
-        lx0 += w + item_gap
-    block_h = 2 * line_h + 5
-    return int(gx), int(ty + (block_h - lh) / 2)
+    # 제목 하단이 '은퇴 원금' 행(마커 y≈689) 위로 150px가 되게 배치(앵커 보정 +18).
+    ty = 689 - 150 + 18 - (2 * line_h + 5)
+    x1 = cx - tf.getlength(line1) / 2
+    d.text((x1, ty), name, fill=COLORS[0], font=tf, anchor="la")
+    d.text((x1 + tf.getlength(name), ty), rest, fill="#f5f5f5", font=tf, anchor="la")
+    d.text((cx, ty + line_h + 5), line2, fill="#f5f5f5", font=tf, anchor="ma")
+    return 0, 0
 
 
 def graph_state(t):

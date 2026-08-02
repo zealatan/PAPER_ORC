@@ -69,11 +69,7 @@ HOOK_SECS = 2.0   # 초반 2초: $80만 최종 결과를 다 보여줘 후킹
 def render(t):
     image = Image.new("RGB", (W, REEL_H), "#000000")
     draw = ImageDraw.Draw(image)
-    if LOGO_IMAGE is not None:
-        lx, ly = header(draw, (LOGO_IMAGE.width, LOGO_IMAGE.height))
-        image.paste(LOGO_IMAGE, (lx, ly), LOGO_IMAGE)
-    else:
-        header(draw)
+    header(draw)   # 로고 제거
 
     row400, row800 = DATA[P1], DATA[P2]
     end400 = max(line["pts"][-1][0] for line in row400["payload"]["lines"])
@@ -139,11 +135,22 @@ def render(t):
             y_top = max(y_top, y_ceiling(g, 0, g_end))
 
     # 패널 없이 검정 배경에 바로 그린다.
-    draw.text((72, 664), f"은퇴 원금  {principal_label(principal)}", fill="#ffe14d",
-              font=font(61, True))
-    draw.text((1010, 687), f"진행 {clip_end:.1f}", anchor="ra",
-              fill="#aaaaaa", font=font(35, True))
-    box = (164, 785, 964, 1540)   # 플롯 높이 축소 → x축 연도 라벨 공간 확보
+    # 은퇴 원금: 노란 마커(원금선 색) + 회색 라벨 + 흰 볼드 금액.
+    cy = 692
+    draw.line((72, cy, 112, cy), fill="#ffe14d", width=7)
+    tx = 130
+    draw.text((tx, cy), "은퇴 원금", fill="#9a9a9a", font=font(36), anchor="lm")
+    tx += font(36).getlength("은퇴 원금") + 22
+    draw.text((tx, cy), principal_label(principal), fill="#ffffff",
+              font=font(64, True), anchor="lm")
+    # 테스트 기간(고정): 데이터 시작~끝을 YYYY.MM 로.
+    def _ym(fy):
+        y = int(fy)
+        return f"{y}.{min(12, int((fy - y) * 12) + 1):02d}"
+    period_txt = f"{_ym(row800['payload']['lines'][0]['pts'][0][0])}~{_ym(end800)}"
+    draw.text((964, cy), period_txt, anchor="rm",
+              fill="#aaaaaa", font=font(34, True))
+    box = (164, 785, 964, 1540)   # 정규 플롯 위치(크기 고정)
     axis_top = axes(draw, box, axis_progress, x_end, y_top)
     left, top, right, bottom = box
 
@@ -179,8 +186,9 @@ def render(t):
                 # 완성=끝점 도달 → 최종 라벨(생존/파산)+흰 박스,
                 # 리빌 중 → 이동하는 끝점의 현재 평가액을 투명 배경으로.
                 final = limit >= line["pts"][-1][0] - .05
-                text = line["end"] if final else money(pts[-1][1])
-                end_labels.append((tx, ty, text, color, anchor, final))
+                short = MOS[idx].replace("생활비 ", "")   # "월 인출 200만원"
+                value = line["end"] if final else money(pts[-1][1])
+                end_labels.append((tx, ty, short, value, color, anchor, final))
 
     for ghost_row in ghost_rows:
         # 고스트(이전 원금)는 이미 완성 → 전체를 정지 상태로 그린다.
@@ -189,14 +197,21 @@ def render(t):
     if active_row is not None:
         draw_lines(active_row, "active", clip_end)
 
-    # 가격 라벨은 항상 선보다 위에. 완성 라벨만 흰 배경, 리빌 중엔 투명.
-    lab_font = font(31, True)
-    for tx, ty, text, color, anchor, final in end_labels:
+    # 가격 라벨: 1줄 "월 인출 XXX" + 2줄 값. 완성 라벨만 흰 배경, 리빌 중엔 투명. 항상 선 위.
+    sf, vf = font(28), font(33, True)
+    a2, d2 = vf.getmetrics()
+    line_gap = a2 + d2
+    for tx, ty, short, value, color, anchor, final in end_labels:
+        block_w = max(sf.getlength(short), vf.getlength(value))
+        if anchor == "ra":
+            bx_l, bx_r = tx - block_w, tx
+        else:
+            bx_l, bx_r = tx, tx + block_w
         if final:
-            bb = draw.textbbox((tx, ty), text, font=lab_font, anchor=anchor)
-            draw.rounded_rectangle((bb[0] - 12, bb[1] - 7, bb[2] + 12, bb[3] + 7),
+            draw.rounded_rectangle((bx_l - 12, ty - 6, bx_r + 12, ty + line_gap * 2 - 2),
                                    9, fill="#ffffff")
-        draw.text((tx, ty), text, anchor=anchor, fill=color, font=lab_font)
+        draw.text((tx, ty), short, anchor=anchor, fill=color, font=sf)
+        draw.text((tx, ty + line_gap), value, anchor=anchor, fill=color, font=vf)
 
     if held and SHOW_STAMP:
         # 판정은 데이터 기준: 월 $2,000(첫 선)이 30년 생존했는가.
@@ -206,8 +221,6 @@ def render(t):
         else:
             stamp(draw, "파 산", "#ff4d8d")
 
-    draw.text((68, 1710), "배당투자 실험실 · 과거 데이터 백테스트",
-              fill="#777777", font=font(28))
     draw.text((984, 1710), "1/2", anchor="ra", fill="#777777", font=font(28))
     return image
 

@@ -40,6 +40,22 @@ ffmpeg -y -i exports/hynix_fire_original_style_reel.mp4 \
 - 풀네임 표시는 `build_instagram_video.py`의 `NAME`, 로고는 `assets/logos/<prefix>_logo.png`.
 - 원화 종목은 `gen`에서 `KRW=True`만 주면 억/만원 포맷·원금(4억/8억)·인출(200/400만원) 자동.
 
+## 데이터 무결성 — 액면분할/병합 체크
+
+yfinance는 분할·병합을 종가에 **자동 보정**한다(`auto_adjust=False`여도 splits는 항상 보정, 배당만 미보정). 신규 종목은 아래로 미보정 급점프가 없는지 확인 후 사용:
+
+```python
+t = yf.Ticker(TK); h = t.history(start="2000-01-01", end="…", auto_adjust=False)
+r = h["Close"] / h["Close"].shift(1)           # 하루 등락비
+print(t.splits)                                 # 알려진 분할이력
+print(r[(r>1.4)|(r<0.6)].dropna())              # 40%+ 급변(=미보정 분할 의심) → 비어야 정상
+```
+
+검증 완료(2026-08 기준, 40%+ 미보정 급변 0건 → 보정 정상):
+- **KT&G 033780** 분할 없음
+- **삼성전자 005930** 2018-05 액면분할 50:1
+- **SK하이닉스 000660** 2003-04 병합 21:1
+
 ## 스크립트
 
 - `gen_monthly_fires.py` — 백테스트 원천(`global_cup.fire_engine`) → `assets/data/<pref>_fires_monthly.json`.
@@ -59,4 +75,4 @@ golden_instagram_fire/
 ```
 
 `exports/`(대용량 mp4/png)와 `__pycache__/`는 `.gitignore` 제외.
-설명글(시청자용 캡션): `exports/captions.md` (재생성물).
+시청자용 인스타 설명글: `captions.md` (종목별 캡션·해시태그).

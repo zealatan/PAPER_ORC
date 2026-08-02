@@ -42,7 +42,7 @@ def csv_series(prefix):
     close.index = pd.to_datetime(close.index).tz_localize(None); div.index = pd.to_datetime(div.index).tz_localize(None)
     return close, div
 
-START_YEAR = {"SCHD": 2016, "SEC": 2010, "AAPL": 2016, "QYLD": 2015, "JEPI": 2020, "HYNIX": 2010}.get(STOCK, 2000)   # 종목별 은퇴 시작연도(기본 2000)
+START_YEAR = {"SCHD": 2016, "SEC": 2010, "AAPL": 2016, "QYLD": 2015, "JEPI": 2020, "HYNIX": 2010, "KTNG": 2005}.get(STOCK, 2000)   # 종목별 은퇴 시작연도(기본 2000)
 
 # ── 종목 설정 ──
 if STOCK == "PG":

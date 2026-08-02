@@ -40,6 +40,14 @@ CONFIG = {
               "sub": "2010년 은퇴 · 15년 경과 · 물가연동 인출 · 배당 생활비 사용",
               "note": "4억은 월 200만원만 생존, 월 400만원은 ’25년 파산.\n"
                       "8억은 둘 다 생존 — 반도체 초강세로 원금 급증."},
+    "SEC": {"prefix": "sec", "ticker": "SEC", "name": "삼성전자", "x1": 2027,
+            "sub": "2010년 은퇴 · 15년 경과 · 물가연동 인출 · 배당 생활비 사용",
+            "note": "4억·8억 모두 월 400만원 인출까지 생존.\n"
+                    "반도체 대표주로 15년간 원금 크게 증가."},
+    "KTNG": {"prefix": "ktng", "ticker": "KTNG", "name": "KT&G", "x1": 2027,
+             "sub": "2005년 은퇴 · 21년 경과 · 물가연동 인출 · 배당 생활비 사용",
+             "note": "4억·8억 모두 월 400만원 인출까지 생존.\n"
+                     "대표 고배당 방어주로 원금 꾸준히 증가."},
 }
 CFG = CONFIG[STOCK]
 TICKER = CFG["ticker"]
@@ -149,7 +157,7 @@ padding:4px 0 4px 22px;color:#ddd;font-size:24px;line-height:1.55}}.note{{margin
 <div class="read">{CFG["note"].replace(chr(10), "<br>")}</div>
 <div class="note">배당소득세 15% 반영 · 인출액은 물가에 따라 증가<br>
 투자 권유가 아니며 과거 성과는 미래 수익을 보장하지 않습니다.</div>"""
-    return shell("은퇴 원금 × 월 생활비<br>30년 생존 결과", f"{TICKER} FIRE RESULT", body, 2)
+    return shell("은퇴 원금 × 월 생활비<br>생존 결과", f"{TICKER} FIRE RESULT", body, 2)
 
 
 def font(size, bold=False):
@@ -198,7 +206,7 @@ def render_graph(path):
 def render_table(path):
     im = Image.new("RGB", (W, H), "#000000")
     d = ImageDraw.Draw(im)
-    header(d, "은퇴 원금 × 월 생활비\n30년 생존 결과", 2)
+    header(d, "은퇴 원금 × 월 생활비\n생존 결과", 2)
     x = (68, 380, 696, 1012)
     y0, hh, rh = 370, 96, 155
     d.rounded_rectangle((x[0], y0, x[-1], y0 + hh + rh * len(DATA)), 18,
