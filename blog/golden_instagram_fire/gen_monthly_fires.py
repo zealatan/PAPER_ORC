@@ -42,7 +42,8 @@ def csv_series(prefix):
     close.index = pd.to_datetime(close.index).tz_localize(None); div.index = pd.to_datetime(div.index).tz_localize(None)
     return close, div
 
-START_YEAR = {"SCHD": 2016, "SEC": 2010, "AAPL": 2016, "QYLD": 2015, "JEPI": 2020, "HYNIX": 2010, "KTNG": 2005, "TQQQ": 2022}.get(STOCK, 2000)   # 종목별 은퇴 시작연도(기본 2000)
+START_YEAR = {"SCHD": 2016, "SEC": 2010, "AAPL": 2016, "QYLD": 2015, "JEPI": 2020, "HYNIX": 2010, "KTNG": 2005, "TQQQ": 2022, "JEPQ": 2022}.get(STOCK, 2000)   # 종목별 은퇴 시작연도(기본 2000)
+SAMPLE = os.environ.get("FIRE_SAMPLE", "D").upper()   # 플롯 해상도 D/W/M(인출은 월별 유지). 골든=일별
 
 # ── 종목 설정 ──
 if STOCK == "PG":
@@ -61,6 +62,8 @@ elif STOCK == "TQQQ":
     close, div = yf_series("TQQQ"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "JEPI":
     close, div = yf_series("JEPI"); cpi = us_cpi(); KRW = False; TAX = 15.0
+elif STOCK == "JEPQ":
+    close, div = yf_series("JEPQ"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "SCHD":
     close, div = yf_series("SCHD"); cpi = us_cpi(); KRW = False; TAX = 15.0
 elif STOCK == "KTNG":
@@ -96,8 +99,12 @@ def scen(init, mo):
     r = run_fire_backtest(close, div, init, annual_withdrawal=mo * 12, strategy="fixed_real",
         frequency="monthly", tax_rate_pct=TAX, reinvest_dividends=False, reinvest_surplus=True,
         cpi=cpi, start_date=date(START_YEAR, 1, 1))
-    s = r.summary; tl = r.timeline_df.copy(); tl["Date"] = pd.to_datetime(tl["Date"]); tl["ym"] = tl["Date"].dt.to_period("M")
-    m = tl.groupby("ym").last().reset_index(drop=True)
+    s = r.summary; tl = r.timeline_df.copy(); tl["Date"] = pd.to_datetime(tl["Date"])
+    # 플롯 해상도(인출 주기는 위 frequency="monthly"로 유지). D=일별, W=주별, M=월별.
+    if SAMPLE == "D":
+        m = tl.reset_index(drop=True)
+    else:
+        m = tl.groupby(tl["Date"].dt.to_period(SAMPLE)).last().reset_index(drop=True)
     pts = [[to_year(x["Date"]), round(x["Portfolio Value"])] for _, x in m.iterrows()]
     last = [to_year(m.iloc[-1]["Date"]), round(m.iloc[-1]["Portfolio Value"])]
     if pts[-1][0] != last[0]: pts.append(last)
@@ -129,7 +136,7 @@ for init in PRIN:
     fires.append({"amt": init, "hook": hnum(init), "payload": pd_})   # hook=순수 금액(예 $200,000 / 2억)
     print("  %-10s %s" % (hnum(init), " · ".join(row)))
 
-pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy", "MO": "mo", "SEC": "sec", "AAPL": "aapl", "QYLD": "qyld", "JEPI": "jepi", "HYNIX": "hynix", "SFIRE": "sfire", "KT": "kt", "TQQQ": "tqqq"}[STOCK]
+pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy", "MO": "mo", "SEC": "sec", "AAPL": "aapl", "QYLD": "qyld", "JEPI": "jepi", "HYNIX": "hynix", "SFIRE": "sfire", "KT": "kt", "TQQQ": "tqqq", "JEPQ": "jepq"}[STOCK]
 out = os.path.join(HERE, "assets", "data", pref + "_fires_monthly.json")
 json.dump(fires, open(out, "w"), ensure_ascii=False)
 print("→", out, "(원금", len(fires), "종)")

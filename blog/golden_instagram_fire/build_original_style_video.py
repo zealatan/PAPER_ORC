@@ -31,25 +31,27 @@ ALT_YAXIS = os.environ.get("ALT_YAXIS", "1") != "0"   # 기본 ON: y축을 활�
 
 
 def axes(draw, box, progress, x_end, y_top):
+    # 라인은 은은한 어두운 회색, 글자는 그보다 밝은 회색(구분). 굵은 축선 없음.
+    LINE, EDGE, TXT = "#242424", "#3a3a3a", "#b3b3b3"
     left, top, right, bottom = box
     axis_right = lerp(left, right, progress)
     axis_top = top
     for i in range(3):
         value = y_top * i / 2
         y = bottom - (bottom - top) * i / 2
-        draw.line((left, y, axis_right, y), fill="#292929", width=2)
+        draw.line((left, y, axis_right, y), fill=LINE, width=2)
         draw.text((left - 18, y), money(value), anchor="rm",
-                  fill="#aaaaaa", font=font(31))
+                  fill=TXT, font=font(31))
     x_ids = (0,) if progress < .12 else ((0, 4) if progress < .28 else range(5))
     for i in x_ids:
         year = X0 + (x_end - X0) * i / 4
         x = left + (right - left) * progress * i / 4
-        draw.line((x, axis_top, x, bottom), fill="#1b1b1b", width=2)
+        draw.line((x, axis_top, x, bottom), fill=LINE, width=2)
         label = f"{year:.1f}" if x_end - X0 < 2 else f"{year:.0f}"
         draw.text((x, bottom + 30), label, anchor="ma",
-                  fill="#aaaaaa", font=font(30))
-    draw.line((left, bottom, axis_right, bottom), fill="#888888", width=3)
-    draw.line((left, bottom, left, axis_top), fill="#888888", width=3)
+                  fill=TXT, font=font(30))
+    draw.line((left, bottom, axis_right, bottom), fill=EDGE, width=2)
+    draw.line((left, bottom, left, axis_top), fill=EDGE, width=2)
     return axis_top
 
 
@@ -134,32 +136,27 @@ def render(t):
             g_end = max(line["pts"][-1][0] for line in g["payload"]["lines"])
             y_top = max(y_top, y_ceiling(g, 0, g_end))
 
-    # 패널 없이 검정 배경에 바로 그린다.
-    # 은퇴 원금: 노란 마커(원금선 색) + 회색 라벨 + 흰 볼드 금액.
-    cy = 692
-    draw.line((72, cy, 112, cy), fill="#ffe14d", width=7)
-    tx = 130
-    draw.text((tx, cy), "은퇴 원금", fill="#9a9a9a", font=font(36), anchor="lm")
-    tx += font(36).getlength("은퇴 원금") + 22
-    draw.text((tx, cy), principal_label(principal), fill="#ffffff",
-              font=font(64, True), anchor="lm")
-    # 테스트 기간(고정): 데이터 시작~끝을 YYYY.MM 로.
+    # 패널 없이 검정. 은퇴 원금 카드 제거 → 원금선 왼쪽 작은 라벨로.
     def _ym(fy):
         y = int(fy)
         return f"{y}.{min(12, int((fy - y) * 12) + 1):02d}"
     period_txt = f"{_ym(row800['payload']['lines'][0]['pts'][0][0])}~{_ym(end800)}"
-    draw.text((964, cy), period_txt, anchor="rm",
-              fill="#aaaaaa", font=font(34, True))
-    box = (164, 785, 964, 1540)   # 정규 플롯 위치(크기 고정)
+    box = (164, 660, 964, 1360)   # accum과 동일(제목여백·그래프크기·범례여백 통일)
     axis_top = axes(draw, box, axis_progress, x_end, y_top)
     left, top, right, bottom = box
+    draw.text((left, top - 16), period_txt, anchor="ls", fill="#8a8a8a", font=font(32))
 
     if y_top >= principal:
         hy = bottom - principal / y_top * (bottom - top)
         draw.line((left, hy, lerp(left, right, axis_progress), hy),
-                  fill="#ffe14d", width=5)
+                  fill="#ffffff", width=5)
+        # y축 왼쪽 흰색 라벨: "은퇴 원금"+금액 2줄을 원금선 바로 위에 붙여(줄간격 최소)
+        draw.multiline_text((left - 18, hy - 6),
+                            f"은퇴 원금\n{principal_label(principal)}",
+                            anchor="rd", align="right", spacing=2,
+                            fill="#ffffff", font=font(28, True))
 
-    end_labels = []   # 종료점 라벨은 나중에 그려 항상 선 위로 올린다.
+    legend_items = []   # 하단 범례로 뺄 (idx, 인출라벨, 값, 색)
 
     def draw_lines(source_row, color_mode, limit):
         for idx, line in enumerate(source_row["payload"]["lines"]):
@@ -179,16 +176,13 @@ def render(t):
                       joint="curve")
             if color_mode != "ghost":
                 ex, ey = xy[-1]
-                draw.ellipse((ex - 7, ey - 7, ex + 7, ey + 7), fill=color)
-                anchor = "ra" if ex > right - 175 else "la"
-                tx = ex - 10 if anchor == "ra" else ex + 10
-                ty = max(top + 12, ey - 18)
-                # 완성=끝점 도달 → 최종 라벨(생존/파산)+흰 박스,
-                # 리빌 중 → 이동하는 끝점의 현재 평가액을 투명 배경으로.
+                draw.ellipse((ex - 12, ey - 12, ex + 12, ey + 12),
+                             outline=color, width=5, fill="#000000")   # 끝점 링 마커
+                # 값은 하단 범례로. (accum 스타일 통일)
                 final = limit >= line["pts"][-1][0] - .05
                 short = MOS[idx].replace("생활비 ", "")   # "월 인출 200만원"
                 value = line["end"] if final else money(pts[-1][1])
-                end_labels.append((tx, ty, short, value, color, anchor, final))
+                legend_items.append((idx, short, value, color))
 
     for ghost_row in ghost_rows:
         # 고스트(이전 원금)는 이미 완성 → 전체를 정지 상태로 그린다.
@@ -197,28 +191,14 @@ def render(t):
     if active_row is not None:
         draw_lines(active_row, "active", clip_end)
 
-    # 가격 라벨: 1줄 "월 인출 XXX" + 2줄 값. 완성 라벨만 흰 배경, 리빌 중엔 투명. 항상 선 위.
-    sf, vf = font(28), font(33, True)
-    a2, d2 = vf.getmetrics()
-    line_gap = a2 + d2
-    # 세로 충돌 방지(둘 다 파산 등 끝점 y가 겹칠 때): 아래부터 최소 간격 확보하며 위로 밀기.
-    min_gap = line_gap * 2 + 16
-    end_labels.sort(key=lambda L: -L[1])
-    for i in range(1, len(end_labels)):
-        if end_labels[i - 1][1] - end_labels[i][1] < min_gap:
-            c = end_labels[i]
-            end_labels[i] = (c[0], end_labels[i - 1][1] - min_gap) + c[2:]
-    for tx, ty, short, value, color, anchor, final in end_labels:
-        block_w = max(sf.getlength(short), vf.getlength(value))
-        if anchor == "ra":
-            bx_l, bx_r = tx - block_w, tx
-        else:
-            bx_l, bx_r = tx, tx + block_w
-        if final:
-            draw.rounded_rectangle((bx_l - 12, ty - 6, bx_r + 12, ty + line_gap * 2 - 2),
-                                   9, fill="#ffffff")
-        draw.text((tx, ty), short, anchor=anchor, fill=color, font=sf)
-        draw.text((tx, ty + line_gap), value, anchor=anchor, fill=color, font=vf)
+    # 값은 그래프 아래 범례에(스와치 + 인출 라벨 + 값). accum 스타일 통일.
+    legend_items.sort(key=lambda r: r[0])
+    lf, vff = font(34), font(46, True)
+    for i, (idx, short, value, color) in enumerate(legend_items):
+        yy = bottom + 138 + i * 66
+        draw.rounded_rectangle((190, yy - 7, 230, yy + 7), 4, fill=color)
+        draw.text((252, yy), short, anchor="lm", fill="#dddddd", font=lf)
+        draw.text((938, yy), value, anchor="rm", fill=color, font=vff)
 
     if held and SHOW_STAMP:
         # 판정은 데이터 기준: 월 $2,000(첫 선)이 30년 생존했는가.

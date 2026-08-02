@@ -14,12 +14,11 @@ STOCK = os.environ.get("SHORTS_STOCK", "QQQ")
 PREFIX = {"QQQ": "qqq", "SPY": "spy", "MO": "mo", "AAPL": "aapl",
           "QYLD": "qyld", "SCHD": "schd", "PG": "pg", "JEPI": "jepi",
           "HYNIX": "hynix", "SEC": "sec", "KTNG": "ktng",
-          "SFIRE": "sfire", "KT": "kt", "TQQQ": "tqqq"}.get(STOCK, STOCK.lower())
+          "SFIRE": "sfire", "KT": "kt", "TQQQ": "tqqq", "JEPQ": "jepq"}.get(STOCK, STOCK.lower())
 TICKER = STOCK
 # 타이틀 표시명(티커 대신 풀네임). 길면 header에서 폰트 자동 축소.
-NAME = {"QQQ": "나스닥 100 (QQQ)", "HYNIX": "SK하이닉스", "SEC": "삼성전자",
-        "KTNG": "KT&G", "SFIRE": "삼성화재", "KT": "KT",
-        "TQQQ": "TQQQ (나스닥 3배)"}.get(STOCK, STOCK)
+NAME = {"HYNIX": "SK하이닉스", "SEC": "삼성전자",
+        "KTNG": "KT&G", "SFIRE": "삼성화재", "KT": "KT"}.get(STOCK, STOCK)
 SUFFIX = "" if STOCK == "QQQ" else f"_{STOCK}"
 
 from PIL import Image, ImageDraw, ImageFont
@@ -44,6 +43,7 @@ PERIOD = {
     "SCHD": "2016년 은퇴 · 10년 경과 · 물가연동 인출",
     "QYLD": "2015년 은퇴 · 11년 경과 · 물가연동 인출",
     "TQQQ": "2022년 고점 은퇴 · 나스닥 3배 · 물가연동 인출",
+    "JEPQ": "2022년 은퇴 · 4년 경과 · 물가연동 인출",
     "JEPI": "2020년 은퇴 · 6년 경과 · 물가연동 인출",
     "HYNIX": "2010년 은퇴 · 15년 경과 · 물가연동 인출",
     "SEC": "2010년 은퇴 · 15년 경과 · 물가연동 인출",
@@ -53,7 +53,7 @@ PERIOD = {
 }.get(STOCK, f"{X0}년 은퇴 · 물가연동 인출")
 
 W, H, REEL_H, FPS = 1080, 1350, 1920, 30
-COLORS = ("#58a6ff", "#ff4d8d")
+COLORS = ("#2dd4bf", "#ff8c42")
 # 인출 라벨: USD 달러, KRW 만원.
 MOS = (("월 생활비 인출 200만원", "월 생활비 인출 400만원") if KRW
        else ("월 생활비 인출 $2,000", "월 생활비 인출 $4,000"))
@@ -118,7 +118,9 @@ if DATA_SOURCE != MONTHLY_DATA:
 else:
     for _row in DATA.values():
         for _line in _row["payload"]["lines"]:
-            _line["pts"] = keep_monthly_first_three_years(_line["pts"])
+            # 희소(월별, ~200점 이하)만 후반 분기로 솎기. 조밀(주/일별)은 원해상도 유지.
+            if len(_line["pts"]) <= 200:
+                _line["pts"] = keep_monthly_first_three_years(_line["pts"])
 
 
 def font(size, bold=False):
@@ -166,10 +168,8 @@ def header(d, logo_size=(0, 0)):
     line_h = asc + desc
     # 제목 하단이 '은퇴 원금' 행(마커 y≈689) 위로 150px가 되게 배치(앵커 보정 +18).
     ty = 689 - 150 + 18 - (2 * line_h + 5)
-    x1 = cx - tf.getlength(line1) / 2
-    d.text((x1, ty), name, fill=COLORS[0], font=tf, anchor="la")
-    d.text((x1 + tf.getlength(name), ty), rest, fill="#f5f5f5", font=tf, anchor="la")
-    d.text((cx, ty + line_h + 5), line2, fill="#f5f5f5", font=tf, anchor="ma")
+    d.multiline_text((cx, ty), f"{line1}\n{line2}", fill="#f5f5f5", font=tf,
+                     spacing=5, anchor="ma", align="center")   # 제목 전부 흰색
     return 0, 0
 
 
