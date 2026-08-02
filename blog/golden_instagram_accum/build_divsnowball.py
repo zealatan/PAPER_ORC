@@ -29,6 +29,7 @@ CFG = {
     "SKH":  dict(ticker="000660.KS", start=2005, amount=100_000_000, krw=True,  name="SK하이닉스", fy_start=4, pref="skh"),
     "SCHD": dict(ticker="SCHD",      start=2012, amount=100_000,     krw=False, name="SCHD",     fy_start=1, pref="schd"),
     "MO":   dict(ticker="MO",        start=2005, amount=100_000,     krw=False, name="알트리아",   fy_start=1, pref="mo"),
+    "O":    dict(ticker="O",         start=2000, amount=100_000,     krw=False, name="리얼티인컴", fy_start=1, pref="o"),  # 월배당 REIT. 2005 2:1분할·2021 1.032합병 종가·배당 일관보정(확인)
 }[STOCK]
 TICKER, START, AMT, KRW, NAME, FYS0, PREFIX = (CFG["ticker"], CFG["start"], CFG["amount"],
                                                CFG["krw"], CFG["name"], CFG["fy_start"], CFG["pref"])

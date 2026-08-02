@@ -51,7 +51,7 @@ SHORTS_STOCK=KT [ACCUM_THR=30] python3 build_lump.py
 한 번 매수 후 보유하며 배당을 **재투자 O vs X** 했을 때, 주가·총자산이 아니라 **'받는 배당금' 자체**(연·누적)가 어떻게 벌어지는지. 재투자 O는 세후배당으로 당일 종가 매수→주식수 증가→배당 눈덩이. 재투자 X는 주식수 고정→DPS 성장만큼만.
 
 ```bash
-SHORTS_STOCK=KTNG python3 build_divsnowball.py   # KTNG/SEC/SKH/SCHD/MO (CFG 한 줄로 추가)
+SHORTS_STOCK=KTNG python3 build_divsnowball.py   # KTNG/SEC/SKH/SCHD/MO/O (CFG 한 줄로 추가)
 # → exports/ktng_divsnowball.png · ktng_divsnowball_reel(_top100px).mp4
 ```
 
