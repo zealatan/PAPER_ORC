@@ -92,16 +92,16 @@ YOC = [(y, annX[y] / AMT, annO[y] / AMT) for y in MS]
 GREEN, GOLD, TXT, LINE, EDGE = "#4ade80", "#fbbf24", "#b3b3b3", "#242424", "#3a3a3a"
 W, H, FPS = 1080, 1920, 30
 HOOK, REVEAL, GSEC = 2.0, 16.0, 20.0
-ax0, ay0, ax1, ay1 = 180, 470, 980, 830
-bx0, by0, bx1, by1 = 180, 1050, 980, 1440
+ax0, ay0, ax1, ay1 = 180, 556, 980, 846
+bx0, by0, bx1, by1 = 180, 990, 980, 1280
 EXPORTS = ROOT / "exports"
 FYNOTE = "회계연도(중간+기말)" if FYS0 != 1 else "연도"
 
 
 def render(tt):
     im = Image.new("RGB", (W, H), "#000000"); d = ImageDraw.Draw(im)
-    d.multiline_text((W // 2, 150), f"배당 재투자하면, 배당이 눈덩이\n{NAME}에 {amt_lbl(AMT)} 투자",
-                     fill="#f5f5f5", font=font(60, True), spacing=6, anchor="ma", align="center")
+    d.multiline_text((W // 2, 290), f"배당 재투자하면, 배당이 눈덩이\n{NAME}에 {amt_lbl(AMT)} 투자",
+                     fill="#f5f5f5", font=font(56, True), spacing=6, anchor="ma", align="center")
     prog = 1.0 if tt < HOOK else ease((tt - HOOK) / REVEAL)
     rev = X0 + (END_X - X0) * prog
     # 패널 A: 연 배당금 막대(회계연도)
@@ -143,12 +143,10 @@ def render(tt):
     cum_o = co[-1][1] if len(co) >= 1 else 0.0; cum_x = cx[-1][1] if len(cx) >= 1 else 0.0
     for i, (lab, col, ann, cum) in enumerate([("재투자 O", GREEN, annO[cur_f], cum_o),
                                               ("재투자 X", GOLD, annX[cur_f], cum_x)]):
-        yy = 1520 + i * 60
+        yy = 1400 + i * 62
         d.rounded_rectangle((bx0, yy - 7, bx0 + 40, yy + 7), 4, fill=col)
         d.text((bx0 + 52, yy), lab, anchor="lm", fill="#dddddd", font=font(30))
         d.text((bx1, yy), f"연배당금 {unit(ann)} · 누적배당금 {unit(cum)}", anchor="rm", fill=col, font=font(28, True))
-    d.text((72, 1712), f"{START}년 {amt_lbl(AMT)}({AMT/p0:,.0f}주) 매수 · {FYNOTE} · 배당세 {TAX*100:g}%",
-           fill="#666666", font=font(24))
     d.text((984, 1710), "번외 · 1/2", anchor="ra", fill="#777777", font=font(28))
     return im
 

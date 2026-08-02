@@ -34,8 +34,8 @@ def dol(v): return f"${v:,.0f}"
 GREEN, GOLD, TXT, LINE, EDGE = "#4ade80", "#fbbf24", "#b3b3b3", "#242424", "#3a3a3a"
 W, H, FPS = 1080, 1920, 30
 HOOK, REVEAL, GSEC = 2.0, 16.0, 20.0
-ax0, ay0, ax1, ay1 = 180, 470, 980, 830
-bx0, by0, bx1, by1 = 180, 1050, 980, 1440
+ax0, ay0, ax1, ay1 = 180, 556, 980, 846
+bx0, by0, bx1, by1 = 180, 990, 980, 1280
 
 
 def yr(d):
@@ -80,8 +80,8 @@ def clipd(pts, lim):
 
 def render(tt):
     im = Image.new("RGB", (W, H), "#000000"); d = ImageDraw.Draw(im)
-    d.multiline_text((W // 2, 150), f"배당성장 vs 고배당\n{GNAME} vs {YNAME} · {dol(AMT)} ({START}년~)",
-                     fill="#f5f5f5", font=font(60, True), spacing=6, anchor="ma", align="center")
+    d.multiline_text((W // 2, 290), f"배당성장 vs 고배당\n{GNAME} vs {YNAME} · {dol(AMT)} ({START}년~)",
+                     fill="#f5f5f5", font=font(56, True), spacing=6, anchor="ma", align="center")
     prog = 1.0 if tt < HOOK else ease((tt - HOOK) / REVEAL); rev = X0 + (END_X - X0) * prog
     # 패널 A: 연 배당금 막대(G 초록=배당성장, Y 금색=고배당)
     d.text((ax0, ay0 - 62), "① 연 배당금", fill="#eaeaea", font=font(36, True))
@@ -129,11 +129,10 @@ def render(tt):
     cur_y = max([y for y in YEARS if y <= rev], default=YEARS[0])
     for i, (nm, sub, col, ann, nav) in enumerate([(GNAME, "배당성장", GREEN, G["ann"][cur_y], live[0]),
                                                   (YNAME, "고배당", GOLD, Y["ann"][cur_y], live[1])]):
-        yy = 1520 + i * 60
+        yy = 1400 + i * 62
         d.rounded_rectangle((bx0, yy - 7, bx0 + 40, yy + 7), 4, fill=col)
         d.text((bx0 + 52, yy), f"{nm} ({sub})", anchor="lm", fill="#dddddd", font=font(30))
         d.text((bx1, yy), f"연배당 {dol(ann)} · 원금 {dol(nav)}", anchor="rm", fill=col, font=font(29, True))
-    d.text((72, 1712), f"{START}년 {dol(AMT)}씩 매수·보유 · 배당 현금수령(재투자X) · 배당세 15%", fill="#666666", font=font(24))
     d.text((984, 1710), "번외 · 1/2", anchor="ra", fill="#777777", font=font(28))
     return im
 
