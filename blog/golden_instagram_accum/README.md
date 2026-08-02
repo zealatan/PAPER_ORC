@@ -61,6 +61,20 @@ SHORTS_STOCK=KTNG python3 build_divsnowball.py   # KTNG/SEC/SKH/SCHD/MO/O (CFG �
 - 엔진: 재투자 O는 `fire_engine`(reinvest_dividends), 배당 발생액은 직접 시뮬(주식수×DPS×(1-세)).
 - 인사이트(KT&G 2005~ 1억): 재투자 O 연 3,462만·누적 3.32억 vs X 연 1,656만·누적 2.18억. 배당 눈덩이로 '배당 받는 힘'이 2배.
 
+## 번외 — 배당성장 vs 고배당 (build_growth_vs_yield.py) ❄️
+
+같은 금액을 **배당성장주(SCHD)와 고배당주(QYLD)** 에 넣고 보유(재투자 X). 2패널 애니 + 2페이지 요약표.
+
+```bash
+PAIR=SCHD_QYLD python3 build_growth_vs_yield.py   # SCHD_QYLD / SCHD_JEPI (PAIRS 한 줄 추가)
+# → exports/schd_qyld_gvy.png · schd_qyld_gvy_reel(_top100px).mp4
+```
+
+- **① 연 배당금**(막대): 고배당(금색)은 높게 시작해 정체·감소, 배당성장(초록)은 낮게 시작해 상승 → 추월(CROSS 연도).
+- **② 원금(주가) 평가액**(라인 + 투자원금 점선): 고배당 NAV 침식(원금선 아래), 배당성장 성장.
+- 2페이지 요약표: 연배당·누적배당·원금·총자산 4행 × 2열(▲우위 표기). **정직**하게 고배당이 '누적배당'만 우위.
+- 인사이트(SCHD vs QYLD, 2014~ $10K): 연배당 추월 2025, 원금 $27.6K vs $6.9K, 총자산 $33.5K vs $16.3K. 고배당은 받은 배당 총액↑지만 배당성장이 배당·원금·총자산 우위.
+
 ## 데이터 구조
 
 `assets/data/<pref>_accum.json` = 임계값 3종(20/30/50) 리스트. 각 항목의 `payload.lines` 4선(적립원금 점선·매수원금 점선·적립평가·매수평가), `steady`/`smart`{final,xirr,cagr}, `invested`/`monthly`. 엔진: `blog/PG/deck/tools/ko_smart_vs_steady.py`(수정 금지).
