@@ -147,7 +147,7 @@ def render(tt):
         d.rounded_rectangle((bx0, yy - 7, bx0 + 40, yy + 7), 4, fill=col)
         d.text((bx0 + 52, yy), lab, anchor="lm", fill="#dddddd", font=font(30))
         d.text((bx1, yy), f"연배당금 {unit(ann)} · 누적배당금 {unit(cum)}", anchor="rm", fill=col, font=font(28, True))
-    d.text((72, 1712), f"{START}년 {amt_lbl(AMT)}({AMT/p0:,.0f}주) 매수 · {FYNOTE} · 배당세 {TAX*100:.1f}%",
+    d.text((72, 1712), f"{START}년 {amt_lbl(AMT)}({AMT/p0:,.0f}주) 매수 · {FYNOTE} · 배당세 {TAX*100:g}%",
            fill="#666666", font=font(24))
     d.text((984, 1710), "번외 · 1/2", anchor="ra", fill="#777777", font=font(28))
     return im
@@ -173,7 +173,7 @@ def render_table():
     py = ty + 108 + len(YOC) * 104 + 80
     d.multiline_text((W // 2, py), f"{LAST_FY}년, 원금 대비 배당율\n재투자 O {YOC[-1][2]*100:.0f}% · 안 하면 {YOC[-1][1]*100:.0f}%",
                      fill="#f5f5f5", font=font(42, True), spacing=12, anchor="ma", align="center")
-    d.text((72, 1712), f"{START}년 {amt_lbl(AMT)} 매수·보유 · 세후 연배당 ÷ 투자원금 · 배당세 {TAX*100:.0f}%",
+    d.text((72, 1712), f"{START}년 {amt_lbl(AMT)} 매수·보유 · 세후 연배당 ÷ 투자원금 · 배당세 {TAX*100:g}%",
            fill="#666666", font=font(24))
     d.text((984, 1710), "번외 · 2/2", anchor="ra", fill="#777777", font=font(28))
     return im
