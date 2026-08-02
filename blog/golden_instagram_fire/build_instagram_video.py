@@ -14,11 +14,11 @@ STOCK = os.environ.get("SHORTS_STOCK", "QQQ")
 PREFIX = {"QQQ": "qqq", "SPY": "spy", "MO": "mo", "AAPL": "aapl",
           "QYLD": "qyld", "SCHD": "schd", "PG": "pg", "JEPI": "jepi",
           "HYNIX": "hynix", "SEC": "sec", "KTNG": "ktng",
-          "SFIRE": "sfire"}.get(STOCK, STOCK.lower())
+          "SFIRE": "sfire", "KT": "kt"}.get(STOCK, STOCK.lower())
 TICKER = STOCK
 # 타이틀 표시명(티커 대신 풀네임). 길면 header에서 폰트 자동 축소.
 NAME = {"QQQ": "나스닥 100 (QQQ)", "HYNIX": "SK하이닉스", "SEC": "삼성전자",
-        "KTNG": "KT&G", "SFIRE": "삼성화재"}.get(STOCK, STOCK)
+        "KTNG": "KT&G", "SFIRE": "삼성화재", "KT": "KT"}.get(STOCK, STOCK)
 SUFFIX = "" if STOCK == "QQQ" else f"_{STOCK}"
 
 from PIL import Image, ImageDraw, ImageFont
@@ -47,6 +47,7 @@ PERIOD = {
     "SEC": "2010년 은퇴 · 15년 경과 · 물가연동 인출",
     "KTNG": "2005년 은퇴 · 21년 경과 · 물가연동 인출",
     "SFIRE": "2000년 은퇴 · 26년 경과 · 물가연동 인출",
+    "KT": "2000년 은퇴 · 통신버블 고점 · 물가연동 인출",
 }.get(STOCK, f"{X0}년 은퇴 · 물가연동 인출")
 
 W, H, REEL_H, FPS = 1080, 1350, 1920, 30

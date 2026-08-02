@@ -111,7 +111,7 @@ def render(t):
             progress = axis_progress = 1
             x_end = clip_end = end400
             principal = lerp(P1, P2, tp)
-            y_top = principal
+            y_top = P2   # y축을 8억에 고정 → 원금선이 4억(중간)→8억(위)로 상승 연출
             held = False
             ghost_rows = [row400]
             active_row = None
@@ -201,6 +201,13 @@ def render(t):
     sf, vf = font(28), font(33, True)
     a2, d2 = vf.getmetrics()
     line_gap = a2 + d2
+    # 세로 충돌 방지(둘 다 파산 등 끝점 y가 겹칠 때): 아래부터 최소 간격 확보하며 위로 밀기.
+    min_gap = line_gap * 2 + 16
+    end_labels.sort(key=lambda L: -L[1])
+    for i in range(1, len(end_labels)):
+        if end_labels[i - 1][1] - end_labels[i][1] < min_gap:
+            c = end_labels[i]
+            end_labels[i] = (c[0], end_labels[i - 1][1] - min_gap) + c[2:]
     for tx, ty, short, value, color, anchor, final in end_labels:
         block_w = max(sf.getlength(short), vf.getlength(value))
         if anchor == "ra":
