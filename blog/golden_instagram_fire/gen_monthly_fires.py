@@ -67,6 +67,8 @@ elif STOCK == "SEC":
     close, div = yf_series("005930.KS"); cpi = kr_cpi(); KRW = True; TAX = 15.4
 elif STOCK == "HYNIX":
     close, div = yf_series("000660.KS"); cpi = kr_cpi(); KRW = True; TAX = 15.4
+elif STOCK == "SFIRE":
+    close, div = yf_series("000810.KS"); cpi = kr_cpi(); KRW = True; TAX = 15.4
 else:
     raise SystemExit("unknown SHORTS_STOCK: " + STOCK)
 
@@ -123,7 +125,7 @@ for init in PRIN:
     fires.append({"amt": init, "hook": hnum(init), "payload": pd_})   # hook=순수 금액(예 $200,000 / 2억)
     print("  %-10s %s" % (hnum(init), " · ".join(row)))
 
-pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy", "MO": "mo", "SEC": "sec", "AAPL": "aapl", "QYLD": "qyld", "JEPI": "jepi", "HYNIX": "hynix"}[STOCK]
+pref = {"PG": "pg", "QQQ": "qqq", "KTNG": "ktng", "SCHD": "schd", "SPY": "spy", "MO": "mo", "SEC": "sec", "AAPL": "aapl", "QYLD": "qyld", "JEPI": "jepi", "HYNIX": "hynix", "SFIRE": "sfire"}[STOCK]
 out = os.path.join(HERE, "assets", "data", pref + "_fires_monthly.json")
 json.dump(fires, open(out, "w"), ensure_ascii=False)
 print("→", out, "(원금", len(fires), "종)")

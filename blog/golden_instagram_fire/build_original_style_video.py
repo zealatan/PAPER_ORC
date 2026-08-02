@@ -11,7 +11,7 @@ SHOW_STAMP = os.environ.get("INSTA_STAMP", "1") != "0"   # 생존/파산 스탬�
 from PIL import Image, ImageDraw
 
 from build_instagram_video import (
-    BOLD, COLORS, DATA, EXPORTS, FONT, FPS, MOS, PREFIX, PRINCIPALS, REEL_H,
+    BOLD, COLORS, DATA, EXPORTS, FONT, FPS, KRW, MOS, PREFIX, PRINCIPALS, REEL_H,
     SUFFIX, W, X0, clip_points, ease, font, header, lerp, money, principal_label,
 )
 
@@ -221,6 +221,9 @@ def render(t):
         else:
             stamp(draw, "파 산", "#ff4d8d")
 
+    tax_disp = "15.4%" if KRW else "15%"
+    draw.text((72, 1712), f"{X0}년 첫 거래일 종가 기준 · 배당세 {tax_disp}·물가 반영",
+              fill="#666666", font=font(25))
     draw.text((984, 1710), "1/2", anchor="ra", fill="#777777", font=font(28))
     return image
 

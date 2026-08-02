@@ -48,6 +48,10 @@ CONFIG = {
              "sub": "2005년 은퇴 · 21년 경과 · 물가연동 인출 · 배당 생활비 사용",
              "note": "4억·8억 모두 월 400만원 인출까지 생존.\n"
                      "대표 고배당 방어주로 원금 꾸준히 증가."},
+    "SFIRE": {"prefix": "sfire", "ticker": "SFIRE", "name": "삼성화재", "x1": 2027,
+              "sub": "2000년 은퇴 · 26년 경과 · 물가연동 인출 · 배당 생활비 사용",
+              "note": "4억은 월 400만원 인출 시 ’23년 파산.\n"
+                      "8억은 둘 다 생존 — 배당·주가로 원금 크게 증가."},
 }
 CFG = CONFIG[STOCK]
 TICKER = CFG["ticker"]
@@ -234,8 +238,11 @@ def render_table(path):
     d.rectangle((68, 970, 73, 1060), fill="#ff4d8d")
     d.text((94, 969), CFG["note"],
            fill="#dddddd", font=font(23, True), spacing=10)
-    d.multiline_text((68, 1100), "배당소득세 15% 반영 · 인출액은 물가에 따라 증가\n"
-                                 "투자 권유가 아니며 과거 성과는 미래 수익을 보장하지 않습니다.",
+    tax_disp = "15.4%" if KRW else "15%"
+    d.multiline_text((68, 1100),
+                     f"{X0}년 첫 거래일 종가 매수 기준 · 배당소득세 {tax_disp} 원천징수 · 인출액 물가연동\n"
+                     "배당은 생활비로 먼저 쓰고 잉여만 재투자 · 과거 데이터 백테스트\n"
+                     "투자 권유가 아니며 과거 성과는 미래 수익을 보장하지 않습니다.",
                      fill="#777777", font=font(16), spacing=6)
     im.save(path, quality=95)
 
