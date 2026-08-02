@@ -14,11 +14,12 @@ STOCK = os.environ.get("SHORTS_STOCK", "QQQ")
 PREFIX = {"QQQ": "qqq", "SPY": "spy", "MO": "mo", "AAPL": "aapl",
           "QYLD": "qyld", "SCHD": "schd", "PG": "pg", "JEPI": "jepi",
           "HYNIX": "hynix", "SEC": "sec", "KTNG": "ktng",
-          "SFIRE": "sfire", "KT": "kt"}.get(STOCK, STOCK.lower())
+          "SFIRE": "sfire", "KT": "kt", "TQQQ": "tqqq"}.get(STOCK, STOCK.lower())
 TICKER = STOCK
 # 타이틀 표시명(티커 대신 풀네임). 길면 header에서 폰트 자동 축소.
 NAME = {"QQQ": "나스닥 100 (QQQ)", "HYNIX": "SK하이닉스", "SEC": "삼성전자",
-        "KTNG": "KT&G", "SFIRE": "삼성화재", "KT": "KT"}.get(STOCK, STOCK)
+        "KTNG": "KT&G", "SFIRE": "삼성화재", "KT": "KT",
+        "TQQQ": "TQQQ (나스닥 3배)"}.get(STOCK, STOCK)
 SUFFIX = "" if STOCK == "QQQ" else f"_{STOCK}"
 
 from PIL import Image, ImageDraw, ImageFont
@@ -42,6 +43,7 @@ PERIOD = {
     "SPY": "2000년 은퇴 · 30년 · 물가연동 인출",
     "SCHD": "2016년 은퇴 · 10년 경과 · 물가연동 인출",
     "QYLD": "2015년 은퇴 · 11년 경과 · 물가연동 인출",
+    "TQQQ": "2022년 고점 은퇴 · 나스닥 3배 · 물가연동 인출",
     "JEPI": "2020년 은퇴 · 6년 경과 · 물가연동 인출",
     "HYNIX": "2010년 은퇴 · 15년 경과 · 물가연동 인출",
     "SEC": "2010년 은퇴 · 15년 경과 · 물가연동 인출",
