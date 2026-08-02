@@ -46,6 +46,21 @@ SHORTS_STOCK=KT [ACCUM_THR=30] python3 build_lump.py
 - 제목 "적립 vs 폭락매수 vs 일시금 / {종목} · 같은 돈, 넣는 방법만 다르게". 우하단 "번외".
 - 인사이트: **고점 일시금의 타이밍 위험**. KT(2000 통신버블 고점)는 일시금이 원금(3.2억) 밑(2.5억)에 그친 반면 나눠 산 두 방법은 7~9억. 단 우상향장에선 일시금이 유리할 때가 많음(면책).
 
+## 번외 — 배당 눈덩이 (build_divsnowball.py) ❄️
+
+한 번 매수 후 보유하며 배당을 **재투자 O vs X** 했을 때, 주가·총자산이 아니라 **'받는 배당금' 자체**(연·누적)가 어떻게 벌어지는지. 재투자 O는 세후배당으로 당일 종가 매수→주식수 증가→배당 눈덩이. 재투자 X는 주식수 고정→DPS 성장만큼만.
+
+```bash
+SHORTS_STOCK=KTNG python3 build_divsnowball.py   # KTNG/SEC/SKH/SCHD/MO (CFG 한 줄로 추가)
+# → exports/ktng_divsnowball.png · ktng_divsnowball_reel(_top100px).mp4
+```
+
+- 2패널: **① 연 배당금**(회계연도 그룹 막대 O/X) + **② 누적 배당금**(area, 재투자 O 초록 `#4ade80` / X 금색 `#fbbf24`).
+- 애니: 막대가 해마다 자라고 누적 area가 벌어짐(2초 후킹+16초 리빌). 동적 범례 "재투자 O/X · 연배당금 ○○만원 · 누적배당금 ○○만원"(라이브).
+- **회계연도(`fy_start`)**: KT&G 등 기말배당 익년(2월) 지급 → 4월 시작으로 묶어 달력연도 왜곡 제거(미국 분기배당은 1=달력).
+- 엔진: 재투자 O는 `fire_engine`(reinvest_dividends), 배당 발생액은 직접 시뮬(주식수×DPS×(1-세)).
+- 인사이트(KT&G 2005~ 1억): 재투자 O 연 3,462만·누적 3.32억 vs X 연 1,656만·누적 2.18억. 배당 눈덩이로 '배당 받는 힘'이 2배.
+
 ## 데이터 구조
 
 `assets/data/<pref>_accum.json` = 임계값 3종(20/30/50) 리스트. 각 항목의 `payload.lines` 4선(적립원금 점선·매수원금 점선·적립평가·매수평가), `steady`/`smart`{final,xirr,cagr}, `invested`/`monthly`. 엔진: `blog/PG/deck/tools/ko_smart_vs_steady.py`(수정 금지).
