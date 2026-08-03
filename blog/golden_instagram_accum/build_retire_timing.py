@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(ROOT, "..", "..", "global_cup_su
 from global_cup.fire_engine import run_fire_backtest
 
 TICKER = os.environ.get("RT_TICKER", "TQQQ").upper()
-NAME = {"TQQQ": "TQQQ (나스닥 3배)"}.get(TICKER, TICKER)
+NAME = TICKER   # 타이틀은 티커만
 Y1, Y2 = int(os.environ.get("RT_Y1", "2022")), int(os.environ.get("RT_Y2", "2023"))
 P = float(os.environ.get("RT_PRINCIPAL", "800000"))       # 은퇴 원금
 MO = float(os.environ.get("RT_WITHDRAW", "4000"))         # 월 인출(물가연동)
@@ -32,9 +32,10 @@ def lerp(a, b, t): return a + (b - a) * ease(t)
 def dol(v): return f"${v:,.0f}"
 def usd(v): return f"${v/1e6:.2f}M" if v >= 1e6 else (f"${v/1e3:.0f}K" if v >= 1e4 else f"${v:,.0f}")
 
-C1, C2 = "#fbbf24", "#4ade80"   # Y1(고점 은퇴)=금색, Y2=초록(회복장 은퇴)
+C1, C2 = "#fb7185", "#4ade80"   # Y1(고점 은퇴)=금색, Y2=초록(회복장 은퇴)
 W, REEL_H, FPS = 1080, 1920, 30
-HOOK, REVEAL, GSEC = 2.0, 24.0, 28.0
+BRAND = "#fbbf24"   # 브랜드 골드
+HOOK, REVEAL, GSEC = 2.0, 12.0, 16.0
 box = (164, 660, 964, 1360)
 
 cpi = pd.read_csv(os.path.join(ROOT, "..", "PG", "ref", "fred_CPIAUCSL.csv"), parse_dates=["date"])
@@ -80,7 +81,9 @@ def header(d):
     size = 74
     while size > 44 and max(font(size, True).getlength(l1), font(size, True).getlength(l2)) > 1000: size -= 2
     tf = font(size, True); asc, desc = tf.getmetrics(); lh = asc + desc
-    d.multiline_text((cx, 689 - 150 + 18 - (2 * lh + 5)), f"{l1}\n{l2}", fill="#f5f5f5", font=tf, spacing=5, anchor="ma", align="center")
+    ty = 689 - 150 + 18 - (2 * lh + 5)
+    d.text((cx, ty), l1, anchor="ma", fill="#f5f5f5", font=tf)
+    d.text((cx, ty + lh + 5), l2, anchor="ma", fill="#f5f5f5", font=tf)
 
 
 def render(tt):
@@ -122,7 +125,7 @@ def render(tt):
         yy = bottom + 138 + i * 66
         d.rounded_rectangle((190, yy - 7, 230, yy + 7), 4, fill=col)
         d.text((252, yy), f"{y}년 은퇴", anchor="lm", fill="#dddddd", font=lf)
-        d.text((938, yy), f"{usd(val)} ({mult:.1f}배)", anchor="rm", fill=col, font=vf)
+        d.text((938, yy), f"{usd(val)} ({mult:.1f}배)", anchor="rm", fill="#f5f5f5", font=vf)
     d.text((72, 1712), f"원금 {dol(P)} · 월 {dol(MO)} 인출(물가연동) · 배당세 15%", fill="#666666", font=font(25))
     d.text((984, 1710), "번외 · 1/2", anchor="ra", fill="#777777", font=font(28))
     return im
@@ -132,8 +135,8 @@ def render_table():
     im = Image.new("RGB", (W, REEL_H), "#000000"); d = ImageDraw.Draw(im)
     d.multiline_text((W // 2, 230), f"{NAME}로 은퇴\n{Y1} 고점 vs {Y2}", fill="#f5f5f5", font=font(58, True), spacing=8, anchor="ma", align="center")
     cx1, cx2 = 620, 900; ty = 560
-    d.text((cx1, ty), f"{Y1} 은퇴", anchor="mm", fill=C1, font=font(36, True)); d.text((cx1, ty + 40), "고점 은퇴", anchor="mm", fill="#8a8a8a", font=font(24))
-    d.text((cx2, ty), f"{Y2} 은퇴", anchor="mm", fill=C2, font=font(36, True))
+    d.text((cx1, ty), f"{Y1} 은퇴", anchor="mm", fill=C1, font=font(44, True)); d.text((cx1, ty + 48), "고점 은퇴", anchor="mm", fill="#8a8a8a", font=font(28))
+    d.text((cx2, ty), f"{Y2} 은퇴", anchor="mm", fill=C2, font=font(44, True))
     d.line((100, ty + 70, 1000, ty + 70), fill=EDGE, width=2)
     rows = [("은퇴 원금", dol(P), dol(P), None),
             ("최종 평가액", usd(S1["fin"]), usd(S2["fin"]), S1["fin"] >= S2["fin"]),
@@ -141,10 +144,10 @@ def render_table():
             ("원금 대비", f"{S1['mult']:.1f}배", f"{S2['mult']:.1f}배", S1["mult"] >= S2["mult"])]
     for i, (lab, v1, v2, win1) in enumerate(rows):
         ry = ty + 140 + i * 130
-        d.text((110, ry), lab, anchor="lm", fill="#cfcfcf", font=font(31))
-        d.text((cx1, ry), v1, anchor="mm", fill=C1, font=font(38, True))
-        d.text((cx2, ry), v2, anchor="mm", fill=C2, font=font(38, True))
-        if win1 is not None: d.text((cx1 if win1 else cx2, ry + 42), "▲ 우위", anchor="mm", fill=(C1 if win1 else C2), font=font(22, True))
+        d.text((110, ry), lab, anchor="lm", fill="#cfcfcf", font=font(38))
+        d.text((cx1, ry), v1, anchor="mm", fill=C1, font=font(46, True))
+        d.text((cx2, ry), v2, anchor="mm", fill=C2, font=font(46, True))
+        if win1 is not None: d.text((cx1 if win1 else cx2, ry + 50), "▲ 우위", anchor="mm", fill=(C1 if win1 else C2), font=font(28, True))
         if i < 3: d.line((100, ry + 65, 1000, ry + 65), fill="#161616", width=2)
     py = ty + 140 + 4 * 130 + 40
     d.multiline_text((W // 2, py), f"같은 {TICKER}, 1년 차이\n고점 은퇴는 -{round((1-S1['mn']/P)*100)}% 지옥 (수익률 순서 위험)", fill="#f5f5f5", font=font(38, True), spacing=10, anchor="ma", align="center")

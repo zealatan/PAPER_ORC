@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.join(ROOT, "..", "PG", "deck", "tools"))
 import ko_smart_vs_steady as E   # xirr
 
 TICKER = os.environ.get("DCA_TICKER", "TQQQ").upper()
-NAME = {"TQQQ": "TQQQ (나스닥 3배)"}.get(TICKER, TICKER)
+NAME = TICKER   # 타이틀은 티커만
 Y1, Y2 = int(os.environ.get("DCA_Y1", "2022")), int(os.environ.get("DCA_Y2", "2023"))
 MO = float(os.environ.get("DCA_MO", "1000"))
 PREFIX = TICKER.lower()
@@ -31,9 +31,10 @@ def lerp(a, b, t): return a + (b - a) * ease(t)
 def dol(v): return f"${v:,.0f}"
 def usd(v): return f"${v/1e6:.2f}M" if v >= 1e6 else (f"${v/1e3:.0f}K" if v >= 1e4 else f"${v:,.0f}")
 
-C1, C2 = "#4ade80", "#fbbf24"   # Y1(폭락장 시작)=초록, Y2=금색
+C1, C2 = "#4ade80", "#38bdf8"   # Y1(폭락장 시작)=초록, Y2=금색
 W, REEL_H, FPS = 1080, 1920, 30
-HOOK, REVEAL, GSEC = 2.0, 24.0, 28.0
+BRAND = "#fbbf24"   # 브랜드 골드
+HOOK, REVEAL, GSEC = 2.0, 12.0, 16.0
 box = (164, 660, 964, 1360)
 
 t = yf.Ticker(TICKER); h = t.history(start=f"{Y1-1}-06-01", end="2026-07-31", auto_adjust=False)
@@ -95,7 +96,9 @@ def header(d):
     size = 74
     while size > 44 and max(font(size, True).getlength(l1), font(size, True).getlength(l2)) > 1000: size -= 2
     tf = font(size, True); asc, desc = tf.getmetrics(); lh = asc + desc
-    d.multiline_text((cx, 689 - 150 + 18 - (2 * lh + 5)), f"{l1}\n{l2}", fill="#f5f5f5", font=tf, spacing=5, anchor="ma", align="center")
+    ty = 689 - 150 + 18 - (2 * lh + 5)
+    d.text((cx, ty), l1, anchor="ma", fill="#f5f5f5", font=tf)
+    d.text((cx, ty + lh + 5), l2, anchor="ma", fill="#f5f5f5", font=tf)
 
 
 def render(tt):
@@ -142,7 +145,7 @@ def render(tt):
         yy = bottom + 138 + i * 66
         d.rounded_rectangle((190, yy - 7, 230, yy + 7), 4, fill=col)
         d.text((252, yy), f"{y}년부터 적립", anchor="lm", fill="#dddddd", font=lf)
-        d.text((938, yy), f"{dol(val)} ({mult:.2f}배)", anchor="rm", fill=col, font=vf)
+        d.text((938, yy), f"{dol(val)} ({mult:.2f}배)", anchor="rm", fill="#f5f5f5", font=vf)
     d.text((72, 1712), f"매달 {dol(MO)} 적립 · 첫 거래월말 매수 · 배당 미미(무시)", fill="#666666", font=font(25))
     d.text((984, 1710), "번외 · 1/2", anchor="ra", fill="#777777", font=font(28))
     return im
@@ -152,8 +155,8 @@ def render_table():
     im = Image.new("RGB", (W, REEL_H), "#000000"); d = ImageDraw.Draw(im)
     d.multiline_text((W // 2, 230), f"{NAME} 적립\n{Y1} 폭락장 vs {Y2} 시작", fill="#f5f5f5", font=font(58, True), spacing=8, anchor="ma", align="center")
     cx1, cx2 = 640, 910; ty = 560
-    d.text((cx1, ty), f"{Y1}부터", anchor="mm", fill=C1, font=font(36, True)); d.text((cx1, ty + 40), "폭락장 시작", anchor="mm", fill="#8a8a8a", font=font(24))
-    d.text((cx2, ty), f"{Y2}부터", anchor="mm", fill=C2, font=font(36, True))
+    d.text((cx1, ty), f"{Y1}부터", anchor="mm", fill=C1, font=font(44, True)); d.text((cx1, ty + 48), "폭락장 시작", anchor="mm", fill="#8a8a8a", font=font(28))
+    d.text((cx2, ty), f"{Y2}부터", anchor="mm", fill=C2, font=font(44, True))
     d.line((120, ty + 70, 980, ty + 70), fill=EDGE, width=2)
     rows = [("투입 원금", dol(S1["inv"]), dol(S2["inv"]), None),
             ("평가액", dol(S1["fin"]), dol(S2["fin"]), S1["fin"] >= S2["fin"]),
@@ -161,10 +164,10 @@ def render_table():
             ("XIRR(연)", f"{S1['xirr']*100:.0f}%", f"{S2['xirr']*100:.0f}%", S1["xirr"] >= S2["xirr"])]
     for i, (lab, v1, v2, win1) in enumerate(rows):
         ry = ty + 140 + i * 130
-        d.text((130, ry), lab, anchor="lm", fill="#cfcfcf", font=font(31))
-        d.text((cx1, ry), v1, anchor="mm", fill=C1, font=font(40, True))
-        d.text((cx2, ry), v2, anchor="mm", fill=C2, font=font(40, True))
-        if win1 is not None: d.text((cx1 if win1 else cx2, ry + 42), "▲ 우위", anchor="mm", fill=(C1 if win1 else C2), font=font(22, True))
+        d.text((130, ry), lab, anchor="lm", fill="#cfcfcf", font=font(38))
+        d.text((cx1, ry), v1, anchor="mm", fill=C1, font=font(48, True))
+        d.text((cx2, ry), v2, anchor="mm", fill=C2, font=font(48, True))
+        if win1 is not None: d.text((cx1 if win1 else cx2, ry + 50), "▲ 우위", anchor="mm", fill=(C1 if win1 else C2), font=font(28, True))
         if i < 3: d.line((120, ry + 65, 980, ry + 65), fill="#161616", width=2)
     py = ty + 140 + 4 * 130 + 40
     d.multiline_text((W // 2, py), f"무서운 폭락장에 시작해도\n{int(END_X)-Y1}년 뒤 {S1['mult']:.1f}배 — 미룰 이유 없다", fill="#f5f5f5", font=font(40, True), spacing=10, anchor="ma", align="center")
