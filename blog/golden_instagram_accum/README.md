@@ -75,6 +75,19 @@ PAIR=SCHD_QYLD python3 build_growth_vs_yield.py   # SCHD_QYLD / SCHD_JEPI (PAIRS
 - 2페이지 요약표: 연배당·누적배당·원금·총자산 4행 × 2열(▲우위 표기). **정직**하게 고배당이 '누적배당'만 우위.
 - 인사이트(SCHD vs QYLD, 2014~ $10K): 연배당 추월 2025, 원금 $27.6K vs $6.9K, 총자산 $33.5K vs $16.3K. 고배당은 받은 배당 총액↑지만 배당성장이 배당·원금·총자산 우위.
 
+## 번외 — 시작/은퇴 시점 비교 (build_dca_timing.py · build_retire_timing.py) ❄️
+
+같은 금액을 '시점'만 다르게 넣었을 때의 차이. 단일 차트(평가액 2선)+2페이지 요약표.
+
+```bash
+DCA_TICKER=TQQQ [DCA_Y1=2022 DCA_Y2=2023 DCA_MO=1000] python3 build_dca_timing.py   # 적립 시작 시점
+RT_TICKER=TQQQ  [RT_Y1=2022 RT_Y2=2023 RT_PRINCIPAL=800000 RT_WITHDRAW=4000] python3 build_retire_timing.py  # 은퇴 시점
+```
+
+- **dca_timing**(적립): 매달 적립을 Y1 vs Y2에 시작. 평가액 solid 2선 + 누적원금 점선. 표=투입·평가·배수·XIRR. TQQQ 2022(폭락장) 2.71배 vs 2023 2.23배 — 회복 자산은 폭락장에 담을수록 절대수익↑(단 XIRR은 근소차).
+- **retire_timing**(은퇴): 원금+월인출(물가연동, `fire_engine`)로 Y1 vs Y2 은퇴. 평가액 2선 + **은퇴원금 흰 기준선**. 표=원금·최종·최저점·원금대비. TQQQ 2022 고점 은퇴 $582K(최저 -84%) vs 2023 $5.82M — **수익률 순서 위험**.
+- x축 고정(짧은 범위이므로 도메인 리빌 대신 데이터만 리빌), ALT y축. 색 Y1=금색 / Y2=초록.
+
 ## 데이터 구조
 
 `assets/data/<pref>_accum.json` = 임계값 3종(20/30/50) 리스트. 각 항목의 `payload.lines` 4선(적립원금 점선·매수원금 점선·적립평가·매수평가), `steady`/`smart`{final,xirr,cagr}, `invested`/`monthly`. 엔진: `blog/PG/deck/tools/ko_smart_vs_steady.py`(수정 금지).
