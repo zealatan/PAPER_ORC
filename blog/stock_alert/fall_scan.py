@@ -35,9 +35,14 @@ from global_cup.high_scanner import scan_market, filter_by_min_drop   # noqa: E4
 
 ASSET = ROOT / "global_cup_suite" / "data" / "asset_size.csv"
 
+# 데이터 오류로 제외하는 종목(6자리코드/티커앞). 정상화되면 제거.
+#  402340 SK스퀘어: 야후 주가 ~8-10배 뻥튀기 → 시총(→top 진입)·낙폭 모두 왜곡.
+EXCLUDE = {"402340"}
 
-def run(market: str, top: int, min_drop: float, pool: int, min_size: float):
-    end = date.today()
+
+def run(market: str, top: int, min_drop: float, pool: int, min_size: float, asof: date | None = None):
+    # asof(포함할 마지막 종가일) 지정 시 end=asof+1일(yfinance end 배타적)로 고정 → 시장 간 날짜 통일.
+    end = (asof + timedelta(days=1)) if asof else date.today()
     start = end - timedelta(days=365 * ws.LOOKBACK_YEARS)
     a = pd.read_csv(ASSET); a["ticker"] = a["ticker"].astype(str)
     SIZE = dict(zip(a["ticker"], a["asset_size"]))
@@ -45,6 +50,7 @@ def run(market: str, top: int, min_drop: float, pool: int, min_size: float):
     tickers = ws.candidates(pool)[market]
     df = scan_market(tickers, start, end)
     df = filter_by_min_drop(df, min_drop)              # 하락 ≥ min_drop%
+    df = df[~df["ticker"].astype(str).str.split(".").str[0].isin(EXCLUDE)]  # 데이터오류 제외
     if df.empty:
         print(f"[{market}] 하락 {min_drop}%↑ 종목 없음"); return []
     df["size"] = df["ticker"].astype(str).map(SIZE)
@@ -79,13 +85,15 @@ def main():
     ap.add_argument("--pool", type=int, default=100)
     ap.add_argument("--min-size", type=float, default=10e12,
                     help="시총 하한(시장 통화, 기본 10조=한국원). 미달 시 중소형 backfill.")
+    ap.add_argument("--asof", help="포함할 마지막 종가일 YYYY-MM-DD(예: 지난주 금요일). 미지정=오늘. 시장 간 날짜 통일용.")
     a = ap.parse_args()
 
-    rows = run(a.market, a.top, a.min_drop, a.pool, a.min_size)
+    asof = date.fromisoformat(a.asof) if a.asof else None
+    rows = run(a.market, a.top, a.min_drop, a.pool, a.min_size, asof)
     out = PROJ / "data" / f"fall_week{a.week}.json"
     d = json.loads(out.read_text(encoding="utf-8")) if out.exists() else \
         {"week": a.week, "mode": "fall", "markets": {}}
-    d["date"] = date.today().strftime("%Y-%m-%d")     # 스캔일 항상 갱신
+    d["date"] = (a.asof or date.today().strftime("%Y-%m-%d"))   # asof 지정 시 기준일로 기록
     d.setdefault("markets", {})[a.market] = rows
     out.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"저장 → {out.name} (시장={list(d['markets'])})")

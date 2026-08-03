@@ -24,7 +24,9 @@ KR_NAME = {'005930': '삼성전자', '000660': 'SK하이닉스', '402340': 'SK�
            '009150': '삼성전기', '373220': 'LG에너지솔루션', '032830': '삼성생명', '028260': '삼성물산',
            '329180': 'HD현대중공업', '000270': '기아', '011070': 'LG이노텍', '006800': '미래에셋증권',
            '066570': 'LG전자', '064400': 'LG CNS', '950160': '코오롱티슈진', '010950': 'S-Oil',
-           '078930': 'GS', '161390': '한국타이어'}
+           '078930': 'GS', '161390': '한국타이어', '012450': '한화에어로스페이스',
+           '034020': '두산에너빌리티', '012330': '현대모비스',
+           '005490': 'POSCO홀딩스', '010130': '고려아연', '051910': 'LG화학'}
 
 
 def emoji(ch, px):
@@ -77,17 +79,26 @@ def main():
     tbl_h = rowh * n; y0 = top + (avail - tbl_h) // 2
     fs = 44 if n > 6 else 50
     f_rk = ImageFont.truetype(FONT, fs); f_nm = ImageFont.truetype(FONT, fs); f_dd = ImageFont.truetype(FONT, fs)
+    NAME_X = LX + 100
     for i, r in enumerate(rows):
         y = y0 + i * rowh
         if i % 2 == 0:
             dr.rectangle([LX - 20, y, RX + 20, y + rowh - 8], fill=(34, 31, 27))
         cy = y + (rowh - 8) // 2
         dr.text((LX, cy), f'{i+1}', font=f_rk, fill=YELLOW, anchor='lm')
-        dr.text((LX + 100, cy), name_of(r), font=f_nm, fill=WHITE, anchor='lm')
         v = r.get('drawdown_pct') if a.dir == 'fall' else r.get('return_pct')
         val = abs(v) if a.dir == 'fall' else v
         sign = '' if a.dir == 'fall' else ('+' if v >= 0 else '')
-        dr.text((RX, cy), f'{arrow}{sign}{val:.1f}%', font=f_dd, fill=accent, anchor='rm')
+        vtxt = f'{arrow}{sign}{val:.1f}%'
+        # 이름은 값(우측) 앞에서 잘리게 폭 제한 — ETF 등 긴 이름 겹침 방지
+        name_max = (RX - dr.textlength(vtxt, font=f_dd) - 28) - NAME_X
+        nm = name_of(r)
+        while nm and dr.textlength(nm, font=f_nm) > name_max:
+            nm = nm[:-1]
+        if nm != name_of(r):
+            nm = nm[:-1] + '…'
+        dr.text((NAME_X, cy), nm, font=f_nm, fill=WHITE, anchor='lm')
+        dr.text((RX, cy), vtxt, font=f_dd, fill=accent, anchor='rm')
 
     out = a.out or os.path.join(OUT, f'table_{code}.png')
     img.save(out); print(out, img.size)
