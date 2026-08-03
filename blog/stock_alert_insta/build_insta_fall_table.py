@@ -42,8 +42,7 @@ KR_NAME = {'005930': '삼성전자', '000660': 'SK하이닉스', '402340': 'SK�
 _p = open(GF / "assets" / "paper_b64.txt").read().strip()
 if _p.startswith("data:"): _p = _p.split(",", 1)[1]
 PAPER = Image.open(BytesIO(base64.b64decode(_p))).convert("RGB")
-_m = SA / "assets" / "shorts" / "mascot_knit.png"
-MASCOT = Image.open(_m).convert("RGBA") if _m.exists() else None
+MASCOT = None   # 마크 사용 안 함(제거)
 LOGO_DIR = SA / "deck" / "logos"
 _lc = {}
 

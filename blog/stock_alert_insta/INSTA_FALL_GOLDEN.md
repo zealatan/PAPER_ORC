@@ -23,7 +23,7 @@ python3 -c "import build_insta_fall_table as b; b.main_cards()"   # 캐러셀 �
 - 타이틀 `<국기> <시장> 주식 하락 TOPn` — **하락=마젠타 `#d12e77`**, 나머지 흰색. 국기=NotoColorEmoji. 아래 `2026 · week N`(골드 `#d9b44a`).
 - 표: [순위][로고][종목명][전고점比]. **순위·▼낙폭%=라즈베리 `#c2255c`**, 종목명 `#141414`, th `#8a857c`. ETF는 로고 열 없음.
 - 로고: `stock_alert/deck/logos/<티커앞>.png`, **contain(비율 유지)** height≤46(릴)/pitch비례(카드). 한글명 `KR_NAME`.
-- 마스코트 `mascot_knit.png` 우상단. 페이지표시(릴 `N/총`).
+- 마크(마스코트) **미사용**(`MASCOT=None`) — 타이틀만 상단 중앙, 표가 꽉 참. 페이지표시(릴 `N/총`, 카드 노트 `N/총`).
 - 폰트: 원본 Pretendard → **Noto Sans CJK 대체**(PIL은 woff2 불가). 나머지 좌표·색은 원본 CSS %를 픽셀로 이식.
 
 ## 애니(릴)
