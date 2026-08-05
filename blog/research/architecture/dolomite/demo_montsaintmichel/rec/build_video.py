@@ -24,6 +24,7 @@ MAXCH = int(os.environ.get('MAXCH', 12))
 SUBS  = os.environ.get('SUBS', '1') != '0'
 FONT  = os.environ.get('FONT', 'NanumSquare')
 FONTDIR = '/usr/share/fonts/truetype/nanum'
+XF    = float(os.environ.get('XFADE', '0.3'))   # 컷 사이 크로스페이드(초). 0=하드컷
 
 MAN = json.load(open(os.path.join(ROOT, 'manifest.json'), encoding='utf-8'))
 SHOTS = sorted(MAN['shots'], key=lambda s: s['id'])
@@ -74,28 +75,30 @@ segs = []
 timeline = []   # (start, dur, id, text)
 clock = 0.0
 missing = []
-for sh in SHOTS:
+for idx, sh in enumerate(SHOTS):
     sid = sh['id']
     n = NARR.get(sid)
     adur = float(n['dur']) if n and n.get('file') and n['dur'] > 0.05 else float(sh.get('dur', 3))
+    is_last = (idx == len(SHOTS)-1)
+    tgt = adur + (0.0 if (is_last or XF<=0) else XF)   # 크로스페이드 겹침분만큼 세그 연장(총길이는 오디오와 동일 유지)
     src = os.path.join(IMG, f"shot{sid:02d}.mp4")
     seg = os.path.join(TMP, f"seg{sid:02d}.mp4")
     if not os.path.exists(src):
         missing.append(sid)
         # 회색 슬레이트로 자리 채움
         run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','lavfi',
-             '-i', f'color=c=0x20242c:s={W}x{H}:r={FPS}:d={adur:.3f}',
+             '-i', f'color=c=0x20242c:s={W}x{H}:r={FPS}:d={tgt:.3f}',
              '-vf', f"drawtext=fontfile={FONTDIR}/NanumSquareB.ttf:text='#{sid:02d}':fontcolor=white:fontsize=90:x=(w-tw)/2:y=(h-th)/2",
              '-c:v','libx264','-pix_fmt','yuv420p','-r',str(FPS), seg])
     else:
         vdur = probe_dur(src)
-        # cover 스케일 + 센터크롭 → WxH, fps 통일, 오디오 제거, 길이=adur
+        # cover 스케일 + 센터크롭 → WxH, fps 통일, 오디오 제거, 길이=tgt
         vf = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
               f"crop={W}:{H},setsar=1,fps={FPS}")
-        if vdur < adur - 0.03:   # 모자라면 마지막 프레임 프리즈로 연장
-            vf += f",tpad=stop_mode=clone:stop_duration={adur - vdur + 0.05:.3f}"
+        if vdur < tgt - 0.03:   # 모자라면 마지막 프레임 프리즈로 연장
+            vf += f",tpad=stop_mode=clone:stop_duration={tgt - vdur + 0.05:.3f}"
         run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',src,
-             '-an','-vf',vf,'-t',f'{adur:.3f}',
+             '-an','-vf',vf,'-t',f'{tgt:.3f}',
              '-c:v','libx264','-pix_fmt','yuv420p','-r',str(FPS), seg])
     segs.append(seg)
     timeline.append((clock, adur, sid, sh['sentence_kr'].strip()))
@@ -104,12 +107,26 @@ for sh in SHOTS:
 TOTAL = clock
 print(f"세그먼트 {len(segs)}개 · 총 {TOTAL:.1f}s" + (f" · ⚠️클립누락 {missing}" if missing else ""))
 
-# ---------- 2) 비디오 concat ----------
-concat_list = os.path.join(TMP, 'segs.txt')
-open(concat_list,'w').write(''.join(f"file '{os.path.abspath(s)}'\n" for s in segs))
+# ---------- 2) 비디오 이어붙이기 (XF>0: 크로스페이드 체인 / else: 하드컷 concat) ----------
 silent = os.path.join(TMP, 'silent.mp4')
-run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','concat','-safe','0',
-     '-i', concat_list, '-c','copy', silent])
+if XF > 0 and len(segs) > 1:
+    inp = []
+    for s in segs: inp += ['-i', s]
+    fc = []; prev = '[0:v]'
+    for k in range(1, len(segs)):
+        off = timeline[k][0]                      # = 앞 컷들 나레이션 누적 = 크로스페이드 시작점
+        out = '[vout]' if k == len(segs)-1 else f'[vx{k}]'
+        fc.append(f'{prev}[{k}:v]xfade=transition=fade:duration={XF}:offset={off:.3f}{out}')
+        prev = out
+    run(['ffmpeg','-hide_banner','-loglevel','error','-y', *inp,
+         '-filter_complex', ';'.join(fc), '-map','[vout]',
+         '-c:v','libx264','-pix_fmt','yuv420p','-r',str(FPS), silent])
+    print(f"  크로스페이드 {XF}s × {len(segs)-1}이음새")
+else:
+    concat_list = os.path.join(TMP, 'segs.txt')
+    open(concat_list,'w').write(''.join(f"file '{os.path.abspath(s)}'\n" for s in segs))
+    run(['ffmpeg','-hide_banner','-loglevel','error','-y','-f','concat','-safe','0',
+         '-i', concat_list, '-c','copy', silent])
 
 # ---------- 3) 오디오 concat (컷 순서, TTS) ----------
 aud_inputs, amap = [], []
@@ -129,7 +146,7 @@ run(['ffmpeg','-hide_banner','-loglevel','error','-y', *aud_inputs,
 vf_final = None
 if SUBS:
     fs = int(H*0.030)          # ~58px @1080p
-    marginV = int(H*0.11)      # 하단 여백(쇼츠 안전영역 위)
+    marginV = int(H*float(os.environ.get('SUBPOS','0.25')))  # 바닥에서 비율(0.25=75%높이)
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}

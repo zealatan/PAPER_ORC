@@ -1,0 +1,233 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>브레제 성 — 프롬프트 갤러리 (t2v)</title><style>
+:root{--bg:#16181d;--panel:#1e2127;--line:#2b2f37;--ink:#e6e8ec;--mute:#8b919c;--amber:#e8a33d;--green:#8fd06f;--cyan:#3fb6c4;--dyn:#ff7ac0}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:Pretendard,"Malgun Gothic",sans-serif;margin:0;padding:22px}
+.wrap{max-width:1400px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}.sub{color:var(--mute);font-size:13px;margin:0 0 14px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.c{background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden;display:flex;flex-direction:column}
+.c.dyn{border-color:#ff7ac077;box-shadow:0 0 0 1px #ff7ac033}
+.slot{position:relative;aspect-ratio:9/16;background:#0e1013;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.slot.dyn{background:#1a0f16}
+.slot img,.slot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.slot.empty img{display:none}
+.slot .rm{position:absolute;top:6px;right:6px;z-index:3;background:#000a;color:#fff;border:none;border-radius:5px;padding:2px 7px;font-size:12px;cursor:pointer;display:none}.slot.filled .rm{display:block}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+.bar .save{background:#173a2a;color:#8fd06f;border:1px solid #2f6b48;border-radius:7px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer}.bar .save:hover{background:#1d4a35}
+.barhint{color:var(--mute);font-size:12px}.barhint code{background:#0f1418;border:1px solid #223040;border-radius:4px;padding:1px 5px;color:#cfe0ea;font-size:11px}
+.slot .ph{color:#5a616c;font-size:12px;text-align:center;font-family:ui-monospace}.slot .ph span{color:#3a4048}
+.slot input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.meta{padding:11px 13px 13px}.hd{font-family:ui-monospace;font-size:12px;color:var(--mute);display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.hd b{color:var(--amber);font-size:14px}.role{color:#b48be6}.tr{color:#e4685c}.cls{border:1px solid;border-radius:5px;padding:0 6px;font-size:11px}.dur{margin-left:auto}
+.dyn{color:var(--dyn)}.hd .dyn{border:1px solid #ff7ac055;border-radius:5px;padding:0 6px;font-size:10.5px}
+.kr{font-size:13px;margin:7px 0}
+.ov{font-size:11px;color:#d6e2c9;background:#12160f;border:1px solid #2c3a22;border-left:2px solid var(--cyan);border-radius:5px;padding:6px 8px;margin-bottom:8px;line-height:1.5}.ov b{color:var(--cyan)}
+.c.dyn .ov{border-left-color:var(--dyn)}.c.dyn .ov b{color:var(--dyn)}
+button{background:#20242c;color:var(--cyan);border:1px solid #2f4557;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer}button:hover{background:#263041}
+code.p{display:block;font-family:ui-monospace;font-size:10.4px;line-height:1.5;color:#cfe0ea;background:#0f1418;border:1px solid #223040;border-radius:6px;padding:8px 10px;white-space:pre-wrap;margin-top:8px;max-height:180px;overflow:auto}
+</style></head><body><div class="wrap">
+<h1>브레제 성 <span style="color:var(--cyan)">t2v</span> (15컷 · 70초 · 4-스킨)</h1>
+<p class="sub"><span class="dyn">⚡ DYNAMIC 4컷</span> · 4-스킨 문법(실사 7 · 디오라마 4 · X-ray 2 · 청사진 2) · 위트톤. 훅=성 밑의 성. 프롬프트 복사→t2v→슬롯 드롭. 영상 저장→images/shotNN.mp4 자동 로드.</p>
+<div class="bar"><button class="save" onclick="saveFolder()">📁 images 폴더에 바로 저장</button><button class="save" onclick="saveDownload()">⬇️ shotNN 전부 다운로드</button><span class="barhint">저장 규칙 <code>images/shot01.mp4</code> · 다음에 열면 자동으로 불러옵니다</span></div>
+<div class="grid"><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#01 · hook · 0s→4s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>01</b> <span class="role">hook</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 지도→드론 다이브 줌</span> <span class="dur">0s→4s</span></div>
+<p class="kr">프랑스 루아르 밸리, 포도밭 한복판. 우아한 르네상스 성이 서 있습니다.</p>
+<div class="ov"><b>카메라/효과</b><br>지도→드론 다이브 줌</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic footage, warm color grade, vertical 9:16, Loire Valley France setting, no watermark. DYNAMIC opening: start on a clean minimal stylized map of France (soft grey landmass, no text labels) as a glowing cyan location pin drops onto the Loire Valley; then a fast Google-Earth-style DIVE ZOOM plunges down through a thin cloud layer into a real cinematic drone view swooping over vineyards toward an elegant pale-stone Renaissance château ringed by deep dry moats. no words anywhere. One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#02 · hook · 4s→7s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>02</b> <span class="role">hook</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">4s→7s</span></div>
+<p class="kr">그림 같죠? 근데 이 성, 진짜배기는 발밑에 숨어 있습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, warm cinematic color grade, vertical 9:16, Loire Valley France setting, an elegant pale tuffeau-limestone Renaissance château ringed by deep dry moats and vineyards under warm golden light. Presented with clean rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a low warm drone glide skimming over the elegant château&#x27;s pale facades and slate roofs, then tilting downward toward the ground and the deep dry moat as if about to descend beneath it. SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a low glide over the château then a downward tilt hinting at the world underground One continuous ~3-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#03 · subject · 7s→12s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>03</b> <span class="role">subject</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">7s→12s</span></div>
+<p class="kr">브레제 성. 별명이 아예 &#x27;성 밑의 성&#x27;이에요.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, warm cinematic color grade, vertical 9:16, Loire Valley France setting, an elegant pale tuffeau-limestone Renaissance château ringed by deep dry moats and vineyards under warm golden light. Presented with clean rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a majestic full 360-degree orbit sweeping right around the château at golden hour, pale tuffeau walls and towers glowing with warm rim-light, the deep dry moat wrapping the base, vineyards spreading beyond. SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow cinematic full 360-degree orbit around the whole château, beautiful golden-hour light One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#04 · subject · 12s→16s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>04</b> <span class="role">subject</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">12s→16s</span></div>
+<p class="kr">먼저 이 해자. 성을 빙 두른 마른 도랑인데 — 이게 유럽에서 제일 깊습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a red vertical dimension line reading 18 m down the moat wall (numbers only)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, warm cinematic color grade, vertical 9:16, Loire Valley France setting, an elegant pale tuffeau-limestone Renaissance château ringed by deep dry moats and vineyards under warm golden light. Presented with clean rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a dramatic aerial that drops straight down into the vast dry stone moat encircling the château, sheer pale limestone walls towering on both sides, tiny visitors far below for scale. Rendered numeric annotations in the image: a red vertical dimension line reading 18 m down the moat wall (numbers only). SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a fast vertical drone descent (ZOOM DOWN) plunging into the deep dry moat One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#05 · scale · 16s→21s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>05</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#e8a33d;border-color:#e8a33d55">디오라마</span>  <span class="dur">16s→21s</span></div>
+<p class="kr">보통 성 해자는 3에서 6미터. 근데 브레제는 무려 18미터, 세 배가 넘죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a red dimension line reading 18 m on the deep moat, a faint ghost outline marked 3–6 m, and a callout 3x (numbers only)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the château and the rock beneath it cut out and floating in a WARM graduated amber-to-charcoal void, flat specimen cut-sides exposing pale tuffeau limestone strata and the hollow underground galleries, lit by a warm low amber key light with soft golden fill and gentle rim glow, faint volumetric haze and ambient occlusion, portrait telephoto look with shallow depth of field, photorealistic miniature render, warm cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp legible rendered annotations: thin cyan and warm-amber dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a warm floating-diorama cross-section slab of the château and its dry moat, the deep moat cut about three times deeper than a faint ghost outline of a typical shallow moat placed beside it for comparison, pale limestone strata on the cut faces. Rendered numeric annotations in the image: a red dimension line reading 18 m on the deep moat, a faint ghost outline marked 3–6 m, and a callout 3x (numbers only). SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow orbit around the cross-section comparing the deep moat to a typical shallow one One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#06 · cause · 21s→25s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>06</b> <span class="role">cause</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#7aa2ff;border-color:#7aa2ff55">청사진</span>  <span class="dur">21s→25s</span></div>
+<p class="kr">비결은 이 땅이에요. 무른 석회암이라, 파고 또 파기 딱 좋았거든요.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>cyan hatching marking the soft limestone layer (numbers only)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">an engineering blueprint that morphs into photoreal reality, vertical 9:16. The shot BEGINS as a clean technical blueprint — crisp cyan and white line drawing on deep blueprint-blue paper with a faint grid, dimension lines and rounded callout boxes — then a bright wipe sweeps across and the blueprint MORPHS and fills into a photorealistic build with real pale stone and physically-based light, subtle film grain, warm grade; the numeric annotations live in the blueprint layer and fade as the real build resolves. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a blueprint section of the soft tuffeau limestone bedrock that morphs into real carved stone, chisels cutting easily into the pale rock and blocks being removed, showing how readily the ground could be dug. Rendered numeric annotations in the image: cyan hatching marking the soft limestone layer (numbers only). SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow push-in as the blueprint of the bedrock wipes into real carved stone One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#07 · flip · 25s→31s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>07</b> <span class="role">flip</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#5bd0ff;border-color:#5bd0ff55">X-ray</span> <span class="dyn">⚡ 지하 성 스캔 리빌</span> <span class="dur">25s→31s</span></div>
+<p class="kr">그렇게 파 내려간 지하에는 — 지상 성보다 더 거대한 &#x27;지하 성&#x27;이 통째로 들어앉았습니다. 길이만 1.5km.</p>
+<div class="ov"><b>카메라/효과</b><br>지하 성 스캔 리빌</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">see-through x-ray / scan visualization, deep navy-black void, glowing translucent cyan wireframe revealing hidden underground structure, scan-line sweep, vertical 9:16, no watermark. DYNAMIC x-ray reveal: the elegant château above turns translucent as a bright scan-line sweeps DOWNWARD through the ground, revealing beneath it a vast glowing cyan wireframe network of underground galleries, rooms and passages far larger than the château above — an entire hidden fortress under the castle; the camera cranes down into the revealed network as a bold 1.5 km counter lights up. One continuous ~6-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#08 · solution · 31s→36s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>08</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#e8a33d;border-color:#e8a33d55">디오라마</span>  <span class="dur">31s→36s</span></div>
+<p class="kr">땅속 9미터에 마구간·주방은 기본. 빵 굽는 제빵소에, 누에 키우는 방까지 있었어요.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a depth dimension line reading 9 m and small numeric callouts on the rooms (numbers only)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the château and the rock beneath it cut out and floating in a WARM graduated amber-to-charcoal void, flat specimen cut-sides exposing pale tuffeau limestone strata and the hollow underground galleries, lit by a warm low amber key light with soft golden fill and gentle rim glow, faint volumetric haze and ambient occlusion, portrait telephoto look with shallow depth of field, photorealistic miniature render, warm cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp legible rendered annotations: thin cyan and warm-amber dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a warm floating-diorama cutaway of the underground level about 9 metres down, little rooms carved into the pale limestone — stables, a kitchen, a bakery with a domed oven, and a silkworm-rearing room — warm lamplight and tiny figures at work. Rendered numeric annotations in the image: a depth dimension line reading 9 m and small numeric callouts on the rooms (numbers only). SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow orbit across the row of carved underground rooms One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#09 · scale · 36s→40s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>09</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#e8a33d;border-color:#e8a33d55">디오라마</span>  <span class="dur">36s→40s</span></div>
+<p class="kr">게다가 이 와인 압착실은, 프랑스에서 손꼽는 크기랍니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a bracket callout on the huge press hall (numbers only)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the château and the rock beneath it cut out and floating in a WARM graduated amber-to-charcoal void, flat specimen cut-sides exposing pale tuffeau limestone strata and the hollow underground galleries, lit by a warm low amber key light with soft golden fill and gentle rim glow, faint volumetric haze and ambient occlusion, portrait telephoto look with shallow depth of field, photorealistic miniature render, warm cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp legible rendered annotations: thin cyan and warm-amber dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a warm floating-diorama cutaway of an enormous underground wine-press hall carved in pale stone, a giant old wooden press dwarfing tiny figures, oak barrels stacked in the adjacent galleries. Rendered numeric annotations in the image: a bracket callout on the huge press hall (numbers only). SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow push-in on the giant underground wine press One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#10 · solution · 40s→45s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>10</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#5bd0ff;border-color:#5bd0ff55">X-ray</span>  <span class="dur">40s→45s</span></div>
+<p class="kr">1km 넘는 방어 통로에, 공성 때 귀족이 숨어 살던 지하 거처까지. 완벽한 지하 요새였죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a length callout reading 1 km on the galleries (numbers only)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">see-through x-ray / technical scan visualization, deep graduated navy-black void background, the château and everything beneath it rendered as a glowing translucent cyan wireframe with x-ray interior layers revealing the underground galleries, rooms and passages hidden below ground, a soft horizontal scan-line sweeping through, holographic engineering feel, physically-based glow, subtle film grain, muted palette with cyan and red accents, vertical 9:16. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. an x-ray see-through of the château and its moat revealing the long defensive galleries snaking over a kilometre through the rock, plus elegant carved underground apartments where the nobility could live during a siege, all as glowing translucent cyan wireframe. Rendered numeric annotations in the image: a length callout reading 1 km on the galleries (numbers only). SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow x-ray glide following the defensive galleries deep through the rock One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#11 · solution · 45s→50s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>11</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#7aa2ff;border-color:#7aa2ff55">청사진</span> <span class="dyn">⚡ 도개교·방어 작동 모프</span> <span class="dur">45s→50s</span></div>
+<p class="kr">적이 쳐들어오면? 다리를 걷어 올리고, 18미터 절벽 해자 앞에서 그냥 막혀버립니다.</p>
+<div class="ov"><b>카메라/효과</b><br>도개교·방어 작동 모프</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">engineering blueprint morphing into photoreal reality, blueprint-blue paper with grid, cyan line-drawing wiping into real pale stone, vertical 9:16, no watermark. DYNAMIC blueprint-to-real: a technical blueprint of the drawbridge over the deep dry moat draws itself, then MORPHS to real as the bridge lifts and an attacker is stopped dead at the edge of the sheer 18-metre moat wall; the defensive galleries glow to life below. One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#12 · fail · 50s→55s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>12</b> <span class="role">fail</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">50s→55s</span></div>
+<p class="kr">근데 반전. 이렇게 철벽으로 지어놨는데, 브레제 성은 역사상 단 한 번도 공격받은 적이 없어요. 그 방어터널, 실전에선 한 번도 못 써봤죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, warm cinematic color grade, vertical 9:16, Loire Valley France setting, an elegant pale tuffeau-limestone Renaissance château ringed by deep dry moats and vineyards under warm golden light. Presented with clean rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. a serene wide golden-hour drone shot of the peaceful, untouched château and its empty deep moat, calm vineyards all around, an air of gentle irony that nothing ever attacked this perfect fortress. SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow calm orbit over the peaceful never-besieged château One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#13 · solution · 55s→59s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>13</b> <span class="role">solution</span> <span class="tr">cont</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">55s→59s</span></div>
+<p class="kr">대신 그 서늘한 지하는 지금, 최고의 와인 저장고가 됐습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, warm cinematic color grade, vertical 9:16, Loire Valley France setting, an elegant pale tuffeau-limestone Renaissance château ringed by deep dry moats and vineyards under warm golden light. Presented with clean rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. inside the cool underground stone cellars today, long rows of oak barrels and dusty bottles of Loire wine aging in the pale limestone galleries, soft lamplight and drifting dust motes. SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow reveal gliding along the barrels aging deep underground One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#14 · scale · 59s→64s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>14</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#e8a33d;border-color:#e8a33d55">디오라마</span>  <span class="dur">59s→64s</span></div>
+<p class="kr">위는 우아한 성, 아래는 숨은 요새. 돌덩이 하나에, 성이 둘인 셈이죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a summary strip reading only 18 m   1.5 km (numerals and units only, no words)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the château and the rock beneath it cut out and floating in a WARM graduated amber-to-charcoal void, flat specimen cut-sides exposing pale tuffeau limestone strata and the hollow underground galleries, lit by a warm low amber key light with soft golden fill and gentle rim glow, faint volumetric haze and ambient occlusion, portrait telephoto look with shallow depth of field, photorealistic miniature render, warm cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp legible rendered annotations: thin cyan and warm-amber dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 18 m, 1.5 km, 1 km, 9 m, 1448, 3x), never words, sentences, captions or titles. no watermark. the full warm floating-diorama money cross-section, complete: the elegant Renaissance château on top and directly beneath it the vast underground fortress of galleries, rooms and cellars filling the rock — one continuous limestone body holding two castles, the upper château and the lower fortress gently distinguished. Rendered numeric annotations in the image: a summary strip reading only 18 m   1.5 km (numerals and units only, no words). SUBJECT: Château de Brézé — an elegant pale tuffeau-limestone Renaissance château in the Loire Valley of France, ringed by the deepest dry moats in Europe (about 18 metres deep) and standing above a vast hidden underground fortress of galleries, rooms and defensive passages carved into the soft limestone bedrock — a &#x27;château beneath the château&#x27; — surrounded by vineyards. Camera: a slow orbit around the complete top-and-bottom cross-section One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#15 · end · 64s→70s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>15</b> <span class="role">end</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 지하→지상 클라임→골든아워</span> <span class="dur">64s→70s</span></div>
+<p class="kr">성 밑의 성, 브레제. 진짜 이야기는 늘, 발밑에 있었습니다.</p>
+<div class="ov"><b>카메라/효과</b><br>지하→지상 클라임→골든아워</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic footage, warm color grade, vertical 9:16, Loire Valley France setting, no watermark. DYNAMIC finale: start deep in the underground wine cellars, the camera CLIMBS fast UP through the pale rock past the galleries, BURSTS up out of the ground into the château courtyard and CRANES up into a golden-hour sky over the château and vineyards — a rising underground-to-sky transition; a small summary strip reads only 18 m 1.5 km (numerals and units only). One continuous ~6-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article></div></div><script>
+function cp(b){const t=b.closest('.meta').querySelector('code.p').innerText;
+  const ok=function(){if(!b.dataset.o)b.dataset.o=b.innerText;b.innerText='✓ 복사됨';setTimeout(function(){b.innerText=b.dataset.o},1200)};
+  const fb=function(){try{const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();const done=document.execCommand('copy');ta.remove();done?ok():miss()}catch(e){miss()}};
+  const miss=function(){if(!b.dataset.o)b.dataset.o=b.innerText;b.innerText='길게 눌러 복사';setTimeout(function(){b.innerText=b.dataset.o},1500)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok).catch(fb)}else{fb()}}
+// 코드블록 탭/클릭 → 전체선택(모바일 수동복사 대비)
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('code.p').forEach(function(c){c.style.cursor='text';c.title='탭하면 전체선택';c.addEventListener('click',function(){const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r)})})});
+var EXTS=['mp4','webm','mov','jpg','jpeg','png','webp'];
+var VIDEXT=['mp4','webm','mov'];
+function slotNum(s){return String([...document.querySelectorAll('.slot')].indexOf(s)+1).padStart(2,'0')}
+function clearSlot(s,inp){s.querySelectorAll('video,.rm').forEach(x=>{try{URL.revokeObjectURL(x.src)}catch(e){}x.remove()});const img=s.querySelector('img');if(img){try{URL.revokeObjectURL(img.src)}catch(e){}img.removeAttribute('src');img.style.display='none'}s.classList.remove('filled');s.classList.add('empty');const ph=s.querySelector('.ph');if(ph)ph.style.display='';if(inp)inp.value=''}
+// url: any src (blob: or images/shotNN.ext); name: filename used for save extension
+function fillSlot(s,url,isVid,name){
+  clearSlot(s,null);
+  if(isVid){const v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.controls=true;s.insertBefore(v,s.querySelector('input'))}
+  else{const img=s.querySelector('img');img.src=url;img.style.display='block'}
+  const rm=document.createElement('button');rm.className='rm';rm.textContent='✕';rm.title=name||'';rm.onclick=function(ev){ev.stopPropagation();clearSlot(s,s.querySelector('input'))};s.appendChild(rm);
+  s.classList.add('filled');s.classList.remove('empty');
+  const ph=s.querySelector('.ph');if(ph)ph.style.display='none';
+  s.dataset.name=name||'';
+}
+function drop(inp){const f=inp.files[0];if(!f)return;const s=inp.closest('.slot');fillSlot(s,URL.createObjectURL(f),f.type.startsWith('video'),f.name)}
+
+// ---- 자동 불러오기: 열 때 images/shotNN.<ext> 를 순서대로 시도 ----
+function tryLoad(s){return new Promise(function(res){
+  var num=slotNum(s),i=0;
+  (function next(){
+    if(i>=EXTS.length){res(false);return}
+    var ext=EXTS[i++],path='images/shot'+num+'.'+ext,isVid=VIDEXT.indexOf(ext)>=0;
+    var probe=isVid?document.createElement('video'):new Image();
+    var done=false,t=setTimeout(function(){if(!done){done=true;next()}},4000);
+    var ok=function(){if(done)return;done=true;clearTimeout(t);fillSlot(s,path+'?v='+Date.now(),isVid,'shot'+num+'.'+ext);res(true)};
+    var bad=function(){if(done)return;done=true;clearTimeout(t);next()};
+    if(isVid){probe.preload='metadata';probe.onloadedmetadata=ok;probe.onerror=bad;probe.src=path}
+    else{probe.onload=ok;probe.onerror=bad;probe.src=path}
+  })();
+})}
+window.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.slot').forEach(tryLoad)});
+
+// ---- 저장: File System Access API 로 images/ 폴더에 직접 기록 ----
+async function saveFolder(){
+  if(!window.showDirectoryPicker){alert('이 브라우저는 폴더 저장을 지원하지 않습니다. "⬇️ shotNN 전부 다운로드"를 쓰고 파일을 images/ 폴더로 옮기세요. (Chrome/Edge 권장)');return}
+  var dir;try{dir=await window.showDirectoryPicker({mode:'readwrite'})}catch(e){return}
+  var slots=[...document.querySelectorAll('.slot')],n=0;
+  for(var i=0;i<slots.length;i++){
+    var s=slots[i],m=s.querySelector('video[src^="blob"],img[src^="blob"]');
+    if(!m)continue; // blob(새로 드롭한 것)만 기록. 이미 images/에서 온 건 건너뜀
+    var ext=((s.dataset.name||'').match(/\.([a-z0-9]+)$/i)||[,'mp4'])[1].toLowerCase();
+    var blob=await fetch(m.src).then(function(r){return r.blob()});
+    var fh=await dir.getFileHandle('shot'+slotNum(s)+'.'+ext,{create:true});
+    var w=await fh.createWritable();await w.write(blob);await w.close();n++;
+  }
+  alert(n?(n+'개를 폴더에 저장했습니다. 새로고침하면 자동으로 뜹니다.'):'새로 저장할(드롭한) 영상이 없습니다.');
+}
+// ---- 저장: 다운로드 폴더로 shotNN 이름 다운로드 (모든 브라우저) ----
+async function saveDownload(){
+  var slots=[...document.querySelectorAll('.slot')],n=0;
+  for(var i=0;i<slots.length;i++){
+    var s=slots[i],m=s.querySelector('video[src^="blob"],img[src^="blob"]');
+    if(!m)continue;
+    var ext=((s.dataset.name||'').match(/\.([a-z0-9]+)$/i)||[,'mp4'])[1].toLowerCase();
+    var blob=await fetch(m.src).then(function(r){return r.blob()});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='shot'+slotNum(s)+'.'+ext;
+    document.body.appendChild(a);a.click();a.remove();n++;await new Promise(function(r){setTimeout(r,400)});
+  }
+  alert(n?(n+'개 다운로드. 파일들을 이 페이지 옆 images/ 폴더로 옮기면 다음에 자동으로 뜹니다.'):'저장할(드롭한) 영상이 없습니다.');
+}
+</script></body></html>
