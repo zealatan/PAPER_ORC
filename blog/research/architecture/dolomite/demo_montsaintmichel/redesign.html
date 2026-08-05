@@ -1,0 +1,150 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>몽생미셸 재설계 — 반성·분석·발산</title><style>
+:root{--bg:#14161b;--pan:#1d2027;--pan2:#232732;--line:#2c313b;--ink:#e7e9ee;--mut:#8b93a1;--red:#ff5d52;--cy:#37c2d6;--gr:#8fd06f;--am:#e8a33d;--pur:#b48be6}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:Pretendard,"Malgun Gothic",sans-serif;margin:0;padding:26px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:25px;margin:0 0 2px}h2{font-size:19px;margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h2 .n{color:var(--am);font-family:ui-monospace;margin-right:8px}
+h3{font-size:15px;margin:20px 0 8px;color:var(--cy)}
+.sub{color:var(--mut);font-size:13px;margin:0 0 6px}
+p{font-size:13.5px}small{color:var(--mut)}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:12.5px}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{background:var(--pan2);color:var(--mut);font-weight:600}
+td.bad{color:var(--red)}td.ok{color:var(--gr)}td.mid{color:var(--am)}
+code{font-family:ui-monospace;font-size:11.5px;background:#0f1216;border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:#cfe0d6}
+.card{background:var(--pan);border:1px solid var(--line);border-radius:9px;padding:14px 16px;margin:10px 0}
+.red{color:var(--red)}.cy{color:var(--cy)}.gr{color:var(--gr)}.am{color:var(--am)}.pur{color:var(--pur)}
+.pill{display:inline-block;border:1px solid;border-radius:5px;padding:0 7px;font-size:11px;font-family:ui-monospace;margin-right:4px}
+ul{margin:6px 0 6px 2px;padding-left:18px}li{font-size:13px;margin:3px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tag{font-family:ui-monospace;font-size:11px;color:var(--mut)}
+.big{font-size:15px;color:var(--ink)}
+hr{border:0;border-top:1px dashed var(--line);margin:16px 0}
+@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+
+<h1>몽생미셸 재설계 — <span class="red">반성</span> · <span class="cy">분석</span> · <span class="am">발산</span></h1>
+<p class="sub">307샷 역추론 규칙집(mechanism·common-technique·answerkey·diorama-anatomy)을 근거로, 데모가 왜 못 미쳤고 어떻게 레퍼런스급으로 끌어올릴지의 블루프린트.</p>
+
+<!-- ================= 반성 ================= -->
+<h2><span class="n">01</span>반성 — 왜 아쉬웠나</h2>
+<div class="card">
+<p class="big">핵심 실책: <b>"프롬프트를 썼다"</b>. 해야 했던 건 <b class="cy">역추론된 함수 f를 적용</b>하는 것이었다.</p>
+<p>분석 문서엔 <code>f = STYLE_BASE + archetype(role) + render(object+action) + composition</code> 이 307샷으로 검증돼 있는데, 데모는 이 규칙 대신 매 샷 즉흥으로 장면을 상상했다.</p>
+</div>
+<table>
+<tr><th>실책</th><th>분석 문서엔</th><th>결과</th></tr>
+<tr><td class="bad">t2v로 통째 생성</td><td>"t2v 통째 상상 ✗ → <b>t2i(스틸)→i2v(모션) 2단</b>이 재현의 열쇠"</td><td>밋밋·부정확·다 비슷</td></tr>
+<tr><td class="bad">숫자를 AI에 baked</td><td>"오버레이(red/cyan)는 OUTPUT에 안 넣고 <b>편집에서 얹음</b>" (red 70:cyan 13 통계)</td><td>750≠760, AgX 누출, 스케일 붕괴</td></tr>
+<tr><td class="bad">역할→아키타입 무시</td><td>R1: hook=항공·flip=청사진·solution=컷어웨이·end=오빗 (307샷 통계)</td><td>컷 문법 없음 → 단조</td></tr>
+<tr><td class="bad">fail을 정적으로</td><td>fail(66샷)=<b>"오답을 시도→부작용 상태로 기각"</b> (물리 시뮬)</td><td>긴장·설득력 상실</td></tr>
+<tr><td class="bad">고급 모티프 미사용</td><td>스피드라인·순차점등·게이지·발광네트워크·등고선·사람실루엣</td><td>레퍼런스 특유의 '맛' 증발</td></tr>
+<tr><td class="bad">한 컷(21)에 매몰</td><td>—</td><td>전체 완성도 대신 국소 반복</td></tr>
+</table>
+
+<!-- ================= 분석 ================= -->
+<h2><span class="n">02</span>분석 — 레퍼런스의 실제 엔진</h2>
+
+<h3>R1 · 역할 → 샷 아키타입 (307샷 실측 지배값)</h3>
+<table>
+<tr><th>역할</th><th>샷수</th><th>지배 아키타입</th><th>MSM 적용</th></tr>
+<tr><td class="pur">hook</td><td>12</td><td>실사 항공 부감 75%</td><td>01 수면저공 / 02 온브리지</td></tr>
+<tr><td class="pur">subject</td><td>36</td><td>top-down 30% · 항공 · 클로즈업</td><td>03 로우앵글 / 04 top-down</td></tr>
+<tr><td class="pur">scale</td><td>24</td><td>항공 45% + <b>비교 다이어그램/top-down 37%</b></td><td>05 치수+사람실루엣 / 17·22 게이지·측면도</td></tr>
+<tr><td class="pur">cause</td><td>40</td><td>메커니즘: top-down·<b>단면</b>·클로즈업·항공</td><td>06 top-down / 07 단면 컷어웨이</td></tr>
+<tr><td class="pur">fail</td><td>66</td><td><b>시도→부작용 상태</b> (단면·시뮬 혼용)</td><td>08 퇴적시뮬 / 10 준설시도 / 11 기각</td></tr>
+<tr><td class="pur">flip</td><td>27</td><td><b>청사진/다이어그램 48%</b> + top-down</td><td>12 wireframe→solid 전환</td></tr>
+<tr><td class="pur">solution</td><td>71</td><td>항공 26% + <b>컷어웨이 단면 23%</b> (발광 반투명)</td><td>13 댐단면 / 14·15 게이지</td></tr>
+<tr><td class="pur">end</td><td>31</td><td><b>항공 오빗 35%</b> — 실사 완성형</td><td>23 골든아워 오빗</td></tr>
+</table>
+
+<h3>R2 · 주어 → 카메라</h3>
+<p>큰 공간→<span class="cy">항공</span> · 부품→<span class="cy">macro</span> · 내부 작동→<span class="cy">cutaway</span> · 시스템 전체→<span class="cy">top-down</span> · 완성물→<span class="cy">orbit</span></p>
+
+<h3>R3 · 오버레이 색코딩 사전 (후반 합성 · red 70 : cyan 13)</h3>
+<div class="grid2">
+<div class="card"><b class="red">문제 = 붉음/어둠</b>
+<ul>
+<li>붉은 <b>치수선·화살표</b> (하중·방향·힘)</li>
+<li>red 측정 그리드 / 각도 마커 / 경사 화살표</li>
+<li>red 응력-발광(stress-glow) · 압력/무게 하강 화살표</li>
+<li>red 침식 라인 · 수렴 화살표 · 위험 마커</li>
+<li>white <b>스피드라인</b> (radial/speed) — 속도·긴장</li>
+</ul></div>
+<div class="card"><b class="cy">해법 = 파랑/청록 발광</b>
+<ul>
+<li>cyan/blue <b>흐름선</b> (물·배수·방류)</li>
+<li>glowing <b>네트워크</b> 라인 · 배수망 그리드</li>
+<li>cyan <b>구역 박스 순차 점등</b> / 윤곽 발광</li>
+<li>파란 컷어웨이(물/냉) · 오렌지 컷어웨이(열/불)</li>
+<li>등고선 오버레이 · 발광 outlet 링 · 반투명 버블</li>
+</ul></div>
+</div>
+<p><b>공통:</b> 대형 키워드 자막(중앙) · <b class="am">숫자 초대형 단독 배치</b>(5만·156m·240개·98m) · <b>사람 실루엣</b>(스케일) · 지도+거리 라벨 · <span class="am">✦</span> 스파클 트랜지션(우하단) · 고정 클로징 "…이렇게 탄생한 겁니다".</p>
+
+<h3>컷 시퀀스 문법 (10편 공통 순서)</h3>
+<p class="tag">실사 부감 → 클로즈업 → 컷어웨이 단면 → <span class="red">물리시뮬 기각샷</span> → <span class="am">스피드라인 전환</span> → 익스플로디드/아이소 → <span class="cy">top-down 순차점등</span> → 발광 네트워크·지도 → 실사 오빗 클로징</p>
+
+<h3>파이프라인 (자동화)</h3>
+<p>주제 → ① LLM 7비트 대본 → ② 컷 분해(1문장→1~2샷·~3.5s) → ③ <b class="cy">t2i 스틸(Flux)</b> → ④ <b class="cy">i2v 모션(LTX)</b> → ⑤ 자막·오버레이(PIL/CapCut) → 쇼츠. <br><small>핵심: ③④ 2단이 원본 재현·정확도의 열쇠. 로컬 <code>ai_diorama</code>(Blender→Flux→LTX)와 동일 구조.</small></p>
+
+<h3>부유 디오라마 해부 (시그니처)</h3>
+<p>세상 한 조각을 잘라 <b>어두운 허공</b>에 띄움 → 잘린 단면=<b>지층 머티리얼</b> → boolean로 속 파냄(집수정·수로) → 측·바닥 평평(표본감) → 아래 블러그림자+배경간격=부유감 → 45°키+안개+AO → Empty 오빗·DOF·손떨림. <b>재사용 리그</b>(RIG_LIGHTING/CAMERA/POST)로 편당 '주제 모델링'만.</p>
+
+<!-- ================= 발산 ================= -->
+<h2><span class="n">03</span>발산 — 몽생미셸 23컷 재설계 매트릭스</h2>
+<p class="sub">각 컷 = 역할 아키타입(R1) + 주입할 <span class="red">고급 기법</span> + 색코딩(R3) + 전환. 오버레이(숫자/치수/발광)는 <b>후반 분리</b>, AI는 깨끗한 t2i 스틸만.</p>
+<table>
+<tr><th>#</th><th>역할·아키타입</th><th>주입 고급기법</th><th>색/오버레이(후반)</th><th>전환</th></tr>
+<tr><td>01</td><td>hook·수면저공 실사</td><td>미스터리 훅, 안개·반영</td><td>키워드 자막만</td><td>—</td></tr>
+<tr><td>02</td><td>hook·온브리지 POV</td><td>1인칭 워크(앵글 대비)</td><td>—</td><td>cont</td></tr>
+<tr><td>03</td><td>subject·로우앵글</td><td>틸트업 크레인</td><td>대형 타이틀</td><td>cut</td></tr>
+<tr><td>04</td><td>subject·<b>top-down</b></td><td>정수직 강하</td><td class="cy">cyan '물 통과' 화살표</td><td>cut</td></tr>
+<tr><td>05</td><td>scale·항공+비교</td><td><b class="red">사람 실루엣</b>+초대형 "760m"+치수선 (축구장은 보조)</td><td class="red">red 전장 치수선 / 대형 숫자</td><td>cont</td></tr>
+<tr><td>06</td><td>cause·<b>디오라마 top-down</b></td><td>단절 지도, 지층 단면</td><td class="red">red 갭 마커 / 라벨</td><td>줌스루→</td></tr>
+<tr><td>07</td><td>cause·<b>단면 컷어웨이</b></td><td>둑=댐벽, 조수 막힘</td><td class="red">red X / <span class="cy">blue 정체 수위</span></td><td>cut</td></tr>
+<tr><td>08</td><td>fail·<b>퇴적 시뮬</b></td><td><b class="red">시간경과 accretion</b> — 모래가 자라 섬을 삼킴</td><td class="am">노랑 퇴적 화살표</td><td>cut</td></tr>
+<tr><td>09</td><td>fail·부작용 상태</td><td>갯벌에 묻힌 섬(위기 상태)</td><td class="red">red 경고 라인</td><td>cut</td></tr>
+<tr><td>10</td><td>fail·<b>오답 시도</b></td><td>준설선이 파냄 (the attempt)</td><td>—</td><td>cut</td></tr>
+<tr><td>11</td><td>fail·<b>기각(물리시뮬)</b></td><td><b class="red">조류·강물이 도로 쌓음</b> — 순환 실패</td><td class="red">red 순환 화살표</td><td><b class="am">스피드라인→</b></td></tr>
+<tr><td>12</td><td>flip·<b>청사진 전환</b></td><td><b class="cy">wireframe→solid</b> 시안 그리드가 댐으로 (반투명 콘크리트)</td><td class="cy">cyan 청사진 그리드</td><td>cut</td></tr>
+<tr><td>13</td><td>solution·<b>컷어웨이 단면</b></td><td>댐 8수문 단면 + <b class="cy">발광 반투명 물</b></td><td class="cy">'8' 콜아웃 / cyan 물</td><td>cut</td></tr>
+<tr><td>14</td><td>solution·디오라마</td><td>밀물 저장 + <b class="am">수위 게이지</b></td><td class="cy">blue 상승 수위 / 게이지</td><td>cut</td></tr>
+<tr><td>15</td><td>solution·디오라마</td><td>썰물 방류 + <b class="am">유량계 게이지</b></td><td class="cy">cyan 방류 화살표 / "100 m³/s"</td><td><b class="am">물살 매치컷→</b></td></tr>
+<tr><td>16</td><td>solution·항공</td><td><b class="cy">발광 흐름 네트워크</b> 섬 양옆 순차 점등</td><td class="cy">cyan flow network</td><td>cut</td></tr>
+<tr><td>17</td><td>scale·<b>비교 다이어그램</b></td><td>저장량: <b class="red">사람 실루엣</b>·수영장 + 초대형 숫자 + 게이지</td><td class="am">"1.7M m³" 초대형 / x680</td><td>cut</td></tr>
+<tr><td>18</td><td>solution·항공</td><td>둑길 철거 시간경과</td><td>"2015" / <span class="cy">blue 복원</span></td><td>cut</td></tr>
+<tr><td>19</td><td>solution·항공</td><td>조수 자유통과</td><td class="cy">cyan 통과 화살표</td><td>cont</td></tr>
+<tr><td>20</td><td>scale·다이어그램</td><td>비용 초대형 숫자 단독</td><td class="am">"184M €" 초대형</td><td>cut</td></tr>
+<tr><td>21</td><td>end·항공</td><td>밀물 섬 감쌈(물 전용, 오빗 리빌)</td><td class="cy">blue 조위선 "14 m"</td><td>cut</td></tr>
+<tr><td>22</td><td>scale·<b>측면도 다이어그램</b></td><td>155m vs 14m vs 아파트/<b class="red">사람 실루엣</b> 상대크기</td><td class="red">"155m"·"14m"·x11</td><td>디졸브→</td></tr>
+<tr><td>23</td><td>end·<b>오빗 클로징</b></td><td>골든아워 + <b>고정 클로징</b> "…되살아났습니다"</td><td class="am">요약칩 / ✦</td><td>—</td></tr>
+</table>
+
+<h2><span class="n">04</span>발산 — 새 아이디어 (현재 23컷 밖)</h2>
+<div class="grid2">
+<div class="card"><h3 style="margin-top:0">모티프 신규</h3><ul>
+<li><b>조석 게이지</b>: 하루 조위 곡선 위 밀물/썰물 포인트가 달리는 HUD (14m 진폭)</li>
+<li><b>퇴적 네트워크 지도</b>: 조류·강물 벡터가 발광 라인으로 섬으로 수렴 (문제) → 방류로 역전(해법)</li>
+<li><b>before/after 와이프</b>: 갯벌에 묻힌 섬 ↔ 물에 뜬 섬 슬라이더</li>
+<li><b>수문 8개 순차 점등</b>: 방류 순간 게이트가 좌→우 순차 발광</li>
+</ul></div>
+<div class="card"><h3 style="margin-top:0">서사·비유 강화</h3><ul>
+<li>콜로세움의 "해군 불러옴"처럼 — 몽생미셸 공법/인력의 <b>의외의 디테일</b> 1컷</li>
+<li>스케일 비유는 <b>사람 실루엣</b> 우선(채널 시그니처), 축구장·수영장·아파트는 보조</li>
+<li>fail 3연타 리듬: 시도→기각→시도→기각 (준설·둑보강)</li>
+<li>클로징 고정 문구 통일: "…이렇게 <b>다시 섬이 된 겁니다</b>"</li>
+</ul></div>
+</div>
+
+<h2><span class="n">05</span>다음 액션 (택1)</h2>
+<div class="card">
+<p><b class="cy">A. 정공법(레퍼런스 재현)</b> — 오버레이 후반 분리 + t2i→i2v. AI는 깨끗한 씬만, red/cyan·숫자·게이지는 편집 레이어. → 레퍼런스급 정확도·룩. (작업량↑, 후반 필요)</p>
+<p><b class="am">B. baked 유지 + 기법만 주입</b> — 위 매트릭스의 아키타입·fail 기각샷·flip 청사진·컷어웨이 발광·색코딩을 프롬프트에 녹임. 숫자는 여전히 흔들릴 수 있음. (한 방, 정확도 타협)</p>
+<p><b class="gr">C. 하이브리드</b> — 씬·발광 모티프는 baked, <b>숫자·치수선·게이지만</b> 후반. (정확도 확보 + 작업량 중간) ← 실무 추천</p>
+</div>
+
+<p class="sub" style="margin-top:22px">근거: 60ch-mechanism.html(307샷 f 복원) · 60ch-common-technique.html(7비트·샷문법·모티프사전) · 60ch-answerkey-dataset.md(오버레이 패턴) · benchmarks/diorama-anatomy.html · gyeongbok scene04/05/09_veo.md.</p>
+
+</div></body></html>

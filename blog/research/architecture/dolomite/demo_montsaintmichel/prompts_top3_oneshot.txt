@@ -1,0 +1,31 @@
+# 몽생미셸 톱3 — t2v 원샷 프롬프트 (텍스트→영상 · 이미지 입력 없음 · 편집 불필요)
+# Veo/Kling/Sora 등 t2v에 이거 하나만 붙여넣기. 효과(모프·수문개방·물의 고리)·숫자·카메라모션 전부 프롬프트에 baked.
+# ⚠️ 정확한 숫자는 t2v가 가끔 틀림 → 나오면 그 컷만 재생성(리롤). 긴 수치는 단축표기.
+
+════════════════════════════════════════════════════════
+# ★ 프레이밍 원칙: 몽생미셸 전경(와이드 항공) 반복 금지. macro·클로즈업·외벽 무빙으로 프레임을 좁혀 변화.
+# ★ 전환 카메라도 매 컷 다르게: 전면→하늘 휘프업 / 360° 한바퀴 오빗 / 외벽 무빙→틸트업 / 하늘 드론→수면 다이브→수중.
+
+### 12 [flip · ~4s] — 물로 밀어내기로  ⚡퇴적물 MACRO + 단면 파냄 + 모프
+────────────────────────────────────────────────────────
+signature floating-diorama miniature, dark graduated grey void, muted desaturated color grade, vertical 9:16, no watermark. HIGH-ENERGY, TIGHT FRAMING — NOT a wide island vista. Extreme close-up: a cross-section CARVES OPEN layer by layer, revealing sediment strata (sand, silt, clay) in MACRO detail; a glowing cyan wireframe rapidly draws itself and SNAPS into a solid grey concrete dam; hard PUNCH-IN zoom, then the camera sweeps in a fast FULL 360-DEGREE ORBIT around the carved cross-section; then a MACRO shot of churning water surging through and BLASTING loose sand and silt grains tumbling downstream past the lens; bold glowing cyan flow arrows shoot along the current; kinetic, close, dynamic. One continuous ~4-second shot.
+
+════════════════════════════════════════════════════════
+### 15 [solution · ~4s] — 수문 8개 개방  ⚡바닷물 MACRO + 순차폭발 + 카운트업
+────────────────────────────────────────────────────────
+signature floating-diorama miniature cutaway of a dam, dark grey void, exposed concrete + strata section, muted desaturated color grade, vertical 9:16, no watermark. HIGH-ENERGY, TIGHT ON THE GATES — not the whole scene. A row of eight sluice gates fills the frame and BURSTS open in a rapid left-to-right CHAIN with bright cyan shock-flashes; the camera drops to a MACRO angle as a wall of white water EXPLODES straight at the lens, churning foam and spray filling the whole frame; snap back, then the camera WHIPS UP off the water into the open sky as the transition; a big bold glowing "100" scales up and rapidly counts with "m3/s" snapping in; extreme kinetic water detail. One continuous ~4-second shot.
+
+════════════════════════════════════════════════════════
+### 21 [end · ~5s] — 밀물이 외벽을 감쌈  ⚡외벽 무빙 → 틸트업 전환 + 조위 카운트업
+────────────────────────────────────────────────────────
+photorealistic cinematic footage, muted desaturated color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. DYNAMIC — NOT another wide aerial of the whole island. Start LOW right at the waterline as the spring tide surges and FOAMS against the base of Mont-Saint-Michel's ancient stone outer rampart wall in close detail; the camera travels fast ALONG the outer wall as the rising water wraps around it, then CRANES and TILTS UP the wall face — from the churning water at the base soaring up the ramparts to the abbey and spire, and continues UP into the open sky — a rising wall-climb-to-sky transition; a bold "14 m" tide number rises with the water and counts up; intimate then soaring, cinematic climax. One continuous ~5-second shot.
+
+════════════════════════════════════════════════════════
+### 16b [solution · ~5s] — 물살이 퇴적물을 바다로  ⚡하늘 드론 → 수면 다이브 → 수중 리빌
+────────────────────────────────────────────────────────
+photorealistic cinematic footage, muted desaturated color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. DYNAMIC continuous descent through mediums — NOT a static wide vista. A high drone shot flies fast over the tidal flats beside Mont-Saint-Michel following a strong released current, then the camera DIVES DOWN and PLUNGES THROUGH the water surface in one continuous move into the underwater world; underwater, a MACRO reveal of clouds of sand and silt sediment being swept and carried along the seabed by the powerful flush current out toward the open sea, shafts of light through the churning water, particles streaming past the lens; kinetic, immersive, cinematic. One continuous ~5-second shot.
+
+════════════════════════════════════════════════════════
+### 06 [cause · ~4s] — 1879년 제방도로  ⚡돌·흙 다이나믹 축조 + 360° 드론 회전
+────────────────────────────────────────────────────────
+photorealistic cinematic drone footage, muted desaturated color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. HIGH-ENERGY construction time-lapse, dynamic assembly. Across the wet tidal sand flats, thousands of rough grey stones and heaps of dark earth rapidly STACK and ASSEMBLE themselves piece by piece, layer on layer, rising into a long dead-straight raised embankment causeway that runs out to the rocky island of Mont-Saint-Michel like a solid wall, sealing off the tide on one side; flying dust, tumbling stones, kinetic building motion. Camera: a fast FULL 360-DEGREE drone ORBIT circling the causeway as it stacks up and completes. a small bold "1879" marker. One continuous ~4-second shot.

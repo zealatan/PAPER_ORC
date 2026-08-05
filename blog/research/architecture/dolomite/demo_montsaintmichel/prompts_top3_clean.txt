@@ -1,0 +1,28 @@
+# 몽생미셸 톱3 — 깨끗한 PLATE 프롬프트 (t2i 스틸 → i2v 모션)
+# 편집 지시서(edit_top3.html)와 짝. 숫자·치수·게이지·모프·순차점등 = 전부 후반 draw-on → 프롬프트엔 없음(깨끗).
+# 워크플로: t2i로 스틸 확정 → i2v로 모션 → edit_top3.html 레이어 합성.
+
+STYLE_실사   = photorealistic cinematic drone footage, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, muted grey-green-sand palette, clean composition with uncluttered negative space for post graphics, no on-screen text, no numbers, no labels, no watermark.
+STYLE_디오라마 = signature floating-diorama miniature cutaway, a rectangular slab of the estuary floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), low angled key light with soft fill, faint volumetric haze and ambient occlusion, shallow depth of field, photorealistic miniature render, muted desaturated color grade, vertical 9:16, clean with dark negative space reserved for post graphics, no on-screen text, no numbers, no labels, no watermark.
+SUBJECT = Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by tidal sand flats and shallow estuary water, a slender stilted footbridge on thin pillars, a low sluice-gate dam across the mouth of the river Couesnon nearby.
+
+════════════════════════════════════════════════════════
+### 12 [flip · 4s] — 물로 밀어내기로  (후반: wireframe→solid 모프)
+────────────────────────────────────────────────────────
+t2i: signature floating-diorama miniature cutaway, a rectangular slab of the estuary floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), low angled key light with soft fill, faint volumetric haze and ambient occlusion, shallow depth of field, photorealistic miniature render, muted desaturated color grade, vertical 9:16, clean with dark negative space reserved for post graphics, no on-screen text, no numbers, no labels, no watermark. A small conical tidal island on the floating slab; a powerful surge of released water sweeps down both sides of the island toward the open sea, carrying and pushing sediment outward; a grey concrete sluice dam sits at the river mouth; solid clean render, generous dark empty space around the slab. SUBJECT: Mont-Saint-Michel diorama with the Couesnon dam.
+i2v: Animate the provided still image. slow orbit around the floating slab while the released water surges and sweeps sediment down both sides of the island toward the sea; keep the slab, island and dam perfectly rigid — only the water moves and the camera orbits, no morphing of structures, no added text. ~4s single continuous shot, vertical 9:16, no watermark.
+후반(edit_top3): 0.0–1.0 시안 청사진 그리드 → 0.8–1.6 wireframe→solid 모프 → 1.2 cyan 흐름화살표 · 진입 스피드라인 · SFX.
+
+════════════════════════════════════════════════════════
+### 15 [solution · 4s] — 썰물 방류 폭발  (후반: 수문 순차점등 + 유량계 게이지)
+────────────────────────────────────────────────────────
+t2i: signature floating-diorama miniature cutaway, a rectangular slab of the estuary floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands, low angled key light with soft fill, faint volumetric haze and ambient occlusion, shallow depth of field, photorealistic miniature render, muted desaturated color grade, vertical 9:16, clean negative space in the lower corner reserved for a post gauge, no on-screen text, no numbers, no labels, no watermark. Isometric cutaway of a low modern dam across the canalised river mouth with a clear row of eight sluice gates, the gates opening as a powerful sheet of water pours out downstream, churning white water and spray rushing toward the viewer, exposed concrete and strata in section. SUBJECT: the Couesnon sluice-gate dam, eight gates.
+i2v: Animate the provided still image. hold briefly on the closed gates, then the eight sluice gates open and a powerful surge of water bursts out downstream, rushing toward the camera with churning spray and motion blur, the camera easing back with the surge; keep the dam structure rigid, only water moves; no added text. ~4s single continuous shot, vertical 9:16, no watermark.
+후반(edit_top3): 0.5–1.0 수문 8 순차 점등(cyan 플래시) · 0.8–1.6 유량계 0→100 카운트업 · 3.5 물살 매치컷→16 · SFX 게이트 clank×8.
+
+════════════════════════════════════════════════════════
+### 21 [end · 5s] — 밀물이 섬을 감쌈  (후반: 조위 게이지 + 물의 고리 순차점등)
+────────────────────────────────────────────────────────
+t2i: photorealistic cinematic drone footage, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, muted grey-green-sand palette, clean composition, no on-screen text, no numbers, no labels, no watermark. A high dramatic aerial of Mont-Saint-Michel at a great spring high tide: foaming seawater has flooded all the way around the base ramparts forming an unbroken ring of water, the low stilted footbridge submerged and vanishing beneath the surface, the medieval abbey and spire towering high and dry above, luminous dramatic light, water the dominant element. SUBJECT: Mont-Saint-Michel fully encircled by the high tide, bridge drowned.
+i2v: Animate the provided still image. a sweeping aerial orbit rising with the incoming flood, circling the island to reveal the unbroken ring of seawater wrapping every side while the low bridge drowns beneath the surface; surging churning water, drifting light; keep the island and abbey rigid, only water and camera move; no added text. ~5s single continuous shot, vertical 9:16, no watermark.
+후반(edit_top3): 0–1.5 cyan 전진 조수선 · 1.0–2.5 세로 조위 게이지 "14 m" 카운트업 · 2.5–4.0 물의 고리 발광 순차점등 · 4.0 →22 디졸브. 그래픽 은은하게, 물이 주인공.
