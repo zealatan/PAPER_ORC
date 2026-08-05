@@ -129,7 +129,7 @@ run(['ffmpeg','-hide_banner','-loglevel','error','-y', *aud_inputs,
 vf_final = None
 if SUBS:
     fs = int(H*0.030)          # ~58px @1080p
-    marginV = int(H*0.11)      # 하단 여백(쇼츠 안전영역 위)
+    marginV = int(H*float(os.environ.get('SUBPOS','0.25')))  # 바닥에서의 비율. 0.25=75%높이(중앙과 바닥의 중간)
     head = f"""[Script Info]
 ScriptType: v4.00+
 PlayResX: {W}
