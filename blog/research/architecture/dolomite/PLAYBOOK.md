@@ -55,6 +55,7 @@
 - **클립엔 숫자·치수·라벨을 절대 굽지 않는다.** 프롬프트에 `CLEAN` 절 삽입:
   *"Absolutely NO rendered text, numbers, dimension lines, callouts… a clean plate; numeric graphics added later as post overlay."*
 - 수치·치수선은 **전부 후처리 오버레이**로 얹음(정확한 숫자·폰트·모션 통제). 빌더의 per-shot `anno`는 프롬프트에서 빠지고 갤러리에 **🎬 오버레이(후처리)** 메모로만 표시.
+- **오버레이는 미니멀**(★): 요란하게 X. **꼭 필요한 핵심 수치만**(편당 2~3개). 나레이션에 이미 나온 정보는 오버레이로 중복 금지. (효과는 클립 안 ⚡다이내믹으로, 숫자는 오버레이로 — 역할 분리)
 - (구버전 BAKED=숫자를 화면에 구움은 폐기)
 
 ## 6. 연속성 & 렌더
