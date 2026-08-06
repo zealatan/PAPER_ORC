@@ -1,0 +1,178 @@
+#!/usr/bin/env python3
+"""demo_azay 빌더 — 아제르리도: 앵드르 강 섬 위, 물속 나무 말뚝에 지은 '다이아몬드 성'.
+   미모 우선 + 4-스킨(디오라마 비중↑) + 위트/대화체 + 연속-무빙 + CLEAN PLATE(숫자 없음, 후처리 오버레이).
+   갤러리 CSS/JS는 ../demo_montsaintmichel/gallery.html 재사용.
+"""
+import json, os, re, html
+from collections import Counter
+HERE = os.path.dirname(os.path.abspath(__file__))
+REF  = os.path.join(HERE, '..', 'demo_montsaintmichel', 'gallery.html')
+
+TOPIC = '아제르리도 성 — 물속 말뚝 위에 지은 다이아몬드 성 (Château d\'Azay-le-Rideau)'
+SUBJECT = ("Château d'Azay-le-Rideau — an elegant early-French-Renaissance chateau in the Loire Valley: an "
+    "L-shaped building of creamy-white tuffeau limestone with round corner turrets (tourelles) capped by conical "
+    "blue-grey slate roofs, steep blue-grey slate roofs with dormer windows, a delicate decorative machicolation "
+    "frieze running under the eaves, and a tall ornate central entrance frontispiece with tiers of stacked "
+    "Renaissance windows rising above the doorway (the grand straight-staircase facade); one wing rises straight "
+    "out of the calm still River Indre and is mirrored almost perfectly in the water, on a small natural island "
+    "among formal gardens and trees.")
+
+CLEAN = (" Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text "
+    "or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are "
+    "added later as a separate post overlay. no watermark.")
+STYLE_REAL = ("photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based "
+    "lighting, subtle film grain, soft cinematic color grade, vertical 9:16, Loire Valley France setting on the "
+    "calm River Indre, an elegant white Renaissance chateau on a small island reflected almost perfectly in the "
+    f"still water, soft silvery-golden light, gardens and trees.{CLEAN}")
+STYLE_DIORAMA = ("signature floating-diorama miniature cutaway: a rectangular slab of the River Indre with the little "
+    "island chateau on it, cut out and floating in a WARM graduated amber-to-charcoal void, flat cut-sides exposing "
+    "water, riverbed mud and the wooden foundation piles driven beneath the chateau, lit by a warm low amber key light with soft "
+    "golden fill and gentle rim glow, faint volumetric haze, portrait telephoto look, shallow depth of field, "
+    f"photorealistic miniature render, warm cinematic color grade, vertical 9:16.{CLEAN}")
+STYLE_XRAY = ("see-through x-ray / technical scan visualization, deep graduated navy-black void, the island chateau "
+    "and the river rendered as a glowing translucent cyan wireframe with x-ray layers revealing the wooden foundation piles "
+    "driven into the damp ground beneath the chateau, a soft horizontal scan-line sweeping through, holographic "
+    f"engineering feel, subtle film grain, cyan accents, vertical 9:16.{CLEAN}")
+STYLE_BLUEPRINT = ("an architectural blueprint that morphs into photoreal reality, vertical 9:16. The shot BEGINS as "
+    "a clean cyan-and-white line drawing on deep blueprint-blue paper with a faint grid, then a bright wipe sweeps "
+    f"across and it MORPHS into the real white stone structure with soft light.{CLEAN}")
+DYN_REAL = f"photorealistic cinematic footage, soft cinematic color grade, vertical 9:16, Loire Valley River Indre setting.{CLEAN}"
+DYN_DIORAMA = f"signature floating-diorama miniature, warm graduated amber-charcoal void, warm cinematic color grade, vertical 9:16.{CLEAN}"
+DYN_XRAY = f"see-through x-ray / scan visualization, deep navy-black void, glowing translucent cyan wireframe revealing wooden foundation piles under the chateau, scan-line sweep, vertical 9:16.{CLEAN}"
+DYN_BLUEPRINT = f"architectural blueprint morphing into a real white stone chateau, blueprint-blue paper with grid, cyan line-drawing wiping into real stone, vertical 9:16.{CLEAN}"
+BASE  = {'real':STYLE_REAL,'diorama':STYLE_DIORAMA,'xray':STYLE_XRAY,'blueprint':STYLE_BLUEPRINT}
+DBASE = {'real':DYN_REAL,'diorama':DYN_DIORAMA,'xray':DYN_XRAY,'blueprint':DYN_BLUEPRINT}
+CLS_KO   = {'real':'실사','diorama':'디오라마','xray':'X-ray','blueprint':'청사진'}
+CLS_STYLE= {'real':'color:#8fd06f;border-color:#8fd06f55','diorama':'color:#e8a33d;border-color:#e8a33d55',
+            'xray':'color:#5bd0ff;border-color:#5bd0ff55','blueprint':'color:#7aa2ff;border-color:#7aa2ff55'}
+
+# role, cls, transition, dur, dyn, effect, kr, desc, camera, anno
+SHOTS = [
+ ('hook','real','cut',5,1,'지도→드론 다이브 줌 + 섬 성 리빌', "프랑스 루아르, 앵드르 강 한가운데 섬에 하얀 성이 하나 떠 있어요.",
+   "DYNAMIC opening: start on a clean minimal stylized map of France (soft grey, no text) as a glowing cyan pin drops onto the Loire Valley; a fast Google-Earth-style DIVE ZOOM plunges down through soft clouds into a real cinematic drone view gliding low over a calm river toward an elegant L-shaped white tuffeau chateau with round corner turrets and blue-grey slate roofs rising straight out of the calm river, mirrored almost perfectly in the still water. no words anywhere.", "", ""),
+ ('subject','real','cut',5,0,'', "발자크가 '앵드르에 박힌 다이아몬드'라 부른 성, 아제르리도입니다.",
+   "a majestic full 360-degree orbit at soft golden hour around the white island chateau, its turrets and steep roofs reflected almost perfectly in the glassy still water like a cut diamond, gardens and trees around.",
+   "a slow cinematic 360-degree orbit around the island chateau, its full mirror reflection on the water", ""),
+ ('hook','real','cut',3,0,'', "물 위에 곱게 앉은 것 같죠? 근데 이 성, 물속에 비밀이 있어요.",
+   "a low graceful glide skimming across the still water toward the base of the chateau where stone meets water, then tilting slightly down toward the surface as if about to look beneath it.",
+   "a low glide across the reflection then a downward tilt hinting at what lies beneath the water", ""),
+ ('cause','diorama','cut',5,1,'말뚝 박기 타임랩스', "물가 섬이라 땅이 무르니, 진흙에 말뚝 수백 개를 박아 성을 떠받칠 기초부터 다졌죠.",
+   "HIGH-ENERGY warm floating-diorama construction time-lapse: on a cut slab of the river, hundreds of wooden piles rapidly DRIVE down into the soft muddy ground of the island one after another to form the foundation that will carry the chateau, then stone footings stack on top, kinetic building motion, warm amber lighting, mud and water strata exposed on the cut sides.", "", "[오버레이] 말뚝 기초 마커"),
+ ('cause','xray','cut',5,0,'', "지금도 이 하얀 성은, 물속에 잠긴 말뚝들 위에 그대로 서 있습니다.",
+   "an x-ray see-through of the island chateau and the river, the water and the island turned translucent to reveal the forest of wooden piles standing in the dark riverbed mud beneath, glowing cyan wireframe carrying the whole white building above the surface.",
+   "a slow x-ray crane-down from the chateau to the submerged piles carrying it", "[오버레이] 수중 말뚝 지지 리더선"),
+ ('solution','blueprint','cut',5,0,'', "안으로 들어가면 — 빙빙 도는 나선 대신, 이탈리아에서 막 건너온 곧게 뻗은 계단. 당시 프랑스엔 흔치 않았죠.",
+   "an architectural blueprint of a grand straight-flight Renaissance staircase — straight runs rising floor by floor with tall double bay windows on each landing, not a spiral — draws itself on blueprint-blue paper, then a bright wipe MORPHS it into the real carved white stone staircase inside the chateau.",
+   "a slow push-in as the staircase blueprint resolves into the real carved stone stair", "[오버레이] 직선 계단 강조"),
+ ('scale','real','cut',5,0,'', "층마다 큰 창을 낸 이 계단은, 오르내리며 안뜰이 훤히 보이죠.",
+   "a beautiful real interior shot looking up the grand straight Renaissance staircase, warm daylight pouring through the tall carved double bay windows on each landing, elegant stone and coffered ceilings, a sense of light and openness.",
+   "a slow rise up the staircase past the tall bay windows toward the light", ""),
+ ('subject','real','cut',5,0,'', "지은 사람은 왕의 재무관 베르텔로. 정작 공사는 아내 필리파가 진두지휘했고요.",
+   "an elegant aerial gliding over the white chateau and its formal gardens and the surrounding water, warm and graceful, a sense of a wealthy couple's grand ambition realised in pale stone.",
+   "a slow graceful aerial over the chateau, gardens and its watery setting", ""),
+ ('fail','diorama','cut',5,0,'', "부를 뽐내려 지었는데 — 하필 재정 스캔들이 터집니다.",
+   "a warm floating-diorama of the little island chateau as a cold shadow suddenly sweeps across it and a small heap of gold coins beside it topples and scatters, the warm light dimming to an ominous tone, a sense of fortune collapsing around the proud new house.",
+   "a slow orbit as a shadow falls over the chateau and the coins topple beside it", "[오버레이] 스캔들·재정 붕괴 표시"),
+ ('solution','real','cut',5,0,'', "완공도 전에 베르텔로는 도망치고, 프랑수아 1세가 성을 통째로 가져가 버려요.",
+   "a dramatic real aerial of the half-finished white chateau under a cold overcast sky, a lone figure fleeing away across the water while a royal presence takes possession, banners and a sense of seizure, tense and cinematic.",
+   "a slow push over the seized chateau as a lone figure flees across the water", "[오버레이] 1528 몰수"),
+ ('end','diorama','cut',5,0,'', "정작 지은 사람은, 이 성을 끝내 누려보지 못했습니다.",
+   "a warm floating-diorama of the finished but empty island chateau, softly lit and beautiful yet with no one inside, a tiny lone figure standing on the far bank looking back at the house he never lived in, quietly poignant.",
+   "a slow orbit around the empty finished chateau, one small figure looking back from the bank", ""),
+ ('scale','real','cut',5,0,'', "그래도 500년이 지난 지금, 아제르리도는 물에 비친 가장 아름다운 성으로 남았죠.",
+   "a gorgeous real golden-hour shot of Azay-le-Rideau reflected in perfect stillness on the River Indre, the white chateau doubled flawlessly on the mirror water, lush green trees and soft warm light, breathtaking.",
+   "a slow glide revealing the flawless full reflection of the chateau on the still river", ""),
+ ('end','real','cont',10,0,'', "지은 이는 떠났어도, 성은 오늘도 앵드르 강 위에 조용히 떠 있습니다.",
+   "a long, unhurried, lingering dusk shot: the white island chateau mirrored perfectly on the utterly still River Indre as warm golden light very slowly fades toward soft blue dusk, thin mist drifting low over the water, a single warm light glowing in a window, the camera drifting almost imperceptibly and then holding, letting the scene breathe and settle, quietly emotional and cinematic.",
+   "an almost-still, very slow drift that settles into a long hold on the mirrored chateau as dusk falls, letting it linger", ""),
+]
+
+CONT = (" The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, "
+        "gentle easing, so it blends seamlessly into the neighbouring shots.")
+def prompt_final(role,cls,tr,dur,dyn,eff,kr,desc,cam,anno):
+    if dyn:
+        return f"{DBASE[cls]} {desc} One continuous ~{dur}-second shot.{CONT}"
+    p = f"{BASE[cls]} {desc} SUBJECT: {SUBJECT} Camera: {cam} One continuous ~{dur}-second shot.{CONT}"
+    return p
+
+t=0; rows=[]
+for i,s in enumerate(SHOTS):
+    role,cls,tr,dur,dyn,eff,kr,desc,cam,anno = s
+    rows.append({'id':i+1,'role':role,'cls':cls,'style_class':CLS_KO[cls],'transition':tr,'t':t,'dur':dur,
+                 'dynamic':bool(dyn),'effect':eff,'sentence_kr':kr,'desc':desc,'camera':cam,
+                 'anno_rendered':anno,'prompt_final':prompt_final(*s)})
+    t += dur
+TOTAL=t; mix=Counter(r['style_class'] for r in rows)
+
+manifest = {
+ 'topic':TOPIC,
+ 'mode':'CLEAN-PLATE(클립에 숫자 미포함, 수치는 후처리 오버레이) · 4-skin(디오라마 비중↑) · witty · beauty-first',
+ 'filter_score':{'대중인지도':1,'외관vs기능반전':2,'문제선명도':1,'뻔한해법실패':1,'반직관해결':2,
+                 '작동과정명확성':1,'시각화가능성':2,'강한숫자':1,'공식자료충분':2,'현재성결말':2,'미모(가중)':3,
+                 '총점':15,'판정':'미모 우선 채택'},
+ 'candidate_sentences_hit':['물 위가 아니라 물속 말뚝 위에 지었다','부 과시하려 짓다 완공 전 뺏김(오답/아이러니)',
+                            '지은 이는 살아보지도 못한 성','앵드르에 박힌 다이아몬드'],
+ 'fact_pack':{'입지':'앵드르 강의 자연 섬(CMN: man-made 아님). 습지라 나무 말뚝(pilotis)에 기초. 1518~1527 건립',
+   '계단':'이탈리아식 직선 계단(rampe-sur-rampe), 층마다 더블 베이창. CMN=가장 오래 보존된 것 중 하나(THE oldest 아님)',
+   '건립':'왕실 재무관 Gilles Berthelot 건립, 아내 Philippa Lesbahy가 공사 지휘',
+   '몰수':'Semblançay 스캔들(사촌 Jacques de Beaune 1527 처형)로 베르텔로 Metz로 도망 → 왕 몰수(~1528) → Antoine Raffin(정식 하사 1535, 라팽가 1528~1651). 성은 미완성',
+   '미모':'발자크 "앵드르에 박힌 다이아몬드". 물 반영 명소',
+   '출처':'en.wikipedia.org(Chateau Azay-le-Rideau), britannica.com, loirevalley-france.co.uk'},
+ 'note':'미모 우선·디오라마 비중↑. 4-스킨. clean plate(숫자없음, 후처리 오버레이). 위트톤·연속무빙. #12 미모→#13 여운 엔딩.',
+ 'style_base':STYLE_REAL,'style_base_diorama':STYLE_DIORAMA,'style_base_xray':STYLE_XRAY,'style_base_blueprint':STYLE_BLUEPRINT,
+ 'subject':SUBJECT,'shots':rows,
+}
+json.dump(manifest, open(os.path.join(HERE,'manifest.json'),'w',encoding='utf-8'), ensure_ascii=False, indent=1)
+
+with open(os.path.join(HERE,'prompts.txt'),'w',encoding='utf-8') as f:
+    f.write(f"# {TOPIC}\n# CLEAN-PLATE(숫자없음) · 4-스킨(디오라마↑) · 위트톤 · {len(SHOTS)}컷 · {TOTAL}초\n\n")
+    for r in rows:
+        f.write(f"── #{r['id']:02d} {r['role']} · {r['t']}s→{r['t']+r['dur']}s · [{r['style_class']}]"
+                + (f" · ⚡{r['effect']}" if r['dynamic'] else "") + "\n")
+        f.write(f"  나레이션: {r['sentence_kr']}\n")
+        if r['anno_rendered']: f.write(f"  오버레이(후처리): {r['anno_rendered']}\n")
+        f.write(f"  프롬프트: {r['prompt_final']}\n\n")
+with open(os.path.join(HERE,'script.md'),'w',encoding='utf-8') as f:
+    f.write(f"# {TOPIC} — 대본 (위트, 미모우선, 디오라마↑)\n\n**전체 나레이션**\n\n")
+    f.write(' '.join(r['sentence_kr'] for r in rows) + "\n\n| # | 구간 | 스킨 | 나레이션 |\n|---|---|---|---|\n")
+    for r in rows:
+        f.write(f"| {r['id']} | {r['t']}s→{r['t']+r['dur']}s | {r['style_class']}"
+                + (f"·⚡{r['effect']}" if r['dynamic'] else "") + f" | {r['sentence_kr']} |\n")
+
+ref = open(REF, encoding='utf-8').read()
+style = re.search(r'<style>.*?</style>', ref, re.S).group(0)
+script = re.search(r'<script>.*?</script>', ref, re.S).group(0)
+ndyn = sum(1 for r in rows if r['dynamic'])
+cards=[]
+for r in rows:
+    dyncls = ' dyn' if r['dynamic'] else ' '
+    ph2 = '⚡DYNAMIC · 프롬프트→드롭' if r['dynamic'] else '프롬프트→드롭'
+    dynspan = f'<span class="dyn">⚡ {html.escape(r["effect"])}</span>' if r['dynamic'] else ''
+    if r['dynamic']: ovlabel, ovbody = '카메라/효과', html.escape(r['effect'])
+    elif r['anno_rendered']: ovlabel, ovbody = '🎬 오버레이(후처리)', html.escape(r['anno_rendered'])
+    else: ovlabel, ovbody = '🎬 오버레이(후처리)', '<i style="color:#4a515b">— (없음)</i>'
+    t0,t1 = r['t'], r['t']+r['dur']
+    cards.append(
+f'''<article class="c{dyncls}">
+<div class="slot empty{dyncls}"><div class="ph">#{r['id']:02d} · {r['role']} · {t0}s→{t1}s<br><span>{ph2}</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>{r['id']:02d}</b> <span class="role">{r['role']}</span> <span class="tr">{r['transition']}</span>
+ <span class="cls" style="{CLS_STYLE[r['cls']]}">{r['style_class']}</span> {dynspan} <span class="dur">{t0}s→{t1}s</span></div>
+<p class="kr">{html.escape(r['sentence_kr'])}</p>
+<div class="ov"><b>{ovlabel}</b><br>{ovbody}</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">{html.escape(r['prompt_final'])}</code>
+</div></article>''')
+sub = (f'<span class="dyn">⚡ DYNAMIC {ndyn}컷</span> · 4-스킨(실사 {mix["실사"]}·디오라마 {mix["디오라마"]}·X-ray {mix.get("X-ray",0)}·청사진 {mix.get("청사진",0)}) · 위트 · 미모우선 · <b style="color:#e4685c">클립엔 숫자 없음(후처리 오버레이)</b>. '
+       f'훅=물속 말뚝 위에 지은 다이아몬드 성. 프롬프트 복사→t2v→슬롯 드롭.')
+gallery = ('<!doctype html><html lang="ko"><head><meta charset="utf-8">'
+    '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+    f'<title>아제르리도 성 — 프롬프트 갤러리 (t2v)</title>{style}</head><body><div class="wrap">\n'
+    f'<h1>아제르리도 성 <span style="color:var(--cyan)">t2v</span> ({len(SHOTS)}컷 · {TOTAL}초 · 디오라마↑)</h1>\n'
+    f'<p class="sub">{sub}</p>\n'
+    '<div class="bar"><button class="save" onclick="saveFolder()">📁 images 폴더에 바로 저장</button>'
+    '<button class="save" onclick="saveDownload()">⬇️ shotNN 전부 다운로드</button>'
+    '<span class="barhint">저장 규칙 <code>images/shot01.mp4</code> · 다음에 열면 자동으로 불러옵니다</span></div>\n'
+    '<div class="grid">' + ''.join(cards) + f'</div></div>{script}</body></html>')
+open(os.path.join(HERE,'gallery.html'),'w',encoding='utf-8').write(gallery)
+print(f"생성 완료: {len(SHOTS)}컷 · {TOTAL}초 · DYNAMIC {ndyn}컷 · 스킨 {dict(mix)}")

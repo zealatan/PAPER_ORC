@@ -1,0 +1,7 @@
+# 렌더 파이프라인 자동생성물 (재현 가능 → 커밋 제외)
+out/
+tts/
+rec/narration.json
+gallery.html.bak
+*.raw.mp3
+ffmpeg2pass-*.log*
