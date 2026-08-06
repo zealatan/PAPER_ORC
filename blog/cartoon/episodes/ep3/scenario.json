@@ -1,0 +1,119 @@
+{
+  "id": "ep3",
+  "title": "EP3 · 분배율은 수익률이 아니다 (QYLD vs SPY)",
+  "cartoon": "cartoon.png",
+  "ticker": {
+    "name": "QYLD",
+    "code": "QYLD",
+    "color": "#dc2626"
+  },
+  "benchmark": {
+    "name": "SPY",
+    "code": "SPY",
+    "color": "#2563eb"
+  },
+  "invest": 10000000,
+  "buy_date": "2014-01-02",
+  "asof": "2026-08-05",
+  "panels": [
+    {
+      "n": 1,
+      "overlay": "static"
+    },
+    {
+      "n": 2,
+      "overlay": "yield_badge",
+      "params": {
+        "slot": [
+          551,
+          324,
+          786,
+          562
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "overlay": "static"
+    },
+    {
+      "n": 4,
+      "overlay": "invest_tag",
+      "params": {
+        "slot": [
+          305,
+          660,
+          775,
+          912
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "overlay": "cashflow_accum",
+      "params": {
+        "slot": [
+          544,
+          389,
+          812,
+          713
+        ]
+      },
+      "hold": 2.0
+    },
+    {
+      "n": 6,
+      "overlay": "two_line_compare",
+      "params": {
+        "source": "total",
+        "slot": [
+          294,
+          475,
+          791,
+          864
+        ],
+        "title": "총수익 (배당 재투자)"
+      },
+      "hold": 2.0
+    },
+    {
+      "n": 7,
+      "overlay": "two_line_compare",
+      "params": {
+        "source": "price",
+        "slot": [
+          300,
+          497,
+          786,
+          886
+        ],
+        "title": "가격 (분배 제외)"
+      },
+      "hold": 2.0
+    },
+    {
+      "n": 8,
+      "overlay": "compare_table",
+      "params": {
+        "slot": [
+          300,
+          454,
+          780,
+          734
+        ]
+      },
+      "hold": 2.0
+    }
+  ],
+  "durations": {
+    "1": 3.0,
+    "2": 3.2,
+    "3": 2.6,
+    "4": 3.0
+  },
+  "shorts": {
+    "inner_width": 1004,
+    "bg": "white",
+    "valign": "center"
+  }
+}

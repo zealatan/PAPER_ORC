@@ -1,0 +1,117 @@
+{
+  "id": "ep4",
+  "title": "EP4 · QYLD는 하락 방패가 아니다 (2022 하락장, QYLD vs QQQ)",
+  "cartoon": "cartoon.png",
+  "ticker": {
+    "name": "QYLD",
+    "code": "QYLD",
+    "color": "#dc2626"
+  },
+  "benchmark": {
+    "name": "QQQ",
+    "code": "QQQ",
+    "color": "#2563eb"
+  },
+  "invest": 10000000,
+  "buy_date": "2022-01-03",
+  "asof": "2022-12-30",
+  "panels": [
+    {
+      "n": 1,
+      "overlay": "static"
+    },
+    {
+      "n": 2,
+      "overlay": "static"
+    },
+    {
+      "n": 3,
+      "overlay": "static"
+    },
+    {
+      "n": 4,
+      "overlay": "invest_tag",
+      "params": {
+        "slot": [
+          556,
+          700,
+          802,
+          902
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "overlay": "single_line",
+      "params": {
+        "window": [
+          "2022-01-03",
+          "2022-12-30"
+        ],
+        "down": true,
+        "color": "#dc2626",
+        "label": "QYLD",
+        "code": "QYLD",
+        "slot": [
+          507,
+          389,
+          778,
+          713
+        ]
+      },
+      "hold": 2.0
+    },
+    {
+      "n": 6,
+      "overlay": "mdd_compare",
+      "params": {
+        "title": "2022 최대낙폭",
+        "slot": [
+          296,
+          475,
+          789,
+          864
+        ]
+      },
+      "hold": 2.0
+    },
+    {
+      "n": 7,
+      "overlay": "cashflow_accum",
+      "params": {
+        "slot": [
+          302,
+          497,
+          784,
+          886
+        ]
+      },
+      "hold": 2.0
+    },
+    {
+      "n": 8,
+      "overlay": "compare_table",
+      "params": {
+        "story": "drawdown",
+        "slot": [
+          302,
+          454,
+          778,
+          734
+        ]
+      },
+      "hold": 2.0
+    }
+  ],
+  "durations": {
+    "1": 3.0,
+    "2": 3.0,
+    "3": 2.8,
+    "4": 3.0
+  },
+  "shorts": {
+    "inner_width": 1004,
+    "bg": "white",
+    "valign": "center"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "id": "ep2",
+  "title": "EP2 · 일시매수 vs 분할매수 (QQQ, 2022 금리인상기)",
+  "cartoon": "cartoon.png",
+  "ticker": {
+    "name": "QQQ",
+    "code": "QQQ",
+    "color": "#16a34a"
+  },
+  "invest_total": 6000000,
+  "buy_date": "2022-01-03",
+  "dca_months": 6,
+  "asof": "2024-03-28",
+  "reinvest_dividends": true,
+  "panels": [
+    {
+      "n": 1,
+      "overlay": "single_line",
+      "params": {
+        "window": [
+          "2021-01-04",
+          "2021-12-31"
+        ],
+        "color": "#16a34a",
+        "label": "QQQ",
+        "slot": [
+          572,
+          409,
+          819,
+          932
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "overlay": "static"
+    },
+    {
+      "n": 3,
+      "overlay": "static"
+    },
+    {
+      "n": 4,
+      "overlay": "method_cards",
+      "params": {
+        "slot_lump": [
+          279,
+          486,
+          495,
+          615
+        ],
+        "slot_dca": [
+          574,
+          490,
+          793,
+          617
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "overlay": "single_line",
+      "params": {
+        "window": [
+          "2022-01-03",
+          "2022-11-30"
+        ],
+        "color": "#dc2626",
+        "label": "QQQ",
+        "down": true,
+        "slot": [
+          553,
+          317,
+          814,
+          902
+        ],
+        "caption_slot": [
+          271,
+          983,
+          809,
+          1078
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "overlay": "mdd_compare",
+      "params": {
+        "slot": [
+          70,
+          630,
+          940,
+          985
+        ],
+        "split": 505
+      }
+    },
+    {
+      "n": 7,
+      "overlay": "recovery_table",
+      "params": {
+        "slot": [
+          264,
+          363,
+          810,
+          1068
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "overlay": "static"
+    }
+  ],
+  "durations": {
+    "1": 3.2,
+    "2": 3.0,
+    "3": 2.6,
+    "4": 3.6,
+    "5": 3.6,
+    "6": 4.0,
+    "7": 8.0,
+    "8": 3.4
+  },
+  "shorts": {
+    "inner_width": 1004,
+    "bg": "white",
+    "valign": "center"
+  }
+}
