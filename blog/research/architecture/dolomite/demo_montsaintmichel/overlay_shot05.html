@@ -1,0 +1,101 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<title>OVERLAY 프로토타입 — shot05 (760m 치수선)</title>
+<style>
+/* 실제 합성 시 body 배경을 transparent로 두고 알파 렌더 → PLATE 클립 위에 ffmpeg overlay.
+   여기선 미리보기용으로 PLATE 자리표시(어두운 그라디언트+다리 실루엣)를 깔아둠. */
+html,body{margin:0;height:100%;background:#0d0f13}
+.stage{position:relative;width:min(46vh,100vw);aspect-ratio:9/16;margin:0 auto;overflow:hidden;
+  background:linear-gradient(#12202b 0%,#1a2b36 45%,#243b3e 70%,#3a4a3a 100%)}
+/* ── PLATE 자리표시(미리보기 전용, 합성 땐 제거) ── */
+.plate-note{position:absolute;top:10px;left:10px;font:11px ui-monospace;color:#5b6b74;letter-spacing:.5px}
+.bridge{position:absolute;left:0;right:0;top:56%;height:2.5%;
+  background:linear-gradient(90deg,#4a5a63,#6b7d84 50%,#4a5a63);transform:skewY(-2.5deg);opacity:.9}
+.bridge::after{content:"";position:absolute;inset:0;top:100%;height:340%;
+  background:repeating-linear-gradient(90deg,transparent 0 5.5%,#3d4c54 5.5% 6.2%);opacity:.6}
+.island{position:absolute;right:6%;top:34%;width:20%;aspect-ratio:1/1.4;
+  background:radial-gradient(ellipse at 50% 30%,#8a8f86,#4d534b 60%,#343a33);
+  clip-path:polygon(50% 0,72% 40%,88% 100%,12% 100%,28% 40%);opacity:.92}
+/* ── OVERLAY 레이어 (실제 산출물) ── */
+.ov{position:absolute;inset:0;font-family:Pretendard,"Malgun Gothic",sans-serif}
+/* 치수선 */
+.dim{position:absolute;left:6%;right:26%;top:46%;height:0}
+.dim .line{position:absolute;left:0;top:0;height:2px;background:#ff5d52;width:0;
+  box-shadow:0 0 6px #ff5d5288;animation:draw 1.1s .3s cubic-bezier(.5,0,.2,1) forwards}
+.dim .ext{position:absolute;width:2px;height:26px;top:-13px;background:#ff5d52;opacity:0;box-shadow:0 0 5px #ff5d5288}
+.dim .ext.l{left:0;animation:pop .25s .3s forwards}.dim .ext.r{right:0;animation:pop .25s 1.4s forwards}
+.dim .arw{position:absolute;top:-4px;width:0;height:0;border:5px solid transparent;opacity:0}
+.dim .arw.l{left:-1px;border-right-color:#ff5d52;animation:pop .25s .5s forwards}
+.dim .arw.r{right:-1px;border-left-color:#ff5d52;animation:pop .25s 1.35s forwards}
+/* 콜아웃 */
+.callout{position:absolute;left:50%;top:38.5%;transform:translateX(-50%) translateY(8px);
+  background:#12161bcc;border:1.5px solid #ff5d52;border-radius:9px;padding:7px 15px;
+  color:#fff;text-align:center;opacity:0;animation:rise .5s 1.5s forwards;backdrop-filter:blur(3px)}
+.callout .num{font-size:34px;font-weight:800;letter-spacing:.5px;line-height:1}
+.callout .num small{font-size:17px;font-weight:700;opacity:.9}
+.callout .cap{font-size:11px;color:#ffd0cc;margin-top:3px;letter-spacing:.3px}
+.callout::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:#ff5d52}
+/* 하위 라벨 */
+.sub-label{position:absolute;left:50%;top:52%;transform:translateX(-50%);
+  font:12px ui-monospace;color:#cfe6ff;background:#0d1b2acc;border:1px solid #3a6ea5;
+  border-radius:6px;padding:3px 9px;opacity:0;animation:rise .5s 1.9s forwards}
+/* 자막 */
+.subtitle{position:absolute;left:6%;right:6%;bottom:9%;text-align:center;
+  font-size:26px;font-weight:800;color:#fff;text-shadow:0 2px 10px #000c;
+  opacity:0;animation:rise .5s .1s forwards}
+.subtitle b{color:#ffe08a}
+/* ✦ 시그니처 */
+.sig{position:absolute;right:5%;bottom:4.5%;color:#ffffffcc;font-size:18px;
+  opacity:0;animation:rise .6s 2.1s forwards;text-shadow:0 0 8px #fff8}
+@keyframes draw{to{width:100%}}
+@keyframes pop{to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translate(var(--tx,0),8px)}to{opacity:1;transform:translate(var(--tx,0),0)}}
+.callout{--tx:-50%}.sub-label{--tx:-50%}
+/* 조작 */
+.bar{max-width:520px;margin:14px auto 0;text-align:center;color:#8b919c;font:12px ui-monospace}
+.bar button{background:#20242c;color:#3fb6c4;border:1px solid #2f4557;border-radius:6px;padding:5px 12px;cursor:pointer;margin:0 4px}
+</style></head><body>
+
+<div class="stage" id="stage">
+  <div class="plate-note">▽ PLATE 클립 자리 (합성 시 실제 영상)</div>
+  <div class="bridge"></div><div class="island"></div>
+
+  <!-- ===== OVERLAY (실제 산출 레이어) ===== -->
+  <div class="ov">
+    <div class="dim">
+      <div class="line"></div>
+      <div class="ext l"></div><div class="ext r"></div>
+      <div class="arw l"></div><div class="arw r"></div>
+    </div>
+    <div class="callout">
+      <div class="num" id="num">0<small> m</small></div>
+      <div class="cap">물 위 연결교 전장</div>
+    </div>
+    <div class="sub-label">기둥 134개 · 높이 12 m</div>
+    <div class="subtitle">새 연결교는 물 위 구간만 <b>760m</b></div>
+    <div class="sig">✦ 신비한 건축사전</div>
+  </div>
+</div>
+
+<div class="bar">
+  shot05 · scale · OVERLAY 프로토타입 &nbsp;|&nbsp;
+  <button onclick="replay()">↻ 다시재생</button>
+  <span id="hint">치수선 draw-on → 콜아웃 760 카운트업 → 라벨 → 자막</span>
+</div>
+
+<script>
+function countup(el,to,dur,delay){
+  setTimeout(()=>{const t0=performance.now();
+    function f(t){let p=Math.min(1,(t-t0)/dur);p=1-Math.pow(1-p,3);
+      el.innerHTML=Math.round(p*to)+'<small> m</small>';
+      if(p<1)requestAnimationFrame(f);}
+    requestAnimationFrame(f);},delay);
+}
+function replay(){
+  const s=document.getElementById('stage');
+  const c=s.cloneNode(true);s.parentNode.replaceChild(c,s);c.id='stage';
+  countup(c.querySelector('#num'),760,900,1500);
+}
+countup(document.getElementById('num'),760,900,1500);
+</script>
+</body></html>

@@ -1,0 +1,33 @@
+{
+  "brand_to_logo": {
+    "KODEX": "KODEX.png",
+    "TIGER": "TIGER.png",
+    "SOL": "SOL.png",
+    "KBSTAR": "KBSTAR.png",
+    "RISE": "RISE.png",
+    "ARIRANG": "ARIRANG.png",
+    "PLUS": "PLUS.png",
+    "ACE": "ACE.png",
+    "HANARO": "HANARO.png",
+    "KIWOOM": "KIWOOM.png",
+    "VANGUARD": "VANGUARD.png",
+    "ISHARES": "ISHARES.png",
+    "SPDR": "SPDR.png",
+    "INVESCO": "INVESCO.png",
+    "SCHWAB": "SCHWAB.png",
+    "JPMORGAN": "JPMORGAN.png"
+  },
+  "prefix_rules": [
+    ["KODEX", "KODEX"],
+    ["TIGER", "TIGER"],
+    ["SOL ", "SOL"],
+    ["KBSTAR", "KBSTAR"],
+    ["RISE", "RISE"],
+    ["ARIRANG", "ARIRANG"],
+    ["PLUS", "PLUS"],
+    ["ACE", "ACE"],
+    ["HANARO", "HANARO"],
+    ["KIWOOM", "KIWOOM"]
+  ],
+  "us_note": "미국 ETF는 라벨에 Vanguard/iShares/SPDR/Invesco/Schwab/JPMorgan 포함 여부로 매핑"
+}

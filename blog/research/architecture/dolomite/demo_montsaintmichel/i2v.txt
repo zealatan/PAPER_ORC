@@ -1,0 +1,71 @@
+# 몽생미셸 — i2v 22개 (BAKED·숫자만). 스틸→영상.
+
+### 01 [hook] 3s · cut · 실사
+  i2v: Animate the provided still image. a slow low tracking drift just above the water toward the bridge and distant island, creeping mist, calm and moody Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~3s single continuous shot, vertical 9:16, no watermark.
+
+### 02 [hook] 3s · cont · 실사
+  i2v: Animate the provided still image. a steady first-person forward walk along the deck toward the abbey, gentle and observational Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~3s single continuous shot, vertical 9:16, no watermark.
+
+### 03 [subject] 4s · cut · 실사
+  i2v: Animate the provided still image. a slow graceful tilt-up (crane) from the sand rising to the abbey spire, majestic and unhurried Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 04 [subject] 4s · cut · 실사
+  i2v: Animate the provided still image. a slow overhead lateral glide across the bridge-island junction, then a gentle hold Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 05 [scale] 3s · cont · 실사
+  i2v: Animate the provided still image. a fast dolly pull-back (ZOOM OUT) snapping the whole 760 m bridge into frame — energetic reveal Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~3s single continuous shot, vertical 9:16, no watermark.
+
+### 06 [cause] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a locked near-static shot slowly settling toward top-down over the slab, rigid, calm for readability Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 07 [cause] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a slow lateral truck across the cross-section, gentle parallax on the strata Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 08 [fail] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a slow steady orbit around the spreading sediment, calm Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 09 [fail] 3s · cut · 실사
+  i2v: Animate the provided still image. a strong accelerating push-in (ZOOM IN) slamming toward the silted base of the island Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~3s single continuous shot, vertical 9:16, no watermark.
+
+### 10 [fail] 4s · cut · 실사
+  i2v: Animate the provided still image. a gritty handheld shot circling the dredger scooping, subtle real shake Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 11 [fail] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a slow orbit around the loop, steady and clear Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 12 [flip] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a dramatic accelerating push-in (ZOOM IN) as the stored water bursts out Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 13 [solution] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a steady push-in (ZOOM IN) onto the row of eight gates Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 14 [solution] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a gentle crane-up rising with the pooling water, calm Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 15 [solution] 4s · cont · 디오라마
+  i2v: Animate the provided still image. an explosive push-back (ZOOM OUT) as the gates burst open and water rushes at camera Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 16 [solution] 4s · cut · 실사
+  i2v: Animate the provided still image. a fast tracking shot racing along the flush current past the island Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 17 [scale] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a moderate push-in (ZOOM IN) on the pool grid as pools rapidly stack up Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 18 [solution] 4s · cut · 실사
+  i2v: Animate the provided still image. a moderate overhead tracking push over the demolition as water reclaims the line Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 19 [solution] 4s · cont · 실사
+  i2v: Animate the provided still image. a low tracking glide along the bridge, tide flowing beneath the pillars Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 20 [scale] 4s · cut · 디오라마
+  i2v: Animate the provided still image. a slow orbit around the cost callout, calm Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~4s single continuous shot, vertical 9:16, no watermark.
+
+### 21 [end] 5s · cut · 실사
+  i2v: Animate the provided still image. a sweeping aerial orbit rising with the flood, circling the island to reveal the unbroken ring of seawater wrapping every side as the bridge drowns beneath it Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~5s single continuous shot, vertical 9:16, no watermark.
+
+### 22 [scale] 5s · cut · 디오라마
+  i2v: Animate the provided still image. a slow lateral pan across the three side-by-side shapes on the common baseline, then a gentle hold, calm and clear Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~5s single continuous shot, vertical 9:16, no watermark.
+
+### 23 [end] 6s · cut · 실사
+  i2v: Animate the provided still image. a majestic smooth orbit that pulls back (ZOOM OUT) to a hero wide at golden hour Keep the rendered numbers and dimension lines legible and stable (a dimension line may draw on, a number may count up). Keep the exact same scene, architecture, colors and style as the image — only camera movement and natural motion (water, clouds), no morphing or invented structures. ~6s single continuous shot, vertical 9:16, no watermark.
+

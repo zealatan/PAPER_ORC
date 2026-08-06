@@ -1,0 +1,187 @@
+<!doctype html><html lang=ko><head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><title>PG 쇼츠 3페이지 (9:16) · 썸네일·비교그래프·END</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0}
+body{background:#070b12;font-family:'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+ min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px}
+.bar{display:flex;gap:8px;align-items:center;color:#cfd8e6;font-size:13px;flex-wrap:wrap;justify-content:center}
+.bar button{font:inherit;font-weight:800;border:0;border-radius:8px;padding:7px 13px;cursor:pointer}
+#prev,#next{background:#22304a;color:#cfd8e6}#rpl{background:#6ea8ff;color:#0a0f18}#edT{background:#2c3a52;color:#cfd8e6}
+#edDel{background:#e0463a;color:#fff;display:none}#imp{background:#3a2a7a;color:#fff}
+.pdots{display:flex;gap:6px;margin:0 6px}.pdot{width:9px;height:9px;border-radius:50%;background:#2c3a52}.pdot.act{background:#6ea8ff}
+/* 9:16 쇼츠 캔버스 */
+.viewport{position:relative;height:min(90vh,900px);aspect-ratio:9/16}
+.page{position:absolute;inset:0;display:none}.page.on{display:block}
+.stage{position:relative;width:100%;height:100%;container-type:size;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .tpl-reel{ position:absolute; inset:0; background:radial-gradient(120% 120% at 50% -10%,#16203a 0%,#0a0f18 60%); }
+  .frame:has(.tpl-reel)::before{ opacity:0 !important; }
+  .frame:has(.tpl-reel) #papertex{ opacity:0 !important; }
+  .frame:has(.tpl-reel) #chapscrim{ opacity:0 !important; }
+  .tpl-reel .rc-title{ position:absolute; top:2.2cqw; left:0; right:0; text-align:center; z-index:4; color:#fff; font-size:3cqw; font-weight:800; line-height:1.16; letter-spacing:-.02em; }
+  .tpl-reel .rc-title b{ color:#6ea8ff; }
+  .tpl-reel .rc-card{ position:absolute; left:3cqw; right:3cqw; top:10.4cqw; bottom:2.4cqw; background:#fff; border-radius:1.5cqw; box-shadow:0 1.6cqw 4cqw rgba(0,0,0,.45); overflow:hidden; }
+  .tpl-reel .rc-card::before{ content:""; position:absolute; top:0; left:0; right:0; height:.5cqw; background:linear-gradient(90deg,#1f6fe0,#e0821c,#e01e37); }
+  .tpl-reel .rc-chd{ position:absolute; top:2cqw; left:2.4cqw; display:flex; align-items:center; gap:1.3cqw; z-index:3; }
+  .tpl-reel .rc-logo{ height:3.4cqw; width:auto; display:block; }
+  .tpl-reel .rc-tk{ font-size:2cqw; font-weight:900; color:#0e1522; }
+  .tpl-reel .rc-per{ font-size:1.3cqw; font-weight:700; color:#8a93a2; margin-top:.25cqw; }
+  .tpl-reel .rc-leg{ position:absolute; top:2cqw; right:2.2cqw; display:flex; flex-direction:column; gap:.45cqw; z-index:3; align-items:flex-start; }
+  .tpl-reel .rc-lg{ display:flex; align-items:center; gap:.5cqw; font-size:.92cqw; color:#3a4250; font-weight:800; }
+  .tpl-reel .rc-sw{ width:1.35cqw; height:.3cqw; border-radius:.18cqw; }
+  .tpl-reel .rc-chart{ position:absolute; inset:0; width:100%; height:100%; }
+  .tpl-reel .rc-base{ stroke:rgba(20,30,50,.2); }
+  .tpl-reel .ytick{ stroke:rgba(20,30,50,.09); }
+  .tpl-reel .rc-ax{ fill:#a6adb8; font-size:12px; } .tpl-reel .rc-axx{ text-anchor:middle; } .tpl-reel .rc-al{ text-anchor:start; }
+  .tpl-reel .rc-hline{ stroke:#333; stroke-width:1.3; stroke-dasharray:5 5; opacity:.45; }
+  .tpl-reel .rc-hlab{ fill:#333; font-size:11.5px; font-weight:800; }
+  .tpl-reel .rc-ln{ fill:none; stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round; }
+  .tpl-reel .rc-lab{ font-weight:900; } .tpl-reel .rc-labv{ font-size:19px; } .tpl-reel .rc-labt{ font-size:12.5px; font-weight:800; }
+.tpl-reel{border-radius:0}
+.tpl-reel .rc-alL{text-anchor:end}.tpl-reel .rc-leg{gap:.5cqw}.tpl-reel .rc-lg{font-size:1.2cqw;font-weight:800}
+.tpl-reel .rc-sw{width:1.5cqw;height:1.5cqw;border-radius:.3cqw;background:var(--sc)}
+.tpl-reel .rc-labv{font-weight:900}.tpl-reel .rc-labn{font-weight:800}
+/* 그래프 페이지: 16:9 그래프를 세로 캔버스 중앙 배치 + 상단 훅 + 하단 배투실 */
+.shorts{position:absolute;inset:0;background:#000}
+.graphbox{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:1/1;container-type:size}
+.hook{position:absolute;top:13cqw;left:0;right:0;text-align:center;z-index:5;color:#fff;font-weight:900;font-size:7.8cqw;line-height:1.12;letter-spacing:-.02em;padding:0 5cqw}
+.hook b{color:#ffd21f}
+.punch{position:absolute;bottom:15cqw;left:0;right:0;text-align:center;z-index:5;font-weight:900;font-size:5.6cqw;color:#fff;letter-spacing:-.02em;padding:0 5cqw}
+.punch .win{color:#6ea8ff}.punch .lose{color:#e0821c}
+.wm{position:absolute;bottom:6cqw;left:0;right:0;text-align:center;z-index:5;color:#aebfd6;font-weight:800;font-size:3.2cqw}
+/* 썸네일 9:16 */
+.thumb{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 12%,#16203a,#080d16 62%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4cqw;padding:8cqw}
+#thumbImg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0}#thumbImg.has{opacity:1}
+.thumb .tin{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:4cqw;text-align:center}
+.thumb .tlogo{width:34cqw}.thumb .th1{color:#fff;font-weight:900;font-size:10cqw;line-height:1.08;letter-spacing:-.02em}
+.thumb .th1 b{color:#ffd21f}.thumb .th2{color:#9fc0ee;font-weight:800;font-size:4.4cqw}
+/* END 9:16 */
+.endp{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 16%,#1b2540,#070b12 68%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4cqw;text-align:center;padding:8cqw}
+.endp .elogo{width:30cqw}.endp .e1{color:#fff;font-weight:900;font-size:8.6cqw;letter-spacing:-.02em}
+.endp .e2{color:#9fc0ee;font-weight:800;font-size:4.2cqw;line-height:1.5}
+.endp .cta{margin-top:2cqw;background:#e0463a;color:#fff;font-weight:900;font-size:4.2cqw;padding:2.4cqw 5cqw;border-radius:20cqw}
+/* 편집 */
+.editing .ed-item{cursor:move}.editing .ed-item:hover{outline:2px dashed rgba(110,168,255,.6);outline-offset:3px}
+.ed-item.ed-sel{outline:2.5px solid #6ea8ff!important;outline-offset:3px}.ed-svg.ed-sel{outline:none;filter:drop-shadow(0 0 3px #6ea8ff)}
+[contenteditable=true]{outline:2px solid #ffd21f!important}
+</style></head><body>
+<div class="bar">
+ <button id="prev">◀</button>
+ <div class="pdots"><span class="pdot"></span><span class="pdot"></span><span class="pdot"></span></div>
+ <button id="next">▶</button>
+ <button id="rpl">↻ 재생</button><button id="edT">✎ 편집</button><button id="edDel" disabled>🗑 삭제</button>
+ <button id="imp">🖼 썸네일 PNG</button><input id="impf" type="file" accept="image/*" style="display:none">
+</div>
+<div class="viewport">
+ <!-- 1) 썸네일 9:16 -->
+ <div class="page"><div class="stage"><div class="thumb">
+   <div id="thumbImg"></div>
+   <div class="tin">
+     <svg class="tlogo ed-item ed-html" viewBox="0 0 200 87.021"><path d="M79.231 86.977c-6.824-.367-11.916-3.175-14.894-8.213-1.998-3.382-2.606-7.83-1.692-12.375 1.013-5.036 4.452-9.574 9.73-12.838 3.033-1.877 5.629-3.042 10.915-4.9 1.329-.467 2.476-.897 2.55-.957.106-.084.121-.382.068-1.349-.152-2.751.307-7.037 1.084-10.13 1.307-5.205 3.822-9.404 7.16-11.951 2.396-1.83 5.537-3.206 8.664-3.796 1.727-.325 4.619-.324 6.244.003 6.963 1.402 10.871 6.769 9.332 12.816-.324 1.275-1.348 3.365-2.215 4.521-2.221 2.962-5.562 5.596-10.28 8.102-.593.316-2.535 1.27-4.314 2.122-1.779.851-3.29 1.604-3.36 1.674-.099.099-.074.388.118 1.36.885 4.494 2.373 8.291 4.914 12.537 1.01 1.69 2.407 3.821 2.566 3.92.23.142 1.17-1.377 1.783-2.88.758-1.86 1.192-4.32.978-5.542-.154-.875-.632-1.799-1.242-2.396-.28-.276-.512-.537-.513-.58-.001-.042 2.367-.066 5.264-.051l5.267.027-.03.668c-.041.913-.38 2.86-.737 4.246-1.007 3.897-2.905 7.23-6.186 10.87-.387.429-.704.85-.704.936 0 .086.544.683 1.208 1.327 4.147 4.02 11.493 8.656 17.474 11.027.581.231 1.055.466 1.053.522-.002.068-3.455.112-10.091.13l-10.088.026-.574-.323c-1.172-.659-3.767-2.756-6.26-5.06-.528-.488-1.028-.887-1.111-.887-.083 0-.67.341-1.302.758-3.239 2.136-7.11 4.055-10.384 5.147-3.724 1.243-6.798 1.683-10.395 1.49zm8.494-8.74c1.51-.269 3.365-.817 5.071-1.498 1.715-.684 3.841-1.73 3.917-1.928.03-.078-.363-.735-.872-1.461-2.347-3.344-4.854-8.047-6.539-12.265-.621-1.555-1.781-4.999-2.003-5.943-.07-.301-.197-.574-.282-.607-.235-.09-2.162.937-3.827 2.041-5.918 3.923-8.755 8.712-8.125 13.716.28 2.224.984 3.845 2.265 5.214 2.368 2.53 6.07 3.503 10.395 2.731zM97.77 43.441c2.19-1.282 5.664-4.395 7.607-6.815 2.487-3.097 3.809-5.987 3.81-8.331 0-1.34-.19-1.94-.81-2.56-.617-.616-1.313-.871-2.376-.872-3.154 0-6.565 3.744-8.051 8.838-.75 2.568-.932 3.95-.937 7.087-.004 2.396.035 2.929.215 2.929.039 0 .283-.124.542-.276zm52.163 43.476c-5.197-.523-8.622-1.3-12.486-2.83-5.258-2.084-8.541-4.665-11.314-8.894-.83-1.266-2.162-3.924-2.7-5.393-2.405-6.545-2.933-14.785-1.5-23.381 1.451-8.7 4.756-17.085 9.316-23.639 2.958-4.25 7.359-8.726 11.902-12.106 7.502-5.58 16.137-9.01 25.73-10.216 2.91-.366 4.54-.46 7.977-.458 5.199.003 9.159.399 14.388 1.438 3.336.664 8.65 2.098 8.752 2.363.052.134-3.315 10.925-3.454 11.07-.043.045-.56-.3-1.147-.77-4.729-3.77-9.63-6.065-14.586-6.828-1.583-.244-4.558-.247-6.11-.006-6.948 1.076-13.39 5.515-19.109 13.168-1.858 2.486-3.905 5.818-5.497 8.946-2.157 4.24-3.64 7.988-5.14 13-4.778 15.946-5.02 27.087-.72 33.118 1.771 2.485 4.36 4.068 7.645 4.673 1.886.348 6.464.137 6.92-.318.073-.072 2.308-7.065 4.966-15.54 4.368-13.921 4.84-15.491 4.89-16.28.066-1.06-.131-2.007-.608-2.919-.433-.829-1.577-1.954-2.52-2.477-.407-.226-.741-.446-.742-.488-.001-.042 7.327-.077 16.286-.077 8.958 0 16.288.035 16.287.077 0 .042-.397.259-.882.48-2.536 1.16-4.374 2.898-5.467 5.172-.237.492-2.287 6.86-5.366 16.666l-4.983 15.87-1.44.69c-5.865 2.815-13.04 4.842-20.197 5.707-1.315.16-7.99.293-9.09.182zM.004 85.757c-.033-.052.184-.235.481-.406 1.77-1.019 3.757-3.133 4.599-4.895.244-.51 22.587-71.67 23.08-73.509.087-.322.16-1.002.161-1.51.007-1.552-.475-2.671-1.61-3.745-.31-.293-.563-.576-.563-.629 0-.141 39.015-.129 40.804.013 3.874.307 7.752 1.337 10.718 2.845 5.064 2.575 8.096 6.483 9.028 11.636.26 1.434.31 4.624.097 6.168-.868 6.294-3.72 12.97-7.603 17.8-6.29 7.824-16.577 12.827-29.202 14.203-4.002.436-9.045.546-12.616.274-1.032-.079-1.898-.122-1.924-.096-.127.128-8.182 25.973-8.274 26.55-.284 1.779.632 3.779 2.211 4.827.312.207.54.42.508.472-.08.129-29.816.13-29.896.001zM44.29 47.37c2.933-.52 5.521-1.606 8.018-3.363 1.213-.853 3.705-3.342 4.733-4.727 2.572-3.463 4.464-7.549 5.99-12.931.972-3.43 1.386-6.043 1.385-8.736 0-2.076-.188-3.316-.71-4.707-.775-2.064-2.353-3.695-4.358-4.505-1.722-.696-3.192-.879-6.728-.838l-2.666.03-6.197 19.732C40.35 38.178 37.58 47.11 37.603 47.174c.024.064.452.172.95.24.5.068.977.14 1.062.161.388.095 3.842-.056 4.675-.204z" fill="#165eaa"/></svg>
+     <div class="th1 ed-item ed-html">폭락 타이밍<br>vs <b>매달 적립</b><br>26년, 승자는?</div>
+     <div class="th2 ed-item ed-html">P&amp;G 배당 백테스트 · 🖼PNG 교체</div>
+   </div>
+ </div></div></div>
+ <!-- 2) 비교 그래프 (세로 캔버스 중앙) -->
+ <div class="page"><div class="stage"><div class="shorts">
+   <div class="hook ed-item ed-html">폭락 타이밍 vs 매달 적립<br><b>26년 뒤 승자는?</b></div>
+   <div class="graphbox"><div class="zoom tpl-reel">
+     <div class="rc-title"></div>
+     <div class="rc-card">
+       <div class="rc-chd"><svg class="rc-logo" viewBox="0 0 200 87.021"><path d="M79.231 86.977c-6.824-.367-11.916-3.175-14.894-8.213-1.998-3.382-2.606-7.83-1.692-12.375 1.013-5.036 4.452-9.574 9.73-12.838 3.033-1.877 5.629-3.042 10.915-4.9 1.329-.467 2.476-.897 2.55-.957.106-.084.121-.382.068-1.349-.152-2.751.307-7.037 1.084-10.13 1.307-5.205 3.822-9.404 7.16-11.951 2.396-1.83 5.537-3.206 8.664-3.796 1.727-.325 4.619-.324 6.244.003 6.963 1.402 10.871 6.769 9.332 12.816-.324 1.275-1.348 3.365-2.215 4.521-2.221 2.962-5.562 5.596-10.28 8.102-.593.316-2.535 1.27-4.314 2.122-1.779.851-3.29 1.604-3.36 1.674-.099.099-.074.388.118 1.36.885 4.494 2.373 8.291 4.914 12.537 1.01 1.69 2.407 3.821 2.566 3.92.23.142 1.17-1.377 1.783-2.88.758-1.86 1.192-4.32.978-5.542-.154-.875-.632-1.799-1.242-2.396-.28-.276-.512-.537-.513-.58-.001-.042 2.367-.066 5.264-.051l5.267.027-.03.668c-.041.913-.38 2.86-.737 4.246-1.007 3.897-2.905 7.23-6.186 10.87-.387.429-.704.85-.704.936 0 .086.544.683 1.208 1.327 4.147 4.02 11.493 8.656 17.474 11.027.581.231 1.055.466 1.053.522-.002.068-3.455.112-10.091.13l-10.088.026-.574-.323c-1.172-.659-3.767-2.756-6.26-5.06-.528-.488-1.028-.887-1.111-.887-.083 0-.67.341-1.302.758-3.239 2.136-7.11 4.055-10.384 5.147-3.724 1.243-6.798 1.683-10.395 1.49zm8.494-8.74c1.51-.269 3.365-.817 5.071-1.498 1.715-.684 3.841-1.73 3.917-1.928.03-.078-.363-.735-.872-1.461-2.347-3.344-4.854-8.047-6.539-12.265-.621-1.555-1.781-4.999-2.003-5.943-.07-.301-.197-.574-.282-.607-.235-.09-2.162.937-3.827 2.041-5.918 3.923-8.755 8.712-8.125 13.716.28 2.224.984 3.845 2.265 5.214 2.368 2.53 6.07 3.503 10.395 2.731zM97.77 43.441c2.19-1.282 5.664-4.395 7.607-6.815 2.487-3.097 3.809-5.987 3.81-8.331 0-1.34-.19-1.94-.81-2.56-.617-.616-1.313-.871-2.376-.872-3.154 0-6.565 3.744-8.051 8.838-.75 2.568-.932 3.95-.937 7.087-.004 2.396.035 2.929.215 2.929.039 0 .283-.124.542-.276zm52.163 43.476c-5.197-.523-8.622-1.3-12.486-2.83-5.258-2.084-8.541-4.665-11.314-8.894-.83-1.266-2.162-3.924-2.7-5.393-2.405-6.545-2.933-14.785-1.5-23.381 1.451-8.7 4.756-17.085 9.316-23.639 2.958-4.25 7.359-8.726 11.902-12.106 7.502-5.58 16.137-9.01 25.73-10.216 2.91-.366 4.54-.46 7.977-.458 5.199.003 9.159.399 14.388 1.438 3.336.664 8.65 2.098 8.752 2.363.052.134-3.315 10.925-3.454 11.07-.043.045-.56-.3-1.147-.77-4.729-3.77-9.63-6.065-14.586-6.828-1.583-.244-4.558-.247-6.11-.006-6.948 1.076-13.39 5.515-19.109 13.168-1.858 2.486-3.905 5.818-5.497 8.946-2.157 4.24-3.64 7.988-5.14 13-4.778 15.946-5.02 27.087-.72 33.118 1.771 2.485 4.36 4.068 7.645 4.673 1.886.348 6.464.137 6.92-.318.073-.072 2.308-7.065 4.966-15.54 4.368-13.921 4.84-15.491 4.89-16.28.066-1.06-.131-2.007-.608-2.919-.433-.829-1.577-1.954-2.52-2.477-.407-.226-.741-.446-.742-.488-.001-.042 7.327-.077 16.286-.077 8.958 0 16.288.035 16.287.077 0 .042-.397.259-.882.48-2.536 1.16-4.374 2.898-5.467 5.172-.237.492-2.287 6.86-5.366 16.666l-4.983 15.87-1.44.69c-5.865 2.815-13.04 4.842-20.197 5.707-1.315.16-7.99.293-9.09.182zM.004 85.757c-.033-.052.184-.235.481-.406 1.77-1.019 3.757-3.133 4.599-4.895.244-.51 22.587-71.67 23.08-73.509.087-.322.16-1.002.161-1.51.007-1.552-.475-2.671-1.61-3.745-.31-.293-.563-.576-.563-.629 0-.141 39.015-.129 40.804.013 3.874.307 7.752 1.337 10.718 2.845 5.064 2.575 8.096 6.483 9.028 11.636.26 1.434.31 4.624.097 6.168-.868 6.294-3.72 12.97-7.603 17.8-6.29 7.824-16.577 12.827-29.202 14.203-4.002.436-9.045.546-12.616.274-1.032-.079-1.898-.122-1.924-.096-.127.128-8.182 25.973-8.274 26.55-.284 1.779.632 3.779 2.211 4.827.312.207.54.42.508.472-.08.129-29.816.13-29.896.001zM44.29 47.37c2.933-.52 5.521-1.606 8.018-3.363 1.213-.853 3.705-3.342 4.733-4.727 2.572-3.463 4.464-7.549 5.99-12.931.972-3.43 1.386-6.043 1.385-8.736 0-2.076-.188-3.316-.71-4.707-.775-2.064-2.353-3.695-4.358-4.505-1.722-.696-3.192-.879-6.728-.838l-2.666.03-6.197 19.732C40.35 38.178 37.58 47.11 37.603 47.174c.024.064.452.172.95.24.5.068.977.14 1.062.161.388.095 3.842-.056 4.675-.204z" fill="#165eaa"/></svg>
+         <div><div class="rc-tk">프록터 앤 갬블 (PG)</div><div class="rc-per">−30% 폭락 매수 vs 매달 $1,000 · 배당 재투자 · ’00.3~’26.7</div></div></div>
+       <div class="rc-leg">
+         <span class="rc-lg" style="--sc:#e0821c"><span class="rc-sw"></span>30% 하락매입</span>
+         <span class="rc-lg" style="--sc:#1f6fe0"><span class="rc-sw"></span>매월매입</span></div>
+       <svg class="rc-chart" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet" data-rc='{"ymax": 1200000, "seq": true, "yleft": true, "lines": [{"c": "#e0821c", "name": "폭락 평가", "lab": "value", "phase": 0, "surv": true, "end": "", "pts": [[2000.082, 1000], [2000.322, 3972], [2000.579, 6913], [2000.831, 10445], [2001.082, 13536], [2001.326, 16243], [2001.578, 19735], [2001.83, 22975], [2002.082, 26414], [2002.326, 29899], [2002.578, 33095], [2002.83, 36318], [2003.082, 39485], [2003.326, 42924], [2003.578, 46171], [2003.83, 49877], [2004.079, 53341], [2004.328, 56899], [2004.577, 60262], [2004.825, 63635], [2005.082, 67248], [2005.323, 70809], [2005.573, 74436], [2005.83, 78009], [2006.082, 81818], [2006.321, 85346], [2006.578, 88826], [2006.83, 93011], [2007.082, 96803], [2007.326, 100480], [2007.578, 104029], [2007.83, 108370], [2008.082, 111855], [2008.328, 115803], [2008.579, 119539], [2008.831, 123352], [2009.079, 126490], [2009.326, 125911], [2009.578, 144966], [2009.827, 155190], [2010.077, 168162], [2010.326, 173823], [2010.575, 175434], [2010.825, 185816], [2011.082, 188864], [2011.323, 197829], [2011.573, 193228], [2011.83, 204215], [2012.082, 206080], [2012.328, 212179], [2012.579, 219187], [2012.831, 236550], [2013.082, 257478], [2013.326, 266682], [2013.578, 281271], [2013.83, 287421], [2014.082, 280688], [2014.326, 302478], [2014.578, 292617], [2014.83, 326214], [2015.079, 322661], [2015.326, 314011], [2015.578, 310989], [2015.827, 315403], [2016.077, 336564], [2016.325, 337236], [2016.574, 359075], [2016.831, 368219], [2017.082, 376210], [2017.321, 380934], [2017.578, 397369], [2017.83, 389052], [2018.082, 394691], [2018.326, 356492], [2018.578, 389451], [2018.83, 420453], [2019.082, 451577], [2019.326, 490060], [2019.578, 533858], [2019.83, 561338], [2020.082, 567903], [2020.328, 551929], [2020.579, 602498], [2020.828, 628883], [2021.077, 605478], [2021.326, 629818], [2021.575, 666622], [2021.825, 676145], [2022.082, 742929], [2022.323, 750319], [2022.573, 682476], [2022.83, 675048], [2023.082, 709275], [2023.321, 766035], [2023.578, 773261], [2023.83, 758429], [2024.082, 791543], [2024.328, 821209], [2024.579, 820053], [2024.831, 843863], [2025.082, 854760], [2025.326, 850248], [2025.578, 813638], [2025.83, 821439], [2026.079, 834978], [2026.326, 825800], [2026.556, 830354]]}, {"c": "#e0821c", "name": "폭락원금", "lab": "named", "phase": 0, "surv": true, "end": "", "pts": [[2000.082, 0], [2000.322, 2002], [2000.579, 2002], [2000.831, 2002], [2001.082, 2002], [2001.326, 2002], [2001.578, 2002], [2001.83, 2002], [2002.082, 2002], [2002.326, 2002], [2002.578, 2002], [2002.83, 2002], [2003.082, 2002], [2003.326, 2002], [2003.578, 2002], [2003.83, 2002], [2004.079, 2002], [2004.328, 2002], [2004.577, 2002], [2004.825, 2002], [2005.082, 2002], [2005.323, 2002], [2005.573, 2002], [2005.83, 2002], [2006.082, 2002], [2006.321, 2002], [2006.578, 2002], [2006.83, 2002], [2007.082, 2002], [2007.326, 2002], [2007.578, 2002], [2007.83, 2002], [2008.082, 2002], [2008.328, 2002], [2008.579, 2002], [2008.831, 2002], [2009.079, 2002], [2009.326, 124277], [2009.578, 124277], [2009.827, 124277], [2010.077, 124277], [2010.326, 124277], [2010.575, 124277], [2010.825, 124277], [2011.082, 124277], [2011.323, 124277], [2011.573, 124277], [2011.83, 124277], [2012.082, 124277], [2012.328, 124277], [2012.579, 124277], [2012.831, 124277], [2013.082, 124277], [2013.326, 124277], [2013.578, 124277], [2013.83, 124277], [2014.082, 124277], [2014.326, 124277], [2014.578, 124277], [2014.83, 124277], [2015.079, 124277], [2015.326, 124277], [2015.578, 124277], [2015.827, 124277], [2016.077, 124277], [2016.325, 124277], [2016.574, 124277], [2016.831, 124277], [2017.082, 124277], [2017.321, 124277], [2017.578, 124277], [2017.83, 124277], [2018.082, 124277], [2018.326, 124277], [2018.578, 124277], [2018.83, 124277], [2019.082, 124277], [2019.326, 124277], [2019.578, 124277], [2019.83, 124277], [2020.082, 124277], [2020.328, 124277], [2020.579, 124277], [2020.828, 124277], [2021.077, 124277], [2021.326, 124277], [2021.575, 124277], [2021.825, 124277], [2022.082, 124277], [2022.323, 124277], [2022.573, 124277], [2022.83, 124277], [2023.082, 124277], [2023.321, 124277], [2023.578, 124277], [2023.83, 124277], [2024.082, 124277], [2024.328, 124277], [2024.579, 124277], [2024.831, 124277], [2025.082, 124277], [2025.326, 124277], [2025.578, 124277], [2025.83, 124277], [2026.079, 124277], [2026.326, 124277], [2026.556, 124277]], "dash": true}, {"c": "#1f6fe0", "name": "적립 평가", "lab": "value", "phase": 1, "surv": true, "end": "", "pts": [[2000.082, 1000], [2000.322, 3334], [2000.579, 6067], [2000.831, 10864], [2001.082, 13855], [2001.326, 14461], [2001.578, 20411], [2001.83, 24320], [2002.082, 30128], [2002.326, 36486], [2002.578, 39371], [2002.83, 42277], [2003.082, 44083], [2003.326, 49581], [2003.578, 51650], [2003.83, 61202], [2004.079, 66254], [2004.328, 72674], [2004.577, 74868], [2004.825, 76633], [2005.082, 82969], [2005.323, 87828], [2005.573, 93689], [2005.83, 97656], [2006.082, 106791], [2006.321, 108434], [2006.578, 108230], [2006.83, 125644], [2007.082, 132144], [2007.326, 134841], [2007.578, 133129], [2007.83, 153304], [2008.082, 147666], [2008.328, 155064], [2008.579, 155314], [2008.831, 156828], [2009.079, 135949], [2009.326, 127344], [2009.578, 147118], [2009.827, 157799], [2010.077, 171504], [2010.326, 177299], [2010.575, 178645], [2010.825, 190018], [2011.082, 192908], [2011.323, 202790], [2011.573, 196362], [2011.83, 208779], [2012.082, 209997], [2012.328, 216404], [2012.579, 224180], [2012.831, 245194], [2013.082, 271181], [2013.326, 281837], [2013.578, 299773], [2013.83, 306531], [2014.082, 295586], [2014.326, 323710], [2014.578, 308196], [2014.83, 353212], [2015.079, 346068], [2015.326, 331622], [2015.578, 325094], [2015.827, 329364], [2016.077, 358004], [2016.325, 356535], [2016.574, 386488], [2016.831, 397523], [2017.082, 406982], [2017.321, 411315], [2017.578, 433665], [2017.83, 417798], [2018.082, 423414], [2018.326, 360477], [2018.578, 409296], [2018.83, 455311], [2019.082, 501706], [2019.326, 560183], [2019.578, 627630], [2019.83, 668661], [2020.082, 675660], [2020.328, 645769], [2020.579, 725412], [2020.828, 765071], [2021.077, 721970], [2021.326, 758492], [2021.575, 816015], [2021.825, 827747], [2022.082, 936141], [2022.323, 944264], [2022.573, 824388], [2022.83, 807142], [2023.082, 860884], [2023.321, 953723], [2023.578, 961414], [2023.83, 930813], [2024.082, 983272], [2024.328, 1029765], [2024.579, 1022476], [2024.831, 1058740], [2025.082, 1072381], [2025.326, 1058851], [2025.578, 988533], [2025.83, 996616], [2026.079, 1014982], [2026.326, 992709], [2026.556, 994925]]}, {"c": "#1f6fe0", "name": "적립원금", "lab": "named", "phase": 1, "surv": true, "end": "", "pts": [[2000.082, 0], [2000.322, 2880], [2000.579, 5964], [2000.831, 8988], [2001.082, 12000], [2001.326, 14928], [2001.578, 17952], [2001.83, 20976], [2002.082, 24000], [2002.326, 26928], [2002.578, 29952], [2002.83, 32976], [2003.082, 36000], [2003.326, 38928], [2003.578, 41952], [2003.83, 44976], [2004.079, 47964], [2004.328, 50952], [2004.577, 53940], [2004.825, 56916], [2005.082, 60000], [2005.323, 62892], [2005.573, 65892], [2005.83, 68976], [2006.082, 72000], [2006.321, 74868], [2006.578, 77952], [2006.83, 80976], [2007.082, 84000], [2007.326, 86928], [2007.578, 89952], [2007.83, 92976], [2008.082, 96000], [2008.328, 98952], [2008.579, 101964], [2008.831, 104988], [2009.079, 107964], [2009.326, 110928], [2009.578, 113952], [2009.827, 116940], [2010.077, 119940], [2010.326, 122928], [2010.575, 125916], [2010.825, 128916], [2011.082, 132000], [2011.323, 134892], [2011.573, 137892], [2011.83, 140976], [2012.082, 144000], [2012.328, 146952], [2012.579, 149964], [2012.831, 152988], [2013.082, 156000], [2013.326, 158928], [2013.578, 161952], [2013.83, 164976], [2014.082, 168000], [2014.326, 170928], [2014.578, 173952], [2014.83, 176976], [2015.079, 179964], [2015.326, 182928], [2015.578, 185952], [2015.827, 188940], [2016.077, 191940], [2016.325, 194916], [2016.574, 197904], [2016.831, 200988], [2017.082, 204000], [2017.321, 206868], [2017.578, 209952], [2017.83, 212976], [2018.082, 216000], [2018.326, 218928], [2018.578, 221952], [2018.83, 224976], [2019.082, 228000], [2019.326, 230928], [2019.578, 233952], [2019.83, 236976], [2020.082, 240000], [2020.328, 242952], [2020.579, 245964], [2020.828, 248952], [2021.077, 251940], [2021.326, 254928], [2021.575, 257916], [2021.825, 260916], [2022.082, 264000], [2022.323, 266892], [2022.573, 269892], [2022.83, 272976], [2023.082, 276000], [2023.321, 278868], [2023.578, 281952], [2023.83, 284976], [2024.082, 288000], [2024.328, 290952], [2024.579, 293964], [2024.831, 296988], [2025.082, 300000], [2025.326, 302928], [2025.578, 305952], [2025.83, 308976], [2026.079, 311964], [2026.326, 314928], [2026.556, 317688]], "dash": true}]}'>
+         <g class="rc-yaxis"></g><g class="rc-xaxis"></g>
+         <line class="rc-base" x1="70" y1="474" x2="784" y2="474"/><g class="rc-lines"></g></svg>
+     </div></div></div>
+   <div class="punch ed-item ed-html"><span class="win">매달 적립 $99만</span> 승 · 폭락 <span class="lose">$83만</span></div>
+   <div class="wm ed-item ed-html">📊 배투실 · 배당 백테스트</div>
+ </div></div></div>
+ <!-- 3) END 9:16 -->
+ <div class="page"><div class="stage"><div class="endp">
+   <svg class="elogo ed-item ed-html" viewBox="0 0 200 87.021"><path d="M79.231 86.977c-6.824-.367-11.916-3.175-14.894-8.213-1.998-3.382-2.606-7.83-1.692-12.375 1.013-5.036 4.452-9.574 9.73-12.838 3.033-1.877 5.629-3.042 10.915-4.9 1.329-.467 2.476-.897 2.55-.957.106-.084.121-.382.068-1.349-.152-2.751.307-7.037 1.084-10.13 1.307-5.205 3.822-9.404 7.16-11.951 2.396-1.83 5.537-3.206 8.664-3.796 1.727-.325 4.619-.324 6.244.003 6.963 1.402 10.871 6.769 9.332 12.816-.324 1.275-1.348 3.365-2.215 4.521-2.221 2.962-5.562 5.596-10.28 8.102-.593.316-2.535 1.27-4.314 2.122-1.779.851-3.29 1.604-3.36 1.674-.099.099-.074.388.118 1.36.885 4.494 2.373 8.291 4.914 12.537 1.01 1.69 2.407 3.821 2.566 3.92.23.142 1.17-1.377 1.783-2.88.758-1.86 1.192-4.32.978-5.542-.154-.875-.632-1.799-1.242-2.396-.28-.276-.512-.537-.513-.58-.001-.042 2.367-.066 5.264-.051l5.267.027-.03.668c-.041.913-.38 2.86-.737 4.246-1.007 3.897-2.905 7.23-6.186 10.87-.387.429-.704.85-.704.936 0 .086.544.683 1.208 1.327 4.147 4.02 11.493 8.656 17.474 11.027.581.231 1.055.466 1.053.522-.002.068-3.455.112-10.091.13l-10.088.026-.574-.323c-1.172-.659-3.767-2.756-6.26-5.06-.528-.488-1.028-.887-1.111-.887-.083 0-.67.341-1.302.758-3.239 2.136-7.11 4.055-10.384 5.147-3.724 1.243-6.798 1.683-10.395 1.49zm8.494-8.74c1.51-.269 3.365-.817 5.071-1.498 1.715-.684 3.841-1.73 3.917-1.928.03-.078-.363-.735-.872-1.461-2.347-3.344-4.854-8.047-6.539-12.265-.621-1.555-1.781-4.999-2.003-5.943-.07-.301-.197-.574-.282-.607-.235-.09-2.162.937-3.827 2.041-5.918 3.923-8.755 8.712-8.125 13.716.28 2.224.984 3.845 2.265 5.214 2.368 2.53 6.07 3.503 10.395 2.731zM97.77 43.441c2.19-1.282 5.664-4.395 7.607-6.815 2.487-3.097 3.809-5.987 3.81-8.331 0-1.34-.19-1.94-.81-2.56-.617-.616-1.313-.871-2.376-.872-3.154 0-6.565 3.744-8.051 8.838-.75 2.568-.932 3.95-.937 7.087-.004 2.396.035 2.929.215 2.929.039 0 .283-.124.542-.276zm52.163 43.476c-5.197-.523-8.622-1.3-12.486-2.83-5.258-2.084-8.541-4.665-11.314-8.894-.83-1.266-2.162-3.924-2.7-5.393-2.405-6.545-2.933-14.785-1.5-23.381 1.451-8.7 4.756-17.085 9.316-23.639 2.958-4.25 7.359-8.726 11.902-12.106 7.502-5.58 16.137-9.01 25.73-10.216 2.91-.366 4.54-.46 7.977-.458 5.199.003 9.159.399 14.388 1.438 3.336.664 8.65 2.098 8.752 2.363.052.134-3.315 10.925-3.454 11.07-.043.045-.56-.3-1.147-.77-4.729-3.77-9.63-6.065-14.586-6.828-1.583-.244-4.558-.247-6.11-.006-6.948 1.076-13.39 5.515-19.109 13.168-1.858 2.486-3.905 5.818-5.497 8.946-2.157 4.24-3.64 7.988-5.14 13-4.778 15.946-5.02 27.087-.72 33.118 1.771 2.485 4.36 4.068 7.645 4.673 1.886.348 6.464.137 6.92-.318.073-.072 2.308-7.065 4.966-15.54 4.368-13.921 4.84-15.491 4.89-16.28.066-1.06-.131-2.007-.608-2.919-.433-.829-1.577-1.954-2.52-2.477-.407-.226-.741-.446-.742-.488-.001-.042 7.327-.077 16.286-.077 8.958 0 16.288.035 16.287.077 0 .042-.397.259-.882.48-2.536 1.16-4.374 2.898-5.467 5.172-.237.492-2.287 6.86-5.366 16.666l-4.983 15.87-1.44.69c-5.865 2.815-13.04 4.842-20.197 5.707-1.315.16-7.99.293-9.09.182zM.004 85.757c-.033-.052.184-.235.481-.406 1.77-1.019 3.757-3.133 4.599-4.895.244-.51 22.587-71.67 23.08-73.509.087-.322.16-1.002.161-1.51.007-1.552-.475-2.671-1.61-3.745-.31-.293-.563-.576-.563-.629 0-.141 39.015-.129 40.804.013 3.874.307 7.752 1.337 10.718 2.845 5.064 2.575 8.096 6.483 9.028 11.636.26 1.434.31 4.624.097 6.168-.868 6.294-3.72 12.97-7.603 17.8-6.29 7.824-16.577 12.827-29.202 14.203-4.002.436-9.045.546-12.616.274-1.032-.079-1.898-.122-1.924-.096-.127.128-8.182 25.973-8.274 26.55-.284 1.779.632 3.779 2.211 4.827.312.207.54.42.508.472-.08.129-29.816.13-29.896.001zM44.29 47.37c2.933-.52 5.521-1.606 8.018-3.363 1.213-.853 3.705-3.342 4.733-4.727 2.572-3.463 4.464-7.549 5.99-12.931.972-3.43 1.386-6.043 1.385-8.736 0-2.076-.188-3.316-.71-4.707-.775-2.064-2.353-3.695-4.358-4.505-1.722-.696-3.192-.879-6.728-.838l-2.666.03-6.197 19.732C40.35 38.178 37.58 47.11 37.603 47.174c.024.064.452.172.95.24.5.068.977.14 1.062.161.388.095 3.842-.056 4.675-.204z" fill="#165eaa"/></svg>
+   <div class="e1 ed-item ed-html">꾸준함이 이겼습니다</div>
+   <div class="e2 ed-item ed-html">배당으로 은퇴하는 이야기<br>다음 종목도 이어집니다</div>
+   <div class="cta ed-item ed-html">구독하고 다음 편 보기 ▶</div>
+ </div></div></div>
+</div>
+<script>
+
+function reelAnim(root){
+  var svg=root.querySelector('.rc-chart'); if(!svg) return;
+  var cfg; try{ cfg=JSON.parse(svg.getAttribute('data-rc')); }catch(e){ return; }
+  var _vb=(svg.getAttribute('viewBox')||'0 0 960 540').split(/\s+/).map(Number),W=_vb[2],H=_vb[3],ML=64,MR=cfg.yleft?176:150,MT=H>700?170:150,MB=66,x0=2000,x1=2026.6,YMAX=cfg.ymax,SEQ=cfg.seq,YLX=cfg.yleft;
+  function X(y){return ML+(y-x0)/(x1-x0)*(W-ML-MR);}
+  function Y(v){return (H-MB)-v/YMAX*(H-MB-MT);}
+  function nstep(r){var e=Math.pow(10,Math.floor(Math.log10(r))),f=r/e;var n=f<=1?1:f<=2?2:f<=5?5:10;return n*e;}
+  function fmt(v){return '$'+(v/10000).toFixed(0)+'만';}
+  var NS='http://www.w3.org/2000/svg';
+  function mk(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  var ya=svg.querySelector('.rc-yaxis'),xa=svg.querySelector('.rc-xaxis'),lg=svg.querySelector('.rc-lines');
+  ya.innerHTML='';xa.innerHTML='';lg.innerHTML='';
+  var step=nstep(YMAX/4);
+  for(var v=step;v<=YMAX+1;v+=step){var y=Y(v);ya.appendChild(mk('line',{x1:ML,y1:y,x2:W-MR,y2:y,'class':'ytick'}));var t=mk('text',{x:YLX?ML-8:W-MR+8,y:y+4,'class':'rc-ax rc-al'});if(YLX)t.setAttribute('text-anchor','end');t.textContent=(v/10000)+'만';ya.appendChild(t);}
+  [2000,2005,2010,2015,2020,2025].forEach(function(yr){var t=mk('text',{x:X(yr),y:H-MB+22,'class':'rc-ax rc-axx'});t.textContent=(yr==2000?'2000':'’'+String(yr).slice(2));xa.appendChild(t);});
+  var _bs=svg.querySelector('.rc-base');if(_bs){_bs.setAttribute('y1',H-MB);_bs.setAttribute('y2',H-MB);_bs.setAttribute('x1',ML);_bs.setAttribute('x2',W-MR);}
+  var ELS=cfg.lines.map(function(l){
+    var g=mk('g',{'class':'ed-item ed-svg'});
+    var p=mk('path',{'class':'rc-ln'});p.style.stroke=l.c;if(l.dash)p.style.strokeDasharray='2 5';
+    var dot=mk('circle',{r:4.5});dot.style.fill=l.c;
+    var lab=mk('text',{'class':'rc-lab ed-item ed-svg '+(l.lab==='value'?'rc-labv':'rc-labn')});lab.style.fill=l.c;lab.style.fontSize=(l.lab==='value'?'21px':'13px');lab.style.fontWeight=(l.lab==='value'?900:800);
+    g.appendChild(p);g.appendChild(dot);g.appendChild(lab);lg.appendChild(g);
+    return {g:g,p:p,dot:dot,lab:lab,l:l};});
+  function partial(pts,prog){var n=pts.length,f=prog*(n-1),i=Math.floor(f),fr=f-i;if(i>=n-1){i=n-1;fr=0;}var cx=pts[i][0],cy=pts[i][1];if(i<n-1){cx=pts[i][0]+(pts[i+1][0]-pts[i][0])*fr;cy=pts[i][1]+(pts[i+1][1]-pts[i][1])*fr;}return {arr:pts.slice(0,i+1),ex:cx,ey:cy};}
+  var SEG={0:[0,0.46],1:[0.54,1]};
+  function draw(t){ELS.forEach(function(e){
+    var lp=t;if(SEQ&&e.l.phase!=null){var sg=SEG[e.l.phase]||[0,1];lp=(t-sg[0])/(sg[1]-sg[0]);if(lp<0)lp=0;if(lp>1)lp=1;}
+    var vis=!(SEQ&&e.l.phase!=null)||lp>0.0006;e.g.style.opacity=vis?1:0;if(!vis)return;
+    var r=partial(e.l.pts,lp);var dd='M'+r.arr.map(function(q){return X(q[0]).toFixed(1)+' '+Y(q[1]).toFixed(1);}).join(' L');var ex=X(r.ex),ey=Y(r.ey);
+    e.p.setAttribute('d',dd+' L'+ex.toFixed(1)+' '+ey.toFixed(1));e.dot.setAttribute('cx',ex);e.dot.setAttribute('cy',ey);
+    if(e.lab.dataset.edited)return;
+    var val=(lp>=1&&!e.l.surv)?e.l.end:fmt(r.ey);
+    e.lab.setAttribute('x',ex+10);e.lab.setAttribute('y',ey+(e.l.lab==='value'?6:4));
+    e.lab.textContent=(e.l.lab==='value')?val:(e.l.name+' ('+val+')');});}
+  var DUR=6000,start=null;
+  function run(ts){if(!svg.isConnected)return;if(!start)start=ts;var p=Math.min(1,(ts-start)/DUR);draw(p);if(p<1)requestAnimationFrame(run);}
+  draw(0);start=null;requestAnimationFrame(run);
+}
+
+
+var EDIT=false,sel=null,drag=null;
+function tagH(){document.querySelectorAll('.ed-html').forEach(function(el){el.classList.add('ed-item');});
+  ['.rc-title','.rc-tk','.rc-per','.rc-logo','.rc-lg'].forEach(function(s){document.querySelectorAll(s).forEach(function(el){el.classList.add('ed-item');});});}
+function curStage(){return document.querySelector('.page.on .stage')||document.querySelector('.stage');}
+function svgScale(el){var c=el.closest('.rc-chart');return c?c.getBoundingClientRect().width/960:1;}
+function isSvg(el){return el.classList.contains('ed-svg');}
+function selof(t){return t.closest('.ed-item');}
+function select(el){if(sel)sel.classList.remove('ed-sel');sel=el;if(sel)sel.classList.add('ed-sel');var db=document.getElementById('edDel');if(db)db.disabled=!sel;}
+function curXY(el){if(isSvg(el)){var m=(el.getAttribute('transform')||'').match(/translate\(([-\d.]+)[ ,]+([-\d.]+)\)/);return m?[+m[1],+m[2]]:[0,0];}var m=(el.style.transform||'').match(/translate\(([-\d.]+)px[ ,]+([-\d.]+)px\)/);return m?[+m[1],+m[2]]:[0,0];}
+function setXY(el,x,y){if(isSvg(el))el.setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+')');else el.style.transform='translate('+x+'px,'+y+'px)';}
+document.addEventListener('pointerdown',function(e){if(!EDIT)return;var el=selof(e.target);if(!el)return;e.preventDefault();select(el);var b=curXY(el),sc=isSvg(el)?svgScale(el):1;drag={el:el,sx:e.clientX,sy:e.clientY,bx:b[0],by:b[1],sc:sc};try{el.setPointerCapture(e.pointerId);}catch(_){}}); 
+document.addEventListener('pointermove',function(e){if(!drag)return;setXY(drag.el,drag.bx+(e.clientX-drag.sx)/drag.sc,drag.by+(e.clientY-drag.sy)/drag.sc);});
+document.addEventListener('pointerup',function(e){if(drag){try{drag.el.releasePointerCapture(e.pointerId);}catch(_){}}drag=null;});
+document.addEventListener('dblclick',function(e){if(!EDIT)return;var el=selof(e.target);if(!el)return;e.preventDefault();select(el);
+  if(isSvg(el)){var v=prompt('텍스트 수정',el.textContent);if(v!=null){el.textContent=v;el.dataset.edited='1';}}
+  else{el.setAttribute('contenteditable','true');el.focus();var fin=function(){el.removeAttribute('contenteditable');el.removeEventListener('blur',fin);};el.addEventListener('blur',fin);}});
+function delSel(){if(sel){sel.remove();sel=null;var db=document.getElementById('edDel');if(db)db.disabled=true;}}
+document.addEventListener('keydown',function(e){if(!EDIT||!sel)return;if((e.key==='Delete'||e.key==='Backspace')&&sel.getAttribute('contenteditable')!=='true'){e.preventDefault();delSel();}});
+
+
+var pages=[].slice.call(document.querySelectorAll('.page')),cur=0;
+function show(i){cur=Math.max(0,Math.min(pages.length-1,i));pages.forEach(function(p,k){p.classList.toggle('on',k===cur);});
+  document.querySelectorAll('.pdot').forEach(function(d,k){d.classList.toggle('act',k===cur);});
+  document.getElementById('rpl').style.visibility=(cur===1)?'visible':'hidden';
+  if(cur===1)requestAnimationFrame(function(){reelAnim(pages[1]);});}
+document.getElementById('prev').onclick=function(){show(cur-1);};
+document.getElementById('next').onclick=function(){show(cur+1);};
+document.addEventListener('keydown',function(e){if(e.target.getAttribute&&e.target.getAttribute('contenteditable')==='true')return;if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1);});
+document.getElementById('rpl').onclick=function(){reelAnim(pages[1]);};
+document.getElementById('edT').onclick=function(){EDIT=!EDIT;document.body.classList.toggle('editing',EDIT);this.textContent=EDIT?'✓ 편집 중':'✎ 편집';this.style.background=EDIT?'#ffd21f':'#2c3a52';this.style.color=EDIT?'#0a0f18':'#cfd8e6';document.getElementById('edDel').style.display=EDIT?'':'none';if(!EDIT)select(null);};
+document.getElementById('edDel').onclick=delSel;
+document.getElementById('imp').onclick=function(){document.getElementById('impf').click();};
+document.getElementById('impf').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var t=document.getElementById('thumbImg');t.style.backgroundImage='url('+r.result+')';t.classList.add('has');};r.readAsDataURL(f);e.target.value='';};
+tagH();show(0);
+
+</script></body></html>

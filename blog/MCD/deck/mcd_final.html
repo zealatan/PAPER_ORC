@@ -5096,7 +5096,7 @@ $('loadfile').addEventListener('change', e=>{
   r.readAsText(f);
 });
 applyTheme(); applyPaper();
-(document.fonts ? document.fonts.ready : Promise.resolve()).then(()=>requestAnimationFrame(()=>show(0)));
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(()=>requestAnimationFrame(()=>{var _q=new URLSearchParams(location.search),_p=parseInt(_q.get('page'),10),_n=(!isNaN(_p)&&_p>=1&&_p<=SCENES.length)?_p-1:0;show(_n);if(_q.get('edit')==='1'&&typeof enterEdit==='function')setTimeout(enterEdit,60);}));window.__pipelineSave=function(){var st=new URLSearchParams(location.search).get('stock')||'MCD';return fetch('/api/save-deck',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({stock:st,scenes:SCENES,ov:OV,cp:CP})}).then(function(r){return r.json()});};window.__pipelineReload=function(){try{localStorage.removeItem(KEY)}catch(e){}location.reload();};
 })();
 </script>
 

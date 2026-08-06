@@ -1,0 +1,5 @@
+out/
+*.mp4
+*.webm
+_*
+__pycache__/

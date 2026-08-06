@@ -1,0 +1,162 @@
+/**
+ * Canonical sample project (spec §38). Typed as {@link MotionProject} so the interface is
+ * checked at compile time; the identical JSON lives at `examples/ronald-read/project.motion.json`
+ * and a test asserts the two stay in sync.
+ */
+import type { MotionProject } from "../project/types";
+
+export const ronaldReadProject: MotionProject = {
+  schemaVersion: "1.0.0",
+  id: "project-example-001",
+  name: "Ronald Read Example",
+  createdAt: "2026-07-27T00:00:00.000Z",
+  updatedAt: "2026-07-27T00:00:00.000Z",
+  settings: {
+    width: 1080,
+    height: 1920,
+    fps: 30,
+    durationMode: "scenes",
+    backgroundColor: "#000000",
+    pixelRatio: 1,
+  },
+  theme: {
+    themeId: "finance-yellow",
+  },
+  variables: {
+    person_name: {
+      id: "person_name",
+      name: "Person Name",
+      type: "string",
+      value: "Ronald Read",
+    },
+    headline: {
+      id: "headline",
+      name: "Headline",
+      type: "string",
+      value: "아무도 그를 부자라고 생각하지 않았음.",
+    },
+  },
+  assets: [],
+  audioTracks: [],
+  scenes: [
+    {
+      id: "scene-1",
+      name: "Profile Introduction",
+      duration: 5,
+      background: {
+        type: "solid",
+        color: "#FFD000",
+      },
+      elements: [
+        {
+          id: "profile-card-1",
+          type: "profile-card",
+          name: "Profile Card",
+          visible: true,
+          locked: false,
+          transform: {
+            x: 140,
+            y: 600,
+            width: 800,
+            height: 300,
+            rotation: 0,
+            scaleX: 1,
+            scaleY: 1,
+            anchorX: 0.5,
+            anchorY: 0.5,
+            skewX: 0,
+            skewY: 0,
+            opacity: 1,
+            zIndex: 1,
+          },
+          style: {
+            backgroundColor: "#FFFFFF",
+            borderColor: "#111111",
+            borderWidth: 4,
+            borderRadius: 24,
+          },
+          props: {
+            title: "Ronald Read",
+            description: "평범한 직업으로 800만 달러를 모은 투자자",
+          },
+          timing: {
+            start: 0,
+            duration: 5,
+          },
+          animations: [
+            {
+              id: "animation-1",
+              kind: "preset",
+              target: "transform",
+              start: 0,
+              duration: 0.5,
+              presetId: "pop-in",
+              params: {
+                overshoot: 1.12,
+              },
+            },
+          ],
+          bindings: [
+            {
+              variableId: "person_name",
+              targetPath: "props.title",
+            },
+          ],
+        },
+        {
+          id: "caption-1",
+          type: "caption",
+          name: "Bottom Caption",
+          visible: true,
+          locked: false,
+          transform: {
+            x: 540,
+            y: 1720,
+            width: 900,
+            height: 100,
+            rotation: 0,
+            scaleX: 1,
+            scaleY: 1,
+            anchorX: 0.5,
+            anchorY: 0.5,
+            skewX: 0,
+            skewY: 0,
+            opacity: 1,
+            zIndex: 10,
+          },
+          style: {
+            backgroundColor: "#111111DD",
+            color: "#FFFFFF",
+            borderRadius: 12,
+          },
+          props: {
+            text: "아무도 그를 부자라고 생각하지 않았음.",
+            fontSize: 46,
+            fontWeight: 800,
+            textAlign: "center",
+          },
+          timing: {
+            start: 0,
+            duration: 5,
+          },
+          animations: [
+            {
+              id: "animation-2",
+              kind: "preset",
+              target: "opacity",
+              start: 0.2,
+              duration: 0.4,
+              presetId: "fade-in",
+            },
+          ],
+          bindings: [
+            {
+              variableId: "headline",
+              targetPath: "props.text",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};

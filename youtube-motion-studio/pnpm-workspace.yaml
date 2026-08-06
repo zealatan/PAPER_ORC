@@ -1,0 +1,12 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+  - "examples"
+  - "showcase"
+  - "scenarios"
+  - "ultimate"
+  - "journey"
+  - "hero"
+  - "oneshot"
+  - "impossible"
+  - "legend"

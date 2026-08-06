@@ -24,7 +24,12 @@ from .charts import (
 )
 from .config import LANDING_URL, TRIGGER_DEFAULT, get_market_rule
 from .dividend_reinvest import run_dividend_reinvest_backtest
-from .high_scanner import SCAN_THRESHOLD, filter_by_min_drop, scan_market
+from .high_scanner import (
+    SCAN_THRESHOLD,
+    filter_by_min_drop,
+    scan_market,
+    scan_market_breakout,
+)
 from .market_config import (
     MARKETS,
     AnalysisResult,
@@ -2082,6 +2087,46 @@ def render_market_ranking() -> None:
         )
 
 
+# ── 시총/총자산(AUM) 스냅샷 (data/asset_size.csv, build_asset_size.py로 미리 구축) ──
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def _load_asset_size() -> dict:
+    """{ticker: asset_size(float)} — 주식=시총, ETF=총자산. 없으면 빈 dict."""
+    from pathlib import Path
+    p = Path(__file__).resolve().parent.parent / "data" / "asset_size.csv"
+    if not p.exists():
+        return {}
+    try:
+        df = pd.read_csv(p)
+    except Exception:
+        return {}
+    out: dict = {}
+    for _, r in df.iterrows():
+        v = r.get("asset_size")
+        if pd.notna(v):
+            out[str(r["ticker"])] = float(v)
+    return out
+
+
+def _fmt_asset_size(value, currency_code: str = "USD") -> str:
+    """큰 금액을 통화별 축약 표기. KRW=조/억, 그 외=T/B/M. 없으면 '—'."""
+    if value is None or (isinstance(value, float) and pd.isna(value)) or float(value) <= 0:
+        return "—"
+    sym = {"USD": "$", "EUR": "€", "JPY": "¥", "KRW": "₩", "GBP": "£"}.get(currency_code, "")
+    v = float(value)
+    if currency_code == "KRW":
+        if v >= 1e12:
+            return f"{sym}{v / 1e12:,.1f}조"
+        return f"{sym}{v / 1e8:,.0f}억"
+    if v >= 1e12:
+        return f"{sym}{v / 1e12:,.2f}T"
+    if v >= 1e9:
+        return f"{sym}{v / 1e9:,.1f}B"
+    if v >= 1e6:
+        return f"{sym}{v / 1e6:,.0f}M"
+    return f"{sym}{v:,.0f}"
+
+
 # ── 전고점 대비 낙폭 스캐너 ──────────────────────────────────────────────────────
 
 def _drawdown_table_html(df: pd.DataFrame, currency_code: str = "USD") -> str:
@@ -2092,9 +2137,10 @@ def _drawdown_table_html(df: pd.DataFrame, currency_code: str = "USD") -> str:
     if df is None or df.empty:
         return ""
 
+    asset = _load_asset_size()
     header_cells = "".join(
         f"<th>{c}</th>"
-        for c in ["종목", "전고점 날짜", "전고점 가격", "현재 가격", "낙폭%"]
+        for c in ["종목", "시총/총자산", "전고점 날짜", "전고점 가격", "현재 가격", "낙폭%"]
     )
 
     rows_html = ""
@@ -2105,11 +2151,13 @@ def _drawdown_table_html(df: pd.DataFrame, currency_code: str = "USD") -> str:
             if pd.notna(row["high_date"]) else "-"
         high_price    = format_amount(row["high_price"], currency_code)
         current_price = format_amount(row["current_price"], currency_code)
+        size_str = _fmt_asset_size(asset.get(str(row["ticker"])), currency_code)
         dd = float(row["drawdown_pct"])
 
         rows_html += (
             f'<tr class="{row_class}">'
             f'<td style="text-align:left;">{row["label"]}</td>'
+            f'<td>{size_str}</td>'
             f'<td>{high_date}</td>'
             f'<td>{high_price}</td>'
             f'<td>{current_price}</td>'
@@ -2213,3 +2261,158 @@ def render_high_drawdown_tab(config: MarketConfig, inp: UserInput) -> None:
         f"스캔 완료: {len(df)}/{total_n}개 종목 데이터 확보 · "
         f"직전 전고점 판정 ZigZag 임계 {SCAN_THRESHOLD*100:.0f}%"
     )
+
+
+# ── 신고가 경신 스캐너 (상승) ────────────────────────────────────────────────────
+# 낙폭 스캐너의 정신적 거울: 이번 주 신고가를 경신한 종목(fresh 트리거)만 골라 장기
+# 수익률(payload) 순으로 보여준다. 신선도는 트리거에서, 극적 숫자는 장기수익률에서.
+
+_BREAKOUT_PERIODS = {"최근 5년": 5, "최근 10년": 10, "최근 3년": 3, "올해 (YTD)": "ytd"}
+_BREAKOUT_FRESH = {"이번 주 (5거래일)": 5, "최근 한 달 (20)": 20, "최근 분기 (60)": 60,
+                   "최근 1년 (252)": 252}
+
+
+def _breakout_period_start(end_date: "date", spec) -> "date":
+    """Resolve a period selector ('ytd' or an int # of years) to a start date."""
+    if spec == "ytd":
+        return date(end_date.year, 1, 1)
+    return (pd.Timestamp(end_date) - pd.DateOffset(years=int(spec))).date()
+
+
+def _breakout_table_html(df: pd.DataFrame, currency_code: str = "USD",
+                         period_label: str = "수익률") -> str:
+    """Render breakout scan results as a styled table.
+
+    Columns: 순위 · 종목 · 신고가 날짜 · 신고가 · 현재 가격 · 기간수익률%
+    """
+    if df is None or df.empty:
+        return ""
+
+    asset = _load_asset_size()
+    header_cells = "".join(
+        f"<th>{c}</th>"
+        for c in ["순위", "종목", "시총/총자산", "신고가 날짜", "신고가", "현재 가격",
+                  f"{period_label} 수익률%"]
+    )
+
+    rows_html = ""
+    for i, (_, row) in enumerate(df.iterrows()):
+        row_class = "row-alt" if i % 2 == 0 else "row-neutral"
+        high_date = pd.Timestamp(row["high_date"]).strftime("%Y-%m-%d") \
+            if pd.notna(row["high_date"]) else "-"
+        high_price    = format_amount(row["high_price"], currency_code)
+        current_price = format_amount(row["current_price"], currency_code)
+        size_str = _fmt_asset_size(asset.get(str(row["ticker"])), currency_code)
+        ret = float(row["return_pct"])
+
+        rows_html += (
+            f'<tr class="{row_class}">'
+            f'<td>{i + 1}</td>'
+            f'<td style="text-align:left;">{row["label"]}</td>'
+            f'<td>{size_str}</td>'
+            f'<td>{high_date}</td>'
+            f'<td>{high_price}</td>'
+            f'<td>{current_price}</td>'
+            f'<td class="close-up"><b>+{ret:.1f}%</b></td>'
+            f'</tr>'
+        )
+
+    return (
+        f'<div class="premium-table-wrap">'
+        f'<table class="premium-table">'
+        f'<thead><tr>{header_cells}</tr></thead>'
+        f'<tbody>{rows_html}</tbody>'
+        f'</table></div>'
+    )
+
+
+def render_breakout_scanner_tab(config: MarketConfig, inp: UserInput) -> None:
+    """Scan every ticker for those that set a fresh 52-week/all-time high this
+    week, ranked by their long-term return (신고가 경신 + 장기수익 payload)."""
+    currency_code = get_market_rule(config.key)["currency"]
+    tickers = config.tickers or {}
+    total_n = len(tickers)
+
+    st.markdown(
+        '<div class="recent-title">신고가 경신 스캐너 (상승)</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        f"{config.name} 종목 {total_n}개 중 최근 신고가를 경신한 종목을 골라 "
+        f"장기 수익률 순으로 보여줍니다."
+    )
+
+    if total_n == 0:
+        st.warning("이 마켓에 스캔할 종목이 없습니다.")
+        return
+
+    # 2열 × 2행 배치 (모바일에서 4개 한 줄이면 라벨이 잘림).
+    r1c1, r1c2 = st.columns(2)
+    period_name = r1c1.selectbox("수익률 기간", list(_BREAKOUT_PERIODS.keys()),
+                                 key=f"bo_period::{config.key}")
+    fresh_name = r1c2.selectbox("신고가 신선도", list(_BREAKOUT_FRESH.keys()),
+                                key=f"bo_fresh::{config.key}")
+    r2c1, _r2c2 = st.columns(2)
+    top_n = r2c1.selectbox("표시 개수", [20, 30, 50, 10],
+                           key=f"bo_topn::{config.key}")
+
+    period_spec = _BREAKOUT_PERIODS[period_name]
+    fresh_days = _BREAKOUT_FRESH[fresh_name]
+    high_lookback = 252   # 상승 스캐너는 52주 신고가로 한정
+    period_start = _breakout_period_start(inp.end_date, period_spec)
+    # 다운로드 시작: 선택 기간과 52주 창을 모두 커버하도록 넉넉히 앞당김.
+    dl_start = min(
+        inp.start_date, period_start,
+        (pd.Timestamp(inp.end_date) - pd.DateOffset(days=420)).date(),
+    )
+
+    state_key = f"bo_scan::{config.key}"
+
+    if st.button(f"🚀 신고가 스캔 ({total_n}개)", key=f"bo_btn::{config.key}"):
+        progress = st.progress(0.0)
+        status = st.empty()
+
+        def _cb(done: int, total: int, label: str) -> None:
+            progress.progress(done / total if total else 1.0)
+            status.markdown(f"스캔 중… **{done}/{total}**  ·  {label}")
+
+        df = scan_market_breakout(
+            tickers, dl_start, inp.end_date, period_start,
+            high_lookback_days=high_lookback, fresh_days=fresh_days,
+            progress_cb=_cb,
+        )
+        progress.empty()
+        status.empty()
+        st.session_state[state_key] = {
+            "df": df, "end": inp.end_date,
+            "period": period_name, "fresh": fresh_name,
+        }
+
+    cached = st.session_state.get(state_key)
+    if cached is None:
+        st.info("‘신고가 스캔’ 버튼을 눌러 분석을 시작하세요. "
+                "(종목 수에 따라 수십 초 걸릴 수 있어요.)")
+        return
+
+    df = cached["df"]
+    st.caption(
+        f"기준: 52주 신고가 · 신선도 {cached['fresh']} · {cached['period']} 수익률 "
+        f"· (종료일 {cached['end']})"
+    )
+    if df is None or df.empty:
+        st.warning("조건을 만족하는 신고가 종목이 없습니다. "
+                   "‘신선도’를 넓히거나 ‘사상 최고가→52주 신고가’로 바꿔보세요.")
+        return
+
+    period_label = cached["period"].replace("최근 ", "").replace("올해 (YTD)", "YTD")
+    st.markdown(
+        f'<div class="snapshot-col-label" style="margin-top:1.2rem;">'
+        f'신고가 경신 · {period_label} 수익률 TOP '
+        f'<span style="opacity:.55;">({min(top_n, len(df))}/{len(df)}종목)</span></div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        _breakout_table_html(df.head(top_n), currency_code, period_label),
+        unsafe_allow_html=True,
+    )
+    st.caption(f"스캔 완료: 신고가 경신 {len(df)}종목 확보 · 장기수익률 내림차순")

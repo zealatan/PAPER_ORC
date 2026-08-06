@@ -1,0 +1,140 @@
+# 몽생미셸 — 22 프롬프트 v3 (레퍼런스 정합 · 하이브리드 설계도룩)
+# 시그니처=부유 디오라마(diorama-anatomy.html). 각 샷 = PLATE(AI생성·글자0) + OVERLAY(후반 설계도 주석+정확수치). 글자/치수선/숫자는 절대 AI에 안 넣음.
+#
+# ── FACT PACK (검증본) ──
+#  연결교_물위_m: 760
+#  연결교_접속둑길_m: 1085
+#  착지플랫폼_m: 120
+#  기둥_개: 134
+#  기둥_높이_m: 12
+#  연결교_개통: 2014.7(보행)·2014.12(셔틀)
+#  설계: Dietmar Feichtinger
+#  댐: 쿠에농강 하구 가역식(reversible) 댐, 수문 8개, 2009 가동
+#  수문_개: 8
+#  저장_m3: 7만~170만(조석·계절)
+#  방류_최대_m3s: 100
+#  방류_타이밍: 만조 6시간 후, 20분 내 최대유량
+#  상류저수: Moidrey Cove(5km 상류)
+#  옛제방: 1879 digue-route(제방도로)가 조수 세척 차단→퇴적, 2015 철거
+#  조차_m: 14
+#  총사업비: 약 1억8,400만~2억 유로(≈2천억 원)
+#  목표: 몽생미셸 해양성 회복 — 다시 섬으로
+#  출처: en.wikipedia.org/wiki/Mont-Saint-Michel, projetmontsaintmichel.com, archello.com Feichtinger bridge, archdaily.com jetty, dezeen.com 2014
+#
+# ── STYLE 앵커 ──
+# [실사] = photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated AgX grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette, no on-screen text, no numbers, no labels, no watermark.
+# [디오라마] = signature floating-diorama miniature: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), only the top surface detailed, a soft blurred contact shadow floating below with a clear gap to the dark background, 45-degree key sun plus soft HDRI fill, faint volumetric haze and ambient occlusion, slow orbit on a 50-85mm lens with shallow depth of field and micro handheld drift, photorealistic miniature render, muted desaturated AgX grade, vertical 9:16, no on-screen text, no numbers, no dimension lines, no labels, no watermark.
+# [청사진] = aged archival engineering blueprint aesthetic, sepia and warm dark tones, weathered cracked paper, subtle drafting linework, museum archival lighting, faint dust motes, vertical 9:16, no rendered numbers, no on-screen text, no watermark.
+# SUBJECT_ANCHOR = Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby.
+# ── OVERLAY 어휘(후반): 빨강/시안 치수선(양끝화살표+연장선)·지시선→콜아웃·글로우 흐름선·라벨·✦·카운트업 ──
+
+### 01 [hook] 3s · cut · 실사
+  대본: 여기, 섬으로 들어가는 다리가 하나 있습니다.
+  PLATE: [실사] high cinematic aerial approach along a slender modern stilted footbridge on thin pillars crossing vast wet tidal sand flats toward a distant conical rocky island crowned by a medieval abbey and spire, soft silver morning light, thin sheets of shallow water mirroring the sky, generous empty sky at top. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow forward aerial glide along the bridge toward the island; faint reflections, drifting clouds. One continuous ~3s shot.
+  OVERLAY(후반): 자막 "섬으로 들어가는 다리" · 그래픽 -(훅은 깨끗하게)
+
+### 02 [hook] 3s · cont · 실사
+  대본: 그런데 이 다리, 섬에 들어가려고 만든 게 아닙니다.
+  PLATE: [실사] lower aerial tracking just above the bridge deck as a few tiny visitors walk toward the mount, the bridge revealed as a thin line barely touching the water, wet sand stretching to the horizon on both sides, the abbey growing ahead. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: continue the low forward glide over the deck toward the mount. One continuous ~3s shot.
+  OVERLAY(후반): 자막 "만든 게 아닙니다" · 그래픽 -
+
+### 03 [subject] 4s · cut · 실사
+  대본: 프랑스 몽생미셸. 바다 위에 뜬 수도원 섬이죠.
+  PLATE: [실사] sweeping aerial orbit of the full conical island rising from the tidal flats, medieval ramparts and stone houses spiralling up to the abbey spire, shallow water and sand all around, luminous overcast sky reserved for a title. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow smooth aerial orbit around the island. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "프랑스 몽생미셸(대형 타이틀)" · 그래픽 ✦ 시그니처
+
+### 04 [subject] 4s · cut · 실사
+  대본: 이 다리는 섬을, 다시 섬으로 만들기 위해 놓였습니다.
+  PLATE: [실사] cinematic wide of the island and the thin bridge together seen from a low side angle just over the water, the bridge clearly not reaching solid land but hovering over the estuary, emphasis on water passing freely beneath it, calm silver light. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow lateral drift revealing the water flowing under the whole length of the bridge. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "섬을, 다시 섬으로" · 그래픽 지시선 '물이 아래로 통과'
+
+### 05 [scale] 3s · cont · 실사
+  대본: 새 연결교는 물 위 구간만 760m, 12m 기둥 134개가 받칩니다.
+  PLATE: [실사] high aerial of the full bridge stretching from the mainland toward the island across the flats, its many slender pillars marching in a single line, clean uncluttered composition with empty sky reserved for a large number and a full-length dimension line. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: steady high aerial gliding along the bridge's full length; gentle cloud drift. One continuous ~3s shot.
+  OVERLAY(후반): 자막 "물 위 760 m" · 그래픽 빨강 전장 치수선→콜아웃 '760 m' 카운트업 · 라벨 '기둥 134개 · 높이 12 m'
+
+### 06 [cause] 4s · cut · 디오라마
+  대본: 원래 여기엔 1879년에 만든 제방도로가 있었습니다.
+  PLATE: [디오라마] top-down view of a floating tidal-flat slab: a solid earthen embankment causeway runs dead-straight across the estuary to the island like a low wall, calm water on one side, exposed sediment strata on the slab's flat cut-sides. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: very slow rotate settling toward top-down; slab perfectly rigid. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "1879년 제방도로" · 그래픽 라벨 '1879 제방도로(둑길)' · 빨강 차단 마커(둑이 물길을 막음)
+
+### 07 [cause] 4s · cut · 디오라마
+  대본: 흙으로 바다를 가로막은 둑길이라, 조수가 드나들지 못했죠.
+  PLATE: [디오라마] clean cross-section cutaway through a floating estuary slab: the solid earthen causeway acting as a dam wall, the tide unable to pass beneath it, still water piling on one side, the boolean-carved section faces showing crisp sediment strata bands, cool even studio light. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: very slow push toward the section; only faint water shimmer; structure rigid. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "드나들지 못했죠" · 그래픽 빨강 X(조수 차단) · 파랑 정체 수위선 · 화살표 '물살 막힘'
+
+### 08 [fail] 4s · cut · 디오라마
+  대본: 물살이 막히자, 강과 바다가 실어온 모래가 계속 쌓였습니다.
+  PLATE: [디오라마] top-down floating slab of the estuary around a small conical island, sediment and sand visibly accumulating and creeping outward from the blocked causeway, the sand flats thickening, strata on the cut sides. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: very slow rotate; subtle sediment-growth feel; rigid. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "모래가 계속 쌓였습니다" · 그래픽 노랑 퇴적 확장 화살표 · 라벨 '퇴적물 축적'
+
+### 09 [fail] 3s · cut · 실사
+  대본: 몽생미셸은 점점 갯벌에 묻혀, 육지와 붙을 위기였죠.
+  PLATE: [실사] wide low shot across vast grey-brown mudflats and drying sand almost engulfing the base of the rocky island, sparse channels of shallow water, the mount looking stranded on land, muted overcast light. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow push toward the silted-in base of the island; faint mist. One continuous ~3s shot.
+  OVERLAY(후반): 자막 "육지와 붙을 위기" · 그래픽 빨강 경고 라인(육지화 위기)
+
+### 10 [fail] 4s · cut · 실사
+  대본: 그럼 쌓인 모래를 계속 파내면 되지 않냐고요?
+  PLATE: [실사] a working dredger and excavator scooping wet sand from a channel beside the island, piles of dredged sediment, industrial and effortful, grey utilitarian palette. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow push on the dredger scooping sand; dripping mud. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "파내면 되지 않냐고요?" · 그래픽 라벨 '준설(모래 파내기)'
+
+### 11 [fail] 4s · cut · 디오라마
+  대본: 조류와 강물이 또 실어 나르니, 파내도 끝이 없었습니다.
+  PLATE: [디오라마] isometric floating estuary diorama showing a loop: sand scooped out of a channel, then the incoming tide and the river carrying fresh sediment straight back into the same channel, a visual cycle, strata on the slab sides. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow isometric rotation of the diorama; rigid. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "파내도 끝이 없었습니다" · 그래픽 빨강 순환 화살표(파냄→조류·강물 재퇴적) · 라벨 '조류 · 쿠에농강'
+
+### 12 [flip] 4s · cut · 디오라마
+  대본: 그래서 발상을 뒤집습니다. 모래를 퍼내지 말고, 물로 밀어내기로.
+  PLATE: [디오라마] a floating slab of the estuary; instead of sand being scooped out, a surge of stored water is released and sweeps the sediment away down both sides of the island toward the sea, clean solid diorama, strata on the sides, dark void background. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow orbit revealing the water-driven flush past the island; rigid. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "물로 밀어내기로" · 그래픽 시안 청사진 그리드 · 화살표 '모래 퍼냄 ✕ → 물살로 밀어냄 ○' · 자막 '발상을 뒤집습니다'
+
+### 13 [solution] 4s · cut · 디오라마
+  대본: 쿠에농 강 하구에 수문 8개짜리 댐을 세웠습니다.
+  PLATE: [디오라마] isometric cutaway of a low modern dam across the mouth of a canalised river, a row of eight sluice gates set into it, water on both sides, exposed concrete structure and sediment strata beneath in section, clean studio daylight. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow forward push on the dam; the gates crisp; rigid. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "수문 8개짜리 댐" · 그래픽 콜아웃 '쿠에농강 댐 · 수문 8' · 라벨 '가역식(reversible)'
+
+### 14 [solution] 4s · cut · 디오라마
+  대본: 밀물 때 바닷물과 강물을 가둬 두고,
+  PLATE: [디오라마] isometric diorama of the dam at high tide, the eight sluice gates holding back a rising body of seawater and river water pooling behind the dam, water level climbing, calm surface, strata on the slab sides. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: water rising and pooling behind the closed gates; slow push; rigid. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "밀물 때 물을 가둬 두고" · 그래픽 파랑 상승 수위선 · 화살표 '저장' · 라벨 '만조'
+
+### 15 [solution] 4s · cont · 디오라마
+  대본: 썰물 때 수문을 열어 한꺼번에 쏟아냅니다.
+  PLATE: [디오라마] isometric diorama of the same dam at low tide, the eight sluice gates opening and a powerful sheet of water pouring out downstream all at once, churning release, dynamic flow, strata on the sides. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: gates open and water surges out downstream; strong flow; slow push. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "한꺼번에 쏟아냅니다" · 그래픽 시안 방류 화살표(강한 물살) · 라벨 '썰물 · 방류'
+
+### 16 [solution] 4s · cut · 실사
+  대본: 그 물살이 섬 양옆으로 흐르며 쌓인 모래를 바다로 밀어내죠.
+  PLATE: [실사] aerial of a strong released current racing down both sides of the rocky island across the sand flats, visibly carrying and pushing sediment out toward the open sea, dynamic water streaks, silver light. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow high aerial tracking the flush current sweeping past the island toward the sea. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "바다로 밀어내죠" · 그래픽 시안 흐름선(섬 양옆) · 화살표 '퇴적물 → 바다'
+
+### 17 [scale] 4s · cut · 디오라마
+  대본: 대조 때는 최대 170만㎥의 물을 가뒀다 초당 100톤씩 방류합니다.
+  PLATE: [디오라마] isometric exploded scale study floating in a dark void: a giant labeled block of stored water beside the dam model with a bold flow arrow, neutral grey studio, clean space reserved for big numbers. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow rotation of the scale blocks; minimal, clean. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "-" · 그래픽 콜아웃 '최대 저장 170만 ㎥' · '방류 100 ㎥/s' · 보조 '만조 6시간 후'
+
+### 18 [solution] 4s · cut · 실사
+  대본: 그리고 물을 막던 옛 제방도로는 걷어내고,
+  PLATE: [실사] time-lapse-feel aerial of the old earthen causeway being demolished and removed, machinery peeling back the embankment so open water reclaims the line where the wall stood, overcast working light. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow forward aerial push over the demolition; the water line reopening; clouds drift. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "옛 제방도로는 걷어내고" · 그래픽 라벨 '1879 둑길 철거(2015)' · 파랑 '물길 복원'
+
+### 19 [solution] 4s · cont · 실사
+  대본: 조수가 아래로 지나갈 수 있는 다리로 바꿨습니다.
+  PLATE: [실사] cinematic low aerial along the new slender stilted bridge with the tide flowing freely underneath between the thin pillars, water passing where the wall once blocked it, bright reflective water. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: low glide along the bridge; water streaming under the pillars. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "다리로 바꿨습니다" · 그래픽 시안 화살표 '조수 자유 통과' · 기둥 간격 라벨
+
+### 20 [scale] 4s · cut · 디오라마
+  대본: 여기에 든 돈, 약 2천억 원.
+  PLATE: [디오라마] isometric exploded cost study floating in a dark void: the bridge and dam models beside a clean panel reserved for a large cost figure, neutral grey studio. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow rotation of the blocks; clean. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "약 2천억 원" · 그래픽 콜아웃 '총사업비 ≈ €1억8,400만 (약 2천억 원)' · 빨강 지시선
+
+### 21 [end] 4s · cut · 실사
+  대본: 이제 큰 밀물이 들면, 다리는 잠기고 몽생미셸은 완전히 바다에 둘러싸입니다.
+  PLATE: [실사] dramatic aerial at a great spring high tide: the sea has risen around the island so it is fully surrounded by water, the low bridge partly awash, the mount standing alone as a true island again, luminous light. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow aerial orbit as the high tide encircles the island; the bridge awash. One continuous ~4s shot.
+  OVERLAY(후반): 자막 "완전히 바다에 둘러싸입니다" · 그래픽 파랑 상승 조위선 · 라벨 '대조 만조 ~14 m'
+
+### 22 [end] 6s · cut · 실사
+  대본: 섬을 다시 섬으로. 몽생미셸은 이렇게 되살아났습니다.
+  PLATE: [실사] majestic golden-hour aerial orbit of Mont-Saint-Michel fully ringed by shimmering water at high tide, the thin bridge a delicate line, the abbey spire catching warm light, grand hero composition, sky reserved for a closing title. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: slow majestic aerial orbit at golden hour; warm light, shimmering encircling water. One continuous ~6s shot.
+  OVERLAY(후반): 자막 "섬을 다시 섬으로 | 이렇게 되살아났습니다" · 그래픽 요약칩 '연결교 760 m · 조차 14 m · 다시 섬' · ✦ 시그니처
+

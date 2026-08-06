@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 200" role="img" aria-label="P&amp;G">
+  <defs>
+    <linearGradient id="pgblue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1479d1"/>
+      <stop offset="1" stop-color="#004a99"/>
+    </linearGradient>
+  </defs>
+  <text x="170" y="150" text-anchor="middle" textLength="300" lengthAdjust="spacingAndGlyphs"
+        font-family="'Arial Black', Arial, Helvetica, sans-serif" font-weight="900"
+        font-size="160" fill="url(#pgblue)" stroke="#003064" stroke-width="2">P&amp;G</text>
+</svg>

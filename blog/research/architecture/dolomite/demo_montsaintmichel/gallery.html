@@ -1,0 +1,327 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>몽생미셸 — 프롬프트 갤러리 (t2v)</title><style>
+:root{--bg:#16181d;--panel:#1e2127;--line:#2b2f37;--ink:#e6e8ec;--mute:#8b919c;--amber:#e8a33d;--green:#8fd06f;--cyan:#3fb6c4;--dyn:#ff7ac0}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:Pretendard,"Malgun Gothic",sans-serif;margin:0;padding:22px}
+.wrap{max-width:1400px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}.sub{color:var(--mute);font-size:13px;margin:0 0 14px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.c{background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden;display:flex;flex-direction:column}
+.c.dyn{border-color:#ff7ac077;box-shadow:0 0 0 1px #ff7ac033}
+.slot{position:relative;aspect-ratio:9/16;background:#0e1013;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.slot.dyn{background:#1a0f16}
+.slot img,.slot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.slot.empty img{display:none}
+.slot .rm{position:absolute;top:6px;right:6px;z-index:3;background:#000a;color:#fff;border:none;border-radius:5px;padding:2px 7px;font-size:12px;cursor:pointer;display:none}.slot.filled .rm{display:block}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+.bar .save{background:#173a2a;color:#8fd06f;border:1px solid #2f6b48;border-radius:7px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer}.bar .save:hover{background:#1d4a35}
+.barhint{color:var(--mute);font-size:12px}.barhint code{background:#0f1418;border:1px solid #223040;border-radius:4px;padding:1px 5px;color:#cfe0ea;font-size:11px}
+.slot .ph{color:#5a616c;font-size:12px;text-align:center;font-family:ui-monospace}.slot .ph span{color:#3a4048}
+.slot input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.meta{padding:11px 13px 13px}.hd{font-family:ui-monospace;font-size:12px;color:var(--mute);display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.hd b{color:var(--amber);font-size:14px}.role{color:#b48be6}.tr{color:#e4685c}.cls{border:1px solid;border-radius:5px;padding:0 6px;font-size:11px}.dur{margin-left:auto}
+.dyn{color:var(--dyn)}.hd .dyn{border:1px solid #ff7ac055;border-radius:5px;padding:0 6px;font-size:10.5px}
+.kr{font-size:13px;margin:7px 0}
+.ov{font-size:11px;color:#d6e2c9;background:#12160f;border:1px solid #2c3a22;border-left:2px solid var(--cyan);border-radius:5px;padding:6px 8px;margin-bottom:8px;line-height:1.5}.ov b{color:var(--cyan)}
+.c.dyn .ov{border-left-color:var(--dyn)}.c.dyn .ov b{color:var(--dyn)}
+button{background:#20242c;color:var(--cyan);border:1px solid #2f4557;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer}button:hover{background:#263041}
+code.p{display:block;font-family:ui-monospace;font-size:10.4px;line-height:1.5;color:#cfe0ea;background:#0f1418;border:1px solid #223040;border-radius:6px;padding:8px 10px;white-space:pre-wrap;margin-top:8px;max-height:180px;overflow:auto}
+</style></head><body><div class="wrap">
+<h1>몽생미셸 — 프롬프트 갤러리 <span style="color:var(--cyan)">t2v</span> (23컷 · 93초)</h1>
+<p class="sub"><span class="dyn">⚡ DYNAMIC 5컷</span>(씬 6·12·15·16·21) = 전경 반복 탈피, macro·다이브·360오빗·외벽클라임·휘프업. 나머지는 baked. 프롬프트 복사→t2v(Veo/Kling)→슬롯 드롭.</p>
+<div class="bar"><button class="save" onclick="saveFolder()">📁 images 폴더에 바로 저장</button><button class="save" onclick="saveDownload()">⬇️ shotNN 전부 다운로드</button><span class="barhint">저장 규칙 <code>images/shot01.mp4</code> · 다음에 열면 자동으로 불러옵니다</span></div>
+<div class="grid"><article class="c ">
+<div class="slot empty "><div class="ph">#01 · hook · 0s→3s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>01</b> <span class="role">hook</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">0s→3s</span></div>
+<p class="kr">여기, 섬으로 들어가는 다리가 하나 있습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. a low near-water dawn shot looking straight along a slender stilted footbridge as it recedes toward a distant conical rocky island crowned by an abbey spire, wet sand and mirror-like shallow water in the foreground, low mist drifting over the flats, moody silver-blue light, cinematic anamorphic feel. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a slow low tracking drift just above the water toward the bridge and distant island, creeping mist, calm and moody One continuous ~3-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#02 · hook · 3s→6s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>02</b> <span class="role">hook</span> <span class="tr">cont</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">3s→6s</span></div>
+<p class="kr">그런데 이 다리, 섬에 들어가려고 만든 게 아닙니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. an eye-level first-person view walking forward on the bridge deck itself, the modern timber-and-steel walkway and slim railings leading straight ahead, a couple of visitors as silhouettes, the medieval abbey growing larger at the far end, wide bright sky. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a steady first-person forward walk along the deck toward the abbey, gentle and observational One continuous ~3-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#03 · subject · 6s→10s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>03</b> <span class="role">subject</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">6s→10s</span></div>
+<p class="kr">프랑스 몽생미셸. 바다 위에 뜬 수도원 섬이죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. a dramatic low-angle hero shot from down on the sand looking steeply up at the island, weathered ramparts and stacked stone houses rising to the tall gothic abbey spire that towers against a bright luminous sky, birds circling. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a slow graceful tilt-up (crane) from the sand rising to the abbey spire, majestic and unhurried One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#04 · subject · 10s→14s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>04</b> <span class="role">subject</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">10s→14s</span></div>
+<p class="kr">이 다리는 섬을, 다시 섬으로 만들기 위해 놓였습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>thin cyan arrows pointing to the open water gap beneath the bridge (no text)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. a clean straight-down top-down bird&#x27;s-eye aerial of the thin bridge line meeting the round island, estuary water and rippled sand patterns fanning out, the bridge casting a slim shadow, graphic and minimal, water clearly running beneath the deck. Rendered numeric annotations in the image: thin cyan arrows pointing to the open water gap beneath the bridge (no text). SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a slow overhead lateral glide across the bridge-island junction, then a gentle hold One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#05 · scale · 14s→17s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>05</b> <span class="role">scale</span> <span class="tr">cont</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">14s→17s</span></div>
+<p class="kr">새 연결교는 물 위 구간만 760미터. 축구장 일곱 개를 이어 붙인 길이입니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a bold red dimension line that rapidly draws itself on across the whole bridge with a callout counting up to &quot;760 m&quot;, and — as a DYNAMIC to-scale comparison — seven green football pitches that drop and stamp down one after another in quick succession along the bridge while a counter ticks up to &quot;x7&quot;</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. high aerial of the full bridge stretching from the mainland toward the island across the flats, its many slender pillars marching in a single line, clean uncluttered composition with open sky. Rendered numeric annotations in the image: a bold red dimension line that rapidly draws itself on across the whole bridge with a callout counting up to &quot;760 m&quot;, and — as a DYNAMIC to-scale comparison — seven green football pitches that drop and stamp down one after another in quick succession along the bridge while a counter ticks up to &quot;x7&quot;. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a fast dolly pull-back (ZOOM OUT) snapping the whole 760 m bridge into frame — energetic reveal One continuous ~3-second shot.</code>
+</div></article>
+<article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#06 · cause · 17s→21s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>06</b> <span class="role">cause</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span> <span class="dyn">⚡ 360° 드론 오빗</span> <span class="dur">17s→21s</span></div>
+<p class="kr">원래 여기엔 1879년에 만든 제방도로가 있었습니다.</p>
+<div class="ov"><b>카메라/효과</b><br>360° 드론 오빗</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage, muted desaturated color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. HIGH-ENERGY construction time-lapse, dynamic assembly. Across the wet tidal sand flats, thousands of rough grey stones and heaps of dark earth rapidly STACK and ASSEMBLE themselves piece by piece, layer on layer, rising into a long dead-straight raised embankment causeway that runs out to the rocky island of Mont-Saint-Michel like a solid wall, sealing off the tide on one side; flying dust, tumbling stones, kinetic building motion. Camera: a fast FULL 360-DEGREE drone ORBIT circling the causeway as it stacks up and completes. a small bold &quot;1879&quot; marker. One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#07 · cause · 21s→25s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>07</b> <span class="role">cause</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span>  <span class="dur">21s→25s</span></div>
+<p class="kr">흙으로 바다를 가로막은 둑길이라, 조수가 드나들지 못했죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a large red X over the blocked tide and a blue static water-level line (no words)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), a low angled key sun with soft fill light, faint volumetric haze and ambient occlusion, slow orbit with a portrait telephoto look and shallow depth of field, photorealistic miniature render, muted desaturated cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp, legible rendered annotations: thin cyan and red dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes, faint blueprint grid accents. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. clean cross-section cutaway through a floating estuary slab: the solid earthen causeway acting as a dam wall, the tide unable to pass beneath it, still water piling on one side, the boolean-carved section faces showing crisp sediment strata bands, cool even studio light. Rendered numeric annotations in the image: a large red X over the blocked tide and a blue static water-level line (no words). SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a slow lateral truck across the cross-section, gentle parallax on the strata One continuous ~4-second shot.</code>
+</div></article>
+<article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#08 · fail · 25s→29s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>08</b> <span class="role">fail</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 가속 타임랩스 + 섬으로 휘프전환</span> <span class="dur">25s→29s</span></div>
+<p class="kr">물살이 막히자, 강과 바다가 실어온 모래가 계속 쌓였습니다.</p>
+<div class="ov"><b>카메라/효과</b><br>가속 타임랩스 — 모래·펄이 급속 퇴적·확산 / 노란 퇴적 화살표·상승 게이지 / 섬 기저부로 휘프 전환</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic aerial footage, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. HIGH-ENERGY accelerated TIME-LAPSE at real geographic scale — NOT a miniature, NOT a diorama, NOT a cutaway. A vast real expanse of tidal flats around the base of Mont-Saint-Michel: with the causeway blocking the flow, thick surges of grey-brown sand and silt sweep IN from the river channel and the open sea and visibly PILE UP, THICKEN and SPREAD in fast motion, sandbanks bulging and creeping outward across the whole estuary, shallow water channels choking and vanishing under the rising sediment, streaming dust and sand racing across the flats; dramatic, kinetic, epic scale. Composited documentary motion-graphics: bold yellow accretion arrows sweeping and multiplying outward across the flats and a rising fill-level gauge climbing; any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 1.7M m3), never words, sentences or titles. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water. Camera: a fast sweeping aerial that races low over the accreting sand flats then WHIP-PANS toward the silted base of the island as a hard transition into the next shot. One continuous ~4-second shot.</code>
+</div></article>
+<article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#09 · fail · 29s→32s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>09</b> <span class="role">fail</span> <span class="tr">cont</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 갯벌 봉합 + 슬램 줌인</span> <span class="dur">29s→32s</span></div>
+<p class="kr">몽생미셸은 점점 갯벌에 묻혀, 육지와 붙을 위기였죠.</p>
+<div class="ov"><b>카메라/효과</b><br>가속 타임랩스 — 갯벌이 섬 기저부를 삼키고 육지와 봉합 / 붉은 경계선·줄어드는 갭 브래킷(→0) / 슬램 줌인</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic aerial footage, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. DYNAMIC accelerated TIME-LAPSE at real geographic scale — NOT a static wide vista, NOT a miniature or diorama. Continuing straight from an incoming whip-pan: a high aerial over Mont-Saint-Michel as vast grey-brown mudflats and drying sand rapidly ADVANCE and CREEP up around the base of the rocky island, the last shallow-water channels shrinking and closing, the accreted sand steadily BRIDGING the gap between the island and the mainland until the mount sits stranded on solid land and the sea is pushed far away; sweeping, ominous, epic scale. Composited documentary motion-graphics: a pulsing red warning boundary sweeping around the engulfed base, a closing-gap dimension bracket rapidly shrinking toward zero, and arrows showing the sand sealing the island to the shore; any rendered labels contain ONLY numbers, units and magnitude suffixes, never words, sentences or titles. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water. Camera: a strong accelerating push-in (ZOOM IN) slamming down toward the silted base as the gap seals shut. One continuous ~3-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#10 · fail · 32s→36s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>10</b> <span class="role">fail</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">32s→36s</span></div>
+<p class="kr">그럼 쌓인 모래를 계속 파내면 되지 않냐고요?</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. a working dredger and excavator scooping wet sand from a channel beside the island, piles of dredged sediment, industrial and effortful, grey utilitarian palette. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a gritty handheld shot circling the dredger scooping, subtle real shake One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#11 · fail · 36s→40s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>11</b> <span class="role">fail</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span>  <span class="dur">36s→40s</span></div>
+<p class="kr">조류와 강물이 또 실어 나르니, 파내도 끝이 없었습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>red circular loop arrows showing sediment returning to the channel (no text)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), a low angled key sun with soft fill light, faint volumetric haze and ambient occlusion, slow orbit with a portrait telephoto look and shallow depth of field, photorealistic miniature render, muted desaturated cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp, legible rendered annotations: thin cyan and red dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes, faint blueprint grid accents. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. isometric floating estuary diorama showing a loop: sand scooped out of a channel, then the incoming tide and the river carrying fresh sediment straight back into the same channel, a visual cycle, strata on the slab sides. Rendered numeric annotations in the image: red circular loop arrows showing sediment returning to the channel (no text). SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a slow orbit around the loop, steady and clear One continuous ~4-second shot.</code>
+</div></article>
+<article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#12 · flip · 40s→44s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>12</b> <span class="role">flip</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span> <span class="dyn">⚡ 360° 오빗 + 파냄·모프</span> <span class="dur">40s→44s</span></div>
+<p class="kr">대신에, 묘수를 고안해냅니다. 모래를 퍼내지 말고, 물로 밀어내기로.</p>
+<div class="ov"><b>카메라/효과</b><br>360° 오빗 + 파냄·모프</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature, dark graduated grey void, muted desaturated color grade, vertical 9:16, no watermark. HIGH-ENERGY, TIGHT FRAMING — NOT a wide island vista. Extreme close-up: a cross-section CARVES OPEN layer by layer, revealing sediment strata (sand, silt, clay) in MACRO detail; a glowing cyan wireframe rapidly draws itself and SNAPS into a solid grey concrete dam; hard PUNCH-IN zoom, then the camera sweeps in a fast FULL 360-DEGREE ORBIT around the carved cross-section; then a MACRO shot of churning water surging through and BLASTING loose sand and silt grains tumbling downstream past the lens; bold glowing cyan flow arrows shoot along the current; kinetic, close, dynamic. One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#13 · solution · 44s→48s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>13</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span>  <span class="dur">44s→48s</span></div>
+<p class="kr">쿠에농 강 하구에 수문 8개짜리 댐을 세웠습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a red leader line to the row of gates with a callout reading only &quot;8&quot;</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), a low angled key sun with soft fill light, faint volumetric haze and ambient occlusion, slow orbit with a portrait telephoto look and shallow depth of field, photorealistic miniature render, muted desaturated cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp, legible rendered annotations: thin cyan and red dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes, faint blueprint grid accents. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. isometric cutaway of a low modern dam across the mouth of a canalised river, a clear row of eight sluice gates set into it, water on both sides, exposed concrete structure and sediment strata beneath in section, clean studio daylight. Rendered numeric annotations in the image: a red leader line to the row of gates with a callout reading only &quot;8&quot;. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a steady push-in (ZOOM IN) onto the row of eight gates One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#14 · solution · 48s→52s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>14</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span>  <span class="dur">48s→52s</span></div>
+<p class="kr">밀물 때 바닷물과 강물을 가둬 두고,</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a blue rising water-level line and an upward arrow (no text)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), a low angled key sun with soft fill light, faint volumetric haze and ambient occlusion, slow orbit with a portrait telephoto look and shallow depth of field, photorealistic miniature render, muted desaturated cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp, legible rendered annotations: thin cyan and red dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes, faint blueprint grid accents. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. isometric diorama of the dam at high tide, the eight sluice gates holding back a rising body of seawater and river water pooling behind the dam, water level climbing, calm surface, strata on the slab sides. Rendered numeric annotations in the image: a blue rising water-level line and an upward arrow (no text). SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a gentle crane-up rising with the pooling water, calm One continuous ~4-second shot.</code>
+</div></article>
+<article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#15 · solution · 52s→56s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>15</b> <span class="role">solution</span> <span class="tr">cont</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span> <span class="dyn">⚡ 전면→하늘 휘프업</span> <span class="dur">52s→56s</span></div>
+<p class="kr">썰물 때 수문을 열어 한꺼번에 쏟아냅니다.</p>
+<div class="ov"><b>카메라/효과</b><br>전면→하늘 휘프업</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway of a dam, dark grey void, exposed concrete + strata section, muted desaturated color grade, vertical 9:16, no watermark. HIGH-ENERGY, TIGHT ON THE GATES — not the whole scene. A row of eight sluice gates fills the frame and BURSTS open in a rapid left-to-right CHAIN with bright cyan shock-flashes; the camera drops to a MACRO angle as a wall of white water EXPLODES straight at the lens, churning foam and spray filling the whole frame; snap back, then the camera WHIPS UP off the water into the open sky as the transition; a big bold glowing &quot;100&quot; scales up and rapidly counts with &quot;m3/s&quot; snapping in; extreme kinetic water detail. One continuous ~4-second shot.</code>
+</div></article>
+<article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#16 · solution · 56s→61s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>16</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 하늘→수면 다이브→수중</span> <span class="dur">56s→61s</span></div>
+<p class="kr">그 물살이 섬 양옆으로 흐르며 쌓인 모래를 바다로 밀어내죠.</p>
+<div class="ov"><b>카메라/효과</b><br>하늘→수면 다이브→수중</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic footage, muted desaturated color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. DYNAMIC continuous descent through mediums — NOT a static wide vista. A high drone shot flies fast over the tidal flats beside Mont-Saint-Michel following a strong released current, then the camera DIVES DOWN and PLUNGES THROUGH the water surface in one continuous move into the underwater world; underwater, a MACRO reveal of clouds of sand and silt sediment being swept and carried along the seabed by the powerful flush current out toward the open sea, shafts of light through the churning water, particles streaming past the lens; kinetic, immersive, cinematic. One continuous ~5-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#17 · scale · 61s→65s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>17</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span>  <span class="dur">61s→65s</span></div>
+<p class="kr">대조 때는 최대 170만 세제곱미터, 올림픽 수영장 680개 분량을 가뒀다 쏟아냅니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a DYNAMIC scale build: tiny Olympic swimming pools rapidly multiply and stack into a large grid beside the water block while a counter ticks up to &quot;1.7M m3&quot; and &quot;x680&quot;, then a bold release arrow streaks out with &quot;100 m3/s&quot;, plus a small &quot;6 h&quot;</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), a low angled key sun with soft fill light, faint volumetric haze and ambient occlusion, slow orbit with a portrait telephoto look and shallow depth of field, photorealistic miniature render, muted desaturated cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp, legible rendered annotations: thin cyan and red dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes, faint blueprint grid accents. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. isometric exploded scale study floating in a dark void: a giant block of stored water beside the dam model with a bold flow arrow, and — as a to-scale size comparison — a large grid of tiny Olympic swimming pools representing the stored volume, neutral grey studio, clean space for big numbers. Rendered numeric annotations in the image: a DYNAMIC scale build: tiny Olympic swimming pools rapidly multiply and stack into a large grid beside the water block while a counter ticks up to &quot;1.7M m3&quot; and &quot;x680&quot;, then a bold release arrow streaks out with &quot;100 m3/s&quot;, plus a small &quot;6 h&quot;. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a moderate push-in (ZOOM IN) on the pool grid as pools rapidly stack up One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#18 · solution · 65s→69s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>18</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">65s→69s</span></div>
+<p class="kr">그리고 물을 막던 옛 제방도로는 걷어내고,</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a callout reading only &quot;2015&quot; and a blue marker where the causeway is removed</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. time-lapse-feel aerial of the old earthen causeway being demolished and removed, machinery peeling back the embankment so open water reclaims the line where the wall stood, overcast working light. Rendered numeric annotations in the image: a callout reading only &quot;2015&quot; and a blue marker where the causeway is removed. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a moderate overhead tracking push over the demolition as water reclaims the line One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#19 · solution · 69s→73s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>19</b> <span class="role">solution</span> <span class="tr">cont</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">69s→73s</span></div>
+<p class="kr">조수가 아래로 지나갈 수 있는 다리로 바꿨습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>cyan arrows under the deck showing the tide passing through (no text)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. cinematic low aerial along the new slender stilted bridge with the tide flowing freely underneath between the thin pillars, water passing where the wall once blocked it, bright reflective water. Rendered numeric annotations in the image: cyan arrows under the deck showing the tide passing through (no text). SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a low tracking glide along the bridge, tide flowing beneath the pillars One continuous ~4-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#20 · scale · 73s→77s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>20</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span>  <span class="dur">73s→77s</span></div>
+<p class="kr">여기에 든 돈, 약 2천억 원.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>one big callout reading only &quot;184M EUR&quot;</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), a low angled key sun with soft fill light, faint volumetric haze and ambient occlusion, slow orbit with a portrait telephoto look and shallow depth of field, photorealistic miniature render, muted desaturated cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp, legible rendered annotations: thin cyan and red dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes, faint blueprint grid accents. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. isometric exploded cost study floating in a dark void: the bridge and dam models beside a clean panel, neutral grey studio. Rendered numeric annotations in the image: one big callout reading only &quot;184M EUR&quot;. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a slow orbit around the cost callout, calm One continuous ~4-second shot.</code>
+</div></article>
+<article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#21 · end · 77s→82s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>21</b> <span class="role">end</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 외벽 무빙→하늘 틸트업</span> <span class="dur">77s→82s</span></div>
+<p class="kr">이제 큰 밀물이 들면, 바닷물이 밀려와 다리를 삼키고 몽생미셸을 완전히 감쌉니다.</p>
+<div class="ov"><b>카메라/효과</b><br>외벽 무빙→하늘 틸트업</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic footage, muted desaturated color grade, vertical 9:16, Normandy tidal-bay coastal setting, no watermark. DYNAMIC — NOT another wide aerial of the whole island. Start LOW right at the waterline as the spring tide surges and FOAMS against the base of Mont-Saint-Michel&#x27;s ancient stone outer rampart wall in close detail; the camera travels fast ALONG the outer wall as the rising water wraps around it, then CRANES and TILTS UP the wall face — from the churning water at the base soaring up the ramparts to the abbey and spire, and continues UP into the open sky — a rising wall-climb-to-sky transition; a bold &quot;14 m&quot; tide number rises with the water and counts up; intimate then soaring, cinematic climax. One continuous ~5-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#22 · scale · 82s→87s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>22</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#3fb6c4;border-color:#3fb6c455">디오라마</span>  <span class="dur">82s→87s</span></div>
+<p class="kr">몽생미셸은 첨탑까지 무려 155미터. 바닷물이 차오르는 높이는 14미터, 딱 아파트 5층 정도죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>rendered to-scale dimension lines and callouts: a tall vertical dimension line on the Mont-Saint-Michel silhouette reading &quot;155 m&quot;, short vertical dimension lines on the apartment and the water column each reading &quot;14 m&quot;, and a small ratio marker reading &quot;x11&quot; between the mount and the apartment</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the estuary cut out and floating in a dark graduated grey void, flat specimen cut-sides exposing sediment strata bands (sand, silt, clay with subtle noise), a low angled key sun with soft fill light, faint volumetric haze and ambient occlusion, slow orbit with a portrait telephoto look and shallow depth of field, photorealistic miniature render, muted desaturated cinematic color grade, vertical 9:16. Presented as a clean engineering technical drawing with crisp, legible rendered annotations: thin cyan and red dimension lines with arrowheads and extension ticks, leader lines to rounded callout boxes, faint blueprint grid accents. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. a clean flat side-elevation infographic comparison on a plain neutral studio background, three shapes standing side by side on one common ground line, drawn strictly to relative scale: on the left a tall accurate dark silhouette of Mont-Saint-Michel, the conical island with ramparts rising to the abbey and spire, towering about eleven times taller than the others; in the middle a small realistic South Korean five-storey apartment building; on the right a slim blue column of seawater exactly as short as the apartment; the huge height difference immediately obvious. Rendered numeric annotations in the image: rendered to-scale dimension lines and callouts: a tall vertical dimension line on the Mont-Saint-Michel silhouette reading &quot;155 m&quot;, short vertical dimension lines on the apartment and the water column each reading &quot;14 m&quot;, and a small ratio marker reading &quot;x11&quot; between the mount and the apartment. SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a slow lateral pan across the three side-by-side shapes on the common baseline, then a gentle hold, calm and clear One continuous ~5-second shot.</code>
+</div></article>
+<article class="c ">
+<div class="slot empty "><div class="ph">#23 · end · 87s→93s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>23</b> <span class="role">end</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">87s→93s</span></div>
+<p class="kr">섬을 다시 섬으로. 몽생미셸은 이렇게 되살아났습니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br>a small clean summary strip reading only &quot;760 m   14 m&quot; (numerals and units only, no words)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, muted desaturated cinematic color grade, vertical 9:16, Normandy tidal-bay coastal setting, soft silver daylight over wet sand and shallow estuary water, muted grey-green-sand palette. Presented with clean, crisp, legible rendered infographic annotations composited over the scene: thin red and cyan dimension lines with arrowheads and extension ticks, leader lines and rounded callout boxes, subtle documentary motion-graphics style. Any rendered labels contain ONLY numbers, units and magnitude suffixes (e.g. 760 m, 8, 1.7M m3, 100 m3/s, 184M EUR), never words, sentences, captions or titles. no watermark. majestic golden-hour aerial orbit of Mont-Saint-Michel fully ringed by shimmering water at high tide, the thin bridge a delicate line, the abbey spire catching warm light, grand hero composition. Rendered numeric annotations in the image: a small clean summary strip reading only &quot;760 m   14 m&quot; (numerals and units only, no words). SUBJECT: Mont-Saint-Michel — a conical rocky tidal island crowned by a medieval abbey with a tall spire, ringed by vast tidal sand flats and shallow estuary water, linked to the mainland by a slender modern stilted footbridge on thin pillars, with a low sluice-gate dam across the mouth of the river Couesnon nearby. Camera: a majestic smooth orbit that pulls back (ZOOM OUT) to a hero wide at golden hour One continuous ~6-second shot.</code>
+</div></article></div></div><script>
+function cp(b){const t=b.closest('.meta').querySelector('code.p').innerText;
+  const ok=function(){if(!b.dataset.o)b.dataset.o=b.innerText;b.innerText='✓ 복사됨';setTimeout(function(){b.innerText=b.dataset.o},1200)};
+  const fb=function(){try{const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();const done=document.execCommand('copy');ta.remove();done?ok():miss()}catch(e){miss()}};
+  const miss=function(){if(!b.dataset.o)b.dataset.o=b.innerText;b.innerText='길게 눌러 복사';setTimeout(function(){b.innerText=b.dataset.o},1500)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok).catch(fb)}else{fb()}}
+// 코드블록 탭/클릭 → 전체선택(모바일 수동복사 대비)
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('code.p').forEach(function(c){c.style.cursor='text';c.title='탭하면 전체선택';c.addEventListener('click',function(){const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r)})})});
+var EXTS=['mp4','webm','mov','jpg','jpeg','png','webp'];
+var VIDEXT=['mp4','webm','mov'];
+function slotNum(s){return String([...document.querySelectorAll('.slot')].indexOf(s)+1).padStart(2,'0')}
+function clearSlot(s,inp){s.querySelectorAll('video,.rm').forEach(x=>{try{URL.revokeObjectURL(x.src)}catch(e){}x.remove()});const img=s.querySelector('img');if(img){try{URL.revokeObjectURL(img.src)}catch(e){}img.removeAttribute('src');img.style.display='none'}s.classList.remove('filled');s.classList.add('empty');const ph=s.querySelector('.ph');if(ph)ph.style.display='';if(inp)inp.value=''}
+// url: any src (blob: or images/shotNN.ext); name: filename used for save extension
+function fillSlot(s,url,isVid,name){
+  clearSlot(s,null);
+  if(isVid){const v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.controls=true;s.insertBefore(v,s.querySelector('input'))}
+  else{const img=s.querySelector('img');img.src=url;img.style.display='block'}
+  const rm=document.createElement('button');rm.className='rm';rm.textContent='✕';rm.title=name||'';rm.onclick=function(ev){ev.stopPropagation();clearSlot(s,s.querySelector('input'))};s.appendChild(rm);
+  s.classList.add('filled');s.classList.remove('empty');
+  const ph=s.querySelector('.ph');if(ph)ph.style.display='none';
+  s.dataset.name=name||'';
+}
+function drop(inp){const f=inp.files[0];if(!f)return;const s=inp.closest('.slot');fillSlot(s,URL.createObjectURL(f),f.type.startsWith('video'),f.name)}
+
+// ---- 자동 불러오기: 열 때 images/shotNN.<ext> 를 순서대로 시도 ----
+function tryLoad(s){return new Promise(function(res){
+  var num=slotNum(s),i=0;
+  (function next(){
+    if(i>=EXTS.length){res(false);return}
+    var ext=EXTS[i++],path='images/shot'+num+'.'+ext,isVid=VIDEXT.indexOf(ext)>=0;
+    var probe=isVid?document.createElement('video'):new Image();
+    var done=false,t=setTimeout(function(){if(!done){done=true;next()}},4000);
+    var ok=function(){if(done)return;done=true;clearTimeout(t);fillSlot(s,path+'?v='+Date.now(),isVid,'shot'+num+'.'+ext);res(true)};
+    var bad=function(){if(done)return;done=true;clearTimeout(t);next()};
+    if(isVid){probe.preload='metadata';probe.onloadedmetadata=ok;probe.onerror=bad;probe.src=path}
+    else{probe.onload=ok;probe.onerror=bad;probe.src=path}
+  })();
+})}
+window.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.slot').forEach(tryLoad)});
+
+// ---- 저장: File System Access API 로 images/ 폴더에 직접 기록 ----
+async function saveFolder(){
+  if(!window.showDirectoryPicker){alert('이 브라우저는 폴더 저장을 지원하지 않습니다. "⬇️ shotNN 전부 다운로드"를 쓰고 파일을 images/ 폴더로 옮기세요. (Chrome/Edge 권장)');return}
+  var dir;try{dir=await window.showDirectoryPicker({mode:'readwrite'})}catch(e){return}
+  var slots=[...document.querySelectorAll('.slot')],n=0;
+  for(var i=0;i<slots.length;i++){
+    var s=slots[i],m=s.querySelector('video[src^="blob"],img[src^="blob"]');
+    if(!m)continue; // blob(새로 드롭한 것)만 기록. 이미 images/에서 온 건 건너뜀
+    var ext=((s.dataset.name||'').match(/\.([a-z0-9]+)$/i)||[,'mp4'])[1].toLowerCase();
+    var blob=await fetch(m.src).then(function(r){return r.blob()});
+    var fh=await dir.getFileHandle('shot'+slotNum(s)+'.'+ext,{create:true});
+    var w=await fh.createWritable();await w.write(blob);await w.close();n++;
+  }
+  alert(n?(n+'개를 폴더에 저장했습니다. 새로고침하면 자동으로 뜹니다.'):'새로 저장할(드롭한) 영상이 없습니다.');
+}
+// ---- 저장: 다운로드 폴더로 shotNN 이름 다운로드 (모든 브라우저) ----
+async function saveDownload(){
+  var slots=[...document.querySelectorAll('.slot')],n=0;
+  for(var i=0;i<slots.length;i++){
+    var s=slots[i],m=s.querySelector('video[src^="blob"],img[src^="blob"]');
+    if(!m)continue;
+    var ext=((s.dataset.name||'').match(/\.([a-z0-9]+)$/i)||[,'mp4'])[1].toLowerCase();
+    var blob=await fetch(m.src).then(function(r){return r.blob()});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='shot'+slotNum(s)+'.'+ext;
+    document.body.appendChild(a);a.click();a.remove();n++;await new Promise(function(r){setTimeout(r,400)});
+  }
+  alert(n?(n+'개 다운로드. 파일들을 이 페이지 옆 images/ 폴더로 옮기면 다음에 자동으로 뜹니다.'):'저장할(드롭한) 영상이 없습니다.');
+}
+</script></body></html>

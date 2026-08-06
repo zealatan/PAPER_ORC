@@ -1,0 +1,27 @@
+{
+  "name": "@motion-studio/renderer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Node export pipeline: deterministic SVG frames → FFmpeg → MP4.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "render": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "@motion-studio/components": "workspace:*",
+    "@motion-studio/core": "workspace:*",
+    "@motion-studio/legacy-adapter": "workspace:*",
+    "@motion-studio/renderer-core": "workspace:*",
+    "@resvg/resvg-js": "^2.6.2"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.1"
+  }
+}

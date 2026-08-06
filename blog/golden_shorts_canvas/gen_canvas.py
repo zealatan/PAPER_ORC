@@ -1,0 +1,208 @@
+#!/usr/bin/env python3
+"""gen_canvas.py — 무한 캔버스 팬·줌 릴 생성기.
+
+큰 흰 종이(월드)에 블록(제목/그래프/콜아웃)을 좌표로 배치 → 카메라가 시퀀스대로 팬·줌하며
+하나씩 보여준다. 줌인(도착) 시 그 그래프의 선이 그려지는(드로우) 애니 + 끝값 라벨 등장.
+카드/패널 없이 종이 위에 바로 그린다.
+
+출력: out/canvas.html  (build_canvas.py 가 playwright로 녹화 → out/canvas.mp4)
+
+■ 저작(핵심):
+  - BLOCKS: 화면 요소 리스트. 각 dict = {id, x, y, w, html}. (h는 내용에 따라 자동)
+  - SEQ:    카메라 순서. [{t: 블록id 또는 "ALL", hold: 정지 ms}, ...]
+  - linechart(w,h,series,cols,ends): 선차트 SVG 문자열(class ln/dot/lab → 드로우/페이드 대상).
+  - 블록에 그래프를 넣으면 그 블록 도착 시 .ln 이 dashoffset 애니로 그려짐.
+
+■ 좌표계: 월드는 좌상단 원점(px). 카메라는 대상 블록 bbox+여백을 세로 1080×1920에 맞춰 fit.
+"""
+import os, json, base64
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+BLOG = os.path.abspath(os.path.join(HERE, ".."))
+
+_pb = open(os.path.join(HERE, "assets", "paper_b64.txt")).read().strip()
+PAPER_URI = _pb if _pb.startswith("data:") else "data:image/jpeg;base64," + _pb
+FONTSRC = "data:font/woff2;base64," + base64.b64encode(open(os.path.join(BLOG, "fonts", "PretendardVariable.woff2"), "rb").read()).decode()
+
+SW, SH = 1080, 1920   # 세로 쇼츠 뷰포트
+
+
+def linechart(w, h, series, cols, ends=None, ml=110, mr=160, mt=30, mb=84, dashed=None, ystep=1e6):
+    """series=[[[x,y],...],...], cols=[색,...], ends=[끝라벨,...] → 종이 위 선차트 SVG.
+    y축=ystep 단위 $M 그리드+라벨, x축=연도 라벨. dashed=값 이면 그 y에 점선(원금선)."""
+    xs = [p[0] for S in series for p in S]; ys = [p[1] for S in series for p in S]
+    x0, x1, y1 = min(xs), max(xs), max(ys) * 1.08
+    def X(x): return ml + (w - ml - mr) * (x - x0) / (x1 - x0)
+    def Y(y): return mt + (h - mt - mb) * (1 - y / y1)
+    def fmtM(v): return ("$%.1fM" % (v / 1e6)).replace(".0", "") if v >= 1e6 else "$" + format(int(round(v / 1000) * 1000), ",")
+    s = ""
+    # y축 그리드 + 라벨
+    t = ystep
+    while t < y1:
+        yy = Y(t)
+        s += '<line x1="%.1f" x2="%.1f" y1="%.1f" y2="%.1f" stroke="rgba(0,0,0,.09)" stroke-width="2"/>' % (ml, w - mr, yy, yy)
+        s += '<text x="%d" y="%.1f" font-size="30" fill="#9a938c" text-anchor="end" font-weight="600">%s</text>' % (ml - 16, yy + 10, fmtM(t))
+        t += ystep
+    # x축 연도 라벨
+    y0i = int(x0) + (1 if x0 > int(x0) else 0)
+    xstep = 2 if (int(x1) - y0i) <= 12 else 3
+    for yr in range(y0i, int(x1) + 1, xstep):
+        s += '<text x="%.1f" y="%d" font-size="30" fill="#9a938c" text-anchor="middle" font-weight="600">%d</text>' % (X(yr), h - mb + 48, yr)
+    s += '<line class="ax" x1="%d" x2="%d" y1="%.1f" y2="%.1f" stroke="#c9c2b6" stroke-width="2"/>' % (ml, w - mr, Y(0), Y(0))
+    if dashed is not None:
+        s += '<line class="ax" x1="%d" x2="%d" y1="%.1f" y2="%.1f" stroke="#b8b1a8" stroke-width="2.5" stroke-dasharray="8 6"/>' % (ml, w - mr, Y(dashed), Y(dashed))
+    for i, S in enumerate(series):
+        d = "M" + " L".join("%.1f,%.1f" % (X(p[0]), Y(p[1])) for p in S)
+        s += '<path class="ln" d="%s" fill="none" stroke="%s" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>' % (d, cols[i])
+        ex, ey = X(S[-1][0]), Y(S[-1][1])
+        s += '<circle class="dot" cx="%.1f" cy="%.1f" r="9" fill="%s"/>' % (ex, ey, cols[i])
+        if ends:
+            s += '<text class="lab" x="%.1f" y="%.1f" font-size="38" font-weight="800" fill="%s">%s</text>' % (ex + 16, ey + 13, cols[i], ends[i])
+    return '<svg viewBox="0 0 %d %d" style="display:block;width:100%%;height:auto" font-family="Pretendard,sans-serif">%s</svg>' % (w, h, s)
+
+
+_HTML = """<!doctype html><meta charset=utf-8><style>
+@font-face{{font-family:'Pretendard';font-weight:100 900;src:url('{FONT}')}}
+*{{margin:0;box-sizing:border-box}}
+body{{width:1080px;height:1920px;background:#000;overflow:hidden;font-family:'Pretendard',sans-serif}}
+#world{{position:absolute;left:0;top:0;width:{WW}px;height:{WH}px;background:#f4f0e8 url('{PAPER}') center/cover;transform-origin:0 0}}
+.block{{position:absolute;opacity:0;transition:opacity .55s ease}}
+.block h2{{font-size:56px;font-weight:900;color:#1a1a1a;letter-spacing:-.02em}}
+.block .s{{font-size:32px;color:#7a746a;font-weight:600;margin:6px 0 4px}}
+.block h1{{font-size:140px;font-weight:900;color:#1a1a1a;letter-spacing:-.03em;line-height:1.04}}
+.block h1 b,.hl{{color:#2b6cb0}}
+.block p{{font-size:46px;color:#7a746a;font-weight:700;margin-top:26px}}
+.big{{font-size:150px;font-weight:900;color:#2b6cb0;letter-spacing:-.02em}}
+.ftbl{{border-collapse:collapse;font-variant-numeric:tabular-nums;width:100%;margin-top:14px}}
+.ftbl th,.ftbl td{{text-align:center;padding:22px 12px;font-size:42px;color:#1a1a1a}}
+.ftbl th{{font-weight:800;color:#8a857c;border-bottom:3px solid rgba(0,0,0,.25)}}
+.ftbl td.pr,.ftbl th.pr{{text-align:left;font-weight:900;font-size:40px;color:#111}}
+.ftbl th.pr{{color:#8a857c}}
+.ftbl tr+tr td{{border-top:2px solid rgba(0,0,0,.12)}}
+.ftbl td.ok{{color:#2b8a3e;font-weight:900}}
+.ftbl td.ko{{color:#c2255c;font-weight:800}}
+.fnote{{font-size:27px;color:#8a857c;margin-top:18px;font-weight:500}}
+.panel{{background:rgba(120,124,134,.10);border-radius:40px;padding:22px 40px}}   /* 회색 반투명 패널(투명도 90%=알파.1)·여백 최소 */
+.firepanel{{background:rgba(120,124,134,.10);border-radius:40px;overflow:hidden;position:relative}}
+</style>
+<div id="world">
+{BLOCKS}
+</div>
+<script>
+var SW={SW},SH={SH},WW={WW},WH={WH},SEQ={SEQ},MOVE={MOVE};
+var world=document.getElementById('world');
+document.querySelectorAll('.block').forEach(function(bl){{
+ bl.querySelectorAll('.ln').forEach(function(p){{var L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;p.style.transition='stroke-dashoffset 1.55s cubic-bezier(.4,0,.2,1)';}});
+ bl.querySelectorAll('.dot,.lab').forEach(function(e){{e.style.opacity=0;e.style.transition='opacity .5s ease 1.05s';}});
+}});
+function reveal(id){{var bl=document.getElementById(id);if(!bl||bl.dataset.r)return;bl.dataset.r=1;bl.style.opacity=1;
+ bl.querySelectorAll('.ln').forEach(function(p){{p.style.strokeDashoffset=0;}});
+ bl.querySelectorAll('.dot,.lab').forEach(function(e){{e.style.opacity=1;}});
+ bl.querySelectorAll('iframe[data-src]').forEach(function(f){{if(!f.getAttribute('src'))f.setAttribute('src',f.dataset.src);}});}}  /* 파이어 그래프: 도착→로드. 애니는 iframe 자체 autorun(교차출처로 부모 호출 불가) */
+function lookAt(x,y,w,h,pad){{pad=pad||70;w+=pad*2;h+=pad*2;x-=pad;y-=pad;var s=Math.min(SW/w,SH/h);return {{s:s,tx:SW/2-s*(x+w/2),ty:SH/2-s*(y+h/2)}};}}
+function target(k){{if(k==='ALL')return lookAt(0,0,WW,WH,140);var e=document.getElementById(k);return lookAt(e.offsetLeft,e.offsetTop,e.offsetWidth,e.offsetHeight,80);}}
+function apply(v){{world.style.transform='translate('+v.tx+'px,'+v.ty+'px) scale('+v.s+')';}}
+function ease(p){{return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;}}
+var i=0,t0=null,from=null,to=target(SEQ[0].t),phase='hold',holdEnd=0;
+apply(to);reveal(SEQ[0].t);
+function frame(ts){{if(t0===null){{t0=ts;holdEnd=ts+SEQ[0].hold;}}
+ if(phase==='hold'){{if(ts>=holdEnd){{if(i>=SEQ.length-1){{window.__done=1;return;}}from=to;to=target(SEQ[i+1].t);phase='move';t0=ts;}}}}
+ else{{var p=Math.min(1,(ts-t0)/MOVE),e=ease(p);apply({{s:from.s+(to.s-from.s)*e,tx:from.tx+(to.tx-from.tx)*e,ty:from.ty+(to.ty-from.ty)*e}});
+   if(p>=1){{i++;phase='hold';holdEnd=ts+SEQ[i].hold;reveal(SEQ[i].t);}}}}
+ requestAnimationFrame(frame);}}
+requestAnimationFrame(frame);
+</script>"""
+
+
+def build(world_w, world_h, blocks_html, seq, move_ms=1450):
+    """blocks_html=문자열(.block들), seq=[{t,hold}]. → 전체 HTML 문자열."""
+    return _HTML.format(FONT=FONTSRC, PAPER=PAPER_URI, WW=world_w, WH=world_h,
+                        BLOCKS=blocks_html, SW=SW, SH=SH, SEQ=json.dumps(seq), MOVE=move_ms)
+
+
+def total_seconds(seq, move_ms=1450):
+    return (sum(s["hold"] for s in seq) + move_ms * (len(seq) - 1)) / 1000.0
+
+
+def block(bid, x, y, w, inner, panel=False):
+    cls = "block panel" if panel else "block"
+    return '<div class="%s" id="%s" style="left:%dpx;top:%dpx;width:%dpx">%s</div>' % (cls, bid, x, y, w, inner)
+
+
+def fire_table_html(stock):
+    """파이어 마지막 페이지 요약 테이블(원금×월인출 매트릭스) HTML. gen_fire_table(<stock>) 재사용.
+    → <table class=ftbl>(생존 초록/파산 빨강) + note. 종이 위 표시용(어두운 글씨)."""
+    import importlib.util, sys
+    fire_dir = os.path.join(BLOG, "golden_shorts_fire")
+    os.environ["SHORTS_STOCK"] = stock
+    if fire_dir not in sys.path:
+        sys.path.insert(0, fire_dir)
+    for m in ("gen_fire_table", "golden_shorts_fire"):
+        sys.modules.pop(m, None)
+    spec = importlib.util.spec_from_file_location("gen_fire_table", os.path.join(fire_dir, "gen_fire_table.py"))
+    T = importlib.util.module_from_spec(spec); sys.modules["gen_fire_table"] = T
+    spec.loader.exec_module(T)
+    heads = "".join("<th>%s</th>" % m for m in T.MOS)
+    return ('<table class="ftbl"><thead><tr><th class="pr">은퇴원금</th>%s</tr></thead>'
+            '<tbody>%s</tbody></table><div class="fnote">%s</div>' % (heads, T.ROWS, T.NOTE))
+
+
+def fire_block(bid, x, y, src, w=1080, crop_h=1360, off_y=-210):
+    """파이어 그래프(그대로) iframe 블록. 카메라 도착 시 src 로드→accumAnim 자동 재생.
+    파이어 프레임(1080×1920)의 콘텐츠는 상단부에 몰려 있어 빈 상하 여백을 잘라낸다:
+    iframe을 off_y 만큼 위로 밀고 블록 높이를 crop_h로(overflow hidden) → 패널이 콘텐츠에 밀착.
+    src=out/ 기준 상대경로(예 'qyld_fire.html')."""
+    inner = '<iframe data-src="%s" allowtransparency="true" style="position:absolute;left:0;top:%dpx;width:%dpx;height:1920px;border:0;background:transparent" scrolling="no"></iframe>' % (src, off_y, w)
+    return '<div class="block firepanel" id="%s" style="left:%dpx;top:%dpx;width:%dpx;height:%dpx">%s</div>' % (bid, x, y, w, crop_h, inner)
+
+
+# ─────────────────────────────────────────────────────────────
+# 예제 씬: QYLD 커버드콜 데모 (SHORTS_SCENE=qyld python3 gen_canvas.py)
+# ─────────────────────────────────────────────────────────────
+def scene_qyld():
+    qq = json.load(open(os.path.join(HERE, "data", "qq_cmp.json")))
+    fire = os.path.join(BLOG, "golden_shorts_fire", "assets", "spy_fires.json")
+    spy = json.load(open(fire))[-1]["payload"]["lines"]
+    COL = ["#2b6cb0", "#d98f2b", "#c2255c"]
+    g1 = linechart(1560, 940, [qq["A"], qq["B"]], ["#d98f2b", "#2b6cb0"], ends=["$1.69M", "$2.66M"], dashed=qq["init"])
+    g2 = linechart(1560, 940, [l["pts"] for l in spy], COL, ends=["$5.3M", "$3M", "$744K"])
+    blocks = "\n".join([
+        block("title", 300, 240, 1600, "<h1>은퇴 백테스트<br><b>커버드콜의 진실</b></h1><p>QYLD로 은퇴하면 벌어지는 일</p>"),
+        block("c1", 260, 1180, 1560, '<h2>남는 배당, 어디에 재투자?</h2><div class="s">QYLD $100만 · 월$2천 · 11년</div>' + g1),
+        block("c2", 2380, 560, 1560, '<h2>같은 기간 SPY라면</h2><div class="s">원금 $100만 · 2015 은퇴</div>' + g2),
+        block("c3", 2620, 2050, 1200, '<div class="big">$2.66M</div><div class="s" style="font-size:44px;margin-top:10px">QYLD 배당 → QQQ 재투자<br>QYLD 재투자 대비 <b class="hl">+$97만</b></div>'),
+    ])
+    seq = [{"t": "title", "hold": 1600}, {"t": "c1", "hold": 2700}, {"t": "c2", "hold": 2700},
+           {"t": "c3", "hold": 2100}, {"t": "ALL", "hold": 1700}]
+    return 4400, 3000, blocks, seq
+
+
+def scene_qfire():
+    """인트로 → 파이어 누적 그래프(QYLD, 그대로 iframe) → QQQ 재투자 인사이트 → 전체.
+    전제: out/qyld_fire.html (golden_shorts_fire 로 생성해 복사). 파이어 그래프 ~42.6s."""
+    qq = json.load(open(os.path.join(HERE, "data", "qq_cmp.json")))
+    g1 = linechart(1680, 1080, [qq["CASH"], qq["QYLD"], qq["SCHD"], qq["SPY"], qq["QQQ"]],
+                   ["#8a857c", "#d98f2b", "#2b8a3e", "#6b4f9e", "#2b6cb0"],
+                   ends=["현금 $1.36M", "QYLD $1.69M", "SCHD $2.07M", "SPY $2.27M", "QQQ $2.75M"],
+                   dashed=qq["init"], mr=330)
+    tbl = fire_table_html("QYLD")
+    blocks = "\n".join([
+        block("intro", 300, 260, 1600, "<h1>QYLD로 은퇴하면<br><b>얼마 있어야 할까?</b></h1><p>은퇴자금별로 돌려봤다</p>"),
+        fire_block("fire", 200, 1000, "qyld_fire.html"),
+        block("table", 1560, 1250, 1500, '<h2>원금 × 월 인출 <span class="hl">결과</span></h2><div class="s">✅ 생존 최종액 / 파산 = 고갈 연도</div>' + tbl, panel=True),
+        block("insight", 1560, 2500, 1680, '<h2>남는 배당, <span class="hl">어디에</span> 둘까?</h2><div class="s">QYLD $100만 · 월$2천 · 11년 · 현금 / QYLD / SCHD / SPY / QQQ</div>' + g1, panel=True),
+    ])
+    seq = [{"t": "intro", "hold": 1800}, {"t": "fire", "hold": 43500}, {"t": "table", "hold": 3200},
+           {"t": "insight", "hold": 2700}, {"t": "ALL", "hold": 1800}]
+    return 3400, 3900, blocks, seq
+
+
+SCENES = {"qyld": scene_qyld, "qfire": scene_qfire}
+
+if __name__ == "__main__":
+    scene = os.environ.get("SHORTS_SCENE", "qyld")
+    ww, wh, blocks, seq = SCENES[scene]()
+    html = build(ww, wh, blocks, seq)
+    out = os.path.join(HERE, "out", "canvas.html")
+    open(out, "w", encoding="utf-8").write(html)
+    print("wrote %s (scene=%s · world %dx%d · %.1fs)" % (out, scene, ww, wh, total_seconds(seq)))

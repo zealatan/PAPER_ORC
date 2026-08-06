@@ -1,0 +1,224 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>슈농소 성 — 프롬프트 갤러리 (t2v)</title><style>
+:root{--bg:#16181d;--panel:#1e2127;--line:#2b2f37;--ink:#e6e8ec;--mute:#8b919c;--amber:#e8a33d;--green:#8fd06f;--cyan:#3fb6c4;--dyn:#ff7ac0}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:Pretendard,"Malgun Gothic",sans-serif;margin:0;padding:22px}
+.wrap{max-width:1400px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}.sub{color:var(--mute);font-size:13px;margin:0 0 14px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.c{background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden;display:flex;flex-direction:column}
+.c.dyn{border-color:#ff7ac077;box-shadow:0 0 0 1px #ff7ac033}
+.slot{position:relative;aspect-ratio:9/16;background:#0e1013;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.slot.dyn{background:#1a0f16}
+.slot img,.slot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.slot.empty img{display:none}
+.slot .rm{position:absolute;top:6px;right:6px;z-index:3;background:#000a;color:#fff;border:none;border-radius:5px;padding:2px 7px;font-size:12px;cursor:pointer;display:none}.slot.filled .rm{display:block}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+.bar .save{background:#173a2a;color:#8fd06f;border:1px solid #2f6b48;border-radius:7px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer}.bar .save:hover{background:#1d4a35}
+.barhint{color:var(--mute);font-size:12px}.barhint code{background:#0f1418;border:1px solid #223040;border-radius:4px;padding:1px 5px;color:#cfe0ea;font-size:11px}
+.slot .ph{color:#5a616c;font-size:12px;text-align:center;font-family:ui-monospace}.slot .ph span{color:#3a4048}
+.slot input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.meta{padding:11px 13px 13px}.hd{font-family:ui-monospace;font-size:12px;color:var(--mute);display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.hd b{color:var(--amber);font-size:14px}.role{color:#b48be6}.tr{color:#e4685c}.cls{border:1px solid;border-radius:5px;padding:0 6px;font-size:11px}.dur{margin-left:auto}
+.dyn{color:var(--dyn)}.hd .dyn{border:1px solid #ff7ac055;border-radius:5px;padding:0 6px;font-size:10.5px}
+.kr{font-size:13px;margin:7px 0}
+.ov{font-size:11px;color:#d6e2c9;background:#12160f;border:1px solid #2c3a22;border-left:2px solid var(--cyan);border-radius:5px;padding:6px 8px;margin-bottom:8px;line-height:1.5}.ov b{color:var(--cyan)}
+.c.dyn .ov{border-left-color:var(--dyn)}.c.dyn .ov b{color:var(--dyn)}
+button{background:#20242c;color:var(--cyan);border:1px solid #2f4557;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer}button:hover{background:#263041}
+code.p{display:block;font-family:ui-monospace;font-size:10.4px;line-height:1.5;color:#cfe0ea;background:#0f1418;border:1px solid #223040;border-radius:6px;padding:8px 10px;white-space:pre-wrap;margin-top:8px;max-height:180px;overflow:auto}
+</style></head><body><div class="wrap">
+<h1>슈농소 성 <span style="color:var(--cyan)">t2v</span> (14컷 · 76초 · 4-스킨)</h1>
+<p class="sub"><span class="dyn">⚡ DYNAMIC 4컷</span> · 4-스킨(실사 8·디오라마 3·X-ray 1·청사진 2) · 위트톤 · 미모우선 · <b style="color:#e4685c">클립엔 숫자 없음(후처리 오버레이)</b>. 훅=강을 건너는 성·여인들의 성·2차대전 탈출 다리. 프롬프트 복사→t2v→슬롯 드롭.</p>
+<div class="bar"><button class="save" onclick="saveFolder()">📁 images 폴더에 바로 저장</button><button class="save" onclick="saveDownload()">⬇️ shotNN 전부 다운로드</button><span class="barhint">저장 규칙 <code>images/shot01.mp4</code> · 다음에 열면 자동으로 불러옵니다</span></div>
+<div class="grid"><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#01 · hook · 0s→5s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>01</b> <span class="role">hook</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 지도→드론 다이브 줌 + 다리 리빌</span> <span class="dur">0s→5s</span></div>
+<p class="kr">프랑스 루아르, 셰르 강 위에 하얀 성이 떠 있습니다. 근데 자세히 보면 이 성, 강을 건너고 있어요. 성이 아니라 다리죠.</p>
+<div class="ov"><b>카메라/효과</b><br>지도→드론 다이브 줌 + 다리 리빌</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic footage, soft cinematic color grade, vertical 9:16, Loire Valley River Cher setting. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. DYNAMIC opening: start on a clean minimal stylized map of France (soft grey, no text) as a glowing cyan pin drops onto the Loire Valley; a fast Google-Earth-style DIVE ZOOM plunges down through soft clouds into a real cinematic drone view gliding low over a calm river toward an elegant white chateau that seems to float, then the camera slides alongside to reveal it stands on stone arches right across the river with water flowing beneath it, more bridge than castle. no words anywhere. One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#02 · subject · 5s→10s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>02</b> <span class="role">subject</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">5s→10s</span></div>
+<p class="kr">슈농소 성. 강 위에 아치를 놓고 올라선, &#x27;여인들의 성&#x27;이에요.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, soft cinematic color grade, vertical 9:16, Loire Valley France setting on the River Cher, an elegant white Renaissance château spanning the calm river on arches, mirror-still water reflections, soft silvery-golden light, gardens and woods. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a majestic full 360-degree orbit at soft golden hour around the chateau spanning the River Cher, the long gallery carried on graceful arches, mirror-still reflection doubling it on the water. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow cinematic 360-degree orbit around the chateau on the river, beautiful soft golden light One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#03 · cause · 10s→14s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>03</b> <span class="role">cause</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#e8a33d;border-color:#e8a33d55">디오라마</span>  <span class="dur">10s→14s</span></div>
+<p class="kr">사실 이 자리엔 원래, 강물을 받아 돌던 물레방아가 있었어요.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the River Cher with the château-bridge on it, cut out and floating in a WARM graduated amber-to-charcoal void, flat cut-sides exposing water and riverbed strata and the stone arches and piers under the water, warm low amber key light with soft golden fill and gentle rim glow, faint volumetric haze, portrait telephoto look, shallow depth of field, photorealistic miniature render, warm cinematic color grade, vertical 9:16. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a warm floating-diorama miniature of an old fortified stone water mill sitting on stone piers in the river, its little wooden wheel slowly turning in the flowing current, the small mill modelled on a floating cut slab with riverbed strata exposed on the sides. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow orbit around the miniature old water mill and its turning wheel One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#04 · solution · 14s→20s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>04</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#7aa2ff;border-color:#7aa2ff55">청사진</span> <span class="dyn">⚡ 기초→다리 도면→실물 모프</span> <span class="dur">14s→20s</span></div>
+<p class="kr">원래는 강가 물레방앗간 자리. 앙리 2세의 연인 디안이, 그 돌기초 위로 강을 가로지르는 다리를 놓습니다.</p>
+<div class="ov"><b>카메라/효과</b><br>기초→다리 도면→실물 모프</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">architectural blueprint morphing into a real white stone arched bridge over a river, blueprint-blue paper with grid, cyan line-drawing wiping into real stone, vertical 9:16. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. DYNAMIC blueprint-to-real: over an old fortified mill&#x27;s stone foundations standing in the river, a clean architectural blueprint of a five-arched stone bridge draws itself on blueprint-blue paper, then a bright wipe MORPHS it into the real white stone arched bridge spanning the River Cher, water flowing through the arches. One continuous ~6-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#05 · scale · 20s→25s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>05</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#5bd0ff;border-color:#5bd0ff55">X-ray</span>  <span class="dur">20s→25s</span></div>
+<p class="kr">아치 다섯 개가, 강물 속 교각을 딛고 성 전체를 떠받칩니다.</p>
+<div class="ov"><b>🎬 오버레이(후처리)</b><br>[오버레이] 아치 5개 · 수중 교각 리더선</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">see-through x-ray / technical scan visualization, deep graduated navy-black void, the château-bridge and the river rendered as a glowing translucent cyan wireframe with x-ray layers revealing the stone arches and submerged piers standing in the riverbed beneath the water surface, a soft horizontal scan-line sweeping through, holographic engineering feel, subtle film grain, cyan accents, vertical 9:16. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. an x-ray see-through of the chateau-bridge and the river, the water turned translucent to reveal the five stone arches and their submerged piers planted firmly in the riverbed, glowing cyan wireframe holding up the whole structure. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow x-ray glide along the bridge revealing the five arches and their submerged piers One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#06 · scale · 25s→30s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>06</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#e8a33d;border-color:#e8a33d55">디오라마</span>  <span class="dur">25s→30s</span></div>
+<p class="kr">게다가 다리 기둥 속엔 — 강물 바로 위에 주방까지 숨겨 넣었어요.</p>
+<div class="ov"><b>🎬 오버레이(후처리)</b><br>[오버레이] 교각 내부 주방 마커</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the River Cher with the château-bridge on it, cut out and floating in a WARM graduated amber-to-charcoal void, flat cut-sides exposing water and riverbed strata and the stone arches and piers under the water, warm low amber key light with soft golden fill and gentle rim glow, faint volumetric haze, portrait telephoto look, shallow depth of field, photorealistic miniature render, warm cinematic color grade, vertical 9:16. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a warm floating-diorama cutaway of one massive bridge pier standing in the river, the near side sliced open to reveal the chateau&#x27;s kitchens built inside the pier right at water level — a domed oven, a butcher&#x27;s block and hanging copper pots with tiny figures at work — warm amber lighting, riverbed strata exposed on the cut sides of the floating slab. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow orbit into the sliced-open pier revealing the kitchens inside at water level One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#07 · solution · 30s→35s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>07</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#7aa2ff;border-color:#7aa2ff55">청사진</span> <span class="dyn">⚡ 갤러리 증축 모프</span> <span class="dur">30s→35s</span></div>
+<p class="kr">왕이 죽자 왕비 카트린이 디안을 쫓아내고, 그 다리 위에 2층 갤러리를 올리죠.</p>
+<div class="ov"><b>카메라/효과</b><br>갤러리 증축 모프</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">architectural blueprint morphing into a real white stone arched bridge over a river, blueprint-blue paper with grid, cyan line-drawing wiping into real stone, vertical 9:16. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. DYNAMIC blueprint-to-real: on top of the existing five-arched bridge, a blueprint of a long elegant two-storey gallery draws itself and then MORPHS into the real white stone gallery rising over the water, completing the chateau that crosses the river. One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#08 · scale · 35s→40s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>08</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">35s→40s</span></div>
+<p class="kr">그렇게 완성된 물 위의 긴 회랑. 강물에 그대로 한 번 더 비칩니다.</p>
+<div class="ov"><b>🎬 오버레이(후처리)</b><br>[오버레이] 갤러리 길이 60 m 치수선</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, soft cinematic color grade, vertical 9:16, Loire Valley France setting on the River Cher, an elegant white Renaissance château spanning the calm river on arches, mirror-still water reflections, soft silvery-golden light, gardens and woods. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a beautiful soft golden-hour shot of the long two-storey gallery stretching across the River Cher, perfectly mirrored in the glassy water below, symmetrical and dreamlike, the long white stone gallery over the river. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow glide down the length of the gallery with its full reflection on the water One continuous ~5-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#09 · subject · 40s→44s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>09</b> <span class="role">subject</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">40s→44s</span></div>
+<p class="kr">세운 것도, 넓힌 것도, 지킨 것도 모두 여인들. 그래서 &#x27;여인들의 성&#x27;이에요.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, soft cinematic color grade, vertical 9:16, Loire Valley France setting on the River Cher, an elegant white Renaissance château spanning the calm river on arches, mirror-still water reflections, soft silvery-golden light, gardens and woods. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. an elegant aerial gliding over the chateau and its two famous formal gardens on either bank, warm and graceful, a sense of many hands having shaped it over centuries. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow graceful aerial over the chateau and its symmetrical gardens One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#10 · subject · 44s→48s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>10</b> <span class="role">subject</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">44s→48s</span></div>
+<p class="kr">성 양옆 정원은 또 어떻고요. 손질된 화단이 강까지 곧게 이어집니다.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, soft cinematic color grade, vertical 9:16, Loire Valley France setting on the River Cher, an elegant white Renaissance château spanning the calm river on arches, mirror-still water reflections, soft silvery-golden light, gardens and woods. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a beautiful ground-level immersive glide along the central path of the blooming formal French parterre garden, geometric flowerbeds and clipped box hedges and bright flowers in warm golden light leading the eye straight toward the white chateau and the river beyond. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a low smooth glide down the garden&#x27;s central path toward the chateau One continuous ~4-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#11 · cause · 48s→54s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>11</b> <span class="role">cause</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#e8a33d;border-color:#e8a33d55">디오라마</span>  <span class="dur">48s→54s</span></div>
+<p class="kr">2차대전엔 이 강이 경계선이 됩니다. 갤러리 이쪽 끝은 자유 프랑스, 저쪽 끝은 나치 점령지였죠.</p>
+<div class="ov"><b>🎬 오버레이(후처리)</b><br>[오버레이] 1940 · 강 경계선(빨강)</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">signature floating-diorama miniature cutaway: a rectangular slab of the River Cher with the château-bridge on it, cut out and floating in a WARM graduated amber-to-charcoal void, flat cut-sides exposing water and riverbed strata and the stone arches and piers under the water, warm low amber key light with soft golden fill and gentle rim glow, faint volumetric haze, portrait telephoto look, shallow depth of field, photorealistic miniature render, warm cinematic color grade, vertical 9:16. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a warm floating-diorama of the chateau-bridge over the river with a stark glowing line running right down the middle of the river beneath it, one bank tinted as free territory and the other as occupied, the long gallery straddling the divide between two worlds. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow orbit as a glowing demarcation line lights up down the river under the bridge One continuous ~6-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#12 · solution · 54s→60s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>12</b> <span class="role">solution</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">54s→60s</span></div>
+<p class="kr">관리인은 순찰이 뜸한 틈에 문을 열어, 수백 명을 이 회랑으로 몰래 건넸습니다. 강을 건너는 다리가, 자유로 건너는 다리가 된 거죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, soft cinematic color grade, vertical 9:16, Loire Valley France setting on the River Cher, an elegant white Renaissance château spanning the calm river on arches, mirror-still water reflections, soft silvery-golden light, gardens and woods. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a tense, moving night-into-dawn scene: a caretaker quietly unlocks the gallery doors while patrols are away and shadowy refugees slip across the long gallery over the dark river from the occupied bank toward freedom, hushed and dramatic, soft moonlight giving way to hopeful dawn on the water. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: a slow careful move following silhouettes crossing the gallery over the river as dawn breaks One continuous ~6-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c dyn">
+<div class="slot empty dyn"><div class="ph">#13 · scale · 60s→66s<br><span>⚡DYNAMIC · 프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>13</b> <span class="role">scale</span> <span class="tr">cut</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span> <span class="dyn">⚡ 강 위 상승→골든아워</span> <span class="dur">60s→66s</span></div>
+<p class="kr">해 질 무렵, 슈농소는 강과 하늘 사이에 조용히 걸립니다.</p>
+<div class="ov"><b>카메라/효과</b><br>강 위 상승→골든아워</div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic footage, soft cinematic color grade, vertical 9:16, Loire Valley River Cher setting. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. DYNAMIC climactic rise: the camera lifts from the water level up the arches and gallery, then CRANES and pulls back into a golden-hour sky as the whole chateau-bridge sits mirrored on the River Cher far below among the gardens — a soaring rising hero move at dusk. One continuous ~6-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article><article class="c ">
+<div class="slot empty "><div class="ph">#14 · end · 66s→76s<br><span>프롬프트→드롭</span></div><input type="file" accept="video/*,image/*" onchange="drop(this)"><img></div>
+<div class="meta">
+<div class="hd"><b>14</b> <span class="role">end</span> <span class="tr">cont</span>
+ <span class="cls" style="color:#8fd06f;border-color:#8fd06f55">실사</span>  <span class="dur">66s→76s</span></div>
+<p class="kr">성을 놓은 여인들도, 강을 건넌 사람들도 이제는 없습니다. 그래도 슈농소는, 오늘도 셰르 강 위에 조용히 떠 있죠.</p>
+<div class="ov"><b>렌더 숫자그래픽</b><br><i style="color:#4a515b">—</i></div>
+<div class="prow"><button onclick="cp(this)">📋 프롬프트 복사</button></div>
+<code class="p">photorealistic cinematic drone footage with a subtle tilt-shift miniature feel, physically-based lighting, subtle film grain, soft cinematic color grade, vertical 9:16, Loire Valley France setting on the River Cher, an elegant white Renaissance château spanning the calm river on arches, mirror-still water reflections, soft silvery-golden light, gardens and woods. Absolutely NO rendered text, numbers, digits, labels, dimension lines, callouts, counters, arrows-with-text or graphic annotations of any kind anywhere in the frame — a completely clean plate; all numeric graphics are added later as a separate post overlay. no watermark. a long, unhurried, lingering night-dusk shot: the white chateau-bridge mirrored perfectly on the utterly still River Cher, thin mist drifting low over the water, a single warm light glowing in the long gallery, the camera drifting almost imperceptibly and then holding, letting the scene breathe and settle, quietly emotional and cinematic, a gentle sense of time passing. SUBJECT: Château de Chenonceau — an elegant white Renaissance château in the Loire Valley of France built right across the River Cher, its long two-storey gallery carried on a five-arched stone bridge spanning the water and mirrored in the river below; the &#x27;Château des Dames&#x27; shaped by a succession of women, set among formal gardens and woods. Camera: an almost-still, very slow drift that settles into a long hold on the mirrored chateau, letting it linger One continuous ~10-second shot. The shot begins and ends on smooth, continuous camera motion with no abrupt start, freeze or hard stop, gentle easing, so it blends seamlessly into the neighbouring shots.</code>
+</div></article></div></div><script>
+function cp(b){const t=b.closest('.meta').querySelector('code.p').innerText;
+  const ok=function(){if(!b.dataset.o)b.dataset.o=b.innerText;b.innerText='✓ 복사됨';setTimeout(function(){b.innerText=b.dataset.o},1200)};
+  const fb=function(){try{const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();const done=document.execCommand('copy');ta.remove();done?ok():miss()}catch(e){miss()}};
+  const miss=function(){if(!b.dataset.o)b.dataset.o=b.innerText;b.innerText='길게 눌러 복사';setTimeout(function(){b.innerText=b.dataset.o},1500)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok).catch(fb)}else{fb()}}
+// 코드블록 탭/클릭 → 전체선택(모바일 수동복사 대비)
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('code.p').forEach(function(c){c.style.cursor='text';c.title='탭하면 전체선택';c.addEventListener('click',function(){const r=document.createRange();r.selectNodeContents(c);const s=getSelection();s.removeAllRanges();s.addRange(r)})})});
+var EXTS=['mp4','webm','mov','jpg','jpeg','png','webp'];
+var VIDEXT=['mp4','webm','mov'];
+function slotNum(s){return String([...document.querySelectorAll('.slot')].indexOf(s)+1).padStart(2,'0')}
+function clearSlot(s,inp){s.querySelectorAll('video,.rm').forEach(x=>{try{URL.revokeObjectURL(x.src)}catch(e){}x.remove()});const img=s.querySelector('img');if(img){try{URL.revokeObjectURL(img.src)}catch(e){}img.removeAttribute('src');img.style.display='none'}s.classList.remove('filled');s.classList.add('empty');const ph=s.querySelector('.ph');if(ph)ph.style.display='';if(inp)inp.value=''}
+// url: any src (blob: or images/shotNN.ext); name: filename used for save extension
+function fillSlot(s,url,isVid,name){
+  clearSlot(s,null);
+  if(isVid){const v=document.createElement('video');v.src=url;v.autoplay=true;v.loop=true;v.muted=true;v.playsInline=true;v.controls=true;s.insertBefore(v,s.querySelector('input'))}
+  else{const img=s.querySelector('img');img.src=url;img.style.display='block'}
+  const rm=document.createElement('button');rm.className='rm';rm.textContent='✕';rm.title=name||'';rm.onclick=function(ev){ev.stopPropagation();clearSlot(s,s.querySelector('input'))};s.appendChild(rm);
+  s.classList.add('filled');s.classList.remove('empty');
+  const ph=s.querySelector('.ph');if(ph)ph.style.display='none';
+  s.dataset.name=name||'';
+}
+function drop(inp){const f=inp.files[0];if(!f)return;const s=inp.closest('.slot');fillSlot(s,URL.createObjectURL(f),f.type.startsWith('video'),f.name)}
+
+// ---- 자동 불러오기: 열 때 images/shotNN.<ext> 를 순서대로 시도 ----
+function tryLoad(s){return new Promise(function(res){
+  var num=slotNum(s),i=0;
+  (function next(){
+    if(i>=EXTS.length){res(false);return}
+    var ext=EXTS[i++],path='images/shot'+num+'.'+ext,isVid=VIDEXT.indexOf(ext)>=0;
+    var probe=isVid?document.createElement('video'):new Image();
+    var done=false,t=setTimeout(function(){if(!done){done=true;next()}},4000);
+    var ok=function(){if(done)return;done=true;clearTimeout(t);fillSlot(s,path+'?v='+Date.now(),isVid,'shot'+num+'.'+ext);res(true)};
+    var bad=function(){if(done)return;done=true;clearTimeout(t);next()};
+    if(isVid){probe.preload='metadata';probe.onloadedmetadata=ok;probe.onerror=bad;probe.src=path}
+    else{probe.onload=ok;probe.onerror=bad;probe.src=path}
+  })();
+})}
+window.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.slot').forEach(tryLoad)});
+
+// ---- 저장: File System Access API 로 images/ 폴더에 직접 기록 ----
+async function saveFolder(){
+  if(!window.showDirectoryPicker){alert('이 브라우저는 폴더 저장을 지원하지 않습니다. "⬇️ shotNN 전부 다운로드"를 쓰고 파일을 images/ 폴더로 옮기세요. (Chrome/Edge 권장)');return}
+  var dir;try{dir=await window.showDirectoryPicker({mode:'readwrite'})}catch(e){return}
+  var slots=[...document.querySelectorAll('.slot')],n=0;
+  for(var i=0;i<slots.length;i++){
+    var s=slots[i],m=s.querySelector('video[src^="blob"],img[src^="blob"]');
+    if(!m)continue; // blob(새로 드롭한 것)만 기록. 이미 images/에서 온 건 건너뜀
+    var ext=((s.dataset.name||'').match(/\.([a-z0-9]+)$/i)||[,'mp4'])[1].toLowerCase();
+    var blob=await fetch(m.src).then(function(r){return r.blob()});
+    var fh=await dir.getFileHandle('shot'+slotNum(s)+'.'+ext,{create:true});
+    var w=await fh.createWritable();await w.write(blob);await w.close();n++;
+  }
+  alert(n?(n+'개를 폴더에 저장했습니다. 새로고침하면 자동으로 뜹니다.'):'새로 저장할(드롭한) 영상이 없습니다.');
+}
+// ---- 저장: 다운로드 폴더로 shotNN 이름 다운로드 (모든 브라우저) ----
+async function saveDownload(){
+  var slots=[...document.querySelectorAll('.slot')],n=0;
+  for(var i=0;i<slots.length;i++){
+    var s=slots[i],m=s.querySelector('video[src^="blob"],img[src^="blob"]');
+    if(!m)continue;
+    var ext=((s.dataset.name||'').match(/\.([a-z0-9]+)$/i)||[,'mp4'])[1].toLowerCase();
+    var blob=await fetch(m.src).then(function(r){return r.blob()});
+    var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='shot'+slotNum(s)+'.'+ext;
+    document.body.appendChild(a);a.click();a.remove();n++;await new Promise(function(r){setTimeout(r,400)});
+  }
+  alert(n?(n+'개 다운로드. 파일들을 이 페이지 옆 images/ 폴더로 옮기면 다음에 자동으로 뜹니다.'):'저장할(드롭한) 영상이 없습니다.');
+}
+</script></body></html>

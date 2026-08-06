@@ -1,0 +1,71 @@
+# The Procter & Gamble Company (PG) 사업개요 — 결정론 소스 없음, 리서치+큐레이션. 각 claim에 출처.
+# ⚠ PG 앵글: MCD의 "49년 증배·부동산회사"가 아니라 →
+#   "70년 연속 증배 배당왕(전 세계 단 6개뿐) + 생활필수품 브랜드 제국(Tide·Pampers·Gillette 등 ~65개)
+#    + 5개 부문 · 경기무관 반복구매 불황방어 소비재".
+# 리서치: deep-research 95에이전트 교차검증(SEC 8-K·FY2025 연차보고서 원문 확인), as-of 2026-07-24.
+#   25개 claim 중 24개 3-0 confirmed. 가격·시총·수익률은 스냅샷(변동) — 촬영 시점 재확인.
+
+dividend_king:
+  consecutive_years: 70            # 2026-04 인상 = 70년 연속 증배 (2025-04까지 69년). 8-K: "69th consecutive year ... since 1956".
+  consecutive_years_2025: 69       # 배경일자가 2025년이면 69로 표기
+  paid_since_years: 136            # 1890년 법인설립 이래 배당 지급 (2026 기준 136년 / 2025 기준 135년)
+  rarity: "70년 연속은 전 세계 단 6개 종목 (Motley Fool 2026-07-14)"
+  king_status: "배당왕(Dividend King) — 50년 기준을 20년 초과"
+  ten_year_div_cagr_pct: 5         # 최근 10년 배당 연평균 증가율 5% (FY2025 연차보고서)
+  last_raise: {date: "2025-04", pct: 5, quarterly_to: 1.0568}   # 분기배당 5% 인상
+  forward_raise: {date: "2026-04", note: "70년차 인상, 분기 ~$1.0885"}
+  fy2025_dividend_ps: 4.0763       # FY2025(6/30 종료) 주당배당 (+6% vs $3.8286)
+  annual_dividend_ps_calendar2025: 4.18   # 달력 2025 실지급 = 백테스트 data 기준값(pg_div.csv)
+  forward_annual_ps: 4.26          # TTM/forward 연배당 (Motley Fool 2026-07)
+  dividend_yield_pct: 2.9          # $4.26 ÷ ~$147 (2026-07). 화면에 가격·날짜 병기. 2026-01 기준 3.1%.
+  payout_ratio_pct: 62             # 배당 $9.9B / 순이익 $16.1B = 61.5%; DPS/EPS 기준 62.7%; 집계 62~64%
+  payout_ratio_note: "화면: '약 60% 초중반 (FY2025 $9.9B 배당 / $16.1B 순이익 = 62%)'"
+
+business_model:                    # "생활필수품 브랜드 제국" 앵글 — FY2025 8-K / 연차보고서
+  brands_count: 65                 # 핵심 브랜드 ~65개 (과거 170개에서 'fewer, bigger, better'로 단순화)
+  flagship_brands: [Tide, Pampers, Gillette, "Oral-B", Crest, "Head & Shoulders", Charmin, Bounty, Febreze, Pantene, Olay, "SK-II", Always, Vicks]
+  moat: "생활필수품(세제·기저귀·면도·구강·샴푸) — 경기와 무관한 반복구매, 강력한 브랜드 파워·유통 지배력"
+
+segments_b:                        # PG 5개 보고부문 (FY2025, $B, 8-K 세그먼트 표)
+  - {name: "Fabric & Home Care",          ko: "섬유·홈케어",           rev_b: 29.617, share_pct: 36, brands: "Tide·Ariel·Downy·Febreze·Dawn"}
+  - {name: "Baby, Feminine & Family Care", ko: "베이비·여성·가족케어",   rev_b: 20.248, share_pct: 24, brands: "Pampers·Always·Charmin·Bounty"}
+  - {name: "Beauty",                       ko: "뷰티",                 rev_b: 14.964, share_pct: 18, brands: "Head & Shoulders·Pantene·Olay·SK-II"}
+  - {name: "Health Care",                  ko: "헬스케어",             rev_b: 11.998, share_pct: 14, brands: "Oral-B·Crest·Vicks"}
+  - {name: "Grooming",                     ko: "그루밍(면도)",          rev_b: 6.662,  share_pct: 8,  brands: "Gillette·Venus"}
+  # 5개 부문 합 $83.5B + Corporate $0.8B = 총 $84.3B. 최대 부문 = Fabric & Home Care(~36%).
+
+recent_results:
+  fy2025:                          # FY 종료 2025-06-30
+    revenue_b: 84.3
+    yoy_pct: 0                     # 사실상 flat (+$245M)
+    organic_sales_pct: 2           # 유기적 매출 +2%
+    net_income_b: 16.065
+    yoy_net_pct: 7                 # +7%
+    gaap_diluted_eps: 6.51         # +8%
+    core_eps: 6.83                 # +4%
+  fy2024:
+    revenue_b: 84.0
+    diluted_eps: 6.02
+  shareholder_return_fy2025:
+    dividends_b: 9.9
+    buybacks_b: 6.5
+    total_b: 16.4                  # 16B+ 주주환원 (배당+자사주)
+
+market_snapshot:                   # ⚠ 매일 변동 — 촬영 시점 재확인 필수
+  as_of: "2026-07-24"
+  market_cap_b: 342                # stockanalysis.com $342.23B (전년비 -7.8%)
+  price_approx: 147
+  shares_out_b: 2.3
+
+story_beats:                       # 서사(근황 씬용) 후보
+  defensive: "생활필수품이라 불황에도 세제·기저귀·면도날 소비는 계속 → 방어적 현금흐름 = 70년 증배의 토대."
+  simplification: "2010년대 중반 170개 → 65개 핵심 브랜드로 축소('fewer, bigger, better'). 수익성·집중도 개선."
+  fy2025_read: "FY2025 매출 flat이지만 유기 +2%, 순이익 +7%, EPS +8% — 가격·믹스로 이익 성장. 물량은 약세(소비 둔화)."
+
+sources:
+  - "SEC 8-K FY2025 Q4 (CIK 80424): https://www.sec.gov/Archives/edgar/data/80424/000008042425000067/fy2425q4amj8-kexhibit991.htm"
+  - "FY2025 연차보고서: https://s204.q4cdn.com/332108499/files/doc_financials/2025/ar/2025_annual_report.pdf"
+  - "P&G IR 보도자료(FY2025 결과): https://www.pginvestor.com/news/news-details/2025/PG-Announces-Fourth-Quarter-and-Fiscal-Year-2025-Results/default.aspx"
+  - "Motley Fool 2026-07-14 (70th dividend increase, 6개 종목뿐): https://www.fool.com/investing/2026/07/14/procter-gamble-declared-70th-dividend-increase/"
+  - "stockanalysis.com PG (dividend·market-cap 스냅샷)"
+  - "Sure Dividend — Dividend Kings: PG (payout 62%, 65 brands)"

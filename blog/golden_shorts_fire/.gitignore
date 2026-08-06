@@ -1,0 +1,11 @@
+_build/
+golden_shorts_fire_[0-9].html
+golden_shorts_fire_[A-Z]*.html
+golden_shorts_fire_[A-Z]*.mp4
+_preview_*.mp4
+_*.png
+__pycache__/
+golden_shorts_fire_table.html
+_accum_proto.*
+_apwork/
+_apoff.txt

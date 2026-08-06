@@ -1,0 +1,7 @@
+_build/
+golden_shorts_accum_[0-9].html
+golden_shorts_accum_table.html
+golden_shorts_accum_[A-Z]*.html
+golden_shorts_accum_[A-Z]*.mp4
+_preview_*.mp4
+__pycache__/

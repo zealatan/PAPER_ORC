@@ -1,0 +1,78 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>몽생미셸 — 톱3 편집 지시서</title><style>
+:root{--bg:#14161b;--pan:#1d2027;--pan2:#232732;--line:#2c313b;--ink:#e7e9ee;--mut:#8b93a1;--red:#ff5d52;--cy:#37c2d6;--gr:#8fd06f;--am:#e8a33d;--pur:#b48be6}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:Pretendard,"Malgun Gothic",sans-serif;margin:0;padding:24px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:23px;margin:0 0 3px}.sub{color:var(--mut);font-size:13px;margin:0 0 18px}
+.shot{background:var(--pan);border:1px solid var(--line);border-radius:10px;margin:16px 0;overflow:hidden}
+.sh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--pan2);border-bottom:1px solid var(--line)}
+.sh .no{font-family:ui-monospace;font-size:19px;font-weight:800;color:var(--am)}
+.sh .t{font-size:15px;font-weight:700}.sh .d{font-family:ui-monospace;font-size:12px;color:var(--mut);margin-left:auto}
+.meta{padding:10px 16px;font-size:12.5px;color:var(--mut);border-bottom:1px solid var(--line)}
+.meta b{color:var(--ink)}.meta .in{color:var(--am)}.meta .out{color:var(--cy)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{border-bottom:1px solid var(--line);padding:6px 12px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600;font-size:11px;background:#191c22}
+td.tc{font-family:ui-monospace;white-space:nowrap;color:#ffd479;font-weight:700;width:96px}
+td.ly{white-space:nowrap;font-family:ui-monospace;font-size:11px}
+.L-plate{color:#9fb0c4}.L-mg{color:var(--cy)}.L-num{color:var(--am)}.L-gauge{color:var(--gr)}.L-sfx{color:var(--pur)}.L-tr{color:var(--red)}
+.r{color:var(--red)}.b{color:var(--cy)}.g{color:var(--gr)}.a{color:var(--am)}
+.legend{font-size:11.5px;color:var(--mut);margin:6px 0 16px}
+.legend span{font-family:ui-monospace;margin-right:10px}
+.note{background:#1a1d24;border-left:2px solid var(--am);padding:6px 10px;border-radius:5px;margin:10px 16px;font-size:12px}
+</style></head><body><div class="wrap">
+
+<h1>몽생미셸 — 톱3 극적 슬라이드 편집 지시서</h1>
+<p class="sub">AI 플레이트(깨끗) 위에 후반 draw-on 레이어를 얹는 키프레임 타임라인. 프레임 기준 30fps 가정. 시간=클립 로컬 t(초).</p>
+<p class="legend">레이어: <span class="L-plate">PLATE=AI클립</span><span class="L-mg">MG=모션그래픽</span><span class="L-num">NUM=숫자/치수</span><span class="L-gauge">GAUGE=게이지</span><span class="L-sfx">SFX=사운드</span><span class="L-tr">TR=전환</span> · 색코딩: <span class="r">red=문제/힘</span> <span class="b">cyan=물/해법</span></p>
+
+<!-- ===== 12 ===== -->
+<div class="shot">
+<div class="sh"><span class="no">12</span><span class="t">flip — "발상을 뒤집습니다: 물로 밀어내기로"</span><span class="d">4.0s · 디오라마</span></div>
+<div class="meta"><b>전환 IN</b> <span class="in">11→12 스피드라인</span>(기각 좌절 → 급전) · <b>전환 OUT</b> <span class="out">cut → 13</span> · <b>핵심효과</b> 청사진 wireframe→solid 모프</div>
+<table><tr><th>t</th><th>이벤트</th><th>레이어</th></tr>
+<tr><td class="tc">0.0–0.30</td><td>이전 컷에서 <span class="r">white radial 스피드라인</span>이 화면을 쓸고 들어와 클리어 (진입 전환)</td><td class="ly L-tr">TR</td></tr>
+<tr><td class="tc">0.0–1.00</td><td>PLATE가 <span class="b">시안 와이어프레임/청사진 그리드</span> 높은 불투명도로 시작 (dark grid floor)</td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">0.30</td><td><span class="r">"모래 퍼냄" ✕ 아이콘</span> 빠르게 draw-on 후 소거 (오답 기각 잔상)</td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">0.80–1.60</td><td><b class="b">MORPH</b>: 와이어프레임 그리드 → 솔리드 콘크리트/물로 크로스페이드(그리드 opacity 100→0), 잔여 그리드 라인 위로 쓸려 사라짐 (ease-out)</td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">1.20</td><td><span class="b">cyan 흐름 화살표 "→ 강 위로/물살로 밀어냄"</span> draw-on (하이라이트)</td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">1.60–3.50</td><td>PLATE 모션: 저장수 방출 물살이 섬 양옆 퇴적물 쓸어냄 (플레이트 내장 모션 유지)</td><td class="ly L-plate">PLATE</td></tr>
+<tr><td class="tc">3.50–4.00</td><td>세틀 → 13으로 하드컷 준비</td><td class="ly L-plate">PLATE</td></tr>
+<tr><td class="tc">0.0 / 0.8 / 1.6</td><td>SFX: 스피드라인 whoosh / 모프 시머(신스) / 물살 로우럼블 시작</td><td class="ly L-sfx">SFX</td></tr>
+</table>
+<div class="note">TTS 나레이션 "그래서 발상을 뒤집습니다…"는 0.0–3.0s. 화면 한글자막 없음(원칙). 모프가 0.8–1.6s에 나레이션 "뒤집습니다"와 싱크되게.</div>
+</div>
+
+<!-- ===== 15 ===== -->
+<div class="shot">
+<div class="sh"><span class="no">15</span><span class="t">solution — 썰물 방류 폭발</span><span class="d">4.0s · 디오라마</span></div>
+<div class="meta"><b>전환 IN</b> <span class="in">cut (14 저장에서)</span> · <b>전환 OUT</b> <span class="out">15→16 물살 매치컷</span>(방류 물줄기가 16 조수흐름으로) · <b>핵심효과</b> 수문 8 순차폭발 + 게이지 스파이크 + 물이 카메라로</div>
+<table><tr><th>t</th><th>이벤트</th><th>레이어</th></tr>
+<tr><td class="tc">0.0–0.50</td><td>닫힌 8수문에 홀드 (긴장). PLATE 정지감</td><td class="ly L-plate">PLATE</td></tr>
+<tr><td class="tc">0.50–1.00</td><td><b class="b">수문 8개 순차 점등/개방</b> 좌→우, 게이트당 ~0.06s 스태거, 각 개방 순간 <span class="b">cyan 플래시</span></td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">0.50–1.20</td><td>물 분출 시작(PLATE) + <span class="b">cyan 방류 화살표</span> 하류로 부채꼴 draw-on</td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">0.80–1.60</td><td><b class="g">유량계 게이지</b> 하단 코너 wipe-in, 바늘 0→최대, <span class="a">카운트업 "100 m³/s"</span> 1.6s에 도달</td><td class="ly L-gauge">GAUGE·NUM</td></tr>
+<tr><td class="tc">1.20–3.50</td><td>물살이 <b>카메라 쪽으로 러시</b>(PLATE push-back) + 모션블러, 물보라</td><td class="ly L-plate">PLATE</td></tr>
+<tr><td class="tc">3.50–4.00</td><td>물살이 프레임 채움 → <b class="b">물살 매치컷</b>으로 16 진입 (흐름 연속)</td><td class="ly L-tr">TR</td></tr>
+<tr><td class="tc">0.5–1.0 / 0.8→1.6</td><td>SFX: 게이트 clank ×8(스태거) / 물 로어 스웰(피크 1.6) / 게이지 틱</td><td class="ly L-sfx">SFX</td></tr>
+</table>
+<div class="note">긴장(0–0.5) → 폭발(0.5–1.6) → 러시(1.6–3.5)의 완급이 핵심. 게이트 점등을 나레이션 "수문을 열어"에 싱크.</div>
+</div>
+
+<!-- ===== 21 ===== -->
+<div class="shot">
+<div class="sh"><span class="no">21</span><span class="t">end — 밀물이 섬을 감쌈</span><span class="d">5.0s · 실사(오빗 리빌)</span></div>
+<div class="meta"><b>전환 IN</b> <span class="in">cut</span> · <b>전환 OUT</b> <span class="out">21→22 디졸브</span>(→ 155m 측면도) · <b>핵심효과</b> 조수 러시 + 조위 게이지 + 물의 고리 순차 점등</div>
+<table><tr><th>t</th><th>이벤트</th><th>레이어</th></tr>
+<tr><td class="tc">0.0–1.50</td><td>밀물이 갯벌 가로질러 밀려듦(PLATE) + <span class="b">cyan 전진 조수선</span> 화면 안으로 질주 draw-on</td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">1.00–2.50</td><td>다리 잠기기 시작 + <span class="b">세로 조위 게이지</span> 함께 상승, <span class="a">카운트업 "14 m"</span> 2.5s 도달</td><td class="ly L-gauge">GAUGE·NUM</td></tr>
+<tr><td class="tc">2.50–4.00</td><td>오빗이 돌며 <b class="b">물의 고리 발광 윤곽</b>이 섬 하부 성벽을 따라 <b>순차 점등</b>(둘레 한 바퀴)</td><td class="ly L-mg">MG</td></tr>
+<tr><td class="tc">4.00–5.00</td><td>고리 완성, 히어로 홀드 — 섬이 물에 완전히 둘러싸임 → 22로 디졸브 준비</td><td class="ly L-plate">PLATE</td></tr>
+<tr><td class="tc">0.0 / 2.5 / 4.0</td><td>SFX: 밀물 스웰 빌드업 / 물 lap / 감정 패드(로우) 페이드인</td><td class="ly L-sfx">SFX</td></tr>
+</table>
+<div class="note">감정 클라이맥스 — 게이지·고리 점등은 <b>은은하게</b>(과하면 시네마틱 훼손). 물이 주인공, 그래픽은 보조. 나레이션 "…완전히 감쌉니다"가 4.0s 고리 완성과 싱크.</div>
+</div>
+
+<p class="sub" style="margin-top:20px">공통: 모든 그래픽은 후반 레이어(AI 플레이트엔 글자·치수 없음). 색코딩 red=문제/cyan=물·해법. 근거 60ch-craft-sheet.html(효과·전환) · manifest.json shots 12/15/21.</p>
+
+</div></body></html>

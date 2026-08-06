@@ -18,7 +18,8 @@
   · 2002년(닷컴 저점) 은퇴 3씬 추가(fire_X_2002, 엔진 기지원) — "진입 시점 2년이 생사" 교훈. is2002 annoMain은 실측 생존 기반으로 수정(JNJ 하드코딩 "셋 다 파산" 제거 — MCD는 반대로 셋 다 생존).
   · 배경영상 10씬으로 확대(새 TPL 배경을 반투명 rgba 오버레이로 → 영상 은은히 비침, 텍스트 가독성 유지). CHAPBG 10종, 덱 ~12MB. 총 24씬 ~4.5분.
   · 엔진 주의: TPL 콘텐츠는 `.fit`(safe-area, scale .88)로 래핑됨 → 레이아웃은 `.tpl-X>.fit`, 배경은 루트(.zoom)에.
-- **남음: E 더빙 · F 렌더 · G 썸네일·쇼츠**
+- **E~G 완료 · 2026-07-24 유튜브 업로드 완료.** 더빙(ElevenLabs "메시" 클론)·렌더(`recordings/longform_final.mp4` 4:22)·쇼츠 2편(`shorts/mcd_short_{fire,strat}.mp4`)·유튜브 메타(`YOUTUBE_META.md`) 전부 완성.
+  · ⚠ 업로드 후 발견한 **그래프 회귀 2건(범례·물가테이블)은 아래 "다음 종목에서 복원" 섹션 참조** — MCD는 그대로 두고 다음 종목부터 복원.
 
 ### (이하 스캐폴딩 시점 기록 — 참고용)
 JNJ를 복제해 **재사용 파이프라인만** 옮겨놓음(`jnj→mcd`, `JNJ→MCD` 치환, 15개 스크립트 컴파일 통과).
@@ -60,8 +61,74 @@ python3 rec/render_pw.py       # 롱폼 렌더 → 트림(blackdetect) → mix_a
 
 ## 표준(다음 제작부터 적용, 이미 상속됨) — PRODUCTION_MANUAL §9
 - 덱 타이틀 = 자막처럼 네모박스(적응형). 글자크기 LOCKED(타이틀 3.45cqw 등, 변경금지). 썸네일은 thumbnail-designer 에이전트.
-- **쇼츠 구도 하향**: build_short_v2.sh VF = 그래프 offset `(oh-ih)/2+170`, 훅 `y=400`, 워터마크 `y=1650`(중앙 정렬, 위 쏠림 해소). MCD 사본에 반영됨.
-- **배투실 마스코트 얼굴 채움**: `assets/shorts/batusil.png`가 살구빛 채운 버전으로 교체됨(윤곽선만 아님). MCD 사본에 반영됨.
+- **쇼츠 구도(2026-07-24 개정, build_short_v2.sh)**: 그래프 offset `(oh-ih)/2+40`, 훅 `y=200`, 워터마크 `y=1470`.
+  · **훅 로고**: gen_hook.py — 아치를 배지 크기(폭 200)로 줄여 상단에 얹고 텍스트는 아래로 분리(예전엔 아치가 전체 프레임처럼 깔려 텍스트와 겹침). 카드 인트로엔 훅 미적용(카드 자체 아치와 중복 방지).
+  · **슬라이드 우상단 배투실 제거 = 크롭 금지**(숫자 라벨 짤림). 대신 **같은 프레임의 깨끗한 종이 패치를 배투실 위에 overlay**(VF_GRAPH: `split→crop 140x184@1645,22→overlay@1778,22`). delogo는 색 번짐으로 부적합. 카드(사진 배경)는 패치 이음새 보여서 자체 배투실 유지.
+  · **자막·숫자는 크롭하지 말 것**(예전 실수: 하단 914 크롭→자막 사라짐, 우측 1795 크롭→숫자 짤림). 전체 프레임 유지.
+- **배투실 마스코트**: `assets/shorts/batusil.png` = deck 베이지 얼굴+브라운 윤곽(신규). 하단 워터마크는 `batusil_label.png`(마크 밑 "배투실" 글자 포함). gen: deck BATUSIL data URI 추출 + BlackHanSans 글자.
+
+## ⚠️ 다음 종목에서 복원할 그래프 회귀 (MCD에서 축소됨 — 반드시 복원)
+> MCD 제작 중 fire(물가반영 은퇴) 차트에서 아래 두 요소가 축소/제거됨. **MCD 영상은 이미 업로드 완료**라 그대로 두고, **다음 종목부터 복원**한다.
+> **시각 기준(참조) = `blog/JNJ/deck/jnj_v1.html`**(= `jnj_illust.html`, 차트부 동일) — 범례·물가테이블이 올바르게 렌더된 상태. 확인법: `grep -c "engtable\|noLegend"` → JNJ는 engtable 17·noLegend 2, MCD는 engtable 1·noLegend 6(회귀).
+> ⚠ JNJ의 *현재* `build_deck.py`도 회귀분이 섞였을 수 있음 → **코드는 아래 지시대로 고치고, "올바른 결과물"만 JNJ deck HTML 렌더로 대조**할 것.
+
+1. **범례(legend) 복원** — fire 차트에 `noLegend:True`가 6개 전부 걸려 색 범례(🔵월$1,000 🟠월$2,000 🔴월$3,000)가 숨겨짐. 지금은 끝라벨(월 $1천 …)로만 구분.
+   · 고칠 곳: `deck/build_deck.py` fire 차트 반환부 `"noLegend": True` **삭제(또는 False)**. series엔 이미 `name`("월 $1,000" 등) 있음 → 플래그만 풀면 복원.
+   · 엔진(`*_final.html`) `engChart()`의 `if(!c.noLegend){…elegbox…}` 블록이 렌더 담당 — **엔진 수정 불필요**, 데이터 플래그만.
+   · 겹침 주의: 기본 범례 위치는 좌상단(`L+6,T+3`). 끝라벨과 중복되면 끝라벨을 결과값만(예 "$2.09M"·"2007 파산")으로 단순화하거나 `legAt`로 위치 조정.
+
+2. **물가연동 인출액 테이블 복원** — "물가연동 실제 월 인출액" 표가 MCD에선 200k 씬 1개에만 붙음.
+   · 고칠 곳: `deck/build_deck.py`의 `if init == 200000: d["table"] = infl_table` → **모든 fire(real/real2002) 차트에 부착**하도록 조건 확대(init·연도별로 `infl_table` 재계산해서 각 씬 data에 넣기).
+   · 엔진 `.engtable` CSS + TPL 렌더·`infl_table` 생성 코드(CPI 기반)는 이미 존재 → **재사용만**. dict 구조 `{title,cols,rows,x,y}`.
+   · 겹침 주의: 표 위치 `x,y`(현재 상단 x60,y5)가 생존선·끝점 라벨과 안 겹치게. 400k/600k는 y값이 커서 상단 여백 재확인.
+
+## 🛠 덱 편집 시스템 (2026-07-24 신설 · 다음 종목 상속) — 파이프라인 UI로 덱을 편집/동기화
+브라우저에서 덱을 편집하면 **소스 JSON까지 자동 동기화**되는 편집 인프라. **종목별로 분리**돼 있다.
+
+### 구성 (종목별)
+```
+architecture_docs/
+  ├─ dec_pipeline.html          종목 선택 인덱스(자동생성 — 존재하는 <STOCK>/ 스캔)
+  ├─ protocol/handover/... .html  공유 문서(종목무관)
+  └─ <STOCK>/                    ← 종목별 편집 UI (예: MCD/, PG/)
+       ├─ dec_pipeline.html      페이지 구조 편집기(이동·추가·삭제·수정 + 🚀 덱에 반영)
+       └─ dec_edit_page{N}.html  페이지 편집화면(덱 iframe + 자막패널 + 💾저장/🔄최신본)
+                └iframe→ ../../<STOCK>/deck/<pfx>_v1.html?page=N&edit=1&stock=<STOCK>
+pipeline/edit_server.py          정적 서빙 + 저장 API(http.server 대체) — 종목무관(stock 파라미터)
+<STOCK>/deck/tools/gen_dec_edit.py  생성기 — **자기 폴더명에서 STOCK 자동 인식**, architecture_docs/<STOCK>/에 출력
+```
+### 실행
+```
+cd ~/PAPER_ORC/blog && python3 pipeline/edit_server.py 8090   # 이걸로 띄워야 저장됨(정적 http.server ✗)
+→ http://<ip>:8090/architecture_docs/dec_pipeline.html   (종목 선택 → 편집)
+```
+### 새 종목(예: PG) 추가 워크플로우
+```
+1. blog/MCD → blog/PG 폴더 복사 + mcd→pg / MCD→PG 치환(스캐폴딩 표준 §스캐폴딩)
+2. A~D 파이프라인 실행 → pg 덱 생성(pg_final.html·pg_v1.html·pg_deck.json)
+3. python3 PG/deck/tools/gen_dec_edit.py   # STOCK=PG 자동인식 → architecture_docs/PG/ 출력
+   (루트 종목선택 인덱스에 PG 카드 자동 추가됨)
+```
+gen_dec_edit.py는 경로를 전부 자기 위치·폴더명에서 유도하므로 **STOCK 하드코딩 없음** — 복사만 하면 됨.
+### 저장 API (edit_server.py)
+- `POST /api/save-deck {stock,scenes,ov,cp}` → `spec/deck_ov.json` 갱신(+무손실 스냅샷) → **build_deck 자동 재굽기**
+- `POST /api/save-pipeline {stock,items}` → `spec/deck_plan.json` 저장 → build_deck(재정렬·추가·삭제 적용) + gen_dec_edit 재생성
+- `POST /api/rebuild {stock}` → build_deck 실행
+
+### 엔진 훅 (mcd_final.html — 상속됨)
+- URL `?page=N&edit=1` → 해당 씬으로 이동 + 편집모드 ON · `?stock=MCD`
+- `window.__pipelineSave()` / `__pipelineReload()` (편집화면 상단바 💾저장/🔄최신본가 호출)
+
+### build_deck의 plan 적용 (덱 구조 동기화)
+- 각 base 씬에 `sid`(원본 1-based) 부여. `deck_plan.json`의 `pg` 항목 `ref`(=sid) 순서대로 재조립:
+  base에 있으면 유지(재정렬), 이전 mcd_deck.json에 있으면 내용보존(새 씬 재빌드 대비), 둘 다 없으면 **빈 sectint** 생성.
+
+### ⚠ 데이터 3계층 & 함정 (사용자가 제일 헷갈려 함 — 반드시 설명)
+- **JSON(소스) = 진짜 원본** · **HTML = 빌드시 구워진 스냅샷** · **localStorage = 그 브라우저 임시 편집본**
+- 규칙: 덱 코드 `if(!localStorage.getItem(KEY))` → **localStorage가 HTML 내장본을 이긴다.** 편집·저장한 적 있으면 재굽기해도 옛 버전이 보임 → `🔄 최신본`(=localStorage 비우고 리로드)으로 해결.
+- 저장 버튼 없이 UI만 고치면 localStorage에만 남아 휘발 → `💾 저장(영구)`가 소스 JSON에 반영(영구).
+- **작업 순서: 구조(재배치/추가/삭제) 먼저 확정 → `🚀 덱에 반영` → 그 다음 페이지 내용 편집.**
+  OV(라벨 위치)는 씬 index로 키잉되므로, 내용편집 후 재배치하면 어긋남.
 
 ## 검증
 - 덱은 playwright headless firefox로 전수조사(매뉴얼 §4). 렌더도 firefox(H.264 bg 때문). 

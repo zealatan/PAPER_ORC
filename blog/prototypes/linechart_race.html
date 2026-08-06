@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The AI Race — Line Chart Race</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: #000;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  #stage {
+    position: relative;
+    width: 100vw; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: #000;
+  }
+  /* 9:16 responsive frame */
+  #frame {
+    position: relative;
+    height: 100vh;
+    aspect-ratio: 9 / 16;
+    max-width: 100vw;
+    background: radial-gradient(120% 80% at 50% 8%, #0d0f12 0%, #050506 55%, #000 100%);
+  }
+  @media (max-aspect-ratio: 9/16) {
+    #frame { width: 100vw; height: auto; aspect-ratio: 9 / 16; }
+  }
+  canvas { display: block; width: 100%; height: 100%; }
+  #replay {
+    position: absolute; left: 50%; bottom: 3.2%; transform: translateX(-50%);
+    padding: 12px 26px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.06);
+    color: #e8e8ea; font-size: 15px; letter-spacing: .04em;
+    cursor: pointer; backdrop-filter: blur(6px);
+    transition: opacity .4s, background .2s;
+    opacity: 0;
+  }
+  #replay:hover { background: rgba(255,255,255,0.14); }
+  #replay.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="frame">
+    <canvas id="c"></canvas>
+    <button id="replay">↻  Replay</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   DATA  — swap this block for real numbers later.
+   Shape: { title, subtitle, watermark, unit, series:[{name,color,logo,points:[{date:"YYYY-MM", value:Number}]}] }
+   `logo` may be a data-URI / SVG string; if null a glowing monogram badge is drawn.
+   Helper `pts(start, [values])` expands a value array into monthly {date,value} points.
+   ========================================================================= */
+function pts(startYM, values){
+  let [y, m] = startYM.split('-').map(Number);
+  return values.map(v => {
+    const date = `${y}-${String(m).padStart(2,'0')}`;
+    m++; if (m > 12){ m = 1; y++; }
+    return { date, value: v };
+  });
+}
+
+const DATA = {
+  title: "The AI Race",
+  subtitle: "Monthly Users, Est. (M)",
+  watermark: "@randomdatavstime",
+  handle: "made with @randomdatavstime",
+  unit: "M",
+  // Placeholder data 2022-12 → 2025-12 (37 monthly points). Approx. upward curves.
+  series: [
+    {
+      name: "ChatGPT", color: "#10a37f", logo: null,
+      points: pts("2022-12", [
+        9.77, 83.3, 120, 158, 178, 190, 196, 194, 201, 213, 232, 251,   // 2022-12 .. 2023-11
+        270, 288, 306, 325, 348, 372, 398, 421, 452, 498, 548, 601,     // 2023-12 .. 2024-11
+        652, 701, 752, 803, 852, 901, 951, 989, 1021, 1042, 1058, 1068, // 2024-12 .. 2025-11
+        1074.94                                                          // 2025-12
+      ])
+    },
+    {
+      name: "Gemini", color: "#4285f4", logo: null,
+      points: pts("2022-12", [
+        0.02, 0.45, 0.9, 1.3, 1.7, 2.0, 2.3, 2.6, 3.0, 3.6, 4.2, 5.0,
+        10, 20, 41, 62, 91, 121, 152, 181, 221, 262, 301, 351,
+        401, 451, 501, 551, 592, 631, 662, 690, 711, 727, 740, 745,
+        748.88
+      ])
+    },
+    {
+      name: "Claude", color: "#d97757", logo: null,
+      points: pts("2022-12", [
+        0.01, 0.29, 0.5, 0.7, 0.9, 1.1, 1.3, 1.6, 1.9, 2.3, 2.8, 3.4,
+        4.1, 4.9, 5.8, 6.8, 8.0, 9.4, 10.9, 12.5, 14.3, 16.2, 18.2, 20.0,
+        21.6, 23.0, 24.3, 25.5, 26.6, 27.6, 28.4, 29.0, 29.5, 29.8, 30.0, 30.05,
+        30.1
+      ])
+    }
+  ]
+};
+
+const DURATION = 12000;   // ~12s active draw
+const END_HOLD = 900;     // brief hold at the end before "done"
+
+/* ========================================================================= */
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const replayBtn = document.getElementById('replay');
+
+// Logical design resolution (9:16)
+const W = 1080, H = 1920;
+let dpr = 1;
+
+function resize(){
+  const r = canvas.getBoundingClientRect();
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width  = Math.round(r.width  * dpr);
+  canvas.height = Math.round(r.height * dpr);
+}
+window.addEventListener('resize', resize);
+
+// Parse month labels
+const N = DATA.series[0].points.length;
+const monthDate = DATA.series[0].points.map(p => p.date);
+
+function monthLabel(ym){
+  const MS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const [y,m] = ym.split('-').map(Number);
+  return `${MS[m-1]} ${y}`;
+}
+// x-axis year ticks: label each January (avoids a cramped partial first year)
+const yearTicks = [];
+monthDate.forEach((ym, i) => { const [y,m] = ym.split('-'); if (m === '01') yearTicks.push({year:y, idx:i}); });
+
+// ---- nice number helpers ----
+function niceNum(v){
+  if (v <= 0) return 1;
+  const exp = Math.floor(Math.log10(v));
+  const base = Math.pow(10, exp);
+  const f = v / base;
+  let nf;
+  if (f <= 1) nf = 1;
+  else if (f <= 1.2) nf = 1.2;
+  else if (f <= 1.5) nf = 1.5;
+  else if (f <= 2) nf = 2;
+  else if (f <= 2.5) nf = 2.5;
+  else if (f <= 3) nf = 3;
+  else if (f <= 4) nf = 4;
+  else if (f <= 5) nf = 5;
+  else if (f <= 6) nf = 6;
+  else if (f <= 8) nf = 8;
+  else nf = 10;
+  return nf * base;
+}
+function fmtAxis(v){
+  if (v >= 1000){
+    let k = v / 1000;
+    let s = (Math.round(k*10)/10).toString();
+    return s + "K " + DATA.unit;
+  }
+  return (Math.round(v*10)/10).toString().replace(/\.0$/,'') + " " + DATA.unit;
+}
+function fmtValue(v){
+  return v.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:2}) + " " + DATA.unit;
+}
+
+// value of a series at fractional month index
+function valueAt(series, fidx){
+  const i = Math.floor(fidx);
+  if (i >= N-1) return series.points[N-1].value;
+  const t = fidx - i;
+  const a = series.points[i].value, b = series.points[i+1].value;
+  return a + (b - a) * t;
+}
+
+function smoothstep(t){ return t<=0?0 : t>=1?1 : t*t*(3-2*t); }
+function lerp(a,b,t){ return a + (b-a)*t; }
+
+// animated axis-top state
+let axisTop = niceNum(DATA.series[0].points[0].value * 1.05);
+let started = 0;
+let running = true;
+
+function start(){
+  resize();
+  axisTop = Math.max(niceNum(maxDrawn(0.0001) * 1.05), niceNum(DATA.series.reduce((m,s)=>Math.max(m,s.points[0].value),0)*1.05));
+  started = performance.now();
+  running = true;
+  replayBtn.classList.remove('show');
+  requestAnimationFrame(frame);
+}
+
+function maxDrawn(fidx){
+  let mx = 0;
+  for (const s of DATA.series) mx = Math.max(mx, valueAt(s, fidx));
+  return mx;
+}
+
+function frame(now){
+  const raw = (now - started) / DURATION;
+  const pClamped = Math.min(raw, 1);
+  const p = smoothstep(pClamped);           // eased playback progress
+  const fidx = p * (N - 1);
+
+  draw(fidx);
+
+  if (raw < 1 + END_HOLD/DURATION){
+    requestAnimationFrame(frame);
+  } else {
+    running = false;
+    replayBtn.classList.add('show');
+  }
+}
+
+function draw(fidx){
+  const cw = canvas.width, ch = canvas.height;
+  const sx = cw / W, sy = ch / H;
+  ctx.save();
+  ctx.setTransform(sx, 0, 0, sy, 0, 0);   // map logical 1080x1920 -> device px
+
+  // background
+  ctx.clearRect(0,0,W,H);
+  const bg = ctx.createRadialGradient(W*0.5, H*0.10, 60, W*0.5, H*0.10, H*0.9);
+  bg.addColorStop(0, "#0d0f12");
+  bg.addColorStop(0.55, "#050506");
+  bg.addColorStop(1, "#000000");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,W,H);
+
+  // ---------- header ----------
+  ctx.textAlign = "center";
+  // "made with @handle"
+  ctx.fillStyle = "rgba(150,150,158,0.85)";
+  ctx.font = "500 30px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  ctx.fillText(DATA.handle, W/2, 235);
+  // little sparkline glyph
+  drawSpark(W/2 + ctx.measureText(DATA.handle).width/2 + 34, 226, "#7bd88f");
+
+  // title
+  ctx.fillStyle = "#f4f4f6";
+  ctx.font = "800 96px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  ctx.fillText(DATA.title, W/2, 350);
+  // subtitle
+  ctx.fillStyle = "rgba(150,150,158,0.95)";
+  ctx.font = "500 40px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  ctx.fillText(DATA.subtitle, W/2, 415);
+
+  // ---------- plot geometry ----------
+  const plotL = 170, plotR = 770, plotT = 560, plotB = 1360;
+  const plotH = plotB - plotT, plotW = plotR - plotL;
+
+  // ---------- dynamic axis top ----------
+  const rawMax = maxDrawn(fidx);
+  const tickStep = niceNum((rawMax * 1.05) / 5) || 1;
+  let topTick = Math.ceil((rawMax * 1.05) / tickStep) * tickStep;
+  if (topTick <= 0) topTick = tickStep * 5;
+  // ease axisTop toward target for smooth rescale
+  axisTop += (topTick - axisTop) * 0.10;
+  if (axisTop < tickStep) axisTop = tickStep;
+
+  const yOf = v => plotB - (v / axisTop) * plotH;
+
+  // ---------- watermark (diagonal, behind lines) ----------
+  ctx.save();
+  ctx.translate(W/2, plotT + plotH*0.42);
+  ctx.rotate(-Math.PI/9);
+  ctx.textAlign = "center";
+  ctx.fillStyle = "rgba(255,255,255,0.05)";
+  ctx.font = "800 78px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  ctx.fillText(DATA.watermark, 0, 0);
+  ctx.restore();
+
+  // ---------- gridlines + y labels ----------
+  ctx.textAlign = "right";
+  ctx.font = "500 30px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  const nTicks = Math.round(topTick / tickStep);
+  for (let k = 0; k <= nTicks; k++){
+    const v = k * tickStep;
+    if (v > axisTop * 1.001) continue;
+    const y = yOf(v);
+    if (y < plotT - 2 || y > plotB + 2) continue;
+    ctx.strokeStyle = k === 0 ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.05)";
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(plotL, y); ctx.lineTo(plotR + 250, y); ctx.stroke();
+    ctx.fillStyle = "rgba(165,165,172,0.9)";
+    ctx.fillText(fmtAxis(v), plotL - 22, y + 10);
+  }
+
+  // y axis line
+  ctx.strokeStyle = "rgba(255,255,255,0.28)";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(plotL, plotT - 10); ctx.lineTo(plotL, plotB); ctx.stroke();
+
+  // ---------- x-axis year ticks (revealed as time passes) ----------
+  const xOf = idx => plotL + (idx / (N-1)) * plotW;
+  ctx.textAlign = "center";
+  ctx.font = "500 30px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  ctx.fillStyle = "rgba(150,150,158,0.85)";
+  for (const yt of yearTicks){
+    if (yt.idx > fidx + 0.4) continue;
+    const x = xOf(yt.idx);
+    ctx.fillText(yt.year, x, plotB + 46);
+  }
+
+  // ---------- draw each line (partial, up to fidx) ----------
+  const tips = [];
+  for (const s of DATA.series){
+    const path = [];
+    const iMax = Math.floor(fidx);
+    for (let i = 0; i <= iMax; i++) path.push([xOf(i), yOf(s.points[i].value)]);
+    // interpolated tip
+    const tipV = valueAt(s, fidx);
+    const tipX = xOf(fidx), tipY = yOf(tipV);
+    path.push([tipX, tipY]);
+
+    // glow line
+    ctx.save();
+    ctx.lineJoin = "round"; ctx.lineCap = "round";
+    ctx.shadowColor = s.color; ctx.shadowBlur = 18;
+    ctx.strokeStyle = s.color; ctx.lineWidth = 5.5;
+    ctx.beginPath();
+    path.forEach((pt,i)=> i? ctx.lineTo(pt[0],pt[1]) : ctx.moveTo(pt[0],pt[1]));
+    ctx.stroke();
+    ctx.restore();
+
+    tips.push({ s, x: tipX, y: tipY, v: tipV });
+  }
+
+  // ---------- tip badges + labels (avoid vertical overlap) ----------
+  // sort by y and nudge labels apart
+  const order = tips.slice().sort((a,b)=>a.y-b.y);
+  const minGap = 78;
+  for (let i = 1; i < order.length; i++){
+    if (order[i].labelY === undefined) order[i].labelY = order[i].y;
+    order[0].labelY = order[0].labelY ?? order[0].y;
+    if (order[i].y - (order[i-1].labelY ?? order[i-1].y) < minGap){
+      order[i].labelY = (order[i-1].labelY ?? order[i-1].y) + minGap;
+    } else order[i].labelY = order[i].y;
+  }
+  for (const t of tips){
+    const ly = t.labelY ?? t.y;
+    drawBadge(t.x, t.y, t.s);
+    // name + value text to the right of badge
+    ctx.textAlign = "left";
+    const tx = t.x + 44;
+    ctx.fillStyle = t.s.color;
+    ctx.font = "700 34px -apple-system, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillText(t.s.name, tx, ly - 6);
+    ctx.fillStyle = "#f0f0f2";
+    ctx.font = "600 32px -apple-system, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillText(fmtValue(t.v), tx, ly + 32);
+  }
+
+  // ---------- big date ticker ----------
+  const di = Math.min(Math.round(fidx), N-1);
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "600 78px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  ctx.fillText(monthLabel(monthDate[di]), W/2, 1520);
+
+  ctx.restore();
+}
+
+// glowing circular logo badge (placeholder: colored disc + monogram)
+function drawBadge(x, y, s){
+  ctx.save();
+  // outer glow ring
+  ctx.shadowColor = s.color; ctx.shadowBlur = 26;
+  ctx.beginPath(); ctx.arc(x, y, 26, 0, Math.PI*2);
+  ctx.fillStyle = "#0a0b0d"; ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.lineWidth = 4; ctx.strokeStyle = s.color; ctx.stroke();
+  // inner disc
+  ctx.beginPath(); ctx.arc(x, y, 18, 0, Math.PI*2);
+  const g = ctx.createRadialGradient(x-6, y-6, 2, x, y, 20);
+  g.addColorStop(0, mix(s.color, "#ffffff", 0.35));
+  g.addColorStop(1, s.color);
+  ctx.fillStyle = g; ctx.fill();
+  // monogram
+  ctx.fillStyle = "#0a0b0d";
+  ctx.font = "800 24px -apple-system, 'Segoe UI', Roboto, sans-serif";
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText(s.name[0], x, y+1);
+  ctx.textBaseline = "alphabetic";
+  ctx.restore();
+}
+
+function drawSpark(x, y, color){
+  ctx.save();
+  ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.lineJoin="round"; ctx.lineCap="round";
+  ctx.beginPath();
+  ctx.moveTo(x-16, y+6); ctx.lineTo(x-6, y-4); ctx.lineTo(x+2, y+2); ctx.lineTo(x+16, y-12);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// mix two hex colors
+function mix(a, b, t){
+  const pa = hx(a), pb = hx(b);
+  const r = Math.round(lerp(pa[0],pb[0],t)), g = Math.round(lerp(pa[1],pb[1],t)), bl = Math.round(lerp(pa[2],pb[2],t));
+  return `rgb(${r},${g},${bl})`;
+}
+function hx(h){ h=h.replace('#',''); return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]; }
+
+// ---- controls ----
+function replay(){ if(!running) start(); }
+replayBtn.addEventListener('click', replay);
+document.getElementById('stage').addEventListener('click', (e)=>{ if(e.target===replayBtn) return; replay(); });
+window.addEventListener('keydown', (e)=>{ if(e.code==='Space'){ e.preventDefault(); replay(); } });
+
+// autoplay
+window.addEventListener('load', start);
+resize();
+</script>
+</body>
+</html>

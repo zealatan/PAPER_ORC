@@ -1,0 +1,26 @@
+{
+  "name": "@motion-studio/ultimate",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "High-end cinematic 90s showreel (720x1280/15fps) built on the existing engine.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "ultimate:generate": "tsx src/cli.ts generate",
+    "ultimate:preview": "tsx src/cli.ts preview",
+    "ultimate:render": "tsx src/cli.ts render",
+    "ultimate:validate": "tsx src/cli.ts validate",
+    "ultimate:gallery": "tsx src/cli.ts gallery",
+    "ultimate:all": "tsx src/cli.ts all"
+  },
+  "dependencies": {
+    "@motion-studio/components": "workspace:*",
+    "@motion-studio/core": "workspace:*",
+    "@motion-studio/renderer": "workspace:*",
+    "@motion-studio/renderer-core": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.1"
+  }
+}

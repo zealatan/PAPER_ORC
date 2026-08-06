@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MCD 더빙 프리뷰 (동기)</title>
+<style>
+  html,body{margin:0;height:100%;background:#14110e;color:#efeae1;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Malgun Gothic",sans-serif;overflow:hidden}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  iframe{border:0;width:100vw;height:100vh;display:block}
+  /* 시작 오버레이 */
+  #gate{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:22px;background:#14110e;text-align:center}
+  #gate h1{font-size:clamp(20px,3vw,34px);margin:0;font-weight:800;letter-spacing:-.02em}
+  #gate p{margin:0;opacity:.6;font-size:clamp(13px,1.5vw,16px);line-height:1.6}
+  #play{appearance:none;border:0;cursor:pointer;background:#e04f3a;color:#fff;
+    font-size:clamp(17px,2vw,22px);font-weight:800;padding:16px 40px;border-radius:999px;
+    box-shadow:0 8px 30px rgba(224,79,58,.35);transition:transform .12s}
+  #play:active{transform:scale(.96)}
+  /* 재생 중 하단 미니 컨트롤 */
+  #bar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:9;
+    display:none;align-items:center;gap:14px;background:rgba(20,17,14,.82);
+    backdrop-filter:blur(8px);padding:8px 16px;border-radius:999px;font-size:13px}
+  #bar.on{display:flex}
+  #bar button{appearance:none;border:0;cursor:pointer;background:#2b2724;color:#efeae1;
+    font-size:13px;font-weight:700;padding:7px 14px;border-radius:999px}
+  #bar #t{font-variant-numeric:tabular-nums;opacity:.7;min-width:92px;text-align:center}
+  #hint{opacity:.5;font-size:12px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <iframe id="deck" src="stock_alert_dubbed.html?rec" allow="autoplay"></iframe>
+</div>
+
+<div id="bar">
+  <button id="replay">⟲ 처음부터</button>
+  <span id="t">0:00 / 0:00</span>
+  <button id="mute">🔊</button>
+</div>
+
+<div id="gate">
+  <h1>MCD 배당 백테스트 — 더빙 프리뷰</h1>
+  <p>슬라이드와 메시 보이스 내레이션이 동기 재생됩니다.<br>
+     이어폰/스피커를 켠 뒤 아래 버튼을 눌러주세요.</p>
+  <button id="play">▶ 재생</button>
+  <p id="hint">약 2분 45초 · 오디오는 이 PC 브라우저에서 재생됩니다</p>
+</div>
+
+<audio id="voice" src="../recordings/voice_track.mp3" preload="auto"></audio>
+
+<script>
+const deck  = document.getElementById('deck');
+const voice = document.getElementById('voice');
+const gate  = document.getElementById('gate');
+const bar   = document.getElementById('bar');
+const tEl   = document.getElementById('t');
+
+function fmt(s){ s=Math.max(0,s|0); return (s/60|0)+':'+String(s%60).padStart(2,'0'); }
+
+// 덱을 씬0부터 재생시키는 트리거 (동일 출처라 contentWindow 직접 접근)
+function startDeck(){
+  try{
+    const w = deck.contentWindow;
+    if(w && typeof w.show === 'function'){ w.show(0); return true; }
+  }catch(e){}
+  // 폴백: Home 키 디스패치
+  try{
+    deck.contentWindow.document.dispatchEvent(
+      new KeyboardEvent('keydown',{key:'Home',bubbles:true}));
+    return true;
+  }catch(e){ return false; }
+}
+
+async function start(){
+  gate.style.display='none';
+  bar.classList.add('on');
+  voice.currentTime = 0;
+  try{ await voice.play(); }catch(e){ /* 사용자 제스처 내 호출이라 통과 */ }
+  // 오디오가 실제로 흐르기 시작한 순간 덱을 씬0에서 출발 → 두 타임라인 정렬
+  startDeck();
+}
+
+document.getElementById('play').addEventListener('click', start);
+document.getElementById('replay').addEventListener('click', start);
+document.getElementById('mute').addEventListener('click', ()=>{
+  voice.muted = !voice.muted;
+  document.getElementById('mute').textContent = voice.muted ? '🔇' : '🔊';
+});
+
+voice.addEventListener('timeupdate', ()=>{
+  tEl.textContent = fmt(voice.currentTime)+' / '+fmt(voice.duration||0);
+});
+voice.addEventListener('ended', ()=>{ tEl.textContent = '끝 · ⟲로 다시'; });
+</script>
+</body>
+</html>

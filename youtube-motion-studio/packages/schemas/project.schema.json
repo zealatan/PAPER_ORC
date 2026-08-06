@@ -1,0 +1,508 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motion-studio.dev/schemas/project.schema.json",
+  "title": "MotionProject",
+  "description": "Top-level serializable document for a YouTube Motion Studio project.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "createdAt",
+    "updatedAt",
+    "settings",
+    "theme",
+    "variables",
+    "assets",
+    "scenes",
+    "audioTracks"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "$ref": "#/$defs/semver" },
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "settings": { "$ref": "#/$defs/ProjectSettings" },
+    "theme": { "$ref": "#/$defs/ThemeReference" },
+    "variables": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/VariableDefinition" }
+    },
+    "assets": { "type": "array", "items": { "$ref": "#/$defs/AssetReference" } },
+    "scenes": { "type": "array", "items": { "$ref": "#/$defs/Scene" } },
+    "audioTracks": { "type": "array", "items": { "$ref": "#/$defs/AudioTrack" } },
+    "metadata": { "type": "object" }
+  },
+  "$defs": {
+    "semver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version string, e.g. 1.0.0."
+    },
+    "color": {
+      "type": "string",
+      "description": "CSS color string (hex, rgb(a), hsl, or named).",
+      "minLength": 1
+    },
+    "ProjectSettings": {
+      "type": "object",
+      "required": [
+        "width",
+        "height",
+        "fps",
+        "durationMode",
+        "backgroundColor",
+        "pixelRatio"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "fps": { "type": "number", "exclusiveMinimum": 0 },
+        "durationMode": { "enum": ["scenes", "fixed"] },
+        "fixedDuration": { "type": "number", "exclusiveMinimum": 0 },
+        "backgroundColor": { "$ref": "#/$defs/color" },
+        "pixelRatio": { "type": "number", "exclusiveMinimum": 0 },
+        "safeArea": { "$ref": "#/$defs/SafeAreaSettings" }
+      }
+    },
+    "SafeAreaSettings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "top": { "type": "number" },
+        "right": { "type": "number" },
+        "bottom": { "type": "number" },
+        "left": { "type": "number" }
+      }
+    },
+    "ThemeReference": {
+      "type": "object",
+      "required": ["themeId"],
+      "additionalProperties": false,
+      "properties": {
+        "themeId": { "type": "string", "minLength": 1 },
+        "overrides": { "type": "object" }
+      }
+    },
+    "VariableDefinition": {
+      "type": "object",
+      "required": ["id", "name", "type", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" },
+        "type": {
+          "enum": [
+            "string",
+            "number",
+            "boolean",
+            "color",
+            "date",
+            "imageAsset",
+            "videoAsset",
+            "audioAsset",
+            "json"
+          ]
+        },
+        "value": {},
+        "defaultValue": {},
+        "description": { "type": "string" },
+        "required": { "type": "boolean" },
+        "group": { "type": "string" }
+      }
+    },
+    "AssetReference": {
+      "type": "object",
+      "required": ["id", "type", "name", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": {
+          "enum": ["image", "video", "audio", "svg", "font", "json", "unknown"]
+        },
+        "name": { "type": "string" },
+        "source": { "$ref": "#/$defs/AssetSource" },
+        "mimeType": { "type": "string" },
+        "width": { "type": "number" },
+        "height": { "type": "number" },
+        "duration": { "type": "number" },
+        "checksum": { "type": "string" },
+        "metadata": { "type": "object" }
+      }
+    },
+    "AssetSource": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "path"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "local-path" },
+            "path": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "key"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "object-url" },
+            "key": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "data-url" },
+            "value": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "remote-url" },
+            "url": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "generatorId"],
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "const": "generated" },
+            "generatorId": { "type": "string" },
+            "params": {}
+          }
+        }
+      ]
+    },
+    "AudioTrack": {
+      "type": "object",
+      "required": ["id", "kind", "assetId", "start", "duration"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": {
+          "enum": ["voiceover", "music", "sfx", "video-audio"]
+        },
+        "assetId": { "type": "string" },
+        "start": { "type": "number", "minimum": 0 },
+        "duration": { "type": "number", "minimum": 0 },
+        "trimStart": { "type": "number", "minimum": 0 },
+        "trimEnd": { "type": "number", "minimum": 0 },
+        "volume": { "type": "number", "minimum": 0 },
+        "muted": { "type": "boolean" },
+        "fadeIn": { "type": "number", "minimum": 0 },
+        "fadeOut": { "type": "number", "minimum": 0 },
+        "playbackRate": { "type": "number", "exclusiveMinimum": 0 },
+        "duckingGroup": { "type": "string" }
+      }
+    },
+    "Scene": {
+      "type": "object",
+      "required": ["id", "name", "duration", "background", "elements"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" },
+        "duration": { "type": "number", "exclusiveMinimum": 0 },
+        "background": { "$ref": "#/$defs/BackgroundDefinition" },
+        "elements": { "type": "array", "items": { "$ref": "#/$defs/MotionElement" } },
+        "transitionIn": { "$ref": "#/$defs/TransitionDefinition" },
+        "transitionOut": { "$ref": "#/$defs/TransitionDefinition" },
+        "metadata": { "type": "object" }
+      }
+    },
+    "BackgroundDefinition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["type"],
+          "additionalProperties": false,
+          "properties": { "type": { "const": "none" } }
+        },
+        {
+          "type": "object",
+          "required": ["type", "color"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "const": "solid" },
+            "color": { "$ref": "#/$defs/color" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["type", "stops"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "const": "gradient" },
+            "angle": { "type": "number" },
+            "stops": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["color", "position"],
+                "additionalProperties": false,
+                "properties": {
+                  "color": { "$ref": "#/$defs/color" },
+                  "position": { "type": "number", "minimum": 0, "maximum": 1 }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["type", "assetId"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "const": "image" },
+            "assetId": { "type": "string" },
+            "fit": { "enum": ["cover", "contain", "fill", "none"] }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["type", "assetId"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "const": "video" },
+            "assetId": { "type": "string" },
+            "fit": { "enum": ["cover", "contain", "fill", "none"] },
+            "loop": { "type": "boolean" }
+          }
+        }
+      ]
+    },
+    "TransitionDefinition": {
+      "type": "object",
+      "required": ["type", "duration"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "cut",
+            "fade",
+            "slide",
+            "push",
+            "zoom",
+            "wipe",
+            "blur-fade",
+            "dip-to-black",
+            "dip-to-white"
+          ]
+        },
+        "duration": { "type": "number", "minimum": 0 },
+        "params": { "type": "object" }
+      }
+    },
+    "MotionElement": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "name",
+        "visible",
+        "locked",
+        "transform",
+        "style",
+        "props",
+        "timing",
+        "animations"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" },
+        "visible": { "type": "boolean" },
+        "locked": { "type": "boolean" },
+        "transform": { "$ref": "#/$defs/Transform2D" },
+        "style": { "type": "object" },
+        "props": { "type": "object" },
+        "timing": { "$ref": "#/$defs/ElementTiming" },
+        "animations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/AnimationDefinition" }
+        },
+        "bindings": { "type": "array", "items": { "$ref": "#/$defs/VariableBinding" } },
+        "effects": { "type": "array", "items": { "$ref": "#/$defs/EffectDefinition" } },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/MotionElement" } },
+        "metadata": { "type": "object" }
+      }
+    },
+    "Transform2D": {
+      "type": "object",
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height",
+        "rotation",
+        "scaleX",
+        "scaleY",
+        "anchorX",
+        "anchorY",
+        "skewX",
+        "skewY",
+        "opacity",
+        "zIndex"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "width": { "type": "number" },
+        "height": { "type": "number" },
+        "rotation": { "type": "number" },
+        "scaleX": { "type": "number" },
+        "scaleY": { "type": "number" },
+        "anchorX": { "type": "number", "minimum": 0, "maximum": 1 },
+        "anchorY": { "type": "number", "minimum": 0, "maximum": 1 },
+        "skewX": { "type": "number" },
+        "skewY": { "type": "number" },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "zIndex": { "type": "number" }
+      }
+    },
+    "ElementTiming": {
+      "type": "object",
+      "required": ["start", "duration"],
+      "additionalProperties": false,
+      "properties": {
+        "start": { "type": "number", "minimum": 0 },
+        "duration": { "type": "number", "minimum": 0 },
+        "trimStart": { "type": "number", "minimum": 0 },
+        "trimEnd": { "type": "number", "minimum": 0 },
+        "playbackRate": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "VariableBinding": {
+      "type": "object",
+      "required": ["variableId", "targetPath"],
+      "additionalProperties": false,
+      "properties": {
+        "variableId": { "type": "string" },
+        "targetPath": { "type": "string" },
+        "transform": {
+          "type": "object",
+          "required": ["type"],
+          "properties": { "type": { "type": "string" } }
+        }
+      }
+    },
+    "EffectDefinition": {
+      "type": "object",
+      "required": ["id", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "params": { "type": "object" },
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "AnimationDefinition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["id", "kind", "target", "start", "duration", "presetId"],
+          "additionalProperties": false,
+          "properties": {
+            "id": { "type": "string", "minLength": 1 },
+            "kind": { "const": "preset" },
+            "target": { "type": "string" },
+            "start": { "type": "number", "minimum": 0 },
+            "duration": { "type": "number", "minimum": 0 },
+            "delay": { "type": "number", "minimum": 0 },
+            "presetId": { "type": "string", "minLength": 1 },
+            "params": { "type": "object" },
+            "loop": { "$ref": "#/$defs/AnimationLoop" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["id", "kind", "target", "start", "duration", "keyframes"],
+          "additionalProperties": false,
+          "properties": {
+            "id": { "type": "string", "minLength": 1 },
+            "kind": { "const": "keyframes" },
+            "target": { "type": "string" },
+            "start": { "type": "number", "minimum": 0 },
+            "duration": { "type": "number", "minimum": 0 },
+            "delay": { "type": "number", "minimum": 0 },
+            "keyframes": { "type": "array", "items": { "$ref": "#/$defs/Keyframe" } },
+            "loop": { "$ref": "#/$defs/AnimationLoop" }
+          }
+        }
+      ]
+    },
+    "AnimationLoop": {
+      "type": "object",
+      "required": ["enabled"],
+      "additionalProperties": false,
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "count": { "type": "integer", "minimum": 0 },
+        "direction": { "enum": ["normal", "alternate"] }
+      }
+    },
+    "Keyframe": {
+      "type": "object",
+      "required": ["id", "time", "value", "easing", "interpolation"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "time": { "type": "number", "minimum": 0 },
+        "value": {},
+        "easing": { "$ref": "#/$defs/EasingDefinition" },
+        "interpolation": { "enum": ["linear", "step", "bezier", "spring"] }
+      }
+    },
+    "EasingDefinition": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "linear",
+            "ease",
+            "ease-in",
+            "ease-out",
+            "ease-in-out",
+            "cubic-bezier",
+            "bounce",
+            "elastic",
+            "back",
+            "spring"
+          ]
+        },
+        "bezier": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "spring": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mass": { "type": "number" },
+            "stiffness": { "type": "number" },
+            "damping": { "type": "number" },
+            "initialVelocity": { "type": "number" }
+          }
+        }
+      }
+    }
+  }
+}

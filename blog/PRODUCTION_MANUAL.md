@@ -61,6 +61,7 @@ json.dump(out, open('rec/narration_lines.json','w',encoding='utf-8'), ensure_asc
 - **더빙/렌더 헬퍼**: `rec/{gen_tts,build_timing,build_voice}.py`, `rec/render_pw.py`, `rec/mix_audio.sh`, `rec/{keep_fs,send_key,nav_raise}.py`(x11grab용, 지금은 playwright라 거의 불필요)
 - **폰트**: `fonts/BlackHanSans-Regular.ttf`(썸네일·훅 굵은 한글)
 - **마스코트/로고**: `assets/shorts/batusil.png`(덱 BATUSIL data URI에서 추출), `assets/jnj_logo.svg`
+- **쇼츠 썸네일 편집기(정식 템플릿)**: `blog/prototypes/thumbs/thumb_editor.html` — 자립형·오프라인·모바일 터치. 요소(제품그룹·배투실 마크·P&G/맥도날드/J&J 로고·텍스트박스)를 드래그·크기(cqw)·색상·외곽선 편집. 🖼임포트(폰 갤러리 임의 이미지)·📐가이드(모눈+가로세로 중심선, **PNG엔 미포함**)·💾PNG(1080×1920 캔버스 직접 렌더, 라이브러리 無)·💾HTML(현재 상태 자립형 저장→다시 열어 재편집). 종목 무관 재사용. 게시판: `thumb_editor_artifact.html`(claude.ai 아티팩트용, head/body 스켈레톤 대응). 제품컷 자산 `assets/products*/`, 손글씨 라벨=Caveat 폰트.
 
 ---
 
@@ -102,7 +103,7 @@ json.dump(out, open('rec/narration_lines.json','w',encoding='utf-8'), ensure_asc
 ### 썸네일
 - 롱폼 가로: **덱 bg 영상 프레임을 배경**으로(예 `hourglass_time`=시간/은퇴자금 소진 메타포) 어둡게+그라디언트 스크림 → JNJ 로고 + 큰 헤드라인(흰+노란 하이라이트) + 마스코트. PIL 합성(`assets/thumb_hourglass.png` 참고).
 - 노부부·돈다발 AI합성은 선택(코카콜라 `recordings/recordings/thumb_final.png`). 손그림 일러스트 버전은 `thumb_illust_v1.png`.
-- 쇼츠 세로: 마지막 카드 페이지 세로 프레임(`assets/shorts/thumb_card.png`). 쇼츠 썸네일은 **YouTube 모바일 앱에서만** 지정 가능.
+- 쇼츠 세로(9:16): **정식 도구 = `blog/prototypes/thumbs/thumb_editor.html`** (§2). **레이아웃·색상 정식 스펙: `blog/prototypes/thumbs/SHORTS_THUMBNAIL_SPEC.md`**(제품 y40·로고 y53·문구 y59/65 · 흰#fff+골드#e8b776, PG·MCD 측정 확정). 검은 배경 위 제품컷(흰테두리)+필기체 라벨(Caveat)+로고+큰 문구(dihichi식). 요소 드래그·리사이즈 후 **💾PNG로 1080×1920 저장**. 종목 무관(로고·제품 임포트). 대안: 마지막 카드 페이지 세로 프레임(`assets/shorts/thumb_card.png`). 쇼츠 썸네일 지정은 **YouTube 모바일 앱에서만** 가능.
 
 ---
 
@@ -158,6 +159,9 @@ JNJ hbars2 '원금 오표기' 사건: 폭락매수 원금을 $319k(전액)로 �
 5. **배투실 마스코트 얼굴 채움** — 윤곽선만 있던 얼굴 내부를 옅은 살구빛 `(255,240,226)`으로 flood-fill. 방법: alpha>60=그려짐, 모서리에서 flood로 바깥 표시 → 나머지 내부(모든 pocket 포함) 채움. `assets/shorts/batusil.png` 교체(JNJ·MCD). 원본 윤곽선 버전은 덱 BATUSIL data URI에 아직 있음(원하면 덱도 교체 가능).
 
 > ⚠ 2·3·4·5는 JNJ 소스에 반영됨. **이미 업로드된 JNJ 롱폼/쇼츠에 소급 적용하려면 재렌더 필요**(사용자가 원할 때만). 기본은 "다음 제작부터". MCD는 클론이라 자동 상속.
+
+6. **쇼츠 썸네일 HTML 편집기(정식 템플릿, 2026-07-27)** — `blog/prototypes/thumbs/thumb_editor.html`(§2). dihichi 벤치마킹 스타일: 검정 배경·제품컷 흰테두리·필기체 라벨·큰 2줄 문구·빨간 포인트. 드래그·크기(cqw)·색상·외곽선·🖼임포트·📐가이드·💾PNG(1080×1920)·💾HTML(재편집). **종목무관 범용** — P&G·맥도날드·J&J 로고 내장, 임의 이미지 임포트. 아티팩트 게시판 `thumb_editor_artifact.html`. thumbnail-designer 에이전트(#1)와 병행: 에이전트=AI시안, 편집기=수동 배치·미세조정.
+7. **reelchart 릴스형 차트(PG 덱)** — 선 성장 + 선끝 값 실시간 카운트업(dihichi식). `pg_final.html` reelchart tpl + `reelAnim()`(기존 countUps 훅에 연결). 파이어 원금 3장·분할투자 2장에 적용, 2002 세트는 deck_plan에서 드롭(sid 안정→자막 보존). 새 종목 이식 시 `build_deck.py` reel_fire/reel_steady/reel_crash + `_nice_ceil` 참고. per-scene y축·흰카드·per 로고.
 
 ---
 

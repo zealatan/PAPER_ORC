@@ -198,6 +198,20 @@ div[data-testid="stColumn"] { min-width:0 !important; }
         monthly = rB[1].number_input(f"월 생활비 ({sym})", value=defaults["exp"],
                                      step=defaults["exp_step"], min_value=0, key=f"exp_{currency}")
 
+        # 물가 반영 · 연 물가상승률 — 한 줄
+        # 켜면 월 생활비를 매년 물가만큼 올려 인출(실질 고정) → 엔진 strategy="fixed_real".
+        # 끄면 명목 고정(예전 동작). 물가율은 전 마켓에 일관 적용하기 위해 사용자 입력값으로
+        # 합성 CPI 시리즈를 만들어 넘긴다(FRED 실측 CPI는 미국·한국만 있어 마켓별 공백이 생김).
+        rC = st.columns([1, 1])
+        inflation_on = rC[0].toggle(
+            "물가 반영 (실질 인출)", value=True,
+            help="켜면 월 생활비를 매년 물가상승률만큼 올려 인출합니다(구매력 고정). "
+                 "끄면 명목 금액 고정 — 은퇴 후반 실질 생활비가 줄어드는 셈이라 결과가 낙관적으로 나옵니다.")
+        inflation_rate = rC[1].number_input(
+            "연 물가상승률 (%)", value=2.5, step=0.5, min_value=0.0, max_value=20.0,
+            disabled=not inflation_on, key=f"infl_{currency}",
+            help="예: 2.5%면 월 생활비가 매년 2.5%씩 증가한 금액을 인출합니다.")
+
         reinvest_surplus = st.toggle("잉여 배당 재투자", value=True,
                                      help="생활비 충당 후 남는 배당을 다음 배당까지 버퍼를 남기고 재매수 "
                                       "(대상 종목은 아래 '잉여 배당 집중 투자 종목'에서 선택)")
@@ -334,14 +348,27 @@ div[data-testid="stColumn"] { min-width:0 !important; }
         unsafe_allow_html=True,
     )
 
+    # ── 물가 반영 CPI 시리즈 ──────────────────────────────────────────────────────
+    # 켜지면 은퇴 시작일=1.0 기준, 연 inflation_rate%로 매월 상승하는 합성 CPI를 만들어
+    # strategy="fixed_real"로 넘긴다. 엔진은 인출액을 cpi(d)/cpi_base(=은퇴 시작 시점)로
+    # 스케일 → 구매력 고정(실질 인출). 끄면 명목 고정(fixed_nominal, 예전 동작).
+    fire_strategy = "fixed_real" if inflation_on and inflation_rate > 0 else "fixed_nominal"
+    cpi_series = None
+    if fire_strategy == "fixed_real":
+        _idx = pd.date_range(start=pd.Timestamp(start), end=pd.Timestamp(end), freq="MS")
+        _idx = _idx.union([pd.Timestamp(start)])   # 은퇴 시작일 앵커(값 1.0) 보장
+        _years = (_idx - pd.Timestamp(start)) / pd.Timedelta(days=365.25)
+        cpi_series = pd.Series((1.0 + inflation_rate / 100.0) ** _years.values, index=_idx)
+
     result = run_fire_backtest_multi(
         assets, float(corpus), annual_withdrawal=float(monthly) * 12,
-        strategy="fixed_nominal", frequency="monthly",
+        strategy=fire_strategy, frequency="monthly",
         tax_rate_pct=float(tax), reinvest_surplus=reinvest_surplus,
         sell_priority=sell_priority,       # UI: 매도 우선순위
         reinvest_target=reinvest_target,   # UI: 잉여 배당 재투자 대상
         reinvest_ticker=reinvest_ticker,   # UI: '특정 종목에 집중'일 때 대상 티커
         reinvest_asset=reinvest_asset,     # UI: 바스켓 밖 종목이면 재투자 전용 편입
+        cpi=cpi_series,                    # UI: 물가 반영 (fixed_real일 때만 사용)
         start_date=start,
         end_date=end,
     )
@@ -365,6 +392,13 @@ div[data-testid="stColumn"] { min-width:0 !important; }
             f'<div class="verdict bad">❌ <b>고갈</b> — {basket} · '
         f'자산이 <b>{dep}</b>에 소진됨 (약 {s["Survived Years"]:.1f}년 지속)</div>',
             unsafe_allow_html=True)
+
+    if fire_strategy == "fixed_real":
+        st.caption(f"💡 물가 반영 ON · 시작 월 생활비 {money(monthly)}에서 연 {inflation_rate:.1f}%씩 인상해 "
+                   f"구매력 고정(실질 인출). 인출액은 은퇴 후반으로 갈수록 명목상 커집니다.")
+    else:
+        st.caption(f"⚠️ 물가 반영 OFF · 월 생활비 {money(monthly)} 명목 고정. "
+                   f"물가 상승을 무시하므로 실제보다 낙관적일 수 있습니다.")
 
     # ── metric cards ────────────────────────────────────────────────────────────────
     delta_pct = (s["Final Value"] / corpus - 1) * 100

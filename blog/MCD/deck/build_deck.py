@@ -413,6 +413,46 @@ for n in NARR:
                             [f"${BIZ['market_cap_b']:.0f}B", "시가총액"]]})
     scenes.append(sc)
 
+# ── deck_plan.json 적용(있으면): 파이프라인 편집기의 재정렬·추가·삭제를 실제 씬에 반영 ──
+#    ref = 안정적 sid(원본 1-based 페이지). 새 씬(ref가 base에 없음)은 이전 빌드에서 내용 보존, 없으면 빈 sectint.
+import copy as _copy
+for _i, _s in enumerate(scenes):
+    _s["sid"] = _i + 1
+_planf = ROOT / "spec" / "deck_plan.json"
+if _planf.exists():
+    try:
+        _plan = json.load(open(_planf, encoding="utf-8"))
+        _pgs = [it for it in _plan if it.get("t") == "pg"]
+        if _pgs:
+            _base = {s["sid"]: s for s in scenes}
+            _prev = {}
+            _pf = ROOT / "deck" / "mcd_deck.json"
+            if _pf.exists():
+                try:
+                    _prev = {s.get("sid"): s for s in json.load(open(_pf))["scenes"] if s.get("sid") is not None}
+                except Exception:
+                    _prev = {}
+            _tmpl = next((s for s in scenes if s.get("tpl") == "sectint"), scenes[0])
+            _out = []
+            for _it in _pgs:
+                _ref = _it.get("ref")
+                if _ref in _base:                       # 기존 씬 유지(순서=plan)
+                    _out.append(_base[_ref])
+                elif _ref in _prev:                     # 이전 빌드의 새 씬 → 내용 보존
+                    _out.append(_prev[_ref])
+                else:                                   # 신규 → 빈 sectint 복제
+                    _ns = _copy.deepcopy(_tmpl)
+                    _ns["sid"] = _ref if _ref is not None else f"new{len(_out)}"
+                    _ns["subLines"] = []
+                    _ns["data"] = {"tone": "d", "part": "새 씬",
+                                   "head": (_it.get("title") or "새 페이지") + "|",
+                                   "sub": "덱 편집기에서 내용을 채우세요"}
+                    _out.append(_ns)
+            scenes = _out
+            print(f"deck_plan 적용 → {len(scenes)}씬 (재정렬·추가·삭제 반영)")
+    except Exception as _e:
+        print("deck_plan 적용 실패(원본 유지):", _e)
+
 deck = {"scenes": scenes, "ov": {}, "cp": {}, "theme": "paper", "paper": "photo"}
 json.dump(deck, open(ROOT / "deck" / "mcd_deck.json", "w"), ensure_ascii=False, indent=1)
 

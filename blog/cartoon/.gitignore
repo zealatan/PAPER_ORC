@@ -1,0 +1,56 @@
+# === cartoon/ 위생 규칙 ===
+# 파이썬 캐시
+__pycache__/
+*.pyc
+
+# 초기 실험 스크래치 디렉터리(_cmp/, _ic/, _frames/ 등) — cartoon 루트 한정
+/_*/
+
+# 파이프라인 구조화(episodes/) 이전의 루트 실험 산출물
+/_*.png
+/_*.mp4
+/scene_*.html
+/scene_*.mp4
+/*_standalone.html
+/*_render.html
+/*_editor.html
+/*_editor_shot.png
+/cartoon_story*.html
+/cartoon_8cut.png
+/1_cartoon_beginner.png
+/cartoon_full.mp4
+/cartoon_shorts.mp4
+/compare*.mp4
+/compare*.html
+/window_*.mp4
+/window_*.html
+/sec_*.mp4
+/sec_*.html
+/subtitle_editor.html
+/panel_2_clean.png
+
+# 루트 실험 시나리오(scenario.example.json만 유지)
+/hynix_scenario.json
+/page5_scenario.json
+/page7_loss.json
+/sec_scenario.json
+/window_scenario.json
+/_concat.txt
+
+# 에피소드 산출물: 중간 씬(scenes/)·프레임 그랩은 재생성물이라 제외
+episodes/*/out/scenes/
+episodes/*/out/_*.png
+episodes/*/out/panels/
+
+# ep3 폴리시 반복 스크래치(_ep3_montage.png·_panels.png만 유지)
+episodes/ep3/_a*.png
+episodes/ep3/_b*.png
+episodes/ep3/_c*.png
+episodes/ep3/_z*.png
+episodes/ep3/_ep3_aligned.png
+episodes/ep3/_ep3_framed.png
+episodes/ep3/_ep3_gray.png
+
+# 파이프라인 구조화 이전의 루트 패널 추출(빌드시 재생성)
+/panels/
+/panels2/
