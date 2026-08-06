@@ -28,7 +28,9 @@ XF    = float(os.environ.get('XFADE', '0.3'))   # 컷 사이 크로스페이드(
 
 MAN = json.load(open(os.path.join(ROOT, 'manifest.json'), encoding='utf-8'))
 SHOTS = sorted(MAN['shots'], key=lambda s: s['id'])
-NARR = {n['id']: n for n in json.load(open(os.path.join(HERE, 'narration.json'), encoding='utf-8'))}
+DUB  = os.environ.get('DUB', '1') != '0'   # 0=더빙없음(무보이스): 클립 자체 오디오(효과음)만
+_np = os.path.join(HERE, 'narration.json')
+NARR = {n['id']: n for n in json.load(open(_np, encoding='utf-8'))} if os.path.exists(_np) else {}
 
 def run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True)
@@ -41,6 +43,11 @@ def probe_dur(path):
                        capture_output=True, text=True)
     try: return float(r.stdout.strip())
     except: return 0.0
+
+def has_audio(path):
+    r = subprocess.run(['ffprobe','-v','error','-select_streams','a','-show_entries','stream=codec_type','-of','csv=p=0',path],
+                       capture_output=True, text=True)
+    return 'audio' in r.stdout
 
 # ---------- 자막 청크 분할 ----------
 def chunk_text(s):
@@ -77,8 +84,13 @@ clock = 0.0
 missing = []
 for idx, sh in enumerate(SHOTS):
     sid = sh['id']
-    n = NARR.get(sid)
-    adur = float(n['dur']) if n and n.get('file') and n['dur'] > 0.05 else float(sh.get('dur', 3))
+    src0 = os.path.join(IMG, f"shot{sid:02d}.mp4")
+    vdur0 = probe_dur(src0) if os.path.exists(src0) else 0.0
+    if DUB:
+        n = NARR.get(sid)
+        adur = float(n['dur']) if n and n.get('file') and n['dur'] > 0.05 else float(sh.get('dur', 3))
+    else:  # 무보이스: 클립 자체 길이대로(없으면 스토리보드 dur)
+        adur = vdur0 if vdur0 > 0.05 else float(sh.get('dur', 3))
     is_last = (idx == len(SHOTS)-1)
     tgt = adur + (0.0 if (is_last or XF<=0) else XF)   # 크로스페이드 겹침분만큼 세그 연장(총길이는 오디오와 동일 유지)
     src = os.path.join(IMG, f"shot{sid:02d}.mp4")
@@ -129,17 +141,26 @@ else:
          '-i', concat_list, '-c','copy', silent])
 
 # ---------- 3) 오디오 concat (컷 순서, TTS) ----------
-aud_inputs, amap = [], []
+aud_inputs, filt, amap = [], [], []
 for i,(st,ad,sid,txt) in enumerate(timeline):
-    n = NARR.get(sid)
-    f = os.path.join(TTS, n['file']) if n and n.get('file') else None
-    if f and os.path.exists(f):
-        aud_inputs += ['-i', f]; amap.append(f'[{len(amap)}:a]')
+    if DUB:
+        n = NARR.get(sid)
+        fp = os.path.join(TTS, n['file']) if n and n.get('file') else None
+        f = fp if (fp and os.path.exists(fp)) else None
+    else:  # 클립 자체 오디오(효과음)
+        src = os.path.join(IMG, f"shot{sid:02d}.mp4")
+        f = src if (os.path.exists(src) and has_audio(src)) else None
+    k = len(amap)
+    if f:
+        aud_inputs += ['-i', f]
+        filt.append(f'[{k}:a]aformat=sample_rates=44100:channel_layouts=stereo,atrim=0:{ad:.3f},apad=whole_dur={ad:.3f},asetpts=N/SR/TB[a{k}]')
     else:  # 무음 자리
-        aud_inputs += ['-f','lavfi','-t',f'{ad:.3f}','-i','anullsrc=r=44100:cl=mono']; amap.append(f'[{len(amap)}:a]')
+        aud_inputs += ['-f','lavfi','-t',f'{ad:.3f}','-i','anullsrc=r=44100:cl=stereo']
+        filt.append(f'[{k}:a]asetpts=N/SR/TB[a{k}]')
+    amap.append(f'[a{k}]')
 master_a = os.path.join(TMP, 'narration.m4a')
 run(['ffmpeg','-hide_banner','-loglevel','error','-y', *aud_inputs,
-     '-filter_complex', ''.join(amap)+f'concat=n={len(amap)}:v=0:a=1[a]',
+     '-filter_complex', ';'.join(filt)+';'+''.join(amap)+f'concat=n={len(amap)}:v=0:a=1[a]',
      '-map','[a]','-c:a','aac','-b:a','192k', master_a])
 
 # ---------- 4) 자막 ASS ----------
